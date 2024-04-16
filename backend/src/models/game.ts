@@ -1,12 +1,15 @@
+import {Team} from "./team";
+
 export class Game {
-  public static STANDARDTEAMS: string[] = ["white", "black"];
+  public static STANDARDTEAMS: Team[] = [Team.WHITE, Team.BLACK];
   public static STANDARDGAME_WINNINGSCORE = 10;
 
   public id: string;
-  public teams: string[] = [];
-  private _scores: Map<string, number> = new Map<string, number>();
+  public teams: Team[] = [];
+
+  private _scores: Map<Team, number> = new Map<Team, number>();
   private readonly _pointsToWin: number;
-  private _winner: undefined | string = undefined;
+  private _winner: undefined | Team = undefined;
 
   // Constructor for standard game
   constructor(id: string) {
@@ -24,7 +27,7 @@ export class Game {
     return this._winner;
   }
 
-  getTeamScore(team: string): number {
+  getTeamScore(team: Team): number {
     const score = this._scores.get(team);
     if (!score) {
       throw Error("There is no '" + team.valueOf() + "'team. ");
@@ -32,7 +35,7 @@ export class Game {
     return score;
   }
 
-  teamScores(team: string): void {
+  teamScores(team: Team): void {
     if (!this.teams.includes(team)) {
       throw Error(
         "Team '" + team.valueOf() + "' is not participating in this game."
@@ -51,7 +54,7 @@ export class Game {
     this.checkIfTeamWon(team);
   }
 
-  private checkIfTeamWon(team: string) {
+  private checkIfTeamWon(team: Team) {
     const score = this._scores.get(team);
 
     if (!score) {
