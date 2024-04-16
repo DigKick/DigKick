@@ -1,4 +1,10 @@
-# backend
+# Backend
+
+Install bun on Mac:
+
+```bash
+curl -fsSL https://bun.sh/install | bash
+```
 
 To install dependencies:
 
