@@ -4,12 +4,10 @@ import {Team} from "../../models/team";
 
 
 let gameObj = new Game('gameId');
-let mockFunction = mock()
 
 
 beforeEach(() => {
     gameObj = new Game('gameId');
-    mockFunction = mock()
 })
 
 
