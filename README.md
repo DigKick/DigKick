@@ -40,7 +40,7 @@ In later steps, the web application will also be used to register new players vi
 
 <br>
 
-## Digital Interface and Console for Kicker aka DICK 🛠️
+## Digital Interface for Counting @ Kicker table (aka DICK) 🛠️
 
 ### Framework: Arduino Framework (on an ESP32)
 
