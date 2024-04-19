@@ -22,4 +22,11 @@ export class Team {
   updateScore(change: ScoreChange) {
     this.score = Math.max(0, this.score + change)
   }
+
+  toJSON() {
+    return {
+      'color': this.color,
+      'score': this.score
+    }
+  }
 }
