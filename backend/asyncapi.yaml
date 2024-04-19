@@ -42,19 +42,43 @@ components:
       type: object
       description: Describes where to put which text on the OLED display
       properties:
-        cursorPosition:
+        snippets:
           type: array
-          description: Defines the position of the cursor (x|y)
+          description: Describes the different text segments for the display
+          example:
+            {
+              "snippets": [
+              {
+                "cursorPosition": [
+                  1,
+                  2
+                ],
+                "text": "WHITE 1 : 2 BLACK"
+              },
+              {
+                "cursorPosition": [
+                  1,
+                  3
+                ],
+                "text": "LAST SCORED: TEAM WHITE"
+              }
+            ]
+          }
           items:
-            type: integer
-            description: Single coordinate. Either x or y.
-          minItems: 2
-          maxItems: 2
-          example: [1, 2]
-        text:
-          type: string
-          description: Defines the text.
-          example: "WHITE 1 : 2 BLACK"
+            type: object
+            description: Defines the position of the cursor (x|y)
+            properties:
+                cursorPosition:
+                  type: integer
+                  description: The cursor positiondefines where the text is written on the display. First value = x position - Second value = y position
+                  minItems: 2
+                  maxItems: 2
+                  example: [1, 2]
+                text:
+                  type: string
+                  description: Defines the text.
+                  example: "WHITE 1 : 2 BLACK"
+            
     
     ledStatus:
       type: object
