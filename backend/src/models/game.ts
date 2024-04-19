@@ -1,4 +1,4 @@
-import {Team, TeamColor} from "./team";
+import {ScoreChange, Team, TeamColor} from "./team";
 
 export class Game {
   public static STANDARDGAME_WINNINGSCORE = 10;
@@ -36,6 +36,26 @@ export class Game {
       return this._winnerTeam;
     }
     return undefined;
+  }
+
+  updateHomeTeamScore(change: ScoreChange) {
+    this._updateTeamScoreAndWinner(this.homeTeam, change);
+  }
+
+  updateGuestTeamScore(change: ScoreChange) {
+    this._updateTeamScoreAndWinner(this.guestTeam, change)
+  }
+
+  private _updateTeamScoreAndWinner(team: Team, change: ScoreChange) {
+    team.score = Math.max(0, team.score + change)
+
+    if (team.score >= this.pointsToWin) {
+      this.winnerTeam = team
+    }
+
+    if (change === ScoreChange.DECREASE && team.score === this.pointsToWin - 1 && this.winnerTeam === team) {
+      this.resetWinnerTeam();
+    }
   }
 
   toJSON() {
