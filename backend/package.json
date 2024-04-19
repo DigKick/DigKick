@@ -14,5 +14,26 @@
   },
   "peerDependencies": {
     "typescript": "^5.0.0"
+  },
+  "generator": {
+    "renderer": "react",
+    "apiVersion": "v3",
+    "supportedProtocols": [
+      "mqtt"
+    ],
+    "parameters": {
+    },
+    "conditionalFiles": {
+    },
+    "nonRenderableFiles": [
+
+    ],
+    "generator": "<2.0.0",
+    "filters": [
+      "@asyncapi/generator-filters"
+    ],
+    "hooks": {
+      "@asyncapi/generator-hooks": "hookFunctionName"
+    }
   }
 }
