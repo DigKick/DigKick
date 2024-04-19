@@ -41,11 +41,8 @@ components:
     displayText:
       type: object
       description: Describes where to put which text on the OLED display
-      properties:
-        snippets:
-          type: array
-          description: Describes the different text segments for the display
-          example:
+      example:
+      
             {
               "snippets": [
               {
@@ -66,6 +63,10 @@ components:
               }
             ]
           }
+      properties:
+        snippets:
+          type: array
+          description: Describes the different text segments for the display
           items:
             type: object
             description: Defines the position of the cursor (x|y)
