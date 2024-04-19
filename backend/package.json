@@ -4,7 +4,7 @@
   "description": "Digital Kicker Backend",
   "main": "index.ts",
   "scripts": {
-    "gen:doc:md": "asyncapi generate fromTemplate asyncapi.yaml @asyncapi/markdown-template -o ./docs "
+    "gen:doc:md": "asyncapi generate fromTemplate asyncapi.yaml @asyncapi/markdown-template -o ./docs ",
     "test": "bun test"
   },
   "keywords": [],
