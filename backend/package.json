@@ -18,12 +18,6 @@
   },
   "generator": {
     "renderer": "react",
-    "apiVersion": "v2.6.0",
-    "parameters": {
-      "server": {
-        "description": "The server you want to use in the code.",
-        "required": true
-      }
-    }
+    "apiVersion": "v2.6.0"
   }
 }
