@@ -9,16 +9,16 @@ export class Game {
   public guestTeam: Team;
   private _winnerTeam?: Team = undefined;
 
-  private readonly _pointsToWin: number;
+  public readonly pointsToWin: number;
 
   // Constructor for standard game
   constructor(id: string) {
     this.id = id;
 
-    this.homeTeam = new Team(TeamColor.WHITE);
-    this.guestTeam = new Team(TeamColor.BLACK);
+    this.homeTeam = new Team(TeamColor.WHITE, this);
+    this.guestTeam = new Team(TeamColor.BLACK, this);
 
-    this._pointsToWin = Game.STANDARDGAME_WINNINGSCORE;
+    this.pointsToWin = Game.STANDARDGAME_WINNINGSCORE;
   }
 
   set winnerTeam(team: Team) {
@@ -37,7 +37,7 @@ export class Game {
   toJSON() {
     return {
       id: this.id,
-      pointsToWin: this._pointsToWin,
+      pointsToWin: this.pointsToWin,
       teams: [this.guestTeam, this.homeTeam],
       winner: this._winnerTeam
     }
