@@ -4,7 +4,7 @@
   "description": "Digital Kicker Backend",
   "main": "index.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "bun test"
   },
   "keywords": [],
   "author": "Marvin Voss, Maximilian Koenig",
