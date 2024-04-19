@@ -7,7 +7,7 @@ export class Game {
 
   public homeTeam: Team;
   public guestTeam: Team;
-  private _winnerTeam?: Team = undefined;
+  private _winnerTeam!: Team | undefined;
 
   public readonly pointsToWin: number;
 
@@ -21,10 +21,14 @@ export class Game {
     this.pointsToWin = Game.STANDARDGAME_WINNINGSCORE;
   }
 
-  set winnerTeam(team: Team) {
+  resetWinnerTeam() {
+    this._winnerTeam = undefined;
+  }
+
+  set winnerTeam(team: Team | undefined) {
     if (this._winnerTeam)
-      return
-    this._winnerTeam = team
+      return;
+    this._winnerTeam = team;
   }
 
   get winnerTeam(): Team | undefined {

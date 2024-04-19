@@ -34,6 +34,10 @@ export class Team {
     if (this._score >= this.game.pointsToWin) {
       this.game.winnerTeam = this
     }
+
+    if (change === ScoreChange.DECREASE && this._score === this.game.pointsToWin - 1 && this.game.winnerTeam === this) {
+      this.game.resetWinnerTeam();
+    }
   }
 
   toJSON() {
