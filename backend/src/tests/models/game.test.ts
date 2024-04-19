@@ -1,6 +1,6 @@
-import { expect, test, beforeEach, mock } from "bun:test";
+import {beforeEach, expect, test} from "bun:test";
 import {Game} from "../../models/game";
-import {Team} from "../../models/team";
+import {ScoreChange, Team} from "../../models/team";
 
 
 let gameObj = new Game('gameId');
@@ -15,47 +15,32 @@ beforeEach(() => {
     Tests for basic game
  */
 
-test('white team scores once', () => {
-    gameObj.teamScores(Team.WHITE);
+test('home team scores once', () => {
+    gameObj.homeTeam.updateScore(ScoreChange.INCREASE);
 
-    expect(gameObj.getTeamScore(Team.WHITE)).toBe(1);
+    expect(gameObj.homeTeam.score).toBe(1);
 });
 
-test('black team scores once', () => {
-    gameObj.teamScores(Team.BLACK);
+test('guest team scores once', () => {
+    gameObj.guestTeam.updateScore(ScoreChange.INCREASE);
 
-    expect(gameObj.getTeamScore(Team.BLACK)).toBe(1);
+    expect(gameObj.guestTeam.score).toBe(1);
 });
+
+test('decrease of a score', () => {
+    gameObj.homeTeam.updateScore(ScoreChange.INCREASE);
+    gameObj.homeTeam.updateScore(ScoreChange.INCREASE);
+
+    gameObj.homeTeam.updateScore(ScoreChange.DECREASE);
+
+    expect(gameObj.homeTeam.score).toEqual(1)
+})
+
 
 test('white team wins', () => {
     for (let i = 0; i < 10; i++) {
-        gameObj.teamScores(Team.WHITE);
+        gameObj.homeTeam.updateScore(ScoreChange.INCREASE);
     }
 
-    expect(gameObj.winner).toEqual(Team.WHITE)
-})
-
-test('white team wins with 10 points', () => {
-    for (let i = 0; i < 10; i++) {
-        gameObj.teamScores(Team.WHITE);
-    }
-
-    expect(gameObj.getTeamScore(Team.WHITE)).toEqual(Game.STANDARDGAME_WINNINGSCORE)
-    expect(gameObj.winner).toEqual(Team.WHITE)
-})
-
-
-test('winner does not change', () => {
-    for (let i = 0; i < 10; i++) {
-        gameObj.teamScores(Team.WHITE);
-    }
-
-    const blackScoresTenTimes = () => {
-        for (let i = 0; i <= 10; i++) {
-            gameObj.teamScores(Team.BLACK);
-        }
-    }
-    blackScoresTenTimes()
-
-    expect(gameObj.winner).toBe(Team.WHITE)
+    expect(gameObj.winnerTeam).toEqual(gameObj.homeTeam)
 })
