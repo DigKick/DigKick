@@ -118,19 +118,35 @@ Digital system for kicker tables.
 | Name | Type | Description | Value | Constraints | Notes |
 |---|---|---|---|---|---|
 | (root) | object | Describes where to put which text on the OLED display | - | - | **additional properties are allowed** |
-| cursorPosition | array&lt;integer&gt; | Defines the position of the cursor (x\|y) | - | 2 items | - |
-| cursorPosition (single item) | integer | Single coordinate. Either x or y. | - | - | - |
-| text | string | Defines the text. | - | - | - |
+| snippets | array&lt;object&gt; | Describes the different text segments for the display | - | - | - |
+| snippets.cursorPosition | integer | The cursor positiondefines where the text is written on the display. First value = x position - Second value = y position | - | 2 items | - |
+| snippets.text | string | Defines the text. | - | - | - |
+| snippets.inverted | boolean | Defines if the display should be inverted around the text. | - | - | - |
 
 > Examples of payload _(generated)_
 
 ```json
 {
-  "cursorPosition": [
-    1,
-    2
-  ],
-  "text": "WHITE 1 : 2 BLACK"
+  "snippets": {
+    "snippets": [
+      {
+        "cursorPosition": [
+          1,
+          2
+        ],
+        "text": "WHITE 1 : 2 BLACK",
+        "inverted": false
+      },
+      {
+        "cursorPosition": [
+          1,
+          3
+        ],
+        "text": "LAST SCORED: TEAM WHITE",
+        "inverted": true
+      }
+    ]
+  }
 }
 ```
 
