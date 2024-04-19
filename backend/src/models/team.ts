@@ -24,6 +24,10 @@ export class Team {
     this.game = game;
   }
 
+  get score() {
+    return this._score
+  }
+
   updateScore(change: ScoreChange) {
     this._score = Math.max(0, this._score + change)
 
