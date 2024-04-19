@@ -147,13 +147,13 @@ operations:
     channel:
       $ref: '#/channels/lightbarrierDetect'
   
-  onDisplayUpdate:
+  displayUpdate:
     action: send
     summary: Display update
     channel:
       $ref: '#/channels/displayUpdate'
   
-  onLEDUpdate:
+  ledUpdate:
     action: send
     summary: LED(s) update
     channel:
