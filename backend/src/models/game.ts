@@ -7,7 +7,7 @@ export class Game {
 
   public homeTeam: Team;
   public guestTeam: Team;
-  public winnerTeam: undefined | Team = undefined;
+  private _winnerTeam?: Team = undefined;
 
   private readonly _pointsToWin: number;
 
@@ -21,13 +21,25 @@ export class Game {
     this._pointsToWin = Game.STANDARDGAME_WINNINGSCORE;
   }
 
+  set winnerTeam(team: Team) {
+    if (this._winnerTeam)
+      return
+    this._winnerTeam = team
+  }
+
+  get winnerTeam(): Team | undefined {
+    if (this._winnerTeam instanceof Team) {
+      return this._winnerTeam;
+    }
+    return undefined;
+  }
 
   toJSON() {
     return {
       id: this.id,
       pointsToWin: this._pointsToWin,
       teams: [this.guestTeam, this.homeTeam],
-      winner: this.winnerTeam
+      winner: this._winnerTeam
     }
   }
 
