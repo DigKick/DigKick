@@ -16,29 +16,35 @@ beforeEach(() => {
  */
 
 test('home team scores once', () => {
-  gameObj.homeTeam.updateScore(ScoreChange.INCREASE);
+  gameObj.updateHomeTeamScore(ScoreChange.INCREASE);
 
   expect(gameObj.homeTeam.score).toBe(1);
 });
 
+test('team score can not be negative', () => {
+  gameObj.updateHomeTeamScore(ScoreChange.DECREASE)
+
+  expect(gameObj.homeTeam.score).toBe(0)
+})
+
 test('guest team scores once', () => {
-  gameObj.guestTeam.updateScore(ScoreChange.INCREASE);
+  gameObj.updateGuestTeamScore(ScoreChange.INCREASE);
 
   expect(gameObj.guestTeam.score).toEqual(1);
 });
 
 test('decrease of a score', () => {
-  gameObj.homeTeam.updateScore(ScoreChange.INCREASE);
-  gameObj.homeTeam.updateScore(ScoreChange.INCREASE);
+  gameObj.updateHomeTeamScore(ScoreChange.INCREASE);
+  gameObj.updateHomeTeamScore(ScoreChange.INCREASE);
 
-  gameObj.homeTeam.updateScore(ScoreChange.DECREASE);
+  gameObj.updateHomeTeamScore(ScoreChange.DECREASE);
 
   expect(gameObj.homeTeam.score).toEqual(1)
 })
 
 test('white team wins', () => {
   for (let i = 0; i < 10; i++) {
-    gameObj.homeTeam.updateScore(ScoreChange.INCREASE);
+    gameObj.updateHomeTeamScore(ScoreChange.INCREASE);
   }
 
   expect(gameObj.winnerTeam).toEqual(gameObj.homeTeam)
@@ -47,11 +53,11 @@ test('white team wins', () => {
 
 test('winning team does not change', () => {
   for (let i = 0; i < 10; i++) {
-    gameObj.homeTeam.updateScore(ScoreChange.INCREASE);
+    gameObj.updateHomeTeamScore(ScoreChange.INCREASE);
   }
 
   for (let i = 0; i < 10; i++) {
-    gameObj.guestTeam.updateScore(ScoreChange.INCREASE);
+    gameObj.updateGuestTeamScore(ScoreChange.INCREASE);
   }
 
   expect(gameObj.winnerTeam).toEqual(gameObj.homeTeam)
@@ -59,10 +65,10 @@ test('winning team does not change', () => {
 
 test('winning team is reset after last goal got undo', () => {
   for (let i = 0; i < 10; i++) {
-    gameObj.homeTeam.updateScore(ScoreChange.INCREASE);
+    gameObj.updateHomeTeamScore(ScoreChange.INCREASE);
   }
 
-  gameObj.homeTeam.updateScore(ScoreChange.DECREASE)
+  gameObj.updateHomeTeamScore(ScoreChange.DECREASE)
 
 
   expect(gameObj.winnerTeam).toBeUndefined()
@@ -70,25 +76,25 @@ test('winning team is reset after last goal got undo', () => {
 
 test('winning team is reset after last goal got undo', () => {
   for (let i = 0; i < 10; i++) {
-    gameObj.homeTeam.updateScore(ScoreChange.INCREASE);
+    gameObj.updateHomeTeamScore(ScoreChange.INCREASE);
   }
 
-  gameObj.homeTeam.updateScore(ScoreChange.DECREASE)
+  gameObj.updateHomeTeamScore(ScoreChange.DECREASE)
 
   expect(gameObj.winnerTeam).toBeUndefined()
 })
 
 test('undo winning team and other team wins', () => {
   for (let i = 0; i < 10; i++) {
-    gameObj.homeTeam.updateScore(ScoreChange.INCREASE);
+    gameObj.updateHomeTeamScore(ScoreChange.INCREASE);
   }
 
   for (let i = 0; i < 9; i++) {
-    gameObj.guestTeam.updateScore(ScoreChange.INCREASE);
+    gameObj.updateGuestTeamScore(ScoreChange.INCREASE);
   }
 
-  gameObj.homeTeam.updateScore(ScoreChange.DECREASE)
-  gameObj.guestTeam.updateScore(ScoreChange.INCREASE)
+  gameObj.updateHomeTeamScore(ScoreChange.DECREASE)
+  gameObj.updateGuestTeamScore(ScoreChange.INCREASE)
 
   expect(gameObj.winnerTeam).toEqual(gameObj.guestTeam)
 })
