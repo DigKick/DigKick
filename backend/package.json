@@ -4,7 +4,8 @@
   "description": "Digital Kicker Backend",
   "main": "index.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "gen:doc:md": "asyncapi generate fromTemplate asyncapi.yaml @asyncapi/markdown-template -o ./docs "
   },
   "keywords": [],
   "author": "Marvin Voss, Maximilian Koenig",
