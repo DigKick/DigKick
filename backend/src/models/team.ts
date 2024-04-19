@@ -19,7 +19,7 @@ export class Team {
     this.score = 0;
   }
 
-  changeScore(change: ScoreChange) {
+  updateScore(change: ScoreChange) {
     this.score = Math.max(0, this.score + change)
   }
 }
