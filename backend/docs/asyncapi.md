@@ -127,26 +127,24 @@ Digital system for kicker tables.
 
 ```json
 {
-  "snippets": {
-    "snippets": [
-      {
-        "cursorPosition": [
-          1,
-          2
-        ],
-        "text": "WHITE 1 : 2 BLACK",
-        "inverted": false
-      },
-      {
-        "cursorPosition": [
-          1,
-          3
-        ],
-        "text": "LAST SCORED: TEAM WHITE",
-        "inverted": true
-      }
-    ]
-  }
+  "snippets": [
+    {
+      "cursorPosition": [
+        1,
+        2
+      ],
+      "text": "WHITE 1 : 2 BLACK",
+      "inverted": false
+    },
+    {
+      "cursorPosition": [
+        1,
+        3
+      ],
+      "text": "LAST SCORED: TEAM WHITE",
+      "inverted": true
+    }
+  ]
 }
 ```
 
