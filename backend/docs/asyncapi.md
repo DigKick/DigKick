@@ -151,7 +151,7 @@ Digital system for kicker tables.
 | Name | Type | Description | Value | Constraints | Notes |
 |---|---|---|---|---|---|
 | (root) | object | Describes how many LEDs are turned in which color(s). Also defines the transmission animation. | - | - | **additional properties are allowed** |
-| ledCount | integer | Describes how many LEDs are getting turned on. | - | - | - |
+| ledCount | integer | Describes how many LEDs are getting turned on. | - | [ 0 .. 20 ] items | - |
 | colors | array&lt;string&gt; | Decribes the color of the LEDs. If the array contains two colors the LEDs will alternate between both colors. | - | [ 1 .. 2 ] items | - |
 | colors (single item) | string | Describes a color in HEX | - | - | - |
 | animation | string | Describes the animation which gets played before the update of the LEDs. | allowed (`null`, `"GLACE GLIDER"`, `"NEON JUMP"`, `"NEON RUN LEFT"`, `"NEON RUN RIGHT"`, `"PARTY"`, `"FIREWORK"`) | - | - |
