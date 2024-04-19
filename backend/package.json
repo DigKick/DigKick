@@ -17,7 +17,7 @@
   },
   "generator": {
     "renderer": "react",
-    "apiVersion": "v3",
+    "apiVersion": "v2.6.0",
     "parameters": {
       "server": {
         "description": "The server you want to use in the code.",
