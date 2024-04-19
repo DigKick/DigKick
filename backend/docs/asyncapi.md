@@ -107,7 +107,7 @@ Digital system for kicker tables.
 
 *Display update*
 
-* Operation ID: `onDisplayUpdate`
+* Operation ID: `displayUpdate`
 
 #### Message `displayMessage`
 
@@ -140,7 +140,7 @@ Digital system for kicker tables.
 
 *LED(s) update*
 
-* Operation ID: `onLEDUpdate`
+* Operation ID: `ledUpdate`
 
 #### Message `ledMessage`
 
