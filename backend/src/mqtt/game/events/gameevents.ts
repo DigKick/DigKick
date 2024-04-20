@@ -48,7 +48,7 @@ export const gameEventMapper = (event: GameEventType, game: Game) => {
       game.updateGuestTeamScore(ScoreChange.DECREASE);
       break;
     default:
-      throw new Error(`Event '${event}' is not mapped to any function.`)
+      break;
   }
 
   if (event.includes(GameEventType.SCORE_DECREASE) || event.includes(GameEventType.SCORE_INCREASE)) {
