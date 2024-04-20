@@ -4,8 +4,7 @@ import {GameHandler} from "../../../mqtt/game/handler/gamehandler";
 import {GameEventType} from "../../../mqtt/game/events/gameevents";
 
 
-let gameObj = new Game('gameId');
-let gameHandler = new GameHandler(gameObj)
+let gameHandler = new GameHandler()
 let emptyMockFunc = mock()
 
 let cbGame!: Game | undefined
@@ -15,34 +14,38 @@ const gameObs = (game: Game) => {
 
 
 beforeEach(() => {
-  gameObj = new Game('gameId');
-  gameHandler = new GameHandler(gameObj)
+  gameHandler = new GameHandler()
+  gameHandler.newGame()
   emptyMockFunc = mock()
   cbGame = undefined
 })
 
+const subscribeAndTriggerEvent = (event: GameEventType) => {
+  gameHandler.subscribe(event, gameObs)
+  gameHandler.triggerEvent(event)
+}
 
 test('add new observer', () => {
-  gameHandler.subscribe(emptyMockFunc)
+  gameHandler.subscribe(GameEventType.START, emptyMockFunc)
 
-  expect(gameHandler.observers.length).toEqual(1)
+  expect(Array.from(gameHandler.observerMap.values()).length).toEqual(1)
 })
 
 test('remove observer', () => {
-  gameHandler.subscribe(emptyMockFunc)
+  gameHandler.subscribe(GameEventType.START, emptyMockFunc)
   gameHandler.unsubscribe(emptyMockFunc)
 
-  expect(gameHandler.observers.length).toEqual(0)
+  expect(Array.from(gameHandler.observerMap.values()).length).toEqual(0)
 })
 
 test('test callback', () => {
-  gameHandler.subscribe(emptyMockFunc)
+  gameHandler.subscribe(GameEventType.HOME_SCORE_CHANGE, emptyMockFunc)
   gameHandler.triggerEvent(GameEventType.HOME_SCORE_INCREASE)
   expect(emptyMockFunc.mock.calls.length).toEqual(1)
 })
 
 test('test event home increase', () => {
-  gameHandler.subscribe(gameObs)
+  gameHandler.subscribe(GameEventType.SCORE_CHANGE, gameObs)
   gameHandler.triggerEvent(GameEventType.HOME_SCORE_INCREASE)
 
   expect(cbGame!.homeTeam.score).toEqual(1)
@@ -50,7 +53,7 @@ test('test event home increase', () => {
 
 
 test('test event home decrease', () => {
-  gameHandler.subscribe(gameObs)
+  gameHandler.subscribe(GameEventType.HOME_SCORE_DECREASE, gameObs)
   gameHandler.triggerEvent(GameEventType.HOME_SCORE_INCREASE)
   gameHandler.triggerEvent(GameEventType.HOME_SCORE_DECREASE)
   expect(cbGame!.homeTeam.score).toEqual(0)
@@ -58,16 +61,13 @@ test('test event home decrease', () => {
 
 
 test('test event guest increase', () => {
-  gameHandler.subscribe(gameObs)
-  gameHandler.triggerEvent(GameEventType.GUEST_SCORE_INCREASE)
-
+  subscribeAndTriggerEvent(GameEventType.GUEST_SCORE_INCREASE)
   expect(cbGame!.guestTeam.score).toEqual(1)
 })
 
 
 test('test event guest decrease', () => {
-  gameHandler.subscribe(gameObs)
-  gameHandler.triggerEvent(GameEventType.GUEST_SCORE_INCREASE)
+  subscribeAndTriggerEvent(GameEventType.GUEST_SCORE_INCREASE)
   gameHandler.triggerEvent(GameEventType.GUEST_SCORE_DECREASE)
 
   expect(cbGame!.guestTeam.score).toEqual(0)
