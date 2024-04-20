@@ -1,0 +1,193 @@
+asyncapi: 3.0.0
+info:
+  title: DigKick (Backend)
+  version: 0.0.1
+  description: Digital system for kicker tables.
+
+servers:
+  emqx:
+    host: kicker.local
+    protocol: mqtt
+
+
+components:
+  messages:
+    pinStatusMessage:
+      summary: Action triggered by a pin output change.
+      payload:
+        $ref: '#/components/schemas/pinStatus'
+
+    displayUpdateMessage:
+      summary: Updates the display with the given parameters.
+      payload:
+        $ref: '#/components/schemas/displayText'
+  
+    ledUpdateMessage:
+      summary: Updates the LEDs strip.
+      payload:
+        $ref: '#/components/schemas/ledStatus'
+
+  schemas:
+    pinStatus:
+      type: object
+      description: Defines the status of an analog or digital pin.
+      properties:
+        pinOut:
+          type: string
+          enum:
+            - HIGH
+            - LOW
+  
+    displayText:
+      type: object
+      description: Describes where to put which text on the OLED display
+      example:
+      
+            {
+              "snippets": [
+              {
+                "cursorPosition": [
+                  1,
+                  2
+                ],
+                "text": "WHITE 1 : 2 BLACK",
+                "inverted": false
+              },
+              {
+                "cursorPosition": [
+                  1,
+                  3
+                ],
+                "text": "LAST SCORED: TEAM WHITE",
+                "inverted": true
+              }
+            ]
+          }
+      properties:
+        snippets:
+          type: array
+          description: Describes the different text segments for the display
+          items:
+            type: object
+            description: Defines the position of the cursor (x|y)
+            properties:
+                cursorPosition:
+                  type: integer
+                  description: The cursor positiondefines where the text is written on the display. First value = x position - Second value = y position
+                  minItems: 2
+                  maxItems: 2
+                  example: [1, 2]
+                text:
+                  type: string
+                  description: Defines the text.
+                  example: "WHITE 1 : 2 BLACK"
+                inverted:
+                  type: boolean
+                  description: Defines if the display should be inverted around the text.
+                  example: false
+            
+    
+    ledStatus:
+      type: object
+      description: Describes how many LEDs are turned in which color(s). Also defines the transmission animation.
+      properties:
+        ledCount:
+          type: integer
+          minItems: 0
+          maxItems: 20
+          example: 2
+          description: Describes how many LEDs are getting turned on.
+        colors:
+          type: array
+          items:
+            type: string
+            description: Describes a color in HEX
+            example: "0xFF00FF"
+          minItems: 1
+          maxItems: 2
+          example: ["0x00FF00", "0x00FFFF"]
+          description: Decribes the color of the LEDs. If the array contains two colors the LEDs will alternate between both colors.
+        animation:
+          type: string
+          description: Describes the animation which gets played before the update of the LEDs.
+          example: "GLACE GLIDER"
+          enum:
+            - 
+            - GLACE GLIDER
+            - NEON JUMP
+            - NEON RUN LEFT
+            - NEON RUN RIGHT
+            - PARTY
+            - FIREWORK
+
+
+channels:
+  kickerTableRegister:
+    address: 'table/register'
+    messages:
+      registerMessage:
+        name: Table register
+        payload:
+          type: object
+          properties:
+            id:
+              type: string
+              example: table1
+              description: Identifier for the table.
+  
+  buttonPress:
+    address: 'table/{tableId}/team/{teamId}/button/{buttonId}'
+    messages:
+      pinOutMessage:
+        $ref: '#/components/messages/pinStatusMessage'
+  
+  lightbarrierDetect:
+    address: 'table/{tableId}/team/{teamId}/lightbarrier/{lightbarrierId}'
+    messages:
+      pinOutMessage:
+        $ref: '#/components/messages/pinStatusMessage'
+
+  displayUpdate:
+    address: 'table/{tableId}/team/{teamId}/display'
+    messages:
+      displayMessage:
+        $ref: '#/components/messages/displayUpdateMessage'
+  
+  ledStripUpdate:
+    address: 'table/{tableId}/team/{teamId}/leds'
+    messages:
+      ledMessage:
+        $ref: '#/components/messages/ledUpdateMessage'
+
+operations:
+  onKickerTableRegister:
+    action: 'receive'
+    summary: Operation to registrate a table with an id
+    channel: 
+      $ref: '#/channels/kickerTableRegister'
+  
+  onButtonPress:
+    action: receive
+    summary: Action on button press
+    channel:
+      $ref: '#/channels/buttonPress'
+  
+  onLightbarrierDetect:
+    action: receive
+    summary: Action on a detection of the light barrier
+    channel:
+      $ref: '#/channels/lightbarrierDetect'
+  
+  displayUpdate:
+    action: send
+    summary: Display update
+    channel:
+      $ref: '#/channels/displayUpdate'
+  
+  ledUpdate:
+    action: send
+    summary: LED(s) update
+    channel:
+      $ref: '#/channels/ledStripUpdate'
+
+    
