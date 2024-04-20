@@ -10,7 +10,6 @@ export class GameHandler {
     this.newGame()
   }
 
-
   public newGame() {
     this.game = new Game('')
     this._notifyObserver(GameEventType.START)
@@ -35,7 +34,6 @@ export class GameHandler {
       // observer already subscribed
       return;
     }
-
     this.observerMap.set(event, observer)
   }
 
