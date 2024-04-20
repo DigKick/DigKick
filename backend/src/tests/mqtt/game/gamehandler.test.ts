@@ -20,8 +20,13 @@ beforeEach(() => {
   cbGame = undefined
 })
 
-const subscribeAndTriggerEvent = (event: GameEventType) => {
+const subscribeObserverAndTriggerEvent = (event: GameEventType) => {
   gameHandler.subscribe(event, gameObs)
+  gameHandler.triggerEvent(event)
+}
+
+const subscribeMockAndTriggerEvent = (event: GameEventType) => {
+  gameHandler.subscribe(event, emptyMockFunc)
   gameHandler.triggerEvent(event)
 }
 
@@ -61,20 +66,26 @@ test('test event home decrease', () => {
 
 
 test('test event guest increase', () => {
-  subscribeAndTriggerEvent(GameEventType.GUEST_SCORE_INCREASE)
+  subscribeObserverAndTriggerEvent(GameEventType.GUEST_SCORE_INCREASE)
   expect(cbGame!.guestTeam.score).toEqual(1)
 })
 
 
 test('test event guest decrease', () => {
-  subscribeAndTriggerEvent(GameEventType.GUEST_SCORE_INCREASE)
+  subscribeObserverAndTriggerEvent(GameEventType.GUEST_SCORE_INCREASE)
   gameHandler.triggerEvent(GameEventType.GUEST_SCORE_DECREASE)
 
   expect(cbGame!.guestTeam.score).toEqual(0)
 })
 
-test('test invalid event type', () => {
-  expect(() => {
-    gameHandler.triggerEvent(GameEventType._INCREASE)
-  }).toThrowError(Error)
+test(`test trigger all events`, () => {
+  Object.values(GameEventType).forEach((event: GameEventType) => {
+    if (event.includes('_')) {
+      // sort out values
+      return
+    }
+    subscribeMockAndTriggerEvent(event)
+    expect(emptyMockFunc.mock.calls.length).toBe(1)
+    emptyMockFunc = mock()
+  })
 })
