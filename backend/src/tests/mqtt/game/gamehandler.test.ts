@@ -49,6 +49,13 @@ test('test callback', () => {
   expect(emptyMockFunc.mock.calls.length).toEqual(1)
 })
 
+test('test new game event', () => {
+  gameHandler.subscribe(GameEventType.START, emptyMockFunc)
+  gameHandler.newGame()
+
+  expect(emptyMockFunc.mock.calls.length).toEqual(1)
+})
+
 test('test event home increase', () => {
   gameHandler.subscribe(GameEventType.SCORE_CHANGE, gameObs)
   gameHandler.triggerEvent(GameEventType.HOME_SCORE_INCREASE)
