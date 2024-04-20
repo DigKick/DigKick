@@ -3,7 +3,7 @@ import {gameEventMapper, GameEventType} from "../events/gameevents";
 
 export class GameHandler {
 
-  private _observers: Function[] = []
+  public observers: Function[] = []
   public game: Game
 
   constructor(game: Game) {
@@ -12,17 +12,17 @@ export class GameHandler {
 
   public triggerEvent(event: GameEventType) {
     gameEventMapper(event, this.game)
-    this._observers.forEach((obs) => obs(this.game))
+    this.observers.forEach((obs) => obs(this.game))
   }
 
   public subscribe(observer: Function) {
-    if (this._observers.includes(observer)) {
+    if (this.observers.includes(observer)) {
       return;
     }
-    this._observers.push(observer)
+    this.observers.push(observer)
   }
 
   public unsubscribe(observer: Function) {
-    this._observers = this._observers.filter((obs) => obs !== observer);
+    this.observers = this.observers.filter((obs) => obs !== observer);
   }
 }
