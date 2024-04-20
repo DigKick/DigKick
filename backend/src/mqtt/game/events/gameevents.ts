@@ -8,15 +8,30 @@ export enum GameEventType {
   _DECREASE = "DECREASE",
   _HOME = "HOME",
   _GUEST = "GUEST",
+  _CHANGE = "CHANGE",
 
-  HOME_SCORE_INCREASE = `${_HOME}.${_SCORE}.${_INCREASE}`,
-  HOME_SCORE_DECREASE = `${_HOME}.${_SCORE}.${_DECREASE}`,
-  GUEST_SCORE_INCREASE = `${_GUEST}.${_SCORE}.${_INCREASE}`,
-  GUEST_SCORE_DECREASE = `${_GUEST}.${_SCORE}.${_DECREASE}`,
+  SCORE_CHANGE = `${_SCORE}.${_CHANGE}`,
 
+  HOME_SCORE_CHANGE = `${_HOME}.${SCORE_CHANGE}`,
+  GUEST_SCORE_CHANGE = `${_GUEST}.${SCORE_CHANGE}`,
+
+  SCORE_INCREASE = `${_SCORE}.${_INCREASE}`,
+  SCORE_DECREASE = `${_SCORE}.${_DECREASE}`,
+
+  HOME_SCORE_INCREASE = `${_HOME}.${SCORE_INCREASE}`,
+  HOME_SCORE_DECREASE = `${_HOME}.${SCORE_DECREASE}`,
+  GUEST_SCORE_INCREASE = `${_GUEST}.${SCORE_INCREASE}`,
+  GUEST_SCORE_DECREASE = `${_GUEST}.${SCORE_DECREASE}`,
+
+  _WINNER = "WINNER",
+
+  WINNER_CHANGE = `${_CHANGE}.${_WINNER}`
 }
 
 export const gameEventMapper = (event: GameEventType, game: Game) => {
+  const prevGame: Game = structuredClone(game)
+  let triggeredEvents = [event]
+
   switch (event) {
     case GameEventType.HOME_SCORE_INCREASE:
       game.updateHomeTeamScore(ScoreChange.INCREASE);
@@ -33,4 +48,20 @@ export const gameEventMapper = (event: GameEventType, game: Game) => {
     default:
       throw new Error(`Event '${event}' is not mapped to any function.`)
   }
+
+  if (event.includes(GameEventType.SCORE_DECREASE) || event.includes(GameEventType.SCORE_INCREASE)) {
+    triggeredEvents.push(GameEventType.SCORE_CHANGE)
+
+    if (event.includes(GameEventType._HOME)) {
+      triggeredEvents.push(GameEventType.HOME_SCORE_CHANGE)
+    } else {
+      triggeredEvents.push(GameEventType.GUEST_SCORE_CHANGE)
+    }
+  }
+
+  if (prevGame.winnerTeam !== game.winnerTeam) {
+    triggeredEvents.push(GameEventType.WINNER_CHANGE)
+  }
+
+  return triggeredEvents
 }
