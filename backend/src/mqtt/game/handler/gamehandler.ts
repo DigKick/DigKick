@@ -1,12 +1,15 @@
 import {Game} from "../../../models/game";
 import {gameEventMapper, GameEventType} from "../events/gameevents";
+import {SoccerTable} from "../../../models/soccerTable";
 
 export class GameHandler {
 
   public observerMap: Map<GameEventType, Function> = new Map();
   public game!: Game
+  public soccerTable: SoccerTable
 
-  constructor() {
+  constructor(soccerTable: SoccerTable) {
+    this.soccerTable = soccerTable;
     this.newGame()
   }
 
