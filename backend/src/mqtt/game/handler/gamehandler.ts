@@ -1,5 +1,5 @@
 import {Game} from "../../../models/game";
-import {gameEventMapper, GameEventType} from "../events/gameevents";
+import {gameEventMapper, GameEventType} from "../events/gameEvents";
 
 export class GameHandler {
 
