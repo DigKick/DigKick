@@ -3,11 +3,11 @@ import {Game} from "../../models/game";
 import {ScoreChange} from "../../models/team";
 
 
-let gameObj = new Game('gameId');
+let gameObj = new Game();
 
 
 beforeEach(() => {
-  gameObj = new Game('gameId');
+  gameObj = new Game();
 })
 
 

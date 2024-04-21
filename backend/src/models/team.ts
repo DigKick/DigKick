@@ -15,19 +15,27 @@ export class Team {
   public color: TeamColor;
   public game: Game;
 
-  public score: number;
+  private _score: number;
 
 
   constructor(color: TeamColor, game: Game) {
     this.color = color;
-    this.score = 0;
+    this._score = 0;
     this.game = game;
+  }
+
+  get score() {
+    return this._score
+  }
+
+  set score(newScore: number) {
+    this._score = Math.max(0, newScore)
   }
 
   toJSON() {
     return {
       'color': this.color,
-      'score': this.score
+      'score': this._score
     }
   }
 }
