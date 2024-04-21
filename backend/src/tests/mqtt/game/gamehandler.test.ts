@@ -1,7 +1,7 @@
 import {beforeEach, expect, mock, test} from "bun:test";
 import {Game} from "../../../models/game";
 import {GameHandler} from "../../../mqtt/game/handler/gameHandler";
-import {GameEventType} from "../../../mqtt/game/events/gameEvents";
+import {GameEventType} from "../../../mqtt/game/events/gameEvent";
 
 
 let gameHandler = new GameHandler()
