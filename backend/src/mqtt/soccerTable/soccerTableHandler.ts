@@ -1,5 +1,5 @@
 import {SoccerTable} from "../../models/soccerTable";
-import {GameHandler} from "../game/handler/gamehandler";
+import {GameHandler} from "../game/handler/gameHandler";
 
 export class SoccerTableHandler {
 
