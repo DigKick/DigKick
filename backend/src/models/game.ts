@@ -47,7 +47,7 @@ export class Game {
   }
 
   private _updateTeamScoreAndWinner(team: Team, change: ScoreChange) {
-    team.score = Math.max(0, team.score + change)
+    team.score = team.score + change
 
     if (team.score >= this.pointsToWin) {
       this.winnerTeam = team
