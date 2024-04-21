@@ -11,7 +11,7 @@ export class GameHandler {
   }
 
   public newGame() {
-    this.game = new Game('')
+    this.game = new Game()
     this._notifyObserver(GameEventType.START)
   }
 

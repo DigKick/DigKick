@@ -3,8 +3,6 @@ import {ScoreChange, Team, TeamColor} from "./team";
 export class Game {
   public static STANDARDGAME_WINNINGSCORE = 10;
 
-  public id: string;
-
   public homeTeam: Team;
   public guestTeam: Team;
   private _winnerTeam!: Team | undefined;
@@ -12,9 +10,7 @@ export class Game {
   public readonly pointsToWin: number;
 
   // Constructor for standard game
-  constructor(id: string) {
-    this.id = id;
-
+  constructor() {
     this.homeTeam = new Team(TeamColor.WHITE, this);
     this.guestTeam = new Team(TeamColor.BLACK, this);
 
@@ -60,9 +56,8 @@ export class Game {
 
   toJSON() {
     return {
-      id: this.id,
-      pointsToWin: this.pointsToWin,
       teams: [this.guestTeam, this.homeTeam],
+      pointsToWin: this.pointsToWin,
       winner: this._winnerTeam
     }
   }
