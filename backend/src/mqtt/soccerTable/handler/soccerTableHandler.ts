@@ -1,14 +1,14 @@
 import {SoccerTable} from "../../../models/soccerTable";
 import {GameHandler} from "../../game/handler/gameHandler";
+import {SoccerTableEvent, soccerTableEventMapper} from "../events/soccerTableEvent";
+import {AbstractHandler} from "../../abstract/AbstractHandler";
 
-export class SoccerTableHandler {
+export class SoccerTableHandler extends AbstractHandler<SoccerTableEvent, SoccerTable> {
 
-  public soccerTable: SoccerTable
   public gameHandler: GameHandler
 
-
   constructor(soccerTable: SoccerTable) {
-    this.soccerTable = soccerTable;
-    this.gameHandler = new GameHandler(this.soccerTable);
+    super(soccerTable, soccerTableEventMapper);
+    this.gameHandler = new GameHandler(this.subject);
   }
 }
