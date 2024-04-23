@@ -7,8 +7,8 @@ export class SoccerTableHandler {
   public gameHandler: GameHandler
 
 
-  constructor(soccerTable: SoccerTable, gameHandler: GameHandler) {
+  constructor(soccerTable: SoccerTable) {
     this.soccerTable = soccerTable;
-    this.gameHandler = gameHandler;
+    this.gameHandler = new GameHandler(this.soccerTable);
   }
 }
