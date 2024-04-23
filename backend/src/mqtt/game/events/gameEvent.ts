@@ -63,5 +63,5 @@ export const gameEventMapper = (event: GameEventType, game: Game) => {
     triggeredEvents.push(GameEventType.WINNER_CHANGE)
   }
 
-  return triggeredEvents
+  return new Set(triggeredEvents)
 }

@@ -1,12 +1,11 @@
 import {SoccerTable} from "../../../models/soccerTable";
 
 export enum SoccerTableEvent {
-  _GAME = "GAME",
+  GAME = "GAME",
 
-
-  NEW_GAME = `NEW.${_GAME}`,
-  CANCEL_GAME = `CANCEL.${_GAME}`,
-  FINISH_GAME = `FINISH.${_GAME}`
+  NEW_GAME = `NEW.${GAME}`,
+  CANCEL_GAME = `CANCEL.${GAME}`,
+  FINISH_GAME = `FINISH.${GAME}`
 }
 
 export const soccerTableEventMapper = (event: SoccerTableEvent, soccerTable: SoccerTable) => {
@@ -27,9 +26,9 @@ export const soccerTableEventMapper = (event: SoccerTableEvent, soccerTable: Soc
       break;
   }
 
-  if (event.includes(SoccerTableEvent._GAME)) {
+  if (event.includes(SoccerTableEvent.GAME)) {
     triggeredEvents.push(SoccerTableEvent.NEW_GAME)
   }
 
-  return triggeredEvents
+  return new Set(triggeredEvents)
 }
