@@ -10,6 +10,7 @@ export class GameHandler {
 
   constructor(soccerTable: SoccerTable) {
     this.soccerTable = soccerTable;
+    this.game = soccerTable.game;
     this.newGame()
   }
 
