@@ -80,7 +80,7 @@ test('test event guest decrease', () => {
 
 test(`test trigger all events`, () => {
   Object.values(GameEventType).forEach((event: GameEventType) => {
-    if (event.includes('_')) {
+    if (!event.includes('.')) {
       // sort out values
       return
     }
