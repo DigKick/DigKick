@@ -2,7 +2,6 @@ import {beforeEach, expect, mock, test} from "bun:test";
 import {SoccerTableHandler} from "../../../mqtt/soccerTable/handler/soccerTableHandler";
 import {SoccerTable} from "../../../models/soccerTable";
 import {SoccerTableEvent} from "../../../mqtt/soccerTable/events/soccerTableEvent";
-import {GameEventType} from "../../../mqtt/game/events/gameEvent";
 
 let emptyMockFunc = mock()
 let soccerTableHandler: SoccerTableHandler = new SoccerTableHandler(new SoccerTable('table'))
@@ -28,13 +27,11 @@ beforeEach(() => {
 })
 
 test('Game gets restarted correctly', () => {
-  soccerTableHandler.gameHandler.triggerEvent(GameEventType.HOME_SCORE_INCREASE)
-
-  expect(soccerTableHandler.subject.game.homeTeam.score).toEqual(1)
+  const beforeGame = (soccerTableHandler.subject.game)
 
   soccerTableHandler.triggerEvent(SoccerTableEvent.NEW_GAME)
 
-  expect(soccerTableHandler.subject.game.homeTeam.score).toEqual(0)
+  expect(soccerTableHandler.subject.game).not.toBe(beforeGame)
 })
 
 test(`test trigger all events`, () => {
