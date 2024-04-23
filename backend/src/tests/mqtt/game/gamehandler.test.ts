@@ -2,9 +2,10 @@ import {beforeEach, expect, mock, test} from "bun:test";
 import {Game} from "../../../models/game";
 import {GameHandler} from "../../../mqtt/game/handler/gameHandler";
 import {GameEventType} from "../../../mqtt/game/events/gameEvent";
+import {SoccerTable} from "../../../models/soccerTable";
 
 
-let gameHandler = new GameHandler()
+let gameHandler = new GameHandler(new SoccerTable('table'))
 let emptyMockFunc = mock()
 
 let cbGame!: Game | undefined
@@ -14,8 +15,7 @@ const gameObs = (game: Game) => {
 
 
 beforeEach(() => {
-  gameHandler = new GameHandler()
-  gameHandler.newGame()
+  gameHandler = new GameHandler(new SoccerTable('table'))
   emptyMockFunc = mock()
   cbGame = undefined
 })
@@ -31,13 +31,13 @@ const subscribeMockAndTriggerEvent = (event: GameEventType) => {
 }
 
 test('add new observer', () => {
-  gameHandler.subscribe(GameEventType.START, emptyMockFunc)
+  gameHandler.subscribe(GameEventType.HOME_SCORE_CHANGE, emptyMockFunc)
 
   expect(Array.from(gameHandler.observerMap.values()).length).toEqual(1)
 })
 
 test('remove observer', () => {
-  gameHandler.subscribe(GameEventType.START, emptyMockFunc)
+  gameHandler.subscribe(GameEventType.HOME_SCORE_CHANGE, emptyMockFunc)
   gameHandler.unsubscribe(emptyMockFunc)
 
   expect(Array.from(gameHandler.observerMap.values()).length).toEqual(0)
@@ -46,13 +46,6 @@ test('remove observer', () => {
 test('test callback', () => {
   gameHandler.subscribe(GameEventType.HOME_SCORE_CHANGE, emptyMockFunc)
   gameHandler.triggerEvent(GameEventType.HOME_SCORE_INCREASE)
-  expect(emptyMockFunc.mock.calls.length).toEqual(1)
-})
-
-test('test new game event', () => {
-  gameHandler.subscribe(GameEventType.START, emptyMockFunc)
-  gameHandler.newGame()
-
   expect(emptyMockFunc.mock.calls.length).toEqual(1)
 })
 

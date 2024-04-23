@@ -10,8 +10,6 @@ export enum GameEventType {
   _GUEST = "GUEST",
   _CHANGE = "CHANGE",
 
-  START = "START",
-
   SCORE_CHANGE = `${_SCORE}.${_CHANGE}`,
 
   HOME_SCORE_CHANGE = `${_HOME}.${SCORE_CHANGE}`,

@@ -11,12 +11,6 @@ export class GameHandler {
   constructor(soccerTable: SoccerTable) {
     this.soccerTable = soccerTable;
     this.game = soccerTable.game;
-    this.newGame()
-  }
-
-  public newGame() {
-    this.game = new Game()
-    this._notifyObserver(GameEventType.START)
   }
 
   public triggerEvent(event: GameEventType) {
