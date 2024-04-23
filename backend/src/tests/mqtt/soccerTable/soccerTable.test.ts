@@ -35,9 +35,7 @@ test('Game gets restarted correctly', () => {
 })
 
 test(`test trigger all events`, () => {
-  emptyMockFunc = mock()
   Object.values(SoccerTableEvent).forEach((event: SoccerTableEvent) => {
-    emptyMockFunc = mock()
     if (!event.includes('.')) {
       // sort out values
       return
