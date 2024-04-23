@@ -1,0 +1,45 @@
+// Define the mixin to rotate individual characters
+@mixin rotated-text($charNumber, $angleSpan, $angleOffset) {
+    $anglePerChar: $angleSpan / 5; // Assuming there are 5 characters in each word
+    transform: rotate($angleOffset + $anglePerChar * ($charNumber - 1));
+}
+
+// Define the mixin to rotate characters
+@mixin rotateChars($totalChars, $angleSpan, $angleOffset) {
+    @for $i from 1 through $totalChars {
+        .char#{$i} {
+            @include rotated-text($i, $angleSpan, $angleOffset);
+        }
+    }
+}
+
+// Include the mixin to rotate the characters
+@include rotateChars(5, 180deg, 0deg);
+
+// Your remaining CSS styles
+.circle {
+    position: relative;
+    width: 20rem;
+    /* Adjust width as needed */
+    height: 20rem;
+    /* Adjust height as needed */
+}
+
+.circle>div {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+‚ .selected {
+    animation: rotateSelected 0.5s ease forwards;
+}
+
+@keyframes rotateSelected {
+    to {
+        transform: translateY(50%) translateX(-50%);
+    }
+}
