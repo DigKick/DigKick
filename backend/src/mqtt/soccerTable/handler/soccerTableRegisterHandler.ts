@@ -1,7 +1,12 @@
-import { SoccerTable } from "../../../../models/soccerTable";
-import { DkMqttClient } from "../../../client/client";
-import type { TopicSubscriber } from "../../../client/topicSubscriber";
-import { SoccerTableHandler } from "../../handler/soccerTableHandler";
+import { SoccerTable } from "../../../models/soccerTable";
+import { BasicTerm } from "../../abstract/BasicTerm";
+import { DkMqttClient } from "../../client/client";
+import type { TopicSubscriber } from "../../client/topicSubscriber";
+import { SoccerTableHandler } from "./soccerTableHandler";
+
+enum SoccerTableRegisterTopic {
+  REGISTER = `${BasicTerm.TABLE}/register`,
+}
 
 export class SoccerTableRegisterHandler {
   dkMqttClient: DkMqttClient;
@@ -10,7 +15,7 @@ export class SoccerTableRegisterHandler {
     new Array<SoccerTableHandler>();
 
   registerSubscriber: TopicSubscriber = {
-    topic: "/register/table",
+    topic: SoccerTableRegisterTopic.REGISTER,
     func: (_: any, payload: Buffer) => {
       const soccerTableId = payload.toString();
       if (!this._validateTableId(soccerTableId)) {
