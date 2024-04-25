@@ -19,5 +19,8 @@
   "generator": {
     "renderer": "react",
     "apiVersion": "v2.6.0"
+  },
+  "dependencies": {
+    "mqtt": "^5.5.3"
   }
 }
