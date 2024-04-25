@@ -15,6 +15,6 @@ export class SoccerTable {
   }
 
   newGame() {
-    this._game = new Game();
+    this._game.reset();
   }
 }
