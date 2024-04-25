@@ -54,6 +54,13 @@ export class Game {
     }
   }
 
+  public reset() {
+    this.homeTeam.score = 0;
+    this.guestTeam.score = 0;
+
+    this._winnerTeam = undefined;
+  }
+
   toJSON() {
     return {
       teams: [this.guestTeam, this.homeTeam],
