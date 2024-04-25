@@ -1,22 +1,17 @@
-import {Game} from "../../../models/game";
 import {gameEventMapper, GameEventType} from "../events/gameEvent";
+import {SoccerTable} from "../../../models/soccerTable";
 
 export class GameHandler {
 
   public observerMap: Map<GameEventType, Function> = new Map();
-  public game!: Game
+  public soccerTable: SoccerTable
 
-  constructor() {
-    this.newGame()
-  }
-
-  public newGame() {
-    this.game = new Game()
-    this._notifyObserver(GameEventType.START)
+  constructor(soccerTable: SoccerTable) {
+    this.soccerTable = soccerTable;
   }
 
   public triggerEvent(event: GameEventType) {
-    const triggeredEvents = gameEventMapper(event, this.game)
+    const triggeredEvents = gameEventMapper(event, this.soccerTable.game)
     triggeredEvents.forEach((event) => {
       this._notifyObserver(event);
     })
@@ -25,7 +20,7 @@ export class GameHandler {
   private _notifyObserver(event: GameEventType) {
     const callback = this.observerMap.get(event)
     if (callback) {
-      callback(this.game)
+      callback(this.soccerTable.game)
     }
   }
 

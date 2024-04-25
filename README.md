@@ -9,7 +9,7 @@ The backend handles the basic game logic and manages all kicker tables and games
 In later steps the backend will store data about the games in a simple database. Further features will be automated statistics about the games played, player registration and an Elo system.
 
 - [X] Implement class for game logic
-- [ ] Implement class for kicker tables
+- [X] Implement class for kicker tables
 - [ ] Wire it up to the MQTT Broker
 - [ ] Make a websocket for the frontend
 

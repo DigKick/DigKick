@@ -10,8 +10,6 @@ export enum GameEventType {
   _GUEST = "GUEST",
   _CHANGE = "CHANGE",
 
-  START = "START",
-
   SCORE_CHANGE = `${_SCORE}.${_CHANGE}`,
 
   HOME_SCORE_CHANGE = `${_HOME}.${SCORE_CHANGE}`,
@@ -65,5 +63,5 @@ export const gameEventMapper = (event: GameEventType, game: Game) => {
     triggeredEvents.push(GameEventType.WINNER_CHANGE)
   }
 
-  return triggeredEvents
+  return new Set(triggeredEvents)
 }
