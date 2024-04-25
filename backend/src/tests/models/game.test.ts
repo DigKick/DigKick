@@ -74,16 +74,6 @@ test('winning team is reset after last goal got undo', () => {
   expect(gameObj.winnerTeam).toBeUndefined()
 })
 
-test('winning team is reset after last goal got undo', () => {
-  for (let i = 0; i < 10; i++) {
-    gameObj.updateHomeTeamScore(ScoreChange.INCREASE);
-  }
-
-  gameObj.updateHomeTeamScore(ScoreChange.DECREASE)
-
-  expect(gameObj.winnerTeam).toBeUndefined()
-})
-
 test('undo winning team and other team wins', () => {
   for (let i = 0; i < 10; i++) {
     gameObj.updateHomeTeamScore(ScoreChange.INCREASE);
