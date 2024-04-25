@@ -1,6 +1,6 @@
 import mqtt, { MqttClient } from "mqtt";
 import { MqttConfig } from "./config";
-import type { TopicSubscriber } from "./TopicSubscriber";
+import type { TopicSubscriber } from "./topicSubscriber";
 
 export class DkMqttClient {
   private static instance: DkMqttClient;
