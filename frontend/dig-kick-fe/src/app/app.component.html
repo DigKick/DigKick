@@ -6,10 +6,28 @@
     <div class="text-[2rem] lg:text-[2.5rem]">stats</div>
 </div>
 
-<div class="flex flex-col lg:flex-row justify-center items-center">
-    <div class="text-[6rem] lg:text-[12rem] lg:mr-20">8</div>
-    <img src="../assets/images/Sprite-0003.png" class="transform rotate-90 ...">
-    <div class="text-[6rem] lg:text-[12rem] lg:ml-20">6</div>
+<div class="flex flex-col lg:flex-row justify-center items-center mt-3 mx-auto w-5/6 lg:mx-auto lg:w-2/3">
+    <!-- Mobile view -->
+    <div class="flex justify-between items-center mx-auto w-3/5 lg:hidden">
+        <div class="text-[6rem]">8</div>
+        <div class="text-[6rem]">:</div>
+        <div class="text-[6rem]">6</div>
+    </div>
+
+    <!-- Image container -->
+    <div class="flex justify-center items-center">
+        <!-- Mobile view -->
+        <div class="lg:hidden">
+            <img src="../assets/images/Sprite-0003.png" class="transform rotate-90 ...">
+        </div>
+    </div>
+
+    <!-- Desktop view -->
+    <div class="hidden lg:flex justify-between items-center w-full">
+        <div class="text-[6rem] lg:text-[12rem]">8</div>
+        <img src="../assets/images/Sprite-0003.png" class="transform rotate-90 ...">
+        <div class="text-[6rem] lg:text-[12rem]">6</div>
+    </div>
 </div>
 
 <router-outlet></router-outlet>
