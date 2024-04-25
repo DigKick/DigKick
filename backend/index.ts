@@ -1,3 +1,3 @@
-import * as mqttC from "./src/mqtt/client";
+import { DkMqttClient } from "./src/mqtt/client";
 
-mqttC.start()
+DkMqttClient.getInstance();

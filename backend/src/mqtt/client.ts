@@ -1,47 +1,53 @@
-import mqtt, {MqttClient} from "mqtt";
-import {MqttConfig} from "./config";
+import mqtt, { MqttClient } from "mqtt";
+import { MqttConfig } from "./config";
 
-const mqttConfig = new MqttConfig();
-let client: MqttClient
+export class DkMqttClient {
+  private static instance: DkMqttClient;
 
-export function start() {
-  connectClient();
-  setupClient();
-}
+  private topicObserver: Array<{ topic: string; func: Function }> = new Array<{
+    topic: string;
+    func: Function;
+  }>();
 
-function connectClient() {
-  client = mqtt.connect(mqttConfig.connectUrl, {
-    clientId: mqttConfig.clientId,
-    clean: true,
-    connectTimeout: 10000,
-    username: "emqx",
-    password: "public",
-    reconnectPeriod: 5000,
-  });
-}
+  private _mqttConfig = new MqttConfig();
 
-function setupClient() {
-  client.on("connect", () => {
-    console.info("Connected to Broker.");
-  });
+  public client!: MqttClient;
 
-  client.on("reconnect", () => {
-    console.info("Trying to connect to the Broker.");
-  });
+  public static getInstance(): DkMqttClient {
+    if (!DkMqttClient.instance) {
+      DkMqttClient.instance = new DkMqttClient();
+    }
+    return this.instance;
+  }
 
-  client.on("error", (error) => {
-    console.error(`Error -> (${error.name}): ${error.message}`);
-  });
+  constructor() {
+    this._connectMqttClient();
+    this._setupClient();
+  }
 
+  private _connectMqttClient() {
+    this.client = mqtt.connect(this._mqttConfig.connectUrl, {
+      clientId: this._mqttConfig.clientId,
+      clean: true,
+      connectTimeout: 10000,
+      //@TODO: hide credentials
+      username: "emqx",
+      password: "public",
+      reconnectPeriod: 5000,
+    });
+  }
 
-}
+  private _setupClient() {
+    this.client.on("connect", () => {
+      console.info("Connected to Broker.");
+    });
 
-export function disconnectMqttClient() {
-  client.end();
-}
+    this.client.on("reconnect", () => {
+      console.info("Trying to connect to the Broker.");
+    });
 
-function logUnhandledInformation(topic: string, payload: Buffer) {
-  console.info(
-    `Unhandled information on top "${topic}", payload: ${payload.toString()}`
-  );
+    this.client.on("error", (error) => {
+      console.error(`Error -> (${error.name}): ${error.message}`);
+    });
+  }
 }
