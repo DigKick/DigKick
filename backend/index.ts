@@ -1,1 +1,3 @@
-console.log("Hello via Bun!");
+import * as mqttC from "./src/mqtt/client";
+
+mqttC.start()
