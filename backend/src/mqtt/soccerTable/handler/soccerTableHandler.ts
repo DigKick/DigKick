@@ -5,10 +5,14 @@ import {AbstractHandler} from "../../abstract/AbstractHandler";
 
 export class SoccerTableHandler extends AbstractHandler<SoccerTableEvent, SoccerTable> {
 
-  public gameHandler: GameHandler
+  private readonly _gameHandler: GameHandler
 
   constructor(soccerTable: SoccerTable) {
     super(soccerTable, soccerTableEventMapper);
-    this.gameHandler = new GameHandler(this.subject);
+    this._gameHandler = new GameHandler(this.subject);
+  }
+
+  get gameHandler() {
+    return this._gameHandler;
   }
 }
