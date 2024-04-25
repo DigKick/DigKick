@@ -98,3 +98,19 @@ test('undo winning team and other team wins', () => {
 
   expect(gameObj.winnerTeam).toEqual(gameObj.guestTeam)
 })
+
+test('reset game', () => {
+  for (let i = 0; i < 10; i++) {
+    gameObj.updateHomeTeamScore(ScoreChange.INCREASE);
+  }
+
+  for (let i = 0; i < 4; i++) {
+    gameObj.updateGuestTeamScore(ScoreChange.INCREASE);
+  }
+
+  gameObj.reset()
+
+  expect(gameObj.winnerTeam).toBeUndefined()
+  expect(gameObj.homeTeam.score).toBe(0)
+  expect(gameObj.guestTeam.score).toBe(0)
+})
