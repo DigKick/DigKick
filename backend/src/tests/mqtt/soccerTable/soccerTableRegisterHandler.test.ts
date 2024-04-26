@@ -1,5 +1,8 @@
 import { beforeEach, expect, test } from "bun:test";
-import { SoccerTableRegisterHandler } from "../../../mqtt/soccerTable/handler/soccerTableRegisterHandler";
+import {
+  SoccerTableRegisterHandler,
+  SoccerTableRegisterTopic,
+} from "../../../mqtt/soccerTable/handler/soccerTableRegisterHandler";
 
 let soccerTableRegisterHandler: SoccerTableRegisterHandler;
 
@@ -8,19 +11,27 @@ beforeEach(() => {
 });
 
 test("test valid table id", () => {
-  soccerTableRegisterHandler.registerSubscriber.func(undefined, "Valid ID");
+  soccerTableRegisterHandler.registerSubscriber.func(
+    SoccerTableRegisterTopic.REGISTER,
+    "Valid ID",
+  );
 
   expect(soccerTableRegisterHandler.soccerTableHandlers.length).toBe(1);
 });
 
 test("test invalid table id", () => {
-  soccerTableRegisterHandler.registerSubscriber.func(undefined, "");
+  soccerTableRegisterHandler.registerSubscriber.func(
+    SoccerTableRegisterTopic.REGISTER,
+    "",
+  );
 
   expect(soccerTableRegisterHandler.soccerTableHandlers.length).toBe(0);
 });
 
 test("test undefined table id", () => {
-  soccerTableRegisterHandler.registerSubscriber.func();
+  soccerTableRegisterHandler.registerSubscriber.func(
+    SoccerTableRegisterTopic.REGISTER,
+  );
 
   expect(soccerTableRegisterHandler.soccerTableHandlers.length).toBe(0);
 });
