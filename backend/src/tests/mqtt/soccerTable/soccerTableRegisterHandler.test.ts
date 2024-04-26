@@ -16,7 +16,9 @@ test("test valid table id", () => {
     "Valid ID",
   );
 
-  expect(soccerTableRegisterHandler.soccerTableHandlers.length).toBe(1);
+  expect(
+    Array.from(soccerTableRegisterHandler.soccerTableHandlers.entries()).length,
+  ).toBe(1);
 });
 
 test("test invalid table id", () => {
@@ -25,7 +27,9 @@ test("test invalid table id", () => {
     "",
   );
 
-  expect(soccerTableRegisterHandler.soccerTableHandlers.length).toBe(0);
+  expect(
+    Array.from(soccerTableRegisterHandler.soccerTableHandlers.entries()).length,
+  ).toBe(0);
 });
 
 test("test undefined table id", () => {
@@ -33,5 +37,7 @@ test("test undefined table id", () => {
     SoccerTableRegisterTopic.REGISTER,
   );
 
-  expect(soccerTableRegisterHandler.soccerTableHandlers.length).toBe(0);
+  expect(
+    Array.from(soccerTableRegisterHandler.soccerTableHandlers.entries()).length,
+  ).toBe(0);
 });

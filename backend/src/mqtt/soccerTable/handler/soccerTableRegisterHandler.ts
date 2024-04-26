@@ -5,14 +5,16 @@ import type { TopicSubscriber } from "../../client/topicSubscriber";
 import { SoccerTableHandler } from "./soccerTableHandler";
 
 export enum SoccerTableRegisterTopic {
-  REGISTER = `${BasicTerm.TABLE}/register`,
+  REGISTER = `/${BasicTerm.TABLE}/register`,
 }
 
 export class SoccerTableRegisterHandler {
   private _dkMqttClient: DkMqttClient;
 
-  soccerTableHandlers: Array<SoccerTableHandler> =
-    new Array<SoccerTableHandler>();
+  soccerTableHandlers: Map<string, SoccerTableHandler> = new Map<
+    string,
+    SoccerTableHandler
+  >();
 
   registerSubscriber: TopicSubscriber = {
     topic: SoccerTableRegisterTopic.REGISTER,
@@ -24,9 +26,13 @@ export class SoccerTableRegisterHandler {
       if (!this._validateTableId(soccerTableId)) {
         return;
       }
-      this.soccerTableHandlers.push(
-        new SoccerTableHandler(new SoccerTable(soccerTableId)),
-      );
+
+      if (!this.soccerTableHandlers.get(soccerTableId)) {
+        this.soccerTableHandlers.set(
+          soccerTableId,
+          new SoccerTableHandler(new SoccerTable(soccerTableId)),
+        );
+      }
     },
   };
 
