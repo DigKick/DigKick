@@ -1,5 +1,5 @@
 export enum BasicTerm {
-    GAME = "GAME",
-    TABLE = "TABLE",
-    TEAM = "TEAM"
+  GAME = "game",
+  TABLE = "table",
+  TEAM = "team",
 }
