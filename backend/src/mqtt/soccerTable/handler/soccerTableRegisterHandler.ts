@@ -1,7 +1,7 @@
 import { SoccerTable } from "../../../models/soccerTable";
 import { BasicTerm } from "../../abstract/basicTerm";
 import { DkMqttClient } from "../../client/client";
-import type { TopicSubscriberTest } from "../../client/topicSubscriberTest";
+import type { TopicSubscriber } from "../../client/topicSubscriber";
 import { SoccerTableHandler } from "./soccerTableHandler";
 
 export enum SoccerTableRegisterTopic {
@@ -16,7 +16,7 @@ export class SoccerTableRegisterHandler {
     SoccerTableHandler
   >();
 
-  registerSubscriber: TopicSubscriberTest = {
+  registerSubscriber: TopicSubscriber = {
     topic: SoccerTableRegisterTopic.REGISTER,
     func: (_: any, payload: Buffer) => {
       if (!payload) {

@@ -1,10 +1,10 @@
 import mqtt, { MqttClient } from "mqtt";
 import { MqttConfig } from "./config";
-import type { TopicSubscriberTest } from "./topicSubscriberTest";
+import type { TopicSubscriber } from "./topicSubscriber";
 
 export class DkMqttClient {
   private static instance: DkMqttClient;
-  private _topicObservers: Array<TopicSubscriberTest>;
+  private _topicObservers: Array<TopicSubscriber>;
   private _mqttConfig = new MqttConfig();
   private _mqttClient!: MqttClient;
 
@@ -18,7 +18,7 @@ export class DkMqttClient {
   private constructor() {
     this._connectMqttClient();
     this._setupClient();
-    this._topicObservers = new Array<TopicSubscriberTest>();
+    this._topicObservers = new Array<TopicSubscriber>();
   }
 
   private _connectMqttClient() {
@@ -56,12 +56,12 @@ export class DkMqttClient {
     });
   }
 
-  public subscribeOnTopic(newSubscription: TopicSubscriberTest) {
+  public subscribeOnTopic(newSubscription: TopicSubscriber) {
     this._mqttClient.subscribe(newSubscription.topic);
     this._topicObservers.push(newSubscription);
   }
 
-  public unsubscribeOnTopic(newSubscription: TopicSubscriberTest) {
+  public unsubscribeOnTopic(newSubscription: TopicSubscriber) {
     this._mqttClient.unsubscribe(newSubscription.topic);
     this._topicObservers.splice(
       this._topicObservers.indexOf(newSubscription),
