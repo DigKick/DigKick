@@ -9,7 +9,7 @@ enum SoccerTableRegisterTopic {
 }
 
 export class SoccerTableRegisterHandler {
-  dkMqttClient: DkMqttClient;
+  private _dkMqttClient: DkMqttClient;
 
   soccerTableHandlers: Array<SoccerTableHandler> =
     new Array<SoccerTableHandler>();
@@ -31,8 +31,8 @@ export class SoccerTableRegisterHandler {
   };
 
   constructor() {
-    this.dkMqttClient = DkMqttClient.getInstance();
-    this.dkMqttClient.subscribeOnTopic(this.registerSubscriber);
+    this._dkMqttClient = DkMqttClient.getInstance();
+    this._dkMqttClient.subscribeOnTopic(this.registerSubscriber);
   }
 
   private _validateTableId(tableId: string): boolean {
