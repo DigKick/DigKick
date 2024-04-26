@@ -4,7 +4,7 @@ import { DkMqttClient } from "../../client/client";
 import type { TopicSubscriber } from "../../client/topicSubscriber";
 import { SoccerTableHandler } from "./soccerTableHandler";
 
-enum SoccerTableRegisterTopic {
+export enum SoccerTableRegisterTopic {
   REGISTER = `${BasicTerm.TABLE}/register`,
 }
 
