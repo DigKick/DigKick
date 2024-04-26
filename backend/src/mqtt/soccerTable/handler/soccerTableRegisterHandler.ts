@@ -17,12 +17,15 @@ export class SoccerTableRegisterHandler {
   registerSubscriber: TopicSubscriber = {
     topic: SoccerTableRegisterTopic.REGISTER,
     func: (_: any, payload: Buffer) => {
+      if (!payload) {
+        return;
+      }
       const soccerTableId = payload.toString();
       if (!this._validateTableId(soccerTableId)) {
         return;
       }
       this.soccerTableHandlers.push(
-        new SoccerTableHandler(new SoccerTable(soccerTableId))
+        new SoccerTableHandler(new SoccerTable(soccerTableId)),
       );
     },
   };
