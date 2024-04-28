@@ -1,6 +1,6 @@
-import mqtt, { MqttClient } from "mqtt";
-import { MqttConfig } from "./config";
-import type { TopicSubscriber } from "./topicSubscriber";
+import mqtt, {MqttClient} from "mqtt";
+import {MqttConfig} from "./config";
+import type {TopicSubscriber} from "./topicSubscriber";
 
 export class DkMqttClient {
   private static instance: DkMqttClient;
@@ -25,7 +25,7 @@ export class DkMqttClient {
     this._mqttClient = mqtt.connect(this._mqttConfig.connectUrl, {
       clientId: this._mqttConfig.clientId,
       clean: true,
-      connectTimeout: 10000,
+      connectTimeout: 100000,
       //@TODO: hide credentials
       username: "emqx",
       password: "public",
