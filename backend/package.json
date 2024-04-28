@@ -22,6 +22,7 @@
     "apiVersion": "v2.6.0"
   },
   "dependencies": {
-    "mqtt": "^5.5.3"
+    "mqtt": "^5.5.3",
+    "winston": "^3.13.0"
   }
 }
