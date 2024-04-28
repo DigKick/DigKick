@@ -186,7 +186,7 @@ components:
           minItems: 1
           maxItems: 2
           example: [ "0x00FF00", "0x00FFFF" ]
-          description: Decribes the color of the LEDs. If the array contains two colors the LEDs will alternate between both colors.
+          description: Describes the color of the LEDs. If the array contains two colors the LEDs will alternate between both colors.
         animation:
           type: string
           description: Describes the animation which gets played before the update of the LEDs.
