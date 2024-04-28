@@ -1,14 +1,18 @@
-import { SoccerTable } from "../../../models/soccerTable";
-import { BasicTerm } from "../../abstract/basicTerm";
-import { DkMqttClient } from "../../client/client";
-import type { TopicSubscriber } from "../../client/topicSubscriber";
-import { SoccerTableHandler } from "./soccerTableHandler";
+import {SoccerTable} from "../../../models/soccerTable";
+import {BasicTerm} from "../../abstract/basicTerm";
+import {DkMqttClient} from "../../client/client";
+import type {TopicSubscriber} from "../../client/topicSubscriber";
+import {SoccerTableHandler} from "./soccerTableHandler";
+import {LoggerFactory} from "../../../logging/loggerFactory";
 
 export enum SoccerTableRegisterTopic {
   REGISTER = `/${BasicTerm.TABLE}/register`,
 }
 
 export class SoccerTableRegisterHandler {
+
+  private _logger = LoggerFactory.getLogger(SoccerTableRegisterHandler.name)
+
   private _dkMqttClient: DkMqttClient;
 
   soccerTableHandlers: Map<string, SoccerTableHandler> = new Map<
@@ -32,6 +36,9 @@ export class SoccerTableRegisterHandler {
           soccerTableId,
           new SoccerTableHandler(new SoccerTable(soccerTableId)),
         );
+        this._logger.info("New table registered: " + soccerTableId)
+      } else {
+        this._logger.warn("Table with id " + soccerTableId + " already registered.")
       }
     },
   };
