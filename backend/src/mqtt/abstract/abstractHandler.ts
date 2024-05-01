@@ -27,6 +27,7 @@ export class AbstractHandler<T, K> {
   }
 
   public subscribe(event: T, observer: Function) {
+    this._logger.debug(`Subscribed to ${event}.`)
     if (Array.from(this.observerMap.values()).includes(observer)) {
       // observer already subscribed
       return;
@@ -38,6 +39,7 @@ export class AbstractHandler<T, K> {
     Array.from(this.observerMap.entries()).forEach((entry) => {
       if (entry[1] === observer) {
         this.observerMap.delete(entry[0])
+        this._logger.debug(`Unsubscribed to ${entry[0]}.`)
       }
     })
   }
