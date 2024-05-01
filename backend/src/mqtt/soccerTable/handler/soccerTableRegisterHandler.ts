@@ -34,7 +34,7 @@ export class SoccerTableRegisterHandler {
       if (!SoccerTableRegisterHandler.soccerTableHandlers.get(soccerTableId)) {
         SoccerTableRegisterHandler.soccerTableHandlers.set(
           soccerTableId,
-          new SoccerTableHandler(new SoccerTable(soccerTableId)),
+          new SoccerTableHandler(new SoccerTable(soccerTableId), soccerTableId),
         );
         this._logger.info("New table registered: " + soccerTableId)
       } else {

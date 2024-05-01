@@ -47,7 +47,7 @@ export class LoggerFactory {
     return logger;
   }
 
-  static getHandlerLogger(handlerName: string) {
+  static getHandlerLogger(handlerName: string, gameId: string) {
     let loggerCount = LoggerFactory.loggerCountMap.get(handlerName);
     if (!loggerCount) {
       LoggerFactory.loggerCountMap.set(handlerName, 1);
@@ -55,7 +55,7 @@ export class LoggerFactory {
       LoggerFactory.loggerCountMap.set(handlerName, ++loggerCount);
     }
 
-    return LoggerFactory.getLogger(`${handlerName.charAt(0).toUpperCase() + handlerName.slice(1)}Handler (${LoggerFactory.loggerCountMap.get(handlerName)})`);
+    return LoggerFactory.getLogger(`${handlerName.charAt(0).toUpperCase() + handlerName.slice(1)}Handler (${gameId})`);
   }
 
 

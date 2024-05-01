@@ -18,11 +18,11 @@ export class AbstractHandler<T, K> {
   private readonly _mapper: Function
 
 
-  constructor(subject: K, mapper: Function, handlerType: HandlerType) {
+  constructor(subject: K, mapper: Function, handlerType: HandlerType, soccerTableId: string) {
     this.subject = subject;
     this._mapper = mapper;
 
-    this._logger = LoggerFactory.getHandlerLogger(handlerType)
+    this._logger = LoggerFactory.getHandlerLogger(handlerType, soccerTableId)
     this._logger.debug(`${handlerType}Handler created.`);
   }
 
