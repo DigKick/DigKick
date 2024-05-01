@@ -1,5 +1,5 @@
-import { beforeEach, expect, mock, test } from "bun:test";
-import { AbstractHandler } from "../../../mqtt/abstract/abstractHandler";
+import {beforeEach, expect, mock, test} from "bun:test";
+import {AbstractHandler, HandlerType} from "../../../mqtt/abstract/abstractHandler";
 
 enum TestEvent {
   EVENT_1 = "EVENT_1",
@@ -38,7 +38,7 @@ class TestClass {
 
 class TestHandler extends AbstractHandler<TestEvent, TestClass> {
   constructor(testObj: TestClass) {
-    super(testObj, testEventMapper);
+    super(testObj, testEventMapper, HandlerType.ABSTRACT);
   }
 }
 

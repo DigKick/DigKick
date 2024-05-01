@@ -8,6 +8,9 @@ addColors({
 });
 
 export class LoggerFactory {
+
+  static loggerCountMap = new Map<string, number>();
+
   static getLoggerFormat(loggerLabel: string) {
     return winston.format.combine(
       winston.format.colorize({
@@ -42,6 +45,17 @@ export class LoggerFactory {
       logger.level = "debug";
     }
     return logger;
+  }
+
+  static getHandlerLogger(handlerName: string) {
+    let loggerCount = LoggerFactory.loggerCountMap.get(handlerName);
+    if (!loggerCount) {
+      LoggerFactory.loggerCountMap.set(handlerName, 1);
+    } else {
+      LoggerFactory.loggerCountMap.set(handlerName, ++loggerCount);
+    }
+
+    return LoggerFactory.getLogger(`${handlerName.charAt(0).toUpperCase() + handlerName.slice(1)}Handler (${LoggerFactory.loggerCountMap.get(handlerName)})`);
   }
 
 

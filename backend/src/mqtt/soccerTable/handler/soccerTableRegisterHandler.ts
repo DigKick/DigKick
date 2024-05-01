@@ -15,7 +15,7 @@ export class SoccerTableRegisterHandler {
 
   private _dkMqttClient: DkMqttClient;
 
-  soccerTableHandlers: Map<string, SoccerTableHandler> = new Map<
+  public static soccerTableHandlers: Map<string, SoccerTableHandler> = new Map<
     string,
     SoccerTableHandler
   >();
@@ -31,8 +31,8 @@ export class SoccerTableRegisterHandler {
         return;
       }
 
-      if (!this.soccerTableHandlers.get(soccerTableId)) {
-        this.soccerTableHandlers.set(
+      if (!SoccerTableRegisterHandler.soccerTableHandlers.get(soccerTableId)) {
+        SoccerTableRegisterHandler.soccerTableHandlers.set(
           soccerTableId,
           new SoccerTableHandler(new SoccerTable(soccerTableId)),
         );

@@ -1,13 +1,29 @@
+import {Logger} from "winston";
+import {LoggerFactory} from "../../logging/loggerFactory";
+import {BasicTerm} from "./basicTerm";
+
+
+export enum HandlerType {
+  GAME = BasicTerm.GAME,
+  SOCCERTABLE = BasicTerm.TABLE,
+  ABSTRACT = "ABSTRACT"
+}
+
 export class AbstractHandler<T, K> {
 
   public observerMap: Map<T, Function> = new Map();
   public subject: K;
+
+  private _logger: Logger;
   private readonly _mapper: Function
 
 
-  constructor(subject: K, mapper: Function) {
+  constructor(subject: K, mapper: Function, handlerType: HandlerType) {
     this.subject = subject;
     this._mapper = mapper;
+
+    this._logger = LoggerFactory.getHandlerLogger(handlerType)
+    this._logger.debug(`${handlerType}Handler created.`);
   }
 
   public subscribe(event: T, observer: Function) {
