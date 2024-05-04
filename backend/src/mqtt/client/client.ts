@@ -1,10 +1,15 @@
-import mqtt, { MqttClient } from "mqtt";
-import { MqttConfig } from "./config";
-import type { TopicSubscriber } from "./topicSubscriber";
+import mqtt, {MqttClient} from "mqtt";
+import {MqttConfig} from "./config";
+import type {TopicSubscriber} from "./topicSubscriber";
+import {Logger} from "winston";
+import {LoggerFactory} from "../../logging/loggerFactory";
 
 export class DkMqttClient {
+
+  private _logger: Logger = LoggerFactory.getLogger(DkMqttClient.name)
+
   private static instance: DkMqttClient;
-  private _topicObservers: Array<TopicSubscriber>;
+  public static _topicObservers: Array<TopicSubscriber> = new Array<TopicSubscriber>();
   private _mqttConfig = new MqttConfig();
   private _mqttClient!: MqttClient;
 
@@ -18,7 +23,6 @@ export class DkMqttClient {
   private constructor() {
     this._connectMqttClient();
     this._setupClient();
-    this._topicObservers = new Array<TopicSubscriber>();
   }
 
   private _connectMqttClient() {
@@ -29,25 +33,42 @@ export class DkMqttClient {
       //@TODO: hide credentials
       username: "emqx",
       password: "public",
-      reconnectPeriod: 5000,
+      reconnectPeriod: 1000,
     });
+
+    DkMqttClient._topicObservers.forEach(subscriber => {
+      this._mqttClient.subscribe(subscriber.topic)
+    })
   }
 
   private _setupClient() {
     this._mqttClient.on("connect", () => {
-      console.info("Connected to Broker.");
+      this._logger.info("Connected to Broker.");
     });
 
+    this._mqttClient.on("end", () => {
+      this._logger.info("Mqtt Client end.")
+    })
+
+    this._mqttClient.on("disconnect", () => {
+      this._logger.info("Disconnected from Broker.");
+    })
+
     this._mqttClient.on("reconnect", () => {
-      console.info("Trying to connect to the Broker.");
+      this._logger.info("Trying to connect to the Broker.");
     });
 
     this._mqttClient.on("error", (error) => {
-      console.error(`Error -> (${error.name}): ${error.message}`);
+      this._logger.error(`Error -> (${error.name}): ${error.message}`);
+
+      if (error.message === "connack timeout") {
+        this._connectMqttClient();
+        this._setupClient();
+      }
     });
 
     this._mqttClient.on("message", (topic, payload, packet) => {
-      this._topicObservers.forEach((subscriber) => {
+      DkMqttClient._topicObservers.forEach((subscriber) => {
         if (subscriber.topic !== topic) {
           return;
         }
@@ -58,13 +79,13 @@ export class DkMqttClient {
 
   public subscribeOnTopic(newSubscription: TopicSubscriber) {
     this._mqttClient.subscribe(newSubscription.topic);
-    this._topicObservers.push(newSubscription);
+    DkMqttClient._topicObservers.push(newSubscription);
   }
 
   public unsubscribeOnTopic(newSubscription: TopicSubscriber) {
     this._mqttClient.unsubscribe(newSubscription.topic);
-    this._topicObservers.splice(
-      this._topicObservers.indexOf(newSubscription),
+    DkMqttClient._topicObservers.splice(
+      DkMqttClient._topicObservers.indexOf(newSubscription),
       1,
     );
   }

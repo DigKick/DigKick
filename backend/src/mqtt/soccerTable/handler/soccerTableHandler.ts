@@ -1,10 +1,7 @@
-import { SoccerTable } from "../../../models/soccerTable";
-import { GameHandler } from "../../game/handler/gameHandler";
-import {
-  SoccerTableEvent,
-  soccerTableEventMapper,
-} from "../events/soccerTableEvent";
-import { AbstractHandler } from "../../abstract/abstractHandler";
+import {SoccerTable} from "../../../models/soccerTable";
+import {GameHandler} from "../../game/handler/gameHandler";
+import {SoccerTableEvent, soccerTableEventMapper,} from "../events/soccerTableEvent";
+import {AbstractHandler, HandlerType} from "../../abstract/abstractHandler";
 
 export class SoccerTableHandler extends AbstractHandler<
   SoccerTableEvent,
@@ -13,7 +10,7 @@ export class SoccerTableHandler extends AbstractHandler<
   private readonly _gameHandler: GameHandler;
 
   constructor(soccerTable: SoccerTable) {
-    super(soccerTable, soccerTableEventMapper);
+    super(soccerTable, soccerTableEventMapper, HandlerType.SOCCERTABLE, soccerTable);
     this._gameHandler = new GameHandler(this.subject);
   }
 
