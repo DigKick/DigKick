@@ -9,9 +9,9 @@ export class SoccerTableHandler extends AbstractHandler<
 > {
   private readonly _gameHandler: GameHandler;
 
-  constructor(soccerTable: SoccerTable, soccerTableId: string) {
-    super(soccerTable, soccerTableEventMapper, HandlerType.SOCCERTABLE, soccerTableId);
-    this._gameHandler = new GameHandler(this.subject, soccerTableId);
+  constructor(soccerTable: SoccerTable) {
+    super(soccerTable, soccerTableEventMapper, HandlerType.SOCCERTABLE, soccerTable);
+    this._gameHandler = new GameHandler(this.subject);
   }
 
   get gameHandler() {

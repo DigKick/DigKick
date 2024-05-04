@@ -1,6 +1,7 @@
 import {Logger} from "winston";
 import {LoggerFactory} from "../../logging/loggerFactory";
 import {BasicTerm} from "./basicTerm";
+import {SoccerTable} from "../../models/soccerTable";
 
 
 export enum HandlerType {
@@ -18,11 +19,11 @@ export class AbstractHandler<T, K> {
   private readonly _mapper: Function
 
 
-  constructor(subject: K, mapper: Function, handlerType: HandlerType, soccerTableId: string) {
+  constructor(subject: K, mapper: Function, handlerType: HandlerType, soccerTable: SoccerTable) {
     this.subject = subject;
     this._mapper = mapper;
 
-    this._logger = LoggerFactory.getHandlerLogger(handlerType, soccerTableId)
+    this._logger = LoggerFactory.getHandlerLogger(handlerType, soccerTable.id)
     this._logger.debug(`${handlerType}Handler created.`);
   }
 

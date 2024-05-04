@@ -7,8 +7,8 @@ export class GameHandler extends AbstractHandler<GameEventType, Game> {
   public observerMap: Map<GameEventType, Function> = new Map();
   public soccerTable: SoccerTable;
 
-  constructor(soccerTable: SoccerTable, soccerTableId: string) {
-    super(soccerTable.game, gameEventMapper, HandlerType.GAME, soccerTableId);
+  constructor(soccerTable: SoccerTable) {
+    super(soccerTable.game, gameEventMapper, HandlerType.GAME, soccerTable);
     this.soccerTable = soccerTable;
   }
 }
