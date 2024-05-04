@@ -28,7 +28,7 @@ export class SoccerTableRegisterHandler {
       }
       const soccerTableId = payload.toString();
       if (!this._validateTableId(soccerTableId)) {
-        this._logger.warn(`"${soccerTableId}" is not a valid id for a soccer table.`)
+        this._logger.error(`"${soccerTableId}" is not a valid id for a soccer table.`)
         return;
       }
 
