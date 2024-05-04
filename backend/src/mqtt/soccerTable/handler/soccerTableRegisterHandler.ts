@@ -4,6 +4,7 @@ import {DkMqttClient} from "../../client/client";
 import type {TopicSubscriber} from "../../client/topicSubscriber";
 import {SoccerTableHandler} from "./soccerTableHandler";
 import {LoggerFactory} from "../../../logging/loggerFactory";
+import {Logger} from "winston";
 
 export enum SoccerTableRegisterTopic {
   REGISTER = `/${BasicTerm.TABLE}/register`,
@@ -11,7 +12,7 @@ export enum SoccerTableRegisterTopic {
 
 export class SoccerTableRegisterHandler {
 
-  private _logger = LoggerFactory.getLogger(SoccerTableRegisterHandler.name)
+  private _logger: Logger = LoggerFactory.getLogger(SoccerTableRegisterHandler.name)
 
   private _dkMqttClient: DkMqttClient;
 
