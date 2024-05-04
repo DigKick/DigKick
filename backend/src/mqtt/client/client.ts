@@ -68,11 +68,25 @@ export class DkMqttClient {
     });
 
     this._mqttClient.on("message", (topic, payload, packet) => {
+
+      let jsonPayload = "";
+
+      try {
+        jsonPayload = JSON.parse(payload.toString());
+      } catch (e) {
+        if (e instanceof SyntaxError) {
+          this._logger.error("Could not parse payload to JSON: ", e)
+          return
+        }
+
+        this._logger.error("Unexpected error while parsing payload to JSON:", e);
+      }
+
       DkMqttClient._topicObservers.forEach((subscriber) => {
         if (subscriber.topic !== topic) {
           return;
         }
-        subscriber.func(topic, payload, packet);
+        subscriber.func(topic, jsonPayload, packet);
       });
     });
   }
