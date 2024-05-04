@@ -1,5 +1,6 @@
 import {beforeEach, expect, mock, test} from "bun:test";
 import {AbstractHandler, HandlerType} from "../../../mqtt/abstract/abstractHandler";
+import {SoccerTable} from "../../../models/soccerTable";
 
 enum TestEvent {
   EVENT_1 = "EVENT_1",
@@ -38,7 +39,7 @@ class TestClass {
 
 class TestHandler extends AbstractHandler<TestEvent, TestClass> {
   constructor(testObj: TestClass) {
-    super(testObj, testEventMapper, HandlerType.ABSTRACT);
+    super(testObj, testEventMapper, HandlerType.ABSTRACT, new SoccerTable("TEST"));
   }
 }
 

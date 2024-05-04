@@ -4,8 +4,23 @@ import {
   SoccerTableRegisterTopic,
 } from "../../../mqtt/soccerTable/handler/soccerTableRegisterHandler";
 import {SoccerTableHandler} from "../../../mqtt/soccerTable/handler/soccerTableHandler";
+import type {TableRegisterPayload} from "../../../mqtt/client/payloads/TableRegisterPayload";
 
 let soccerTableRegisterHandler: SoccerTableRegisterHandler;
+
+const validTableRegisterPayload: TableRegisterPayload = {
+  tableId: "validId"
+}
+
+const invalidTableRegisterPayload: TableRegisterPayload = {
+  tableId: ""
+}
+
+
+const invalidUndefinedTableRegisterPayload: TableRegisterPayload = {
+  // @ts-ignore
+  tableId: undefined
+}
 
 beforeEach(() => {
   soccerTableRegisterHandler = new SoccerTableRegisterHandler();
@@ -15,7 +30,7 @@ beforeEach(() => {
 test("test valid table id", () => {
   soccerTableRegisterHandler.registerSubscriber.func(
     SoccerTableRegisterTopic.REGISTER,
-    "Valid ID",
+    validTableRegisterPayload,
   );
 
   expect(
@@ -26,7 +41,7 @@ test("test valid table id", () => {
 test("test invalid table id", () => {
   soccerTableRegisterHandler.registerSubscriber.func(
     SoccerTableRegisterTopic.REGISTER,
-    "",
+    invalidTableRegisterPayload,
   );
 
   expect(
@@ -36,7 +51,7 @@ test("test invalid table id", () => {
 
 test("test undefined table id", () => {
   soccerTableRegisterHandler.registerSubscriber.func(
-    SoccerTableRegisterTopic.REGISTER,
+    SoccerTableRegisterTopic.REGISTER, invalidUndefinedTableRegisterPayload
   );
 
   expect(

@@ -5,6 +5,7 @@ import type {TopicSubscriber} from "../../client/topicSubscriber";
 import {SoccerTableHandler} from "./soccerTableHandler";
 import {LoggerFactory} from "../../../logging/loggerFactory";
 import {Logger} from "winston";
+import type {TableRegisterPayload} from "../../client/payloads/TableRegisterPayload";
 
 export enum SoccerTableRegisterTopic {
   REGISTER = `/${BasicTerm.TABLE}/register`,
@@ -23,11 +24,11 @@ export class SoccerTableRegisterHandler {
 
   registerSubscriber: TopicSubscriber = {
     topic: SoccerTableRegisterTopic.REGISTER,
-    func: (_: any, payload: Buffer) => {
+    func: (_: any, payload: TableRegisterPayload) => {
       if (!payload) {
         return;
       }
-      const soccerTableId = payload.toString();
+      const soccerTableId = payload.tableId;
       if (!this._validateTableId(soccerTableId)) {
         this._logger.error(`"${soccerTableId}" is not a valid id for a soccer table.`)
         return;
