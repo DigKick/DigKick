@@ -5,6 +5,6 @@ import { TableViewComponent } from './feature/table-view/table-view.component';
 
 export const appRoutes: Route[] = [
     {path: '', component: TableViewComponent},
-    {path: 'game', component: GameViewComponent},
+    {path: 'game/:id', component: GameViewComponent},
     {path: 'score', component: ScoreViewComponent}
 ];
