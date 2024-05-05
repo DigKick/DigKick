@@ -1,16 +1,20 @@
-<p>
-    _                         _
-   |_|                       |_|
-   | |         /^^^\         | |
-  _| |_      (| "o" |)      _| |_
-_| | | | _    (_---_)    _ | | | |_ 
-| | | | |' |    _| |_    | `| | | | |
-\          /   /     \   \          /
-\        /  / /(. .)\ \  \        /
-  \    /  / /  | . |  \ \  \    /
-    \  \/ /    ||Y||    \ \/  /
-      \_/      || ||      \_/
-               () ()
-               || ||
-              ooO Ooo
-</p>
+<div class="overflow-x-auto mt-[3rem]">
+  <table class="table table-zebra">
+    <!-- head -->
+    <thead class="text-[1.5rem]">
+      <tr>
+        <th></th>
+        <th>Name</th>
+        <th>Score</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- loop over players and generate rows -->
+      <tr *ngFor="let player of data; let i = index" class="text-[1.25rem]">
+        <th>{{ i + 1 }}</th>
+        <td>{{ player.firstname }} {{ player.lastname }}</td>
+        <td>{{ player.score }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
