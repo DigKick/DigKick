@@ -1,19 +1,22 @@
-<div class="nav flex flex-col justify-center lg:justify-between items-center mt-3 mx-auto lg:w-2/5">
-    <nav>
+<div class="flex items-center justify-between mx-auto lg:w-2/5">
+    <nav class="mt-3 flex items-center justify-center flex-grow"> <!-- Centering the navbar -->
         <ul class="flex items-center">
             <li class="mr-3">
-                <a routerLink="/" routerLinkActive="active" class="text-[2rem] lg:text-[2.5rem]">games</a>
+                <a routerLink="/" routerLinkActive="active" class="text-[1.5rem] lg:text-[2.5rem]">games</a>
             </li>
             <li class="mr-3">
-                <span class="text-orange-400 text-[2rem] lg:text-[2.5rem]">|</span>
+                <span class="text-orange-400 text-[1.5rem] lg:text-[2.5rem]">|</span>
             </li>
             <li class="mr-3">
-                <a routerLink="/score" routerLinkActive="active" class="text-[2rem] lg:text-[2.5rem]">score</a>
+                <a routerLink="/score" routerLinkActive="active" class="text-[1.5rem] lg:text-[2.5rem]">score</a>
             </li>
             <li class="mr-3">
-                <span class="text-orange-400 text-[2rem] lg:text-[2.5rem]">|</span>
+                <span class="text-orange-400 text-[1.5rem] lg:text-[2.5rem]">|</span>
             </li>
-            <li class="text-[2rem] lg:text-[2.5rem]">stats</li>
+            <li class="text-[1.5rem] lg:text-[2.5rem]">stats</li>
         </ul>
     </nav>
+    <div class="flex items-center"> <!-- Adjusted alignment for the theme toggle button -->
+        <app-theme-toggle-button class=" h-3 mr-4 lg:h-4 lg:mr-0"></app-theme-toggle-button> <!-- Set the height to match the navbar items -->
+    </div>
 </div>
