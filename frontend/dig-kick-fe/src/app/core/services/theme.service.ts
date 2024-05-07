@@ -9,14 +9,14 @@ export class ThemeService {
   private currentThemeSubject: BehaviorSubject<string> = new BehaviorSubject<string>('dark');
   public currentTheme$: Observable<string> = this.currentThemeSubject.asObservable();
 
-  constructor() {}
+  constructor() { }
 
   getCurrentTheme(): string {
     return this.currentTheme;
   }
 
   toggleTheme(): void {
-    const newTheme = this.currentThemeSubject.value === 'dark' ? 'retro' : 'dark';
+    const newTheme = this.currentThemeSubject.value === 'night' ? 'retro' : 'night';
     this.currentThemeSubject.next(newTheme);
     document.documentElement.setAttribute('data-theme', newTheme);
   }

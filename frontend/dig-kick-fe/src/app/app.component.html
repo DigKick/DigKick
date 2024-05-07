@@ -1,3 +1,16 @@
-<app-navbar></app-navbar>
-<router-outlet></router-outlet>
+<div class="flex items-center justify-between">
+    <!-- Linker Bereich (leer) -->
+    <div class="flex-1"></div>
 
+    <!-- Mittlerer Bereich (Navbar) -->
+    <div class="flex-none">
+        <!-- Inhalte der Navbar hier -->
+        <app-navbar></app-navbar>
+    </div>
+
+    <!-- Rechter Bereich (Button) -->
+    <div class="flex-1 flex justify-start ml-3 h-6 lg:h-8">
+        <app-theme-toggle-button></app-theme-toggle-button>
+    </div>
+</div>
+<router-outlet></router-outlet>
