@@ -1,9 +1,11 @@
 <div class="flex flex-col lg:flex-row justify-center items-center mt-3 mx-auto w-5/6 lg:mx-auto lg:w-2/3">
     <!-- Mobile view -->
-    <div class="flex justify-between items-center mx-auto w-3/5 lg:hidden">
-        <div class="text-[6rem]">8</div>
-        <div class="text-[6rem]">:</div>
-        <div class="text-[6rem]">6</div>
+    <div class="flex justify-center items-center mx-auto w-3/5 h-32 lg:h-auto lg:max-h-32 bg-accent-content rounded-lg lg:hidden">
+        <div class="flex justify-center items-center">
+            <div class="text-[6rem] mr-3">8</div>
+            <div class="text-[6rem]">:</div>
+            <div class="text-[6rem] ml-3">6</div>
+        </div>
     </div>
 
     <!-- Image container -->
@@ -19,5 +21,18 @@
         <div class="text-[6rem] lg:text-[12rem]">8</div>
         <img src="../assets/images/Sprite-0003.png" class="transform rotate-90 ...">
         <div class="text-[6rem] lg:text-[12rem]">6</div>
+    </div>
+</div>
+
+<!-- Player names -->
+<div class="flex w-full my-auto lg:mt-3 lg:justify-center items-center text-[1.2rem]">
+    <div class="grid h-20 flex-grow card bg-accent-content rounded-box place-items-center ml-7 lg:ml-9 "> <!-- Added mx-4 for left and right margin -->
+        <div class="flex">{{player1.firstname}} {{player1.lastname}}<div class="text-orange-400">&nbsp;&nbsp;{{player1.score}}</div></div>
+        <div class="flex">{{player2.firstname}} {{player2.lastname}} <div class="text-orange-400">&nbsp;&nbsp;{{player2.score}}</div></div>
+    </div>
+    <div class="divider divider-horizontal divider-warning">VS</div> <!-- Spacer for mobile view -->
+    <div class="grid h-20 flex-grow card bg-accent-content rounded-box place-items-center mr-7 lg:mr-9"> <!-- Added mx-4 for left and right margin -->
+        <div class="flex">{{player3.firstname}} {{player3.lastname}} <div class="text-orange-400">&nbsp;&nbsp;{{player3.score}}</div></div>
+        <div class="flex">{{player4.firstname}} {{player4.lastname}} <div class="text-orange-400">&nbsp;&nbsp;{{player4.score}}</div></div>
     </div>
 </div>
