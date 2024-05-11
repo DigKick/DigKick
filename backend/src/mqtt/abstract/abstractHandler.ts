@@ -7,6 +7,7 @@ import {SoccerTable} from "../../models/soccerTable";
 export enum HandlerType {
   GAME = BasicTerm.GAME,
   SOCCERTABLE = BasicTerm.TABLE,
+  HARDWARE = "HARDWARE",
   ABSTRACT = "ABSTRACT"
 }
 
