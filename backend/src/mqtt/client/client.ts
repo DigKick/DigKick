@@ -68,7 +68,7 @@ export class DkMqttClient {
     });
 
     this._mqttClient.on("message", (topic, payload, packet) => {
-
+      this._logger.debug(`Message on ${topic}:\n${payload}`);
       let jsonPayload = "";
 
       try {
@@ -84,15 +84,51 @@ export class DkMqttClient {
       }
 
       DkMqttClient._topicObservers.forEach((subscriber) => {
-        if (subscriber.topic !== topic) {
+        if (!this._matchTopic(subscriber.topic, topic)) {
           return;
         }
+        this._logger.debug(`Subscriber found for topic: ${topic}`)
         subscriber.func(topic, jsonPayload, packet);
       });
     });
   }
 
+  private _matchTopic(subscriberTopic: string, topic: string): boolean {
+    const subscriberSegments = subscriberTopic.split('/');
+    const topicSegments = topic.split('/');
+
+    let subscriberIndex = 0;
+    let topicIndex = 0;
+
+    for (subscriberIndex = 0; subscriberIndex < subscriberSegments.length; subscriberIndex++) {
+      const subscriberSegment = subscriberSegments[subscriberIndex]
+      if (subscriberSegment === topicSegments[topicIndex]
+        || subscriberSegment === '+') {
+        topicIndex++;
+        continue
+      }
+
+      if (subscriberSegment === '#') {
+        if (subscriberIndex < subscriberTopic.length - 1) {
+          // Check if next one matches
+          if (subscriberSegments[subscriberIndex + 1] === topicSegments[topicIndex]) {
+            topicIndex += 2
+          }
+        } else {
+          // Ends on #
+          return true
+        }
+        continue
+      }
+      // we should not end up here
+      return false
+    }
+    // console.log(topicIndex, topicSegments.length, subscriberIndex, subscriberSegments.length)
+    return topicIndex === topicSegments.length && subscriberIndex === subscriberSegments.length
+  }
+
   public subscribeOnTopic(newSubscription: TopicSubscriber) {
+    this._logger.debug(`Subscribing to topic: ${newSubscription.topic}`);
     this._mqttClient.subscribe(newSubscription.topic);
     DkMqttClient._topicObservers.push(newSubscription);
   }
