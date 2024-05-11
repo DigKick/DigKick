@@ -4,7 +4,7 @@ import {
   SoccerTableRegisterTopic,
 } from "../../../mqtt/soccerTable/handler/soccerTableRegisterHandler";
 import {SoccerTableHandler} from "../../../mqtt/soccerTable/handler/soccerTableHandler";
-import type {TableRegisterPayload} from "../../../mqtt/client/payloads/TableRegisterPayload";
+import type {TableRegisterPayload} from "../../../mqtt/client/payloads/tableRegisterPayload";
 
 let soccerTableRegisterHandler: SoccerTableRegisterHandler;
 

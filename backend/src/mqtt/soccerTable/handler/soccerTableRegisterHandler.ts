@@ -5,7 +5,7 @@ import type {TopicSubscriber} from "../../client/topicSubscriber";
 import {SoccerTableHandler} from "./soccerTableHandler";
 import {LoggerFactory} from "../../../logging/loggerFactory";
 import {Logger} from "winston";
-import type {TableRegisterPayload} from "../../client/payloads/TableRegisterPayload";
+import type {TableRegisterPayload} from "../../client/payloads/tableRegisterPayload";
 
 export enum SoccerTableRegisterTopic {
   REGISTER = `/${BasicTerm.TABLE}/register`,
