@@ -76,10 +76,11 @@ export class DkMqttClient {
       } catch (e) {
         if (e instanceof SyntaxError) {
           this._logger.error("Could not parse payload to JSON: ", e)
-          return
+          return;
         }
 
         this._logger.error("Unexpected error while parsing payload to JSON:", e);
+        return;
       }
 
       DkMqttClient._topicObservers.forEach((subscriber) => {
