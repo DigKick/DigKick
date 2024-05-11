@@ -7,7 +7,7 @@ import {SoccerTable} from "../../models/soccerTable";
 export enum HandlerType {
   GAME = BasicTerm.GAME,
   SOCCERTABLE = BasicTerm.TABLE,
-  HARDWARE = "HARDWARE",
+  HARDWARE = "Hardware",
   ABSTRACT = "ABSTRACT"
 }
 
@@ -16,7 +16,7 @@ export class AbstractHandler<T, K> {
   public observerMap: Map<T, Function> = new Map();
   public subject: K;
 
-  private _logger: Logger;
+  protected _logger: Logger;
   private readonly _mapper: Function
 
 
