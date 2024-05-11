@@ -1,12 +1,13 @@
 import {BasicTerm} from "../../abstract/basicTerm";
+import {TeamColor} from "../../../models/team";
 
 export class HardwareTopicManager {
 
-  constructor(private _soccerTableId: string, private _gameId: string) {
+  constructor(private _soccerTableId: string, private _teamColor: TeamColor) {
   }
 
   private get _baseTopic(): string {
-    return `/${BasicTerm.TABLE}/${this._soccerTableId}/${BasicTerm.TEAM}/${this._gameId}`;
+    return `/${BasicTerm.TABLE}/${this._soccerTableId}/${BasicTerm.TEAM}/${this._teamColor}`;
   }
 
   private get _baseButtonTopic(): string {
