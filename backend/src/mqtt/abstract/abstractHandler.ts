@@ -55,6 +55,10 @@ export class AbstractHandler<T, K> {
 
   public triggerEvent(event: T) {
     const triggeredEvents = this._mapper(event, this.subject)
+    if (!triggeredEvents) {
+      this._logger.warn(`Got "undefined" when triggering event "${event}"`)
+      return
+    }
     triggeredEvents.forEach((event: T) => {
       this._notifyObserver(event);
     })
