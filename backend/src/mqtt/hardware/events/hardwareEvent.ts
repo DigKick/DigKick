@@ -22,5 +22,8 @@ export enum HardwareEventType {
 }
 
 export const hardwareEventMapper = (hardwareEvent: HardwareEventType, soccerTableHandler: SoccerTableHandler) => {
+  let triggeredEvents = [hardwareEvent]
+  console.log("EVENT TRIGGERED: ", hardwareEvent)
 
+  return new Set(triggeredEvents)
 }
