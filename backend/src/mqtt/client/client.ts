@@ -1,4 +1,4 @@
-import mqtt, {MqttClient} from "mqtt";
+import mqtt, {type IClientPublishOptions, MqttClient} from "mqtt";
 import {MqttConfig} from "./config";
 import type {TopicSubscriber} from "./topicSubscriber";
 import {Logger} from "winston";
@@ -140,5 +140,15 @@ export class DkMqttClient {
       DkMqttClient._topicObservers.indexOf(newSubscription),
       1,
     );
+  }
+
+  public publishWithRetain(topic: string, message: string) {
+    this.publish(topic, message, {
+      retain: true
+    })
+  }
+
+  public publish(topic: string, message: string, options: IClientPublishOptions) {
+    this._mqttClient.publish(topic, message, options);
   }
 }
