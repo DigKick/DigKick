@@ -1,6 +1,7 @@
 import {beforeEach, expect, mock, test} from "bun:test";
 import {AbstractHandler, HandlerType} from "../../../mqtt/abstract/abstractHandler";
 import {SoccerTable} from "../../../models/soccerTable";
+import type {EventMapper} from "../../../mqtt/abstract/eventMapper";
 
 enum TestEvent {
   EVENT_1 = "EVENT_1",
@@ -8,27 +9,35 @@ enum TestEvent {
   EVENT_3 = "EVENT_3",
 }
 
-const testEventMapper = (event: TestEvent, testObj: TestClass) => {
-  let triggeredEvents = [event];
+class TestEventMapper implements EventMapper<TestEvent> {
 
-  switch (event) {
-    case TestEvent.EVENT_1:
-      testObj.lastEvent = TestEvent.EVENT_1;
-      break;
-    case TestEvent.EVENT_2:
-      testObj.lastEvent = TestEvent.EVENT_2;
-      break;
-    case TestEvent.EVENT_3:
-      testObj.lastEvent = TestEvent.EVENT_3;
-      break;
-    default:
-      testObj.lastEvent = "default";
-      break;
+  private readonly _testObj: TestClass
+
+  constructor(testObj: TestClass) {
+    this._testObj = testObj;
   }
 
-  return new Set(triggeredEvents);
-};
+  map(event: TestEvent) {
+    let triggeredEvents = [event];
 
+    switch (event) {
+      case TestEvent.EVENT_1:
+        this._testObj.lastEvent = TestEvent.EVENT_1;
+        break;
+      case TestEvent.EVENT_2:
+        this._testObj.lastEvent = TestEvent.EVENT_2;
+        break;
+      case TestEvent.EVENT_3:
+        this._testObj.lastEvent = TestEvent.EVENT_3;
+        break;
+      default:
+        this._testObj.lastEvent = "default";
+        break;
+    }
+
+    return new Set(triggeredEvents);
+  }
+}
 class TestClass {
   lastEvent: string;
 
@@ -39,7 +48,7 @@ class TestClass {
 
 class TestHandler extends AbstractHandler<TestEvent, TestClass> {
   constructor(testObj: TestClass) {
-    super(testObj, testEventMapper, HandlerType.ABSTRACT, new SoccerTable("TEST"));
+    super(testObj, new TestEventMapper(testObj), HandlerType.ABSTRACT, new SoccerTable("TEST"));
   }
 }
 
