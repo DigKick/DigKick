@@ -1,6 +1,6 @@
 import {BasicTerm} from "../../util/basicTerm";
 import {TeamColor} from "../../../models/team";
-import {BaseTopicFactory} from "../../util/BaseTopicFactory";
+import {BaseTopicFactory} from "../../util/baseTopicFactory";
 import {SoccerTable} from "../../../models/soccerTable";
 
 export class HardwareTopicManager {

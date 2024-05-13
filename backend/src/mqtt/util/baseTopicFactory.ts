@@ -9,6 +9,6 @@ export class BaseTopicFactory {
   }
 
   static getTeamTopic(soccerTable: SoccerTable, teamColor: TeamColor): string {
-    return `/${BasicTerm.TABLE}/${soccerTable.id}/${BasicTerm.TEAM}/${teamColor}`;
+    return this.getBaseTopic(soccerTable) + `/${BasicTerm.TEAM}/${teamColor}`;
   }
 }
