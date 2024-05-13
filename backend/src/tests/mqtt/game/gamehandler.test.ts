@@ -31,51 +31,51 @@ const subscribeMockAndTriggerEvent = (event: GameEventType) => {
 }
 
 test('add new observer', () => {
-  gameHandler.subscribe(GameEventType.HOME_SCORE_CHANGE, emptyMockFunc)
+  gameHandler.subscribe(GameEventType.WHITE_SCORE_CHANGE, emptyMockFunc)
 
   expect(Array.from(gameHandler.observerMap.values()).length).toEqual(1)
 })
 
 test('remove observer', () => {
-  gameHandler.subscribe(GameEventType.HOME_SCORE_CHANGE, emptyMockFunc)
+  gameHandler.subscribe(GameEventType.WHITE_SCORE_CHANGE, emptyMockFunc)
   gameHandler.unsubscribe(emptyMockFunc)
 
   expect(Array.from(gameHandler.observerMap.values()).length).toEqual(0)
 })
 
 test('test callback', () => {
-  gameHandler.subscribe(GameEventType.HOME_SCORE_CHANGE, emptyMockFunc)
-  gameHandler.triggerEvent(GameEventType.HOME_SCORE_INCREASE)
+  gameHandler.subscribe(GameEventType.WHITE_SCORE_CHANGE, emptyMockFunc)
+  gameHandler.triggerEvent(GameEventType.WHITE_SCORE_INCREASE)
   expect(emptyMockFunc.mock.calls.length).toEqual(1)
 })
 
-test('test event home increase', () => {
+test('test event white score increase', () => {
   gameHandler.subscribe(GameEventType.SCORE_CHANGE, gameObs)
-  gameHandler.triggerEvent(GameEventType.HOME_SCORE_INCREASE)
+  gameHandler.triggerEvent(GameEventType.WHITE_SCORE_INCREASE)
 
-  expect(cbGame!.homeTeam.score).toEqual(1)
+  expect(cbGame!.whiteTeam.score).toEqual(1)
 })
 
 
-test('test event home decrease', () => {
-  gameHandler.subscribe(GameEventType.HOME_SCORE_DECREASE, gameObs)
-  gameHandler.triggerEvent(GameEventType.HOME_SCORE_INCREASE)
-  gameHandler.triggerEvent(GameEventType.HOME_SCORE_DECREASE)
-  expect(cbGame!.homeTeam.score).toEqual(0)
+test('test event white team score decrease', () => {
+  gameHandler.subscribe(GameEventType.WHITE_SCORE_DECREASE, gameObs)
+  gameHandler.triggerEvent(GameEventType.WHITE_SCORE_INCREASE)
+  gameHandler.triggerEvent(GameEventType.WHITE_SCORE_DECREASE)
+  expect(cbGame!.whiteTeam.score).toEqual(0)
 })
 
 
-test('test event guest increase', () => {
-  subscribeObserverAndTriggerEvent(GameEventType.GUEST_SCORE_INCREASE)
-  expect(cbGame!.guestTeam.score).toEqual(1)
+test('test event black team score increase', () => {
+  subscribeObserverAndTriggerEvent(GameEventType.BLACK_SCORE_INCREASE)
+  expect(cbGame!.blackTeam.score).toEqual(1)
 })
 
 
-test('test event guest decrease', () => {
-  subscribeObserverAndTriggerEvent(GameEventType.GUEST_SCORE_INCREASE)
-  gameHandler.triggerEvent(GameEventType.GUEST_SCORE_DECREASE)
+test('test event black score decrease', () => {
+  subscribeObserverAndTriggerEvent(GameEventType.BLACK_SCORE_INCREASE)
+  gameHandler.triggerEvent(GameEventType.BLACK_SCORE_DECREASE)
 
-  expect(cbGame!.guestTeam.score).toEqual(0)
+  expect(cbGame!.blackTeam.score).toEqual(0)
 })
 
 test(`test trigger all events`, () => {

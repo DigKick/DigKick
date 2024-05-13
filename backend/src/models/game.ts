@@ -3,16 +3,16 @@ import {ScoreChange, Team, TeamColor} from "./team";
 export class Game {
   public static STANDARDGAME_WINNINGSCORE = 10;
 
-  public homeTeam: Team;
-  public guestTeam: Team;
+  public whiteTeam: Team;
+  public blackTeam: Team;
   private _winnerTeam!: Team | undefined;
 
   public readonly pointsToWin: number;
 
   // Constructor for standard game
   constructor() {
-    this.homeTeam = new Team(TeamColor.WHITE, this);
-    this.guestTeam = new Team(TeamColor.BLACK, this);
+    this.whiteTeam = new Team(TeamColor.WHITE, this);
+    this.blackTeam = new Team(TeamColor.BLACK, this);
 
     this.pointsToWin = Game.STANDARDGAME_WINNINGSCORE;
   }
@@ -34,12 +34,12 @@ export class Game {
     return undefined;
   }
 
-  updateHomeTeamScore(change: ScoreChange) {
-    this._updateTeamScoreAndWinner(this.homeTeam, change);
+  updateWhiteTeamScore(change: ScoreChange) {
+    this._updateTeamScoreAndWinner(this.whiteTeam, change);
   }
 
-  updateGuestTeamScore(change: ScoreChange) {
-    this._updateTeamScoreAndWinner(this.guestTeam, change)
+  updateBlackTeamScore(change: ScoreChange) {
+    this._updateTeamScoreAndWinner(this.blackTeam, change)
   }
 
   private _updateTeamScoreAndWinner(team: Team, change: ScoreChange) {
@@ -55,15 +55,15 @@ export class Game {
   }
 
   public reset() {
-    this.homeTeam.score = 0;
-    this.guestTeam.score = 0;
+    this.whiteTeam.score = 0;
+    this.blackTeam.score = 0;
 
     this._winnerTeam = undefined;
   }
 
   toJSON() {
     return {
-      teams: [this.guestTeam, this.homeTeam],
+      teams: [this.blackTeam, this.whiteTeam],
       pointsToWin: this.pointsToWin,
       winner: this._winnerTeam
     }

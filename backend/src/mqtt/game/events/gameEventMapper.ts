@@ -16,17 +16,17 @@ export class GameEventMapper implements EventMapper<GameEventType>{
     let triggeredEvents = [event]
 
     switch (event) {
-      case GameEventType.HOME_SCORE_INCREASE:
-        this._game.updateHomeTeamScore(ScoreChange.INCREASE);
+      case GameEventType.WHITE_SCORE_INCREASE:
+        this._game.updateWhiteTeamScore(ScoreChange.INCREASE);
         break;
-      case GameEventType.HOME_SCORE_DECREASE:
-        this._game.updateHomeTeamScore(ScoreChange.DECREASE);
+      case GameEventType.WHITE_SCORE_DECREASE:
+        this._game.updateWhiteTeamScore(ScoreChange.DECREASE);
         break;
-      case GameEventType.GUEST_SCORE_INCREASE:
-        this._game.updateGuestTeamScore(ScoreChange.INCREASE);
+      case GameEventType.BLACK_SCORE_INCREASE:
+        this._game.updateBlackTeamScore(ScoreChange.INCREASE);
         break;
-      case GameEventType.GUEST_SCORE_DECREASE:
-        this._game.updateGuestTeamScore(ScoreChange.DECREASE);
+      case GameEventType.BLACK_SCORE_DECREASE:
+        this._game.updateBlackTeamScore(ScoreChange.DECREASE);
         break;
       default:
         break;
@@ -36,9 +36,9 @@ export class GameEventMapper implements EventMapper<GameEventType>{
       triggeredEvents.push(GameEventType.SCORE_CHANGE)
 
       if (event.includes(GameEventType._HOME)) {
-        triggeredEvents.push(GameEventType.HOME_SCORE_CHANGE)
+        triggeredEvents.push(GameEventType.WHITE_SCORE_CHANGE)
       } else {
-        triggeredEvents.push(GameEventType.GUEST_SCORE_CHANGE)
+        triggeredEvents.push(GameEventType.BLACK_SCORE_CHANGE)
       }
     }
 

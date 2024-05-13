@@ -1,5 +1,3 @@
-import {SoccerTableHandler} from "../../soccerTable/handler/soccerTableHandler";
-
 export enum HardwareEventType {
   _HIGH = "HIGH",
   _LOW = "LOW",
