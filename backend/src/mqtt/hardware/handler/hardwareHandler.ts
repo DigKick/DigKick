@@ -64,8 +64,8 @@ export class HardwareHandler extends AbstractHandler<HardwareEventType, SoccerTa
   }
 
   constructor(subject: SoccerTableHandler, teamColor: TeamColor) {
-    super(subject, new HardwareEventMapper(subject, teamColor), HandlerType.HARDWARE, subject.subject);
-
+    super(subject, HandlerType.HARDWARE, subject.subject);
+    this._mapper = new HardwareEventMapper(subject, teamColor);
     this._soccerTableHandler = subject;
     this._hardwareTopicManager = new HardwareTopicManager(this._soccerTableHandler.subject, teamColor);
     this._dkMqttClient = DkMqttClient.getInstance();
