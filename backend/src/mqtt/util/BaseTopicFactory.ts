@@ -1,5 +1,5 @@
 import {SoccerTable} from "../../models/soccerTable";
-import {BasicTerm} from "../abstract/basicTerm";
+import {BasicTerm} from "./basicTerm";
 import {TeamColor} from "../../models/team";
 
 export class BaseTopicFactory {

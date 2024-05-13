@@ -4,7 +4,7 @@ import {HardwareEventType} from "../events/hardwareEvent";
 import {DkMqttClient} from "../../client/client";
 import {HardwareTopicManager} from "../topics/hardwareTopicManager";
 import type {PinOut, PinStatusPayload} from "../../client/payloads/pinStatusPayload";
-import {BasicTerm} from "../../abstract/basicTerm";
+import {BasicTerm} from "../../util/basicTerm";
 import type {TopicSubscriber} from "../../client/topicSubscriber";
 import {HardwareEventMapper} from "../events/hardwareEventMapper";
 import {TeamColor} from "../../../models/team";

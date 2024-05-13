@@ -1,4 +1,4 @@
-import {BasicTerm} from "../../abstract/basicTerm";
+import {BasicTerm} from "../../util/basicTerm";
 import {TeamColor} from "../../../models/team";
 import {BaseTopicFactory} from "../../util/BaseTopicFactory";
 import {SoccerTable} from "../../../models/soccerTable";

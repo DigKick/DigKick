@@ -1,6 +1,6 @@
 import {Logger} from "winston";
 import {LoggerFactory} from "../../logging/loggerFactory";
-import {BasicTerm} from "./basicTerm";
+import {BasicTerm} from "../util/basicTerm";
 import {SoccerTable} from "../../models/soccerTable";
 import type {EventMapper} from "./eventMapper";
 

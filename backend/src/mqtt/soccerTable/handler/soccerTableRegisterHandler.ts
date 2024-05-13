@@ -1,5 +1,5 @@
 import {SoccerTable} from "../../../models/soccerTable";
-import {BasicTerm} from "../../abstract/basicTerm";
+import {BasicTerm} from "../../util/basicTerm";
 import {DkMqttClient} from "../../client/client";
 import type {TopicSubscriber} from "../../client/topicSubscriber";
 import {SoccerTableHandler} from "./soccerTableHandler";
