@@ -15,8 +15,6 @@ export enum HardwareEventType {
 
   LIGHTBARRIER_0_HIGH = HardwareEventType._LIGHTBARRIER + `.0.` + HardwareEventType._HIGH,
   LIGHTBARRIER_1_HIGH = HardwareEventType._LIGHTBARRIER + `.1.` + HardwareEventType._HIGH,
-  LIGHTBARRIER_2_HIGH = HardwareEventType._LIGHTBARRIER + `.2.` + HardwareEventType._HIGH,
   LIGHTBARRIER_0_LOW = HardwareEventType._LIGHTBARRIER + `.0.` + HardwareEventType._LOW,
   LIGHTBARRIER_1_LOW = HardwareEventType._LIGHTBARRIER + `.1.` + HardwareEventType._LOW,
-  LIGHTBARRIER_2_LOW = HardwareEventType._LIGHTBARRIER + `.2.` + HardwareEventType._LOW,
 }

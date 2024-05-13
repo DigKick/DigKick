@@ -19,7 +19,7 @@ test('test valid button mappings', () => {
 })
 
 test('test valid lightbarrier mappings', () => {
-  for (let i = 0; i < 3; i++) {
+  for (let i = 0; i < 2; i++) {
     expect(() => hardwareHandler.mapTypeAndIdToEvent(BasicTerm.LIGHTBARRIER, i, PinOut.HIGH)).not.toThrowError()
     expect(() => hardwareHandler.mapTypeAndIdToEvent(BasicTerm.LIGHTBARRIER, i, PinOut.LOW)).not.toThrowError()
   }
