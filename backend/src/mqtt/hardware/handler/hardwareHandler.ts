@@ -1,11 +1,13 @@
 import {SoccerTableHandler} from "../../soccerTable/handler/soccerTableHandler";
 import {AbstractHandler, HandlerType} from "../../abstract/abstractHandler";
-import {hardwareEventMapper, HardwareEventType} from "../events/hardwareEvent";
+import {HardwareEventType} from "../events/hardwareEvent";
 import {DkMqttClient} from "../../client/client";
 import {HardwareTopicManager} from "../topics/hardwareTopicManager";
 import type {PinOut, PinStatusPayload} from "../../client/payloads/pinStatusPayload";
 import {BasicTerm} from "../../abstract/basicTerm";
 import type {TopicSubscriber} from "../../client/topicSubscriber";
+import {HardwareEventMapper} from "../events/hardwareEventMapper";
+import {TeamColor} from "../../../models/team";
 
 export class HardwareHandler extends AbstractHandler<HardwareEventType, SoccerTableHandler> {
 
@@ -61,23 +63,22 @@ export class HardwareHandler extends AbstractHandler<HardwareEventType, SoccerTa
     }
   }
 
-  constructor(subject: SoccerTableHandler, hardwareTopicManager: HardwareTopicManager) {
-    super(subject, hardwareEventMapper, HandlerType.HARDWARE, subject.subject);
+  constructor(subject: SoccerTableHandler, teamColor: TeamColor) {
+    super(subject, new HardwareEventMapper(subject, teamColor), HandlerType.HARDWARE, subject.subject);
+
     this._soccerTableHandler = subject;
-    this._hardwareTopicManager = hardwareTopicManager;
+    this._hardwareTopicManager = new HardwareTopicManager(this._soccerTableHandler.subject, teamColor);
     this._dkMqttClient = DkMqttClient.getInstance();
 
     this.lightbarrierSubscriber  = {
       topic: this._hardwareTopicManager.lightbarriersTopic,
       func: this._topicToEventRouter
     };
-
     this.buttonSubscriber  = {
       topic: this._hardwareTopicManager.buttonsTopic,
       func: this._topicToEventRouter
     };
 
-    // subscribes
     this._subscribeToAllTopics()
   }
 
@@ -97,7 +98,7 @@ export class HardwareHandler extends AbstractHandler<HardwareEventType, SoccerTa
     this._dkMqttClient.subscribeOnTopic(this.lightbarrierSubscriber)
   }
 
-  unsubscribeFromAllTopics() {
+  private _unsubscribeFromAllTopics() {
     this._dkMqttClient.unsubscribeOnTopic(this.buttonSubscriber)
     this._dkMqttClient.unsubscribeOnTopic(this.lightbarrierSubscriber)
   }

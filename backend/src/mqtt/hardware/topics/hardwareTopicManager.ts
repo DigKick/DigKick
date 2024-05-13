@@ -1,17 +1,19 @@
 import {BasicTerm} from "../../abstract/basicTerm";
 import {TeamColor} from "../../../models/team";
+import {BaseTopicFactory} from "../../util/BaseTopicFactory";
+import {SoccerTable} from "../../../models/soccerTable";
 
 export class HardwareTopicManager {
 
-  constructor(private _soccerTableId: string, private _teamColor: TeamColor) {
+  constructor(private _soccerTable: SoccerTable, private _teamColor: TeamColor) {
   }
 
-  private get _baseTopic(): string {
-    return `/${BasicTerm.TABLE}/${this._soccerTableId}/${BasicTerm.TEAM}/${this._teamColor}`;
+  private get _baseTeamTopic(): string {
+    return BaseTopicFactory.getTeamTopic(this._soccerTable, this._teamColor);
   }
 
   private get _baseButtonTopic(): string {
-    return this._baseTopic + `/${BasicTerm.BUTTON}`;
+    return this._baseTeamTopic + `/${BasicTerm.BUTTON}`;
   }
 
   buttonTopic(buttonId: number): string {
@@ -23,7 +25,7 @@ export class HardwareTopicManager {
   }
 
   private get _baseLightbarrierTopic(): string {
-    return this._baseTopic + `/${BasicTerm.LIGHTBARRIER}`;
+    return this._baseTeamTopic + `/${BasicTerm.LIGHTBARRIER}`;
   }
 
   lightBarrierTopic(lightbarrierId: number): string {

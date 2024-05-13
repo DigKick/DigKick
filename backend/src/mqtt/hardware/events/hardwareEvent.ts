@@ -20,10 +20,3 @@ export enum HardwareEventType {
   LIGHTBARRIER_1_LOW = HardwareEventType._LIGHTBARRIER + `.1.` + HardwareEventType._LOW,
   LIGHTBARRIER_2_LOW = HardwareEventType._LIGHTBARRIER + `.2.` + HardwareEventType._LOW,
 }
-
-export const hardwareEventMapper = (hardwareEvent: HardwareEventType, soccerTableHandler: SoccerTableHandler) => {
-  let triggeredEvents = [hardwareEvent]
-  console.log("EVENT TRIGGERED: ", hardwareEvent)
-
-  return new Set(triggeredEvents)
-}

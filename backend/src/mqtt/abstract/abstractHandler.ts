@@ -2,6 +2,7 @@ import {Logger} from "winston";
 import {LoggerFactory} from "../../logging/loggerFactory";
 import {BasicTerm} from "./basicTerm";
 import {SoccerTable} from "../../models/soccerTable";
+import type {EventMapper} from "./eventMapper";
 
 
 export enum HandlerType {
@@ -11,16 +12,16 @@ export enum HandlerType {
   ABSTRACT = "ABSTRACT"
 }
 
-export class AbstractHandler<T, K> {
+export class AbstractHandler<EventType, SubjectType> {
 
-  public observerMap: Map<T, Function> = new Map();
-  public subject: K;
+  public observerMap: Map<EventType, Function> = new Map();
+  public subject: SubjectType;
 
   protected _logger: Logger;
-  private readonly _mapper: Function
+  private readonly _mapper: EventMapper<EventType>
 
 
-  constructor(subject: K, mapper: Function, handlerType: HandlerType, soccerTable: SoccerTable) {
+  constructor(subject: SubjectType, mapper: EventMapper<EventType>, handlerType: HandlerType, soccerTable: SoccerTable) {
     this.subject = subject;
     this._mapper = mapper;
 
@@ -28,7 +29,7 @@ export class AbstractHandler<T, K> {
     this._logger.debug(`${handlerType}Handler created.`);
   }
 
-  public subscribe(event: T, observer: Function) {
+  public subscribe(event: EventType, observer: Function) {
     this._logger.debug(`Subscribed to ${event}.`)
     if (Array.from(this.observerMap.values()).includes(observer)) {
       // observer already subscribed
@@ -46,20 +47,20 @@ export class AbstractHandler<T, K> {
     })
   }
 
-  private _notifyObserver(event: T) {
+  private _notifyObserver(event: EventType) {
     const callback = this.observerMap.get(event)
     if (callback) {
       callback(this.subject)
     }
   }
 
-  public triggerEvent(event: T) {
-    const triggeredEvents = this._mapper(event, this.subject)
+  public triggerEvent(event: EventType) {
+    const triggeredEvents = this._mapper.map(event)
     if (!triggeredEvents) {
       this._logger.warn(`Got "undefined" when triggering event "${event}"`)
       return
     }
-    triggeredEvents.forEach((event: T) => {
+    triggeredEvents.forEach((event: EventType) => {
       this._notifyObserver(event);
     })
   }

@@ -1,7 +1,7 @@
 import { beforeEach, expect, mock, test } from "bun:test";
 import { SoccerTableHandler } from "../../../mqtt/soccerTable/handler/soccerTableHandler";
 import { SoccerTable } from "../../../models/soccerTable";
-import { SoccerTableEvent } from "../../../mqtt/soccerTable/events/soccerTableEvent";
+import { SoccerTableEventType } from "../../../mqtt/soccerTable/events/soccerTableEventType";
 import { GameEventType } from "../../../mqtt/game/events/gameEvent";
 
 let emptyMockFunc = mock();
@@ -13,12 +13,12 @@ const soccerTableCallback = (soccerTable: SoccerTable) => {
   soccerTableCb = soccerTable;
 };
 
-const subscribeObserverAndTriggerEvent = (event: SoccerTableEvent) => {
+const subscribeObserverAndTriggerEvent = (event: SoccerTableEventType) => {
   soccerTableHandler.subscribe(event, soccerTableCallback);
   soccerTableHandler.triggerEvent(event);
 };
 
-const subscribeMockAndTriggerEvent = (event: SoccerTableEvent) => {
+const subscribeMockAndTriggerEvent = (event: SoccerTableEventType) => {
   soccerTableHandler.subscribe(event, emptyMockFunc);
   soccerTableHandler.triggerEvent(event);
 };
@@ -36,13 +36,13 @@ test("Game gets restarted correctly", () => {
 
   expect(soccerTableHandler.gameHandler.subject.homeTeam.score).toBe(1);
 
-  soccerTableHandler.triggerEvent(SoccerTableEvent.NEW_GAME);
+  soccerTableHandler.triggerEvent(SoccerTableEventType.NEW_GAME);
 
   expect(soccerTableHandler.gameHandler.subject.homeTeam.score).toBe(0);
 });
 
 test(`test trigger all events`, () => {
-  Object.values(SoccerTableEvent).forEach((event: SoccerTableEvent) => {
+  Object.values(SoccerTableEventType).forEach((event: SoccerTableEventType) => {
     if (!event.includes(".")) {
       // sort out values
       return;
@@ -56,7 +56,7 @@ test(`test trigger all events`, () => {
 test(`test new game event`, () => {
   const preTableHandler = soccerTableCb;
 
-  subscribeObserverAndTriggerEvent(SoccerTableEvent.NEW_GAME);
+  subscribeObserverAndTriggerEvent(SoccerTableEventType.NEW_GAME);
 
   expect(preTableHandler).not.toBe(soccerTableCb);
 });
@@ -64,7 +64,7 @@ test(`test new game event`, () => {
 test(`test cancel game event`, () => {
   const preTableHandler = soccerTableCb;
 
-  subscribeObserverAndTriggerEvent(SoccerTableEvent.CANCEL_GAME);
+  subscribeObserverAndTriggerEvent(SoccerTableEventType.CANCEL_GAME);
 
   expect(preTableHandler).not.toBe(soccerTableCb);
 });
@@ -72,7 +72,7 @@ test(`test cancel game event`, () => {
 test(`test finish game event`, () => {
   const preTableHandler = soccerTableCb;
 
-  subscribeObserverAndTriggerEvent(SoccerTableEvent.FINISH_GAME);
+  subscribeObserverAndTriggerEvent(SoccerTableEventType.FINISH_GAME);
 
   expect(preTableHandler).not.toBe(soccerTableCb);
 });
