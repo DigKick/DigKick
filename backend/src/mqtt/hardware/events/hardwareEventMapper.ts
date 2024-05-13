@@ -9,7 +9,6 @@ export class HardwareEventMapper implements EventMapper<HardwareEventType>{
 
   constructor(soccerTableHandler: SoccerTableHandler, teamColor: TeamColor) {
     this.soccerTableHandler = soccerTableHandler;
-
   }
 
   map(event: HardwareEventType) {
