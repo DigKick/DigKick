@@ -55,7 +55,7 @@ export class HardwareHandler extends AbstractHandler<HardwareEventType, SoccerTa
     let toTriggerEvent: HardwareEventType
 
     try {
-      toTriggerEvent = this._mapTypeAndIdToEvent(hardwareType, hardwareId, pinStatusPayload.pinOut)
+      toTriggerEvent = this.mapTypeAndIdToEvent(hardwareType, hardwareId, pinStatusPayload.pinOut)
       this.triggerEvent(toTriggerEvent)
     } catch (e) {
       this._logger.error(`No hardware event: "${String(`${hardwareType}_${hardwareId}_${pinStatusPayload.pinOut}`).toUpperCase()}"`)
@@ -82,12 +82,13 @@ export class HardwareHandler extends AbstractHandler<HardwareEventType, SoccerTa
     this._subscribeToAllTopics()
   }
 
-  private _mapTypeAndIdToEvent(hardwareType: BasicTerm, hardwareId: number,
-                               pinStatus: PinOut) {
+  mapTypeAndIdToEvent(hardwareType: BasicTerm, hardwareId: number,
+                      pinStatus: PinOut) {
     const eventTypeString = String(`${hardwareType}.${hardwareId}.${pinStatus}`).toUpperCase();
     if (HardwareEventType[eventTypeString as keyof typeof HardwareEventType]) {
       return HardwareEventType[eventTypeString as keyof typeof HardwareEventType];
     } else {
+      this._logger.error(`Enum entry for '${eventTypeString}' does not exist.`)
       throw new Error(`Enum entry for '${eventTypeString}' does not exist.`);
     }
   }
