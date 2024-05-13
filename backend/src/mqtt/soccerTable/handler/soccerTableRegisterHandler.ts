@@ -25,10 +25,11 @@ export class SoccerTableRegisterHandler {
   registerSubscriber: TopicSubscriber = {
     topic: SoccerTableRegisterTopic.REGISTER,
     func: (_: any, payload: TableRegisterPayload) => {
-      if (!payload) {
+      if (!payload || !payload.tableId) {
+        this._logger.error("Table register payload invalid.")
         return;
       }
-      const soccerTableId = payload.tableId;
+      const soccerTableId = payload.tableId.toLowerCase();
       if (!this._validateTableId(soccerTableId)) {
         this._logger.error(`"${soccerTableId}" is not a valid id for a soccer table.`)
         return;
@@ -52,6 +53,12 @@ export class SoccerTableRegisterHandler {
   }
 
   private _validateTableId(tableId: string): boolean {
+    if (tableId != tableId.toLowerCase()) {
+      return false;
+    }
+    if (tableId == "register") {
+      return false;
+    }
     return !(!tableId || tableId === "");
   }
 }
