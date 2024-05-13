@@ -1,5 +1,3 @@
-import {SoccerTable} from "../../../models/soccerTable";
-
 export enum SoccerTableEventType {
   GAME = "GAME",
 

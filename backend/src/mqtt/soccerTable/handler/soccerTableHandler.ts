@@ -3,7 +3,6 @@ import {GameHandler} from "../../game/handler/gameHandler";
 import {SoccerTableEventType} from "../events/soccerTableEventType";
 import {AbstractHandler, HandlerType} from "../../abstract/abstractHandler";
 import {HardwareHandler} from "../../hardware/handler/hardwareHandler";
-import {HardwareTopicManager} from "../../hardware/topics/hardwareTopicManager";
 import {TeamColor} from "../../../models/team";
 import {SoccerTableEventMapper} from "../events/soccerTableEventMapper";
 
