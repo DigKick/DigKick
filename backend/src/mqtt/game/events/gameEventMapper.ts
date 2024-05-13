@@ -1,7 +1,7 @@
 import type {EventMapper} from "../../abstract/eventMapper";
 import {GameEventType} from "./gameEvent";
 import {Game} from "../../../models/game";
-import {ScoreChange} from "../../../models/team";
+import {ScoreChange, TeamColor} from "../../../models/team";
 
 export class GameEventMapper implements EventMapper<GameEventType>{
 
@@ -35,9 +35,10 @@ export class GameEventMapper implements EventMapper<GameEventType>{
     if (event.includes(GameEventType.SCORE_DECREASE) || event.includes(GameEventType.SCORE_INCREASE)) {
       triggeredEvents.push(GameEventType.SCORE_CHANGE)
 
-      if (event.includes(GameEventType._HOME)) {
+      if (event.includes(TeamColor.WHITE)) {
         triggeredEvents.push(GameEventType.WHITE_SCORE_CHANGE)
-      } else {
+      }
+      if (event.includes(TeamColor.BLACK)) {
         triggeredEvents.push(GameEventType.BLACK_SCORE_CHANGE)
       }
     }
