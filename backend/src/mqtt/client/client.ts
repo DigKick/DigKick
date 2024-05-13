@@ -84,7 +84,7 @@ export class DkMqttClient {
       }
 
       DkMqttClient._topicObservers.forEach((subscriber) => {
-        if (!this._matchTopic(subscriber.topic, topic)) {
+        if (!this.matchTopic(subscriber.topic, topic)) {
           return;
         }
         this._logger.debug(`Subscriber found for topic: ${topic}`)
@@ -93,37 +93,38 @@ export class DkMqttClient {
     });
   }
 
-  private _matchTopic(subscriberTopic: string, topic: string): boolean {
+  matchTopic(subscriberTopic: string, topic: string): boolean {
     const subscriberSegments = subscriberTopic.split('/');
     const topicSegments = topic.split('/');
 
     let subscriberIndex = 0;
     let topicIndex = 0;
 
-    for (subscriberIndex = 0; subscriberIndex < subscriberSegments.length; subscriberIndex++) {
+    while (subscriberIndex < subscriberSegments.length) {
+
       const subscriberSegment = subscriberSegments[subscriberIndex]
-      if (subscriberSegment === topicSegments[topicIndex]
+      const topicSegment = topicSegments[topicIndex]
+
+      if (subscriberSegment === topicSegment
         || subscriberSegment === '+') {
         topicIndex++;
+        subscriberIndex++
         continue
       }
 
-      if (subscriberSegment === '#') {
-        if (subscriberIndex < subscriberTopic.length - 1) {
-          // Check if next one matches
-          if (subscriberSegments[subscriberIndex + 1] === topicSegments[topicIndex]) {
-            topicIndex += 2
+      if (subscriberSegment === '#' && topicSegment) { // Wildcard check
+        if (subscriberIndex + 1 < subscriberSegments.length) { // If subscriber topic has next values search if the next one is already there
+          if (subscriberSegments[subscriberIndex + 1] === topicSegment) {
+            subscriberIndex += 2; // move subscriber index over the matching one (looking one forward already)
           }
-        } else {
-          // Ends on #
-          return true
         }
+
+        topicIndex++
         continue
       }
-      // we should not end up here
-      return false
+
+      return subscriberSegment === '#' && subscriberIndex === subscriberSegments.length - 1 && !topicSegment;
     }
-    // console.log(topicIndex, topicSegments.length, subscriberIndex, subscriberSegments.length)
     return topicIndex === topicSegments.length && subscriberIndex === subscriberSegments.length
   }
 
