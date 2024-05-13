@@ -5,12 +5,17 @@ import {DkMqttClient} from "../../client/client";
 import {HardwareTopicManager} from "../topics/hardwareTopicManager";
 import type {PinOut, PinStatusPayload} from "../../client/payloads/pinStatusPayload";
 import {BasicTerm} from "../../abstract/basicTerm";
+import type {TopicSubscriber} from "../../client/topicSubscriber";
 
 export class HardwareHandler extends AbstractHandler<HardwareEventType, SoccerTableHandler> {
 
   private _soccerTableHandler: SoccerTableHandler;
   private _hardwareTopicManager: HardwareTopicManager;
   private _dkMqttClient: DkMqttClient;
+
+  private readonly lightbarrierSubscriber: TopicSubscriber;
+  private readonly buttonSubscriber: TopicSubscriber;
+
 
   _topicToEventRouter = (topic: string, payload: any) => {
     let pinStatusPayload: PinStatusPayload
@@ -62,6 +67,16 @@ export class HardwareHandler extends AbstractHandler<HardwareEventType, SoccerTa
     this._hardwareTopicManager = hardwareTopicManager;
     this._dkMqttClient = DkMqttClient.getInstance();
 
+    this.lightbarrierSubscriber  = {
+      topic: this._hardwareTopicManager.lightbarriersTopic,
+      func: this._topicToEventRouter
+    };
+
+    this.buttonSubscriber  = {
+      topic: this._hardwareTopicManager.buttonsTopic,
+      func: this._topicToEventRouter
+    };
+
     // subscribes
     this._subscribeToAllTopics()
   }
@@ -76,14 +91,14 @@ export class HardwareHandler extends AbstractHandler<HardwareEventType, SoccerTa
     }
   }
 
+
   private _subscribeToAllTopics() {
-    this._dkMqttClient.subscribeOnTopic({
-      topic: this._hardwareTopicManager.buttonsTopic,
-      func: this._topicToEventRouter
-    })
+    this._dkMqttClient.subscribeOnTopic(this.buttonSubscriber)
+    this._dkMqttClient.subscribeOnTopic(this.lightbarrierSubscriber)
   }
 
   unsubscribeFromAllTopics() {
-
+    this._dkMqttClient.unsubscribeOnTopic(this.buttonSubscriber)
+    this._dkMqttClient.unsubscribeOnTopic(this.lightbarrierSubscriber)
   }
 }
