@@ -2,17 +2,26 @@ import type {EventMapper} from "../../abstract/eventMapper";
 import {GameEventType} from "./gameEvent";
 import {Game} from "../../../models/game";
 import {ScoreChange, TeamColor} from "../../../models/team";
+import {SoccerTable} from "../../../models/soccerTable";
+import {SoccerTableHandler} from "../../soccerTable/handler/soccerTableHandler";
+import {DkMqttClient} from "../../client/client";
+import {BaseTopicFactory} from "../../util/baseTopicFactory";
+import {ScorePayload} from "../payloads/ScorePayload";
+import {WinnerTeamPayload} from "../payloads/WinnerTeamPayload";
 
 export class GameEventMapper implements EventMapper<GameEventType>{
 
   private readonly _game: Game
+  private readonly _soccerTable: SoccerTable
 
-  constructor(game: Game) {
-    this._game = game;
+  constructor(soccerTable: SoccerTable) {
+    this._soccerTable = soccerTable;
+    this._game = soccerTable.game;
   }
 
   map(event: GameEventType) {
     const prevGame: Game = structuredClone(this._game)
+    const dkMqttClient: DkMqttClient = DkMqttClient.getInstance()
     let triggeredEvents = [event]
 
     switch (event) {
@@ -37,15 +46,22 @@ export class GameEventMapper implements EventMapper<GameEventType>{
 
       if (event.includes(TeamColor.WHITE)) {
         triggeredEvents.push(GameEventType.WHITE_SCORE_CHANGE)
+        dkMqttClient.publishWithRetain(BaseTopicFactory.getTeamTopic(this._soccerTable, TeamColor.WHITE) + "/score", JSON.stringify(new ScorePayload(this._game.whiteTeam.score)))
       }
       if (event.includes(TeamColor.BLACK)) {
         triggeredEvents.push(GameEventType.BLACK_SCORE_CHANGE)
+        dkMqttClient.publishWithRetain(BaseTopicFactory.getTeamTopic(this._soccerTable, TeamColor.BLACK) + "/score", JSON.stringify(new ScorePayload(this._game.blackTeam.score)))
       }
     }
 
-    if (prevGame.winnerTeam !== this._game.winnerTeam) {
+    if (prevGame?.winnerTeam !== this._game?.winnerTeam) {
       triggeredEvents.push(GameEventType.WINNER_CHANGE)
+      if (this._game.winnerTeam) {
+        dkMqttClient.publishWithRetain(BaseTopicFactory.getBaseTopic(this._soccerTable) + "/winner", JSON.stringify(new WinnerTeamPayload(this._game.winnerTeam)))
+      }
+
     }
+
 
     return new Set(triggeredEvents)
   }

@@ -10,7 +10,7 @@ export class GameHandler extends AbstractHandler<GameEventType, Game> {
 
   constructor(soccerTable: SoccerTable) {
     super(soccerTable.game, HandlerType.GAME, soccerTable);
-    this._mapper = new GameEventMapper(soccerTable.game)
+    this._mapper = new GameEventMapper(soccerTable)
     this.soccerTable = soccerTable;
   }
 }
