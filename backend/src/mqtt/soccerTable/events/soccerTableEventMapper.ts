@@ -5,7 +5,7 @@ import {GameHandler} from "../../game/handler/gameHandler";
 import {GameEventType} from "../../game/events/gameEvent";
 import {DkMqttClient} from "../../client/client";
 import {BaseTopicFactory} from "../../util/baseTopicFactory";
-import {SoccerTablePayload} from "../payloads/SoccerTablePayload";
+import {SoccerTablePayload} from "../payloads/soccerTablePayload";
 
 
 export class SoccerTableEventMapper implements EventMapper<SoccerTableEventType> {
