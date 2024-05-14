@@ -5,10 +5,9 @@ import {ScoreChange, TeamColor} from "../../../models/team";
 import {DkMqttClient} from "../../client/client";
 import {SoccerTableEventType} from "../../soccerTable/events/soccerTableEventType";
 import {GameEventType} from "../../game/events/gameEvent";
-import {GameHandler} from "../../game/handler/gameHandler";
 import {BaseTopicFactory} from "../../util/baseTopicFactory";
 
-export class HardwareEventMapper implements EventMapper<HardwareEventType>{
+export class HardwareEventMapper implements EventMapper<HardwareEventType> {
 
   private _soccerTableHandler: SoccerTableHandler;
   private readonly _teamColor: TeamColor;
