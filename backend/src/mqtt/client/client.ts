@@ -26,13 +26,13 @@ export class DkMqttClient {
   }
 
   private _connectMqttClient() {
+    this._logger.info(`username: ${process.env.MQTT_LOGIN_USERNAME}, password: ${process.env.MQTT_LOGIN_PASSWORD}`);
     this._mqttClient = mqtt.connect(this._mqttConfig.connectUrl, {
       clientId: this._mqttConfig.clientId,
       clean: true,
       connectTimeout: 10000,
-      //@TODO: hide credentials
-      username: "emqx",
-      password: "public",
+      username: process.env.MQTT_LOGIN_USERNAME,
+      password: process.env.MQTT_LOGIN_PASSWORD,
       reconnectPeriod: 1000,
     });
 
@@ -148,7 +148,7 @@ export class DkMqttClient {
     })
   }
 
-  public publish(topic: string, message: string, options: IClientPublishOptions) {
+  public publish(topic: string, message: string, options?: IClientPublishOptions) {
     this._mqttClient.publish(topic, message, options);
   }
 }

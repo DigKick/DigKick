@@ -1,6 +1,6 @@
 # Backend
 
-Install bun on Mac:
+## Install bun on Mac:
 
 ```bash
 curl -fsSL https://bun.sh/install | bash
@@ -18,4 +18,12 @@ To run:
 bun run index.ts
 ```
 
-This project was created using `bun init` in bun v1.1.0. [Bun](https://bun.sh) is a fast all-in-one JavaScript runtime.
+## Setup .env
+
+Before starting you have to setup a .env files with your MQTT host and credentials.
+
+```txt
+MQTT_LOGIN_USERNAME=MQTT_USERNAME
+MQTT_LOGIN_PASSWORD=MQTT_PASSWORD
+MQTT_HOST=MQTT_HOST
+```
