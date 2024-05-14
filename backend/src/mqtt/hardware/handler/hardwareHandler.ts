@@ -84,7 +84,7 @@ export class HardwareHandler extends AbstractHandler<HardwareEventType, SoccerTa
 
   mapTypeAndIdToEvent(hardwareType: BasicTerm, hardwareId: number,
                       pinStatus: PinOut) {
-    const eventTypeString = String(`${hardwareType}.${hardwareId}.${pinStatus}`).toUpperCase();
+    const eventTypeString = String(`${hardwareType}_${hardwareId}_${pinStatus}`).toUpperCase();
     if (HardwareEventType[eventTypeString as keyof typeof HardwareEventType]) {
       return HardwareEventType[eventTypeString as keyof typeof HardwareEventType];
     } else {
