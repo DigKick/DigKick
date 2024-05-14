@@ -8,7 +8,7 @@ import {BaseTopicFactory} from "../../util/baseTopicFactory";
 import {SoccerTablePayload} from "../payloads/SoccerTablePayload";
 
 
-export class SoccerTableEventMapper implements EventMapper<SoccerTableEventType>{
+export class SoccerTableEventMapper implements EventMapper<SoccerTableEventType> {
 
   private _gameHandler: GameHandler;
   private readonly _soccerTable: SoccerTable;
@@ -27,21 +27,21 @@ export class SoccerTableEventMapper implements EventMapper<SoccerTableEventType>
         this._soccerTable.newGame();
         this._gameHandler.triggerEvent(GameEventType.WHITE_SCORE_CHANGE)
         this._gameHandler.triggerEvent(GameEventType.BLACK_SCORE_CHANGE)
-        dkMqttClient.publishWithRetain(BaseTopicFactory.getBaseTopic(this._soccerTable), JSON.stringify(new SoccerTablePayload(event)))
+        this.publishNewGameValues(event);
         break;
 
       case SoccerTableEventType.FINISH_GAME:
         this._soccerTable.newGame();
         this._gameHandler.triggerEvent(GameEventType.WHITE_SCORE_CHANGE)
         this._gameHandler.triggerEvent(GameEventType.BLACK_SCORE_CHANGE)
-        dkMqttClient.publishWithRetain(BaseTopicFactory.getBaseTopic(this._soccerTable), JSON.stringify(new SoccerTablePayload(event)))
+        this.publishNewGameValues(event);
         break;
 
       case SoccerTableEventType.CANCEL_GAME:
         this._soccerTable.newGame();
         this._gameHandler.triggerEvent(GameEventType.WHITE_SCORE_CHANGE)
         this._gameHandler.triggerEvent(GameEventType.BLACK_SCORE_CHANGE)
-        dkMqttClient.publishWithRetain(BaseTopicFactory.getBaseTopic(this._soccerTable), JSON.stringify(new SoccerTablePayload(event)))
+        this.publishNewGameValues(event);
         break;
 
       default:
@@ -55,5 +55,11 @@ export class SoccerTableEventMapper implements EventMapper<SoccerTableEventType>
     }
 
     return new Set(triggeredEvents)
+  }
+
+  private publishNewGameValues(event: SoccerTableEventType) {
+    const dkMqttClient: DkMqttClient = DkMqttClient.getInstance()
+    dkMqttClient.publishWithRetain(BaseTopicFactory.getBaseTopic(this._soccerTable), JSON.stringify(new SoccerTablePayload(event)))
+    dkMqttClient.publishWithRetain(BaseTopicFactory.getBaseTopic(this._soccerTable) + "/winner", JSON.stringify(this._soccerTable.game.winnerTeam))
   }
 }
