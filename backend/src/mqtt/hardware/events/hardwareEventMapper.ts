@@ -11,12 +11,10 @@ import {BaseTopicFactory} from "../../util/baseTopicFactory";
 export class HardwareEventMapper implements EventMapper<HardwareEventType>{
 
   private _soccerTableHandler: SoccerTableHandler;
-  private _gameHandler: GameHandler;
   private readonly _teamColor: TeamColor;
 
   constructor(soccerTableHandler: SoccerTableHandler, teamColor: TeamColor) {
     this._soccerTableHandler = soccerTableHandler;
-    this._gameHandler = soccerTableHandler.gameHandler;
     this._teamColor = teamColor;
   }
 
@@ -66,7 +64,7 @@ export class HardwareEventMapper implements EventMapper<HardwareEventType>{
 
     const eventType = eventMap[this._teamColor]?.[change];
     if (eventType) {
-      this._gameHandler.triggerEvent(eventType);
+      this._soccerTableHandler.gameHandler.triggerEvent(eventType);
     }
   }
 }
