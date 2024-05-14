@@ -17,6 +17,15 @@ export class Game {
     this.pointsToWin = Game.STANDARDGAME_WINNINGSCORE;
   }
 
+  public getTeamByColor(teamColor: TeamColor): Team {
+    switch (teamColor) {
+      case TeamColor.BLACK:
+        return this.blackTeam
+      case TeamColor.WHITE:
+        return this.whiteTeam
+    }
+  }
+
   resetWinnerTeam() {
     this._winnerTeam = undefined;
   }
