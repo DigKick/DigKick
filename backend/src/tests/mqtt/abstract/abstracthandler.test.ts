@@ -48,7 +48,8 @@ class TestClass {
 
 class TestHandler extends AbstractHandler<TestEvent, TestClass> {
   constructor(testObj: TestClass) {
-    super(testObj, new TestEventMapper(testObj), HandlerType.ABSTRACT, new SoccerTable("TEST"));
+    super(testObj, HandlerType.ABSTRACT, new SoccerTable("TEST"));
+    this._mapper = new TestEventMapper(testObj);
   }
 }
 
