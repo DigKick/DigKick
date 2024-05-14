@@ -6,6 +6,7 @@ import {SoccerTableHandler} from "./soccerTableHandler";
 import {LoggerFactory} from "../../../logging/loggerFactory";
 import {Logger} from "winston";
 import type {TableRegisterPayload} from "../payloads/tableRegisterPayload";
+import {RegisteredTableListPayload} from "../payloads/registeredTableListPayload";
 
 export enum SoccerTableRegisterTopic {
   REGISTER = `/${BasicTerm.TABLE}/register`,
@@ -40,6 +41,8 @@ export class SoccerTableRegisterHandler {
           soccerTableId,
           new SoccerTableHandler(new SoccerTable(soccerTableId)),
         );
+        this._dkMqttClient.publishWithRetain("/tables",
+          JSON.stringify(new RegisteredTableListPayload(Array.from(SoccerTableRegisterHandler.soccerTableHandlers.keys()))))
         this._logger.info("New table registered: " + soccerTableId)
       } else {
         this._logger.warn("Table with id " + soccerTableId + " already registered.")
