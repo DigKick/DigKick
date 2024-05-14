@@ -20,6 +20,8 @@ export class SoccerTableHandler extends AbstractHandler<
     this._hardwareHandlerBlack = new HardwareHandler(this, TeamColor.BLACK)
     this._gameHandler = new GameHandler(this.subject);
     this._mapper = new SoccerTableEventMapper(soccerTable, this._gameHandler);
+
+    this.triggerEvent(SoccerTableEventType.NEW_GAME);
   }
 
   get gameHandler() {
