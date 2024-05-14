@@ -56,11 +56,12 @@ export class HardwareHandler extends AbstractHandler<HardwareEventType, SoccerTa
 
     try {
       toTriggerEvent = this.mapTypeAndIdToEvent(hardwareType, hardwareId, pinStatusPayload.pinOut)
-      this.triggerEvent(toTriggerEvent)
     } catch (e) {
       this._logger.error(`No hardware event: "${String(`${hardwareType}_${hardwareId}_${pinStatusPayload.pinOut}`).toUpperCase()}"`)
       return;
     }
+
+    this.triggerEvent(toTriggerEvent)
   }
 
   constructor(subject: SoccerTableHandler, teamColor: TeamColor) {
