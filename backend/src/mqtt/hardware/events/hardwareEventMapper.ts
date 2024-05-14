@@ -24,7 +24,7 @@ export class HardwareEventMapper implements EventMapper<HardwareEventType>{
     const triggeredEvents = new Set<HardwareEventType>([event]);
     const dkMqttClient: DkMqttClient = DkMqttClient.getInstance()
 
-    switch (event) {
+    switch (HardwareEventType[event] as HardwareEventType) {
       case HardwareEventType.BUTTON_0_LOW:
         this._soccerTableHandler.triggerEvent(SoccerTableEventType.NEW_GAME);
         break;
@@ -40,6 +40,9 @@ export class HardwareEventMapper implements EventMapper<HardwareEventType>{
       case HardwareEventType.LIGHTBARRIER_0_LOW:
       case HardwareEventType.LIGHTBARRIER_1_LOW:
         this._teamScoreChange(ScoreChange.INCREASE)
+        break
+
+      default:
         break
     }
 
