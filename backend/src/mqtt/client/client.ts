@@ -26,7 +26,6 @@ export class DkMqttClient {
   }
 
   private _connectMqttClient() {
-    this._logger.info(`username: ${process.env.MQTT_LOGIN_USERNAME}, password: ${process.env.MQTT_LOGIN_PASSWORD}`);
     this._mqttClient = mqtt.connect(this._mqttConfig.connectUrl, {
       clientId: this._mqttConfig.clientId,
       clean: true,
