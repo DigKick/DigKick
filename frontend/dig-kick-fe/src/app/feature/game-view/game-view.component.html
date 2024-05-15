@@ -1,10 +1,10 @@
 <div class="flex flex-col lg:flex-row justify-center items-center mt-3 mx-auto w-5/6 lg:mx-auto lg:w-2/3">
     <!-- Mobile view -->
-    <div class="flex justify-center items-center mx-auto w-3/5 h-32 lg:h-auto lg:max-h-32 bg-accent-content rounded-lg lg:hidden">
+    <div class="flex justify-center items-center mx-auto card h-32 w-64 bg-accent-content rounded-lg lg:hidden">
         <div class="flex justify-center items-center">
-            <div class="text-[6rem] mr-3">8</div>
+            <div class="text-[6rem] mr-3">{{white.score}}</div>
             <div class="text-[6rem]">:</div>
-            <div class="text-[6rem] ml-3">6</div>
+            <div class="text-[6rem] ml-3">{{black.score}}</div>
         </div>
     </div>
 
@@ -17,10 +17,12 @@
     </div>
 
     <!-- Desktop view -->
-    <div class="hidden lg:flex justify-between items-center w-full">
-        <div class="lg:text-[12rem] flex justify-center items-center mx-auto w-1/5 h-60 lg:h-auto lg:max-h-32 bg-accent-content rounded-lg">8</div>
-        <img src="../assets/images/Sprite-0003.png" class="transform rotate-90 ...">
-        <div class="lg:text-[12rem] flex justify-center items-center mx-auto w-1/5 h-60 lg:h-auto lg:max-h-32 bg-accent-content rounded-lg">6</div>
+    <div class="hidden lg:flex items-center justify-center "> 
+        <div class="flex items-center space-x-40"> 
+            <div class="card h-32 w-64 bg-accent-content flex justify-center items-center text-[11rem]">{{white.score}}</div>
+            <img src="../assets/images/Sprite-0003.png" class="rotate-90 h-full mx-50" alt="Your Image">
+            <div class="card h-32 w-64 bg-accent-content flex justify-center items-center text-[11rem]">{{black.score}}</div>
+        </div>
     </div>
 </div>
 

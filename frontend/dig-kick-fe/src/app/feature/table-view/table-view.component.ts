@@ -27,11 +27,11 @@ export class TableViewComponent implements OnInit {
   ];
   team1: Team = {
     color: 'white',
-    score: String(3)
+    score: 3
   }
   team2: Team = {
     color: 'black',
-    score: String(7)
+    score: 7
   }
 
   game1: Game = {

@@ -1,3 +1,3 @@
 <div class="grid-layout">
-    <app-table-display *ngFor="let item of data" [table]="item" class="tile"></app-table-display>
+    <app-table-display *ngFor="let item of data; let i = index" [table]="item" class="tile" [ngClass]="{'move-left': i % 2 === 0, 'move-right': i % 2 !== 0}"></app-table-display>
 </div>

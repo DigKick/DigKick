@@ -1,4 +1,4 @@
 export interface Team {
     color: string;
-    score: string;
+    score: number;
 }

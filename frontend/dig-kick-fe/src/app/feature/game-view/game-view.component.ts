@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Player } from 'src/app/core/static/models/player.model';
+import { Team } from 'src/app/core/static/models/team.model';
 
 @Component({
   selector: 'app-game-view',
@@ -13,6 +14,9 @@ export class GameViewComponent {
   player2: Player;
   player3: Player;
   player4: Player;
+
+  white: Team;
+  black: Team;
 
   constructor() {
     this.player1 = {
@@ -38,6 +42,14 @@ export class GameViewComponent {
       firstname: 'player',
       lastname: '4',
       score: 123
+    }
+    this.white = {
+      color: 'white',
+      score: 8
+    }
+    this.black = {
+      color: 'black',
+      score: 6
     }
   }
 
