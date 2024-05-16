@@ -18,19 +18,19 @@ beforeEach(() => {
 test('white team scores once', () => {
   gameObj.updateWhiteTeamScore(ScoreChange.INCREASE);
 
-  expect(gameObj.whiteTeam.score).toBe(1);
+  expect(gameObj.teamWhite.score).toBe(1);
 });
 
 test('team score can not be negative', () => {
   gameObj.updateWhiteTeamScore(ScoreChange.DECREASE)
 
-  expect(gameObj.whiteTeam.score).toBe(0)
+  expect(gameObj.teamWhite.score).toBe(0)
 })
 
 test('black team scores once', () => {
   gameObj.updateBlackTeamScore(ScoreChange.INCREASE);
 
-  expect(gameObj.blackTeam.score).toEqual(1);
+  expect(gameObj.teamBlack.score).toEqual(1);
 });
 
 test('decrease of a score', () => {
@@ -39,7 +39,7 @@ test('decrease of a score', () => {
 
   gameObj.updateWhiteTeamScore(ScoreChange.DECREASE);
 
-  expect(gameObj.whiteTeam.score).toEqual(1)
+  expect(gameObj.teamWhite.score).toEqual(1)
 })
 
 test('white team wins', () => {
@@ -47,7 +47,7 @@ test('white team wins', () => {
     gameObj.updateWhiteTeamScore(ScoreChange.INCREASE);
   }
 
-  expect(gameObj.winnerTeam).toEqual(gameObj.whiteTeam)
+  expect(gameObj.winnerTeam).toEqual(gameObj.teamWhite)
 })
 
 
@@ -60,7 +60,7 @@ test('winning team does not change', () => {
     gameObj.updateBlackTeamScore(ScoreChange.INCREASE);
   }
 
-  expect(gameObj.winnerTeam).toEqual(gameObj.whiteTeam)
+  expect(gameObj.winnerTeam).toEqual(gameObj.teamWhite)
 })
 
 test('winning team is reset after last goal got undo', () => {
@@ -86,7 +86,7 @@ test('undo winning team and other team wins', () => {
   gameObj.updateWhiteTeamScore(ScoreChange.DECREASE)
   gameObj.updateBlackTeamScore(ScoreChange.INCREASE)
 
-  expect(gameObj.winnerTeam).toEqual(gameObj.blackTeam)
+  expect(gameObj.winnerTeam).toEqual(gameObj.teamBlack)
 })
 
 test('reset game', () => {
@@ -101,6 +101,6 @@ test('reset game', () => {
   gameObj.reset()
 
   expect(gameObj.winnerTeam).toBeUndefined()
-  expect(gameObj.whiteTeam.score).toBe(0)
-  expect(gameObj.blackTeam.score).toBe(0)
+  expect(gameObj.teamWhite.score).toBe(0)
+  expect(gameObj.teamBlack.score).toBe(0)
 })

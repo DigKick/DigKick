@@ -34,11 +34,11 @@ test("Game gets restarted correctly", () => {
     GameEventType.WHITE_SCORE_INCREASE,
   );
 
-  expect(soccerTableHandler.gameHandler.subject.whiteTeam.score).toBe(1);
+  expect(soccerTableHandler.gameHandler.subject.teamWhite.score).toBe(1);
 
   soccerTableHandler.triggerEvent(SoccerTableEventType.NEW_GAME);
 
-  expect(soccerTableHandler.gameHandler.subject.whiteTeam.score).toBe(0);
+  expect(soccerTableHandler.gameHandler.subject.teamWhite.score).toBe(0);
 });
 
 test(`test trigger all events`, () => {
