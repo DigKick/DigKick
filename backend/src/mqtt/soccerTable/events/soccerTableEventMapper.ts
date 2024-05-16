@@ -3,9 +3,6 @@ import {SoccerTableEventType} from "./soccerTableEventType";
 import {SoccerTable} from "../../../models/soccerTable";
 import {GameHandler} from "../../game/handler/gameHandler";
 import {GameEventType} from "../../game/events/gameEvent";
-import {DkMqttClient} from "../../client/client";
-import {BaseTopicFactory} from "../../util/baseTopicFactory";
-import {SoccerTablePayload} from "../payloads/soccerTablePayload";
 import {MqttObjectUpdater} from "../../util/mqttObjectUpdater";
 import {BasicTerm} from "../../util/basicTerm";
 

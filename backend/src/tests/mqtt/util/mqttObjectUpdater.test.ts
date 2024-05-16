@@ -1,10 +1,6 @@
-import {Game} from "../../../models/game";
 import {test} from "bun:test";
 import {MqttObjectUpdater} from "../../../mqtt/util/mqttObjectUpdater";
 import {SoccerTable} from "../../../models/soccerTable";
-
-let game1 = new Game()
-let game2 = new Game()
 
 
 test('compare function table', () => {

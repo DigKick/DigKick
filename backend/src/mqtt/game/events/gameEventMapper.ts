@@ -5,7 +5,6 @@ import {ScoreChange, TeamColor} from "../../../models/team";
 import {SoccerTable} from "../../../models/soccerTable";
 import {DkMqttClient} from "../../client/client";
 import {BaseTopicFactory} from "../../util/baseTopicFactory";
-import {ScorePayload} from "../payloads/ScorePayload";
 import {WinnerTeamPayload} from "../payloads/WinnerTeamPayload";
 import {MqttObjectUpdater} from "../../util/mqttObjectUpdater";
 import {BasicTerm} from "../../util/basicTerm";
