@@ -6,48 +6,50 @@ import {GameEventType} from "../../game/events/gameEvent";
 import {DkMqttClient} from "../../client/client";
 import {BaseTopicFactory} from "../../util/baseTopicFactory";
 import {SoccerTablePayload} from "../payloads/soccerTablePayload";
+import {MqttObjectUpdater} from "../../util/mqttObjectUpdater";
+import {BasicTerm} from "../../util/basicTerm";
 
 
 export class SoccerTableEventMapper implements EventMapper<SoccerTableEventType> {
 
   private _gameHandler: GameHandler;
   private readonly _soccerTable: SoccerTable;
+  private _mqttObjectUpdater: MqttObjectUpdater<SoccerTable>;
 
   constructor(soccerTable: SoccerTable, gameHandler: GameHandler) {
     this._soccerTable = soccerTable;
     this._gameHandler = gameHandler;
+    this._mqttObjectUpdater = new MqttObjectUpdater<SoccerTable>(soccerTable,
+      {prefix: `/${BasicTerm.TABLE}`, publishWithRetain: true, instantPublish: true})
   }
 
   map(event: SoccerTableEventType) {
     let triggeredEvents = [event]
-    const dkMqttClient: DkMqttClient = DkMqttClient.getInstance()
 
     switch (event) {
       case SoccerTableEventType.NEW_GAME:
         this._soccerTable.newGame();
         this._gameHandler.triggerEvent(GameEventType.WHITE_SCORE_CHANGE)
         this._gameHandler.triggerEvent(GameEventType.BLACK_SCORE_CHANGE)
-        this.publishNewGameValues(event);
+        this.publishNewGameValues();
         break;
 
       case SoccerTableEventType.FINISH_GAME:
         this._soccerTable.newGame();
         this._gameHandler.triggerEvent(GameEventType.WHITE_SCORE_CHANGE)
         this._gameHandler.triggerEvent(GameEventType.BLACK_SCORE_CHANGE)
-        this.publishNewGameValues(event);
+        this.publishNewGameValues();
         break;
 
       case SoccerTableEventType.CANCEL_GAME:
         this._soccerTable.newGame();
         this._gameHandler.triggerEvent(GameEventType.WHITE_SCORE_CHANGE)
         this._gameHandler.triggerEvent(GameEventType.BLACK_SCORE_CHANGE)
-        this.publishNewGameValues(event);
+        this.publishNewGameValues();
         break;
 
       default:
-        console.log("SHOULD NOT BE HERE :C")
         break;
-
     }
 
     if (event.includes(SoccerTableEventType.GAME)) {
@@ -57,9 +59,8 @@ export class SoccerTableEventMapper implements EventMapper<SoccerTableEventType>
     return new Set(triggeredEvents)
   }
 
-  private publishNewGameValues(event: SoccerTableEventType) {
-    const dkMqttClient: DkMqttClient = DkMqttClient.getInstance()
-    dkMqttClient.publishWithRetain(BaseTopicFactory.getBaseTopic(this._soccerTable), JSON.stringify(new SoccerTablePayload(event)))
-    dkMqttClient.publishWithRetain(BaseTopicFactory.getBaseTopic(this._soccerTable) + "/winner", JSON.stringify(this._soccerTable.game.winnerTeam))
+  private publishNewGameValues() {
+    this._mqttObjectUpdater.commit(this._soccerTable)
+    this._mqttObjectUpdater.publish()
   }
 }
