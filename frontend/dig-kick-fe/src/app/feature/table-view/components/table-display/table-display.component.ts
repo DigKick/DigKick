@@ -29,7 +29,8 @@ export class TableDisplayComponent implements OnInit{
     id: String(1),
     teams: [this.team1, this.team2],
     pointsToWin: String(10),
-    winner: ''
+    winner: '',
+    mode: 'normal'
   }
 
   @Input() table: any;

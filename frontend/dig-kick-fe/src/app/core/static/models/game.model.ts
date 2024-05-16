@@ -5,4 +5,5 @@ export interface Game {
     teams: Team[];
     pointsToWin: string;
     winner: string;
+    mode: string;
 }

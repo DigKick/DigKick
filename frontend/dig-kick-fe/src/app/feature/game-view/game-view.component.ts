@@ -1,11 +1,13 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { Game } from 'src/app/core/static/models/game.model';
 import { Player } from 'src/app/core/static/models/player.model';
 import { Team } from 'src/app/core/static/models/team.model';
 
 @Component({
   selector: 'app-game-view',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './game-view.component.html',
   styleUrl: './game-view.component.css'
 })
@@ -17,6 +19,8 @@ export class GameViewComponent {
 
   white: Team;
   black: Team;
+
+  game: Game;
 
   constructor() {
     this.player1 = {
@@ -51,7 +55,13 @@ export class GameViewComponent {
       color: 'black',
       score: 6
     }
-  }
 
-  
+    this.game = {
+      id: '1',
+      teams: [this.white, this.black],
+      pointsToWin: '2',
+      winner: '',
+      mode: 'ranked'
+    }
+  } 
 }

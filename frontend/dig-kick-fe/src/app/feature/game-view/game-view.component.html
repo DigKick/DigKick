@@ -26,8 +26,14 @@
     </div>
 </div>
 
+    <div class="text-[2.5rem] lg:text-[4rem] text-red-800 flex justify-center mb-[1rem] lg:mb-[3rem] custom-font" *ngIf="game.mode === 'ranked'; else hiddenContent">ranked</div>
+        <ng-template #hiddenContent>
+        <div class="hidden lg:hidden">
+         </div>
+        </ng-template>
+
 <!-- Player names -->
-<div class="flex w-full my-auto lg:mt-3 lg:justify-center items-center text-[1.2rem]">
+<div class="flex w-full my-auto lg:justify-center items-center text-[1.2rem]">
     <div class="grid h-20 flex-grow card bg-accent-content rounded-box place-items-center ml-7 lg:ml-9 "> <!-- Added mx-4 for left and right margin -->
         <div class="flex">{{player1.firstname}} {{player1.lastname}}<div class="text-orange-400">&nbsp;&nbsp;{{player1.score}}</div></div>
         <div class="flex">{{player2.firstname}} {{player2.lastname}} <div class="text-orange-400">&nbsp;&nbsp;{{player2.score}}</div></div>

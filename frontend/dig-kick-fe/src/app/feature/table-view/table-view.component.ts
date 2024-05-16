@@ -38,7 +38,8 @@ export class TableViewComponent implements OnInit {
     id: String(1),
     teams: [this.team1, this.team2],
     pointsToWin: String(10),
-    winner: ''
+    winner: '',
+    mode: 'ranked'
   }
 
   constructor() {

@@ -8,11 +8,12 @@ import { Observable, Subscription } from 'rxjs';
 import { ThemeToggleButtonComponent } from './core/static/components/theme-toggle-button/theme-toggle-button.component';
 import { ThemeService } from './core/services/theme.service';
 import { StatsViewComponent } from './feature/stats-view/stats-view.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
   standalone: true,
   imports: [RouterModule, NavbarComponent, GameViewComponent, TableViewComponent, 
-    TableDisplayComponent, ThemeToggleButtonComponent, StatsViewComponent],
+    TableDisplayComponent, ThemeToggleButtonComponent, StatsViewComponent, CommonModule],
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
