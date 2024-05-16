@@ -6,7 +6,7 @@
         <p class="mb-1">player1</p>
         <p class="mt-0">player2</p>
       </div>
-      <p class="col-span-1 text-center text-[3rem]">8:6</p>
+      <p class="col-span-1 text-center text-[3rem]">{{this.scoreService.whiteScoreSignal()}}:{{team2.score}}</p>
       <div class="flex flex-col justify-center pr-4 text-[1.1rem]">
         <p class="mb-1">player3</p>
         <p class="mt-0">player4</p>
@@ -14,7 +14,7 @@
     </div>
     <div class="card-actions justify-center m-3">
       <button class="btn btn-wide w-5/6 items-center btn-primary text-[1.25rem] btn-outline"
-        [routerLink]="['/game', game1.id]">View</button>
+        [routerLink]="['/game', tableId]">View</button>
     </div>
   </div>
 </div>

@@ -1,9 +1,11 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Signal } from '@angular/core';
 import { Table } from 'src/app/core/static/models/table.model';
 import { TableDisplayComponent } from './components/table-display/table-display.component';
 import { CommonModule } from '@angular/common';
 import { Team } from 'src/app/core/static/models/team.model';
 import { Game } from 'src/app/core/static/models/game.model';
+import { DkMqttClientService } from 'src/app/core/services/dk-mqtt-client.service';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-table-view',
@@ -14,40 +16,17 @@ import { Game } from 'src/app/core/static/models/game.model';
 })
 export class TableViewComponent implements OnInit {
 
-  data: Table[] = [
-    { id: '1' },
-    { id: '2' },
-    { id: '3' },
-    { id: '4' },
-    { id: '5' },
-    { id: '6' },
-    { id: '7' },
-    { id: '8' },
-    { id: '9' }
-  ];
-  team1: Team = {
-    color: 'white',
-    score: 3
-  }
-  team2: Team = {
-    color: 'black',
-    score: 7
-  }
+  tableIds$: Observable<String[]>;
+  tablesSignal: Signal<String[]>;
 
-  game1: Game = {
-    id: String(1),
-    teams: [this.team1, this.team2],
-    pointsToWin: String(10),
-    winner: '',
-    mode: 'ranked'
-  }
-
-  constructor() {
+  constructor(private mqttClient: DkMqttClientService) {
+    this.tableIds$ = mqttClient.activeTableIds.asObservable();
+    this.tablesSignal = mqttClient.signalTableIds;
 
   }
 
   ngOnInit(): void {
-    
+    this.mqttClient.activeTableIds
   }
 
 }

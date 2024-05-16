@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, Signal } from '@angular/core';
+import { DkMqttClientService } from 'src/app/core/services/dk-mqtt-client.service';
 import { Game } from 'src/app/core/static/models/game.model';
 import { Player } from 'src/app/core/static/models/player.model';
 import { Team } from 'src/app/core/static/models/team.model';
@@ -22,7 +23,10 @@ export class GameViewComponent {
 
   game: Game;
 
-  constructor() {
+  tables: Signal<String[]>;
+
+  constructor(private mqttClient: DkMqttClientService) {
+    this.tables = mqttClient.signalTableIds;
     this.player1 = {
       id: String(1),
       firstname: 'player',
