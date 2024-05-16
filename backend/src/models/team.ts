@@ -1,5 +1,3 @@
-import {Game} from "./game";
-
 export enum TeamColor {
   WHITE = "white",
   BLACK = "black"
@@ -13,15 +11,12 @@ export enum ScoreChange {
 export class Team {
 
   public color: TeamColor;
-  public game: Game;
-
   private _score: number;
 
 
-  constructor(color: TeamColor, game: Game) {
+  constructor(color: TeamColor) {
     this.color = color;
     this._score = 0;
-    this.game = game;
   }
 
   get score() {
