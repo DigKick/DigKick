@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
@@ -6,18 +6,22 @@ import { BehaviorSubject, Observable } from 'rxjs';
 })
 export class ThemeService {
   private currentTheme: string = 'night';
-  private currentThemeSubject: BehaviorSubject<string> = new BehaviorSubject<string>('night');
-  public currentTheme$: Observable<string> = this.currentThemeSubject.asObservable();
+  themeSignal = signal<string>(this.currentTheme);
 
-  constructor() { }
+  constructor() {}
 
   getCurrentTheme(): string {
     return this.currentTheme;
   }
 
+  setTheme(theme: string) {
+    this.currentTheme = theme;
+    this.themeSignal.set(this.currentTheme);
+  }
+
   toggleTheme(): void {
-    const newTheme = this.currentThemeSubject.value === 'night' ? 'retro' : 'night';
-    this.currentThemeSubject.next(newTheme);
-    document.documentElement.setAttribute('data-theme', newTheme);
+    this.currentTheme = this.currentTheme === 'night' ? 'retro' : 'night';
+    this.themeSignal.set(this.currentTheme)
+    document.documentElement.setAttribute('data-theme', this.themeSignal());
   }
 }

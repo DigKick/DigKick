@@ -10,40 +10,27 @@ import { ThemeService } from './core/services/theme.service';
 import { StatsViewComponent } from './feature/stats-view/stats-view.component';
 import { CommonModule } from '@angular/common';
 
+
+
 @Component({
   standalone: true,
   imports: [RouterModule, NavbarComponent, GameViewComponent, TableViewComponent, 
     TableDisplayComponent, ThemeToggleButtonComponent, StatsViewComponent, CommonModule],
+  providers: [],
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })  
-  export class AppComponent implements OnInit,OnDestroy{
-
-
-    
+  export class AppComponent {
+ 
   title = 'dig-kick-fe';
   theme: string = 'dark'
 
-  private themeSubscription: Subscription;
   public currentTheme: string = 'dark';
 
   constructor(private themeService: ThemeService) {
-    this.themeSubscription = this.themeService.currentTheme$.subscribe(theme => {
-      this.currentTheme = theme;
-      document.body.classList.add('data-theme', this.currentTheme);
-    }); 
+      document.body.classList.add('data-theme', this.themeService.themeSignal());
   }
 
-  ngOnInit(): void {
-    this.themeSubscription = this.themeService.currentTheme$.subscribe(theme => {
-      this.currentTheme = theme;
-      document.body.classList.add('data-theme', this.currentTheme);
-    }); 
-  }
-
-  ngOnDestroy(): void {
-    this.themeSubscription.unsubscribe();
-  }
 }
 
