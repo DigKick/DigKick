@@ -148,6 +148,7 @@ export class DkMqttClient {
   }
 
   public publish(topic: string, message: string, options?: IClientPublishOptions) {
+    this._logger.debug(`Publishing to topic "${topic}", message: ${message}`);
     this._mqttClient.publish(topic, message, options);
   }
 }
