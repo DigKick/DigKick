@@ -13,6 +13,10 @@ test('compare function table', () => {
   table.game.teamWhite.score = 5;
 
   updater.commit(table)
+  console.log("len: ", Array.from(updater.latestChanges.entries()).length)
+  Array.from(updater.latestChanges.entries()).forEach(entry => {
+    console.log(`Changed: ${entry[0]}: ${entry[1]}`);
+  })
   updater.publish()
 })
 

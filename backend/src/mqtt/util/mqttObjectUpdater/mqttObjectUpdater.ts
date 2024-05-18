@@ -27,7 +27,7 @@ export class MqttObjectUpdater<ObjectType> {
   commit(updatedSubject: ObjectType) {
     this.latestChanges = new Map(
       [...this.latestChanges.entries(),
-        ...MqttObjectUpdater.compareObjects(this.subject, updatedSubject, this.config.prefix, this.config.maxDepth).entries()])
+        ...MqttObjectUpdater.compareObjects(this.subject, updatedSubject, this.config.prefix).entries()])
     this.subject = structuredClone(updatedSubject)
   }
 
@@ -35,23 +35,21 @@ export class MqttObjectUpdater<ObjectType> {
    * Publishes the changes to the mqtt broker.
    */
   publish() {
-    console.log("---------------------------PUBLISH CALLED")
-    console.log("publishing changes:")
-    Array.from(this.latestChanges.entries()).forEach((change) => {
-      console.log("change: ", change)
+    Array.from(this.latestChanges.entries()).forEach((entry) => {
     })
 
     const dkMqttClient = DkMqttClient.getInstance()
     Array.from(this.latestChanges.entries()).forEach(entry => {
       if (!entry || !entry[0] || !entry[1]) return
       const publishString = JSON.stringify(entry[1].newValue).replaceAll("_", "")
-      if (!publishString) return;
+      if (!publishString) {
+        return
+      }
       if (this.config.instantPublish) {
         dkMqttClient.publishWithRetain(String(entry[0]), publishString)
       } else {
         dkMqttClient.publish(String(entry[0]), publishString)
       }
-      console.log("publish: ", publishString)
     })
     this.latestChanges.clear()
   }
@@ -61,48 +59,37 @@ export class MqttObjectUpdater<ObjectType> {
   }
 
 
-  private static compareObjects(oldObj: any, newObj: any, path: string = '', maxDepth: number = 1, visited: Set<any> = new Set(), ): Map<string, ChangeLog> {
+  private static compareObjects(oldObj: any, newObj: any, path: string = '', visited: Set<any> = new Set()): Map<string, ChangeLog> {
     let changes = new Map<string, ChangeLog>();
 
-    if (visited.has(oldObj) || visited.has(newObj) || maxDepth === 0) {
+    if (visited.has(oldObj) || visited.has(newObj)) {
       return changes;
     }
 
     visited.add(oldObj);
     visited.add(newObj);
 
-    const keys = new Set([...Reflect.ownKeys(oldObj), ...Reflect.ownKeys(newObj)]);
-    let localPath = structuredClone(path)
+    const keys = Object.keys(newObj);
+    let localPath = structuredClone(path);
 
-    if (keys.has("id")) {
-      localPath += "/" + newObj["id"]
+    if (keys.includes("id")) {
+      localPath += "/" + newObj["id"];
     }
 
     keys.forEach((key) => {
-      if (!changes) {
-        changes = new Map()
-      }
-      const oldVal = oldObj[key]
-      const newVal = newObj[key]
+      const oldVal = oldObj[key];
+      const newVal = newObj[key];
 
       if (oldVal !== newVal) {
-
-
-        if (typeof oldVal ==="object" && typeof newVal ==="object" ) {
-          changes = new Map([...changes.entries(), ...MqttObjectUpdater.compareObjects(oldVal, newVal, this.makeNewPath(localPath, key), maxDepth - 1, visited).entries()])
-        } else {
-        }
-        changes.set(this.makeNewPath(localPath, key), new ChangeLog(oldVal, newVal))
-
+        changes.set(this.makeNewPath(localPath, key), new ChangeLog(oldVal, newVal));
       }
-    })
+    });
 
-    return changes
+    return changes;
   }
 
+
   private static makeNewPath(path: string, key: string | symbol) {
-    let newPath = path + String("/" + String(key)).replace(/[A-Z]/g, (match) => '/' + match.toLowerCase()).replaceAll("_", "")
-    console.log("new path: ", newPath)
-    return newPath;
+    return path + String("/" + String(key)).replace(/[A-Z]/g, (match) => '/' + match.toLowerCase()).replaceAll("_", "");
   }
 }

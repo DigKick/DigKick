@@ -27,10 +27,6 @@ export class Team {
     this._score = Math.max(0, newScore)
   }
 
-  isEqual() {
-
-  }
-
   toJSON() {
     return {
       'color': this.color,

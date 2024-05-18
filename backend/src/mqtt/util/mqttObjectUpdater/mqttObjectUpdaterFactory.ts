@@ -13,8 +13,6 @@ export class MqttObjectUpdaterFactory {
       this.mqttObjectUpdaters.set(obj, mqttObjectUpdater);
     }
 
-    console.log(`>>>>>>>>>>>>>>> MQTT UPDATER COUNT: ${MqttObjectUpdaterFactory.mqttObjectUpdaters.size}`)
-
     return mqttObjectUpdater
   }
 
