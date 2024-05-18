@@ -35,20 +35,19 @@ export class MqttObjectUpdater<ObjectType> {
    * Publishes the changes to the mqtt broker.
    */
   publish() {
-    Array.from(this.latestChanges.entries()).forEach((entry) => {
-    })
-
     const dkMqttClient = DkMqttClient.getInstance()
     Array.from(this.latestChanges.entries()).forEach(entry => {
       if (!entry || !entry[0] || !entry[1]) return
       const publishString = JSON.stringify(entry[1].newValue).replaceAll("_", "")
+      const publishTopic = String(entry[0] + (publishString.startsWith("{") ? "" : "$"))
+
       if (!publishString) {
         return
       }
       if (this.config.instantPublish) {
-        dkMqttClient.publishWithRetain(String(entry[0]), publishString)
+        dkMqttClient.publishWithRetain(publishTopic, publishString)
       } else {
-        dkMqttClient.publish(String(entry[0]), publishString)
+        dkMqttClient.publish(publishTopic, publishString)
       }
     })
     this.latestChanges.clear()
