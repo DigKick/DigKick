@@ -2,7 +2,9 @@ import {DkMqttClient} from "../../client/client";
 import {ChangeLog} from "./changeLog";
 import type {MqttObjectUpdaterConfig} from "./mqttObjectUpdaterConfig";
 
-
+/**
+ * if someone wants to change something here - may the force be with you
+ */
 export class MqttObjectUpdater<ObjectType> {
   subject: ObjectType
   latestChanges: Map<String, ChangeLog>
@@ -19,11 +21,7 @@ export class MqttObjectUpdater<ObjectType> {
     }
   }
 
-  /**
-   * Updates the subject
-   *
-   * @param updatedSubject
-   */
+
   commit(updatedSubject: ObjectType) {
     this.latestChanges = new Map(
       [...this.latestChanges.entries(),
@@ -31,15 +29,16 @@ export class MqttObjectUpdater<ObjectType> {
     this.subject = structuredClone(updatedSubject)
   }
 
-  /**
-   * Publishes the changes to the mqtt broker.
-   */
   publish() {
     const dkMqttClient = DkMqttClient.getInstance()
     Array.from(this.latestChanges.entries()).forEach(entry => {
       if (!entry || !entry[0] || !entry[1]) return
-      const publishString = JSON.stringify(entry[1].newValue).replaceAll("_", "")
-      const publishTopic = String(entry[0] + (publishString.startsWith("{") ? "" : "$"))
+      let publishString = " "
+      if (entry[1].newValue !== undefined) {
+        publishString = JSON.stringify(entry[1].newValue).replaceAll("_", "")
+      }
+
+      const publishTopic = String(entry[0] + (publishString.startsWith("{") || publishString === " " ? "" : "$"))
 
       if (!publishString) {
         return
@@ -94,8 +93,6 @@ export class MqttObjectUpdater<ObjectType> {
       const newVal = newObj[key];
 
       if (oldVal !== newVal) {
-
-
         if (typeof newVal === 'object') {
           const objChanges = MqttObjectUpdater.compareObjects(oldVal, newVal, localPath)
           if (objChanges.size > 0) {
@@ -104,13 +101,11 @@ export class MqttObjectUpdater<ObjectType> {
         } else {
           changes.set(this.makeNewPath(localPath, key), new ChangeLog(oldVal, newVal));
         }
-
       }
     });
 
     return changes;
   }
-
 
   private static makeNewPath(path: string, key: string | symbol) {
     return path + String("/" + String(key)).replace(/[A-Z]/g, (match) => '/' + match.toLowerCase()).replaceAll("_", "");
