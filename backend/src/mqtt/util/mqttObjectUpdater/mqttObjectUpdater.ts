@@ -76,11 +76,35 @@ export class MqttObjectUpdater<ObjectType> {
     }
 
     keys.forEach((key) => {
+
+      if (!oldObj && !newObj) return;
+
+      if (!oldObj || !newObj) {
+
+        if (oldObj) {
+          changes.set(this.makeNewPath(localPath, key), new ChangeLog(oldObj[key], undefined));
+        } else {
+          changes.set(this.makeNewPath(localPath, key), new ChangeLog(undefined, newObj[key]));
+        }
+
+        return
+      }
+
       const oldVal = oldObj[key];
       const newVal = newObj[key];
 
       if (oldVal !== newVal) {
-        changes.set(this.makeNewPath(localPath, key), new ChangeLog(oldVal, newVal));
+
+
+        if (typeof newVal === 'object') {
+          const objChanges = MqttObjectUpdater.compareObjects(oldVal, newVal, localPath)
+          if (objChanges.size > 0) {
+            changes.set(this.makeNewPath(localPath, key), new ChangeLog(oldVal, newVal));
+          }
+        } else {
+          changes.set(this.makeNewPath(localPath, key), new ChangeLog(oldVal, newVal));
+        }
+
       }
     });
 
