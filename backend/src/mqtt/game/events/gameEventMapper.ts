@@ -12,16 +12,11 @@ export class GameEventMapper implements EventMapper<GameEventType> {
   private readonly _game: Game
   private readonly _soccerTable: SoccerTable
   private readonly _mqttObjectUpdaterGame: MqttObjectUpdater<Game>
-  private readonly _mqttObjectUpdaterTeamWhite: MqttObjectUpdater<Team>
-  private readonly _mqttObjectUpdaterTeamBlack: MqttObjectUpdater<Team>
 
   constructor(soccerTable: SoccerTable) {
     this._soccerTable = soccerTable;
     this._game = soccerTable.game;
     this._mqttObjectUpdaterGame = MqttObjectUpdaterFactory.getMqttObjectUpdater(this._game, {prefix: `/${BasicTerm.TABLE}/${this._soccerTable.id}/${BasicTerm.GAME}`, instantPublish: true, publishWithRetain: false, maxDepth: 4})
-    this._mqttObjectUpdaterTeamWhite = MqttObjectUpdaterFactory.getMqttObjectUpdater(this._game.teamWhite, {prefix: `/${BasicTerm.TABLE}/${this._soccerTable.id}/${BasicTerm.GAME}/${BasicTerm.TEAM}/${TeamColor.WHITE}`, instantPublish: true, publishWithRetain: false, maxDepth: 4})
-    this._mqttObjectUpdaterTeamBlack = MqttObjectUpdaterFactory.getMqttObjectUpdater(this._game.teamBlack, {prefix: `/${BasicTerm.TABLE}/${this._soccerTable.id}/${BasicTerm.GAME}/${BasicTerm.TEAM}/${TeamColor.BLACK}`, instantPublish: true, publishWithRetain: false, maxDepth: 4})
-
   }
 
 

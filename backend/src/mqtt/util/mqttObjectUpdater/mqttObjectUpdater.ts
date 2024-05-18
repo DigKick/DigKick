@@ -94,10 +94,11 @@ export class MqttObjectUpdater<ObjectType> {
 
       if (oldVal !== newVal) {
         if (typeof newVal === 'object') {
-          const objChanges = MqttObjectUpdater.compareObjects(oldVal, newVal, localPath)
+          const objChanges = MqttObjectUpdater.compareObjects(oldVal, newVal, this.makeNewPath(localPath, key))
           if (objChanges.size > 0) {
             changes.set(this.makeNewPath(localPath, key), new ChangeLog(oldVal, newVal));
           }
+          changes = new Map<string, ChangeLog>([...changes, ...objChanges]);
         } else {
           changes.set(this.makeNewPath(localPath, key), new ChangeLog(oldVal, newVal));
         }
