@@ -72,7 +72,8 @@ export class Game {
 
   toJSON() {
     return {
-      teams: [this.teamBlack, this.teamWhite],
+      teamWhite: this.teamWhite.toJSON(),
+      teamBlack: this.teamBlack.toJSON(),
       pointsToWin: this.pointsToWin,
       winner: this._winnerTeam
     }

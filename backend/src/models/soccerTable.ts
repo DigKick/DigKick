@@ -17,4 +17,10 @@ export class SoccerTable {
   newGame() {
     this._game.reset();
   }
+
+  toJSON() {
+    return {
+      game: this._game.toJSON()
+    }
+  }
 }

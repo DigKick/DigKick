@@ -3,8 +3,9 @@ import {SoccerTableEventType} from "./soccerTableEventType";
 import {SoccerTable} from "../../../models/soccerTable";
 import {GameHandler} from "../../game/handler/gameHandler";
 import {GameEventType} from "../../game/events/gameEvent";
-import {MqttObjectUpdater} from "../../util/mqttObjectUpdater";
+import {MqttObjectUpdater} from "../../util/mqttObjectUpdater/mqttObjectUpdater";
 import {BasicTerm} from "../../util/basicTerm";
+import {MqttObjectUpdaterFactory} from "../../util/mqttObjectUpdater/mqttObjectUpdaterFactory";
 
 
 export class SoccerTableEventMapper implements EventMapper<SoccerTableEventType> {
@@ -16,8 +17,8 @@ export class SoccerTableEventMapper implements EventMapper<SoccerTableEventType>
   constructor(soccerTable: SoccerTable, gameHandler: GameHandler) {
     this._soccerTable = soccerTable;
     this._gameHandler = gameHandler;
-    this._mqttObjectUpdater = new MqttObjectUpdater<SoccerTable>(soccerTable,
-      {prefix: `/${BasicTerm.TABLE}`, publishWithRetain: true, instantPublish: true})
+    this._mqttObjectUpdater = MqttObjectUpdaterFactory.getMqttObjectUpdater(soccerTable,
+      {prefix: `/${BasicTerm.TABLE}`, instantPublish: true, publishWithRetain: false, maxDepth: 0})
   }
 
   map(event: SoccerTableEventType) {
@@ -28,21 +29,18 @@ export class SoccerTableEventMapper implements EventMapper<SoccerTableEventType>
         this._soccerTable.newGame();
         this._gameHandler.triggerEvent(GameEventType.WHITE_SCORE_CHANGE)
         this._gameHandler.triggerEvent(GameEventType.BLACK_SCORE_CHANGE)
-        this.publishNewGameValues();
         break;
 
       case SoccerTableEventType.FINISH_GAME:
         this._soccerTable.newGame();
         this._gameHandler.triggerEvent(GameEventType.WHITE_SCORE_CHANGE)
         this._gameHandler.triggerEvent(GameEventType.BLACK_SCORE_CHANGE)
-        this.publishNewGameValues();
         break;
 
       case SoccerTableEventType.CANCEL_GAME:
         this._soccerTable.newGame();
         this._gameHandler.triggerEvent(GameEventType.WHITE_SCORE_CHANGE)
         this._gameHandler.triggerEvent(GameEventType.BLACK_SCORE_CHANGE)
-        this.publishNewGameValues();
         break;
 
       default:
@@ -53,11 +51,9 @@ export class SoccerTableEventMapper implements EventMapper<SoccerTableEventType>
       triggeredEvents.push(SoccerTableEventType.NEW_GAME)
     }
 
+    this._mqttObjectUpdater.commit(this._soccerTable)
+
     return new Set(triggeredEvents)
   }
 
-  private publishNewGameValues() {
-    this._mqttObjectUpdater.commit(this._soccerTable)
-    this._mqttObjectUpdater.publish()
-  }
 }
