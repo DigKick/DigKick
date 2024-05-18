@@ -30,31 +30,28 @@ export class GameEventMapper implements EventMapper<GameEventType> {
 
   map(event: GameEventType) {
     const prevGame: Game = structuredClone(this._game)
-    const dkMqttClient: DkMqttClient = DkMqttClient.getInstance()
     let triggeredEvents = [event]
 
     switch (event) {
       case GameEventType.WHITE_SCORE_CHANGE:
-        // dkMqttClient.publishWithRetain(BaseTopicFactory.getTeamTopic(this._soccerTable, TeamColor.WHITE) + "/score", JSON.stringify(new ScorePayload(this._game.teamWhite.score)))
         break;
       case GameEventType.WHITE_SCORE_INCREASE:
+        triggeredEvents.push(GameEventType.WHITE_SCORE_CHANGE);
         this._game.updateWhiteTeamScore(ScoreChange.INCREASE);
-        // dkMqttClient.publishWithRetain(BaseTopicFactory.getTeamTopic(this._soccerTable, TeamColor.WHITE) + "/score", JSON.stringify(new ScorePayload(this._game.teamWhite.score)))
         break;
       case GameEventType.WHITE_SCORE_DECREASE:
+        triggeredEvents.push(GameEventType.WHITE_SCORE_CHANGE);
         this._game.updateWhiteTeamScore(ScoreChange.DECREASE);
-        // dkMqttClient.publishWithRetain(BaseTopicFactory.getTeamTopic(this._soccerTable, TeamColor.WHITE) + "/score", JSON.stringify(new ScorePayload(this._game.teamWhite.score)))
         break;
       case GameEventType.BLACK_SCORE_CHANGE:
-        // dkMqttClient.publishWithRetain(BaseTopicFactory.getTeamTopic(this._soccerTable, TeamColor.BLACK) + "/score", JSON.stringify(new ScorePayload(this._game.teamBlack.score)))
         break;
       case GameEventType.BLACK_SCORE_INCREASE:
+        triggeredEvents.push(GameEventType.BLACK_SCORE_CHANGE);
         this._game.updateBlackTeamScore(ScoreChange.INCREASE);
-        // dkMqttClient.publishWithRetain(BaseTopicFactory.getTeamTopic(this._soccerTable, TeamColor.BLACK) + "/score", JSON.stringify(new ScorePayload(this._game.teamBlack.score)))
         break;
       case GameEventType.BLACK_SCORE_DECREASE:
+        triggeredEvents.push(GameEventType.BLACK_SCORE_CHANGE);
         this._game.updateBlackTeamScore(ScoreChange.DECREASE);
-        // dkMqttClient.publishWithRetain(BaseTopicFactory.getTeamTopic(this._soccerTable, TeamColor.BLACK) + "/score", JSON.stringify(new ScorePayload(this._game.teamBlack.score)))
         break;
       default:
         break;
@@ -64,9 +61,6 @@ export class GameEventMapper implements EventMapper<GameEventType> {
 
     if (prevGame?.winnerTeam !== this._game?.winnerTeam) {
       triggeredEvents.push(GameEventType.WINNER_CHANGE)
-      if (this._game.winnerTeam) {
-        dkMqttClient.publishWithRetain(BaseTopicFactory.getBaseTopic(this._soccerTable) + "/winner", JSON.stringify(new WinnerTeamPayload(this._game.winnerTeam)))
-      }
     }
 
     this.publishNewGameValues()
