@@ -90,11 +90,6 @@ export class GameEventMapper implements EventMapper<GameEventType> {
 
   private publishNewGameValues() {
     this._mqttObjectUpdaterGame.commit(this._game)
-    this._mqttObjectUpdaterTeamWhite.commit(this._game.teamWhite)
-    this._mqttObjectUpdaterTeamBlack.commit(this._game.teamBlack)
-
     this._mqttObjectUpdaterGame.publish()
-    this._mqttObjectUpdaterTeamWhite.publish()
-    this._mqttObjectUpdaterTeamBlack.publish()
   }
 }
