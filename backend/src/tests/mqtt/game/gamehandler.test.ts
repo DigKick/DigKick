@@ -53,7 +53,7 @@ test('test event white score increase', () => {
   gameHandler.subscribe(GameEventType.SCORE_CHANGE, gameObs)
   gameHandler.triggerEvent(GameEventType.WHITE_SCORE_INCREASE)
 
-  expect(cbGame!.teamWhite.score).toEqual(1)
+  expect(gameHandler.subject.teamWhite.score).toEqual(1)
 })
 
 
