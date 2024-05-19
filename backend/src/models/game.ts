@@ -1,4 +1,4 @@
-import {ScoreChange, Team, TeamColor} from "./team";
+import { ScoreChange, Team, TeamColor } from "./team";
 
 export class Game {
   public static STANDARDGAME_WINNINGSCORE = 10;
@@ -20,9 +20,9 @@ export class Game {
   public getTeamByColor(teamColor: TeamColor): Team {
     switch (teamColor) {
       case TeamColor.BLACK:
-        return this.teamBlack
+        return this.teamBlack;
       case TeamColor.WHITE:
-        return this.teamWhite
+        return this.teamWhite;
     }
   }
 
@@ -31,8 +31,7 @@ export class Game {
   }
 
   set teamWinner(team: Team | undefined) {
-    if (this._teamWinner)
-      return;
+    if (this._teamWinner) return;
     this._teamWinner = team;
   }
 
@@ -48,17 +47,21 @@ export class Game {
   }
 
   updateBlackTeamScore(change: ScoreChange) {
-    this._updateTeamScoreAndWinner(this.teamBlack, change)
+    this._updateTeamScoreAndWinner(this.teamBlack, change);
   }
 
   private _updateTeamScoreAndWinner(team: Team, change: ScoreChange) {
-    team.score = team.score + change
+    team.score = team.score + change;
 
     if (team.score >= this.pointsToWin) {
-      this.teamWinner = team
+      this.teamWinner = team;
     }
 
-    if (change === ScoreChange.DECREASE && team.score === this.pointsToWin - 1 && this.teamWinner === team) {
+    if (
+      change === ScoreChange.DECREASE &&
+      team.score === this.pointsToWin - 1 &&
+      this.teamWinner === team
+    ) {
       this.resetWinnerTeam();
     }
   }
@@ -75,8 +78,7 @@ export class Game {
       teamWhite: this.teamWhite.toJSON(),
       teamBlack: this.teamBlack.toJSON(),
       pointsToWin: this.pointsToWin,
-      winner: this._teamWinner
-    }
+      winner: this._teamWinner,
+    };
   }
-
 }

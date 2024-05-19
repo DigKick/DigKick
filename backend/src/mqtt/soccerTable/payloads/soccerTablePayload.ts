@@ -1,8 +1,7 @@
-import {SoccerTableEventType} from "../events/soccerTableEventType";
-
+import { SoccerTableEventType } from "../events/soccerTableEventType";
 
 export class SoccerTablePayload {
-  private readonly _gameResetReason: SoccerTableEventType
+  private readonly _gameResetReason: SoccerTableEventType;
 
   constructor(gameResetReason: SoccerTableEventType) {
     this._gameResetReason = gameResetReason;
@@ -10,7 +9,7 @@ export class SoccerTablePayload {
 
   toJSON(): any {
     return {
-      gameResetReason: this._gameResetReason
-    }
+      gameResetReason: this._gameResetReason,
+    };
   }
 }

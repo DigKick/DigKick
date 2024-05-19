@@ -7,7 +7,6 @@ info:
     name: Marvin Voss, Maximilian König
     email: mkoenig2@stud.hs-heilbronn.de
 
-
 servers:
   emqx:
     host: kicker.local
@@ -17,10 +16,7 @@ servers:
       - type: userPassword
         description: Simple user password login to the broker.
 
-
-
 components:
-
   parameters:
     tableId:
       description: Identifier of a table.
@@ -47,53 +43,53 @@ components:
         - "1"
         - "2"
 
-
   messages:
     tableRegisterMessage:
       summary: A message which contains the information for a table registration.
       payload:
         type: object
         description: Information for a table registration.
-        example:
-          {
-            "id": "table1"
-          }
+        example: { "id": "table1" }
         properties:
           id:
             type: string
 
+    gameMessage:
+      summary: All information about a team.
+      payload:
+        $ref: "#/components/schemas/game"
+
     teamMessage:
       summary: All information about a team.
       payload:
-        $ref: '#/components/schemas/team'
-    
+        $ref: "#/components/schemas/team"
+
     teamColorMessage:
       summary: Information about the score of a team.
       payload:
-        $ref: '#/components/schemas/color'
+        $ref: "#/components/schemas/color"
 
     teamScoreMessage:
       summary: Information about the score of a team.
       payload:
-        $ref: '#/components/schemas/score'
+        $ref: "#/components/schemas/score"
 
     pinStatusMessage:
       summary: Action triggered by a pin output change.
       payload:
-        $ref: '#/components/schemas/pinStatus'
+        $ref: "#/components/schemas/pinStatus"
 
     displayUpdateMessage:
       summary: Updates the display with the given parameters.
       payload:
-        $ref: '#/components/schemas/displayText'
+        $ref: "#/components/schemas/displayText"
 
     ledUpdateMessage:
       summary: Updates the LEDs strip.
       payload:
-        $ref: '#/components/schemas/ledStatus'
+        $ref: "#/components/schemas/ledStatus"
 
   schemas:
-
     pinOut:
       type: string
       enum:
@@ -105,60 +101,62 @@ components:
       description: Defines the status of an analog or digital pin.
       properties:
         pinOut:
-          $ref: '#/components/schemas/pinOut'
+          $ref: "#/components/schemas/pinOut"
+
+    game:
+      type: object
+      description: Describes all information about a game.
+      properties:
+        teamWhite:
+          $ref: "#/components/schemas/team"
+        teamBlack:
+          $ref: "#/components/schemas/team"
+        teamWinner:
+          $ref: "#/components/schemas/team"
+        pointsToWin:
+          type: number
+          minimum: 0
 
     team:
       type: object
-      description: Describes the score of a team.
-      example:
-        {
-          "color": "WHITE",
-          "score": 5
-        }
+      description: Describes all information about a team.
+      example: { "color": "WHITE", "score": 5 }
       properties:
         color:
-          $ref: '#/components/schemas/color'
+          $ref: "#/components/schemas/color"
         score:
-          $ref: '#/components/schemas/score'
+          $ref: "#/components/schemas/score"
 
     score:
       type: integer
       minimum: 0
-      example:
-        1
+      example: 1
 
     color:
       type: string
       enum:
         - WHITE
         - BLACK
-      example:
-        "WHITE"
+      example: "WHITE"
 
     displayText:
       type: object
       description: Describes where to put which text on the OLED display
       example:
         {
-          "snippets": [
-            {
-              "cursorPosition": [
-                1,
-                2
-              ],
-              "text": "WHITE 1 : 2 BLACK",
-              "inverted": false
-            },
-            {
-              "cursorPosition": [
-                1,
-                3
-              ],
-              "text": "LAST SCORED: TEAM WHITE",
-              "inverted": true
-            }
-          ]
-
+          "snippets":
+            [
+              {
+                "cursorPosition": [1, 2],
+                "text": "WHITE 1 : 2 BLACK",
+                "inverted": false,
+              },
+              {
+                "cursorPosition": [1, 3],
+                "text": "LAST SCORED: TEAM WHITE",
+                "inverted": true,
+              },
+            ],
         }
       properties:
         snippets:
@@ -173,7 +171,7 @@ components:
                 description: The cursor position defines where the text is written on the display. First value = x position - Second value = y position
                 minItems: 2
                 maxItems: 2
-                example: [ 1, 2 ]
+                example: [1, 2]
               text:
                 type: string
                 description: Defines the text.
@@ -182,7 +180,6 @@ components:
                 type: boolean
                 description: Defines if the display should be inverted around the text.
                 example: false
-
 
     ledStatus:
       type: object
@@ -195,8 +192,8 @@ components:
             description: Describes a color in HEX
             example: "0xFF00FF"
           minItems: 0
-          example: [ "0x00FF00", "0x00FFFF" ]
-          description: Describes the colors of the LEDs. The led strip should light in the described colors. If the value contains an empty string, the led at this place should be turned off. 
+          example: ["0x00FF00", "0x00FFFF"]
+          description: Describes the colors of the LEDs. The led strip should light in the described colors. If the value contains an empty string, the led at this place should be turned off.
         animation:
           type: string
           description: Describes the animation which gets played before the update of the LEDs.
@@ -210,192 +207,205 @@ components:
             - PARTY
             - FIREWORK
 
-
 channels:
   kickerTableRegister:
-    address: '/table/register'
+    address: "/table/register"
     messages:
       registerMessage:
-        $ref: '#/components/messages/tableRegisterMessage'
+        $ref: "#/components/messages/tableRegisterMessage"
+
+  gameStatus:
+    address: "/table/{tableId}/game"
+    parameters:
+      tableId:
+        $ref: "#/components/parameters/tableId"
+    messages:
+      gameStatusMessage:
+        $ref: "#/components/messages/gameMessage"
 
   teamStatus:
-    address: '/table/{tableId}/game/team/{teamId}'
+    address: "/table/{tableId}/game/team/{teamId}"
     parameters:
       tableId:
-        $ref: '#/components/parameters/tableId'
+        $ref: "#/components/parameters/tableId"
       teamId:
-        $ref: '#/components/parameters/teamId'
+        $ref: "#/components/parameters/teamId"
     messages:
-      scoreStatusMessage:
-        $ref: '#/components/messages/teamMessage'
-  
+      teamMessage:
+        $ref: "#/components/messages/teamMessage"
+
   teamColorStatus:
-    address: '/table/{tableId}/game/team/{teamId}/color$'
+    address: "/table/{tableId}/game/team/{teamId}/color$"
     parameters:
       tableId:
-        $ref: '#/components/parameters/tableId'
+        $ref: "#/components/parameters/tableId"
       teamId:
-        $ref: '#/components/parameters/teamId'
+        $ref: "#/components/parameters/teamId"
     messages:
-      scoreStatusMessage:
-        $ref: '#/components/messages/teamColorMessage'
+      teamColorMessage:
+        $ref: "#/components/messages/teamColorMessage"
 
   teamScoreStatus:
-    address: '/table/{tableId}/game/team/{teamId}/score$'
+    address: "/table/{tableId}/game/team/{teamId}/score$"
     parameters:
       tableId:
-        $ref: '#/components/parameters/tableId'
+        $ref: "#/components/parameters/tableId"
       teamId:
-        $ref: '#/components/parameters/teamId'
+        $ref: "#/components/parameters/teamId"
     messages:
-      scoreStatusMessage:
-        $ref: '#/components/messages/teamScoreMessage'
-  
+      teamScoreMessage:
+        $ref: "#/components/messages/teamScoreMessage"
+
   winnerTeamStatus:
-    address: '/table/{tableId}/game/team/winner'
+    address: "/table/{tableId}/game/team/winner"
     parameters:
       tableId:
-        $ref: '#/components/parameters/tableId'
+        $ref: "#/components/parameters/tableId"
       teamId:
-        $ref: '#/components/parameters/teamId'
+        $ref: "#/components/parameters/teamId"
     messages:
-      scoreStatusMessage:
-        $ref: '#/components/messages/teamMessage'
+      teamMessage:
+        $ref: "#/components/messages/teamMessage"
 
   winnerTeamColorStatus:
-    address: '/table/{tableId}/game/team/winner/color$'
+    address: "/table/{tableId}/game/team/winner/color$"
     parameters:
       tableId:
-        $ref: '#/components/parameters/tableId'
+        $ref: "#/components/parameters/tableId"
       teamId:
-        $ref: '#/components/parameters/teamId'
+        $ref: "#/components/parameters/teamId"
     messages:
       scoreStatusMessage:
-        $ref: '#/components/messages/teamColorMessage'
-  
+        $ref: "#/components/messages/teamColorMessage"
+
   winnerTeamScoreStatus:
-    address: '/table/{tableId}/game/team/winner/score$'
+    address: "/table/{tableId}/game/team/winner/score$"
     parameters:
       tableId:
-        $ref: '#/components/parameters/tableId'
+        $ref: "#/components/parameters/tableId"
       teamId:
-        $ref: '#/components/parameters/teamId'
+        $ref: "#/components/parameters/teamId"
     messages:
       scoreStatusMessage:
-        $ref: '#/components/messages/teamScoreMessage'
+        $ref: "#/components/messages/teamScoreMessage"
 
   buttonPress:
-    address: '/table/{tableId}/game/team/{teamId}/button/{buttonId}'
+    address: "/table/{tableId}/game/team/{teamId}/button/{buttonId}"
     parameters:
       tableId:
-        $ref: '#/components/parameters/tableId'
+        $ref: "#/components/parameters/tableId"
       teamId:
-        $ref: '#/components/parameters/teamId'
+        $ref: "#/components/parameters/teamId"
       buttonId:
-        $ref: '#/components/parameters/buttonId'
+        $ref: "#/components/parameters/buttonId"
     messages:
       pinOutMessage:
-        $ref: '#/components/messages/pinStatusMessage'
+        $ref: "#/components/messages/pinStatusMessage"
 
   lightBarrierDetect:
-    address: '/table/{tableId}/game/team/{teamId}/lightbarrier/{lightBarrierId}'
+    address: "/table/{tableId}/game/team/{teamId}/lightbarrier/{lightBarrierId}"
     parameters:
       tableId:
-        $ref: '#/components/parameters/tableId'
+        $ref: "#/components/parameters/tableId"
       teamId:
-        $ref: '#/components/parameters/teamId'
+        $ref: "#/components/parameters/teamId"
       lightBarrierId:
-        $ref: '#/components/parameters/lightBarrierId'
+        $ref: "#/components/parameters/lightBarrierId"
     messages:
       pinOutMessage:
-        $ref: '#/components/messages/pinStatusMessage'
+        $ref: "#/components/messages/pinStatusMessage"
 
   displayUpdate:
-    address: '/table/{tableId}/game/team/{teamId}/display'
+    address: "/table/{tableId}/game/team/{teamId}/display"
     parameters:
       tableId:
-        $ref: '#/components/parameters/tableId'
+        $ref: "#/components/parameters/tableId"
       teamId:
-        $ref: '#/components/parameters/teamId'
+        $ref: "#/components/parameters/teamId"
     messages:
       displayMessage:
-        $ref: '#/components/messages/displayUpdateMessage'
+        $ref: "#/components/messages/displayUpdateMessage"
 
   ledStripUpdate:
-    address: '/table/{tableId}/game/team/{teamId}/leds'
+    address: "/table/{tableId}/game/team/{teamId}/leds"
     parameters:
       tableId:
-        $ref: '#/components/parameters/tableId'
+        $ref: "#/components/parameters/tableId"
       teamId:
-        $ref: '#/components/parameters/teamId'
+        $ref: "#/components/parameters/teamId"
     messages:
       ledMessage:
-        $ref: '#/components/messages/ledUpdateMessage'
+        $ref: "#/components/messages/ledUpdateMessage"
 
 operations:
   kickerTableRegister:
     action: receive
     summary: Operation for a registration of a table with an id
     channel:
-      $ref: '#/channels/kickerTableRegister'
+      $ref: "#/channels/kickerTableRegister"
 
   buttonPress:
     action: receive
     summary: Action on button press
     channel:
-      $ref: '#/channels/buttonPress'
+      $ref: "#/channels/buttonPress"
 
   lightBarrierDetect:
     action: receive
     summary: Action on a detection of the light barrier
     channel:
-      $ref: '#/channels/lightBarrierDetect'
+      $ref: "#/channels/lightBarrierDetect"
+
+  gameStatus:
+    action: send
+    summary: Information about the game status.
+    channel:
+      $ref: "#/channels/gameStatus"
 
   teamStatus:
     action: send
-    summary: Information about the score status.
+    summary: Information about the team.
     channel:
-      $ref: '#/channels/teamStatus'
-  
+      $ref: "#/channels/teamStatus"
+
   teamColorStatus:
     action: send
-    summary: Information about the score status.
+    summary: Information about the team color.
     channel:
-      $ref: '#/channels/teamColorStatus'
+      $ref: "#/channels/teamColorStatus"
 
   teamScoreStatus:
     action: send
-    summary: Information about the score status.
+    summary: Information about the team score.
     channel:
-      $ref: '#/channels/teamScoreStatus'
-  
+      $ref: "#/channels/teamScoreStatus"
+
   winnerTeamStatus:
     action: send
     summary: Information about the score status of the winner team. Payload is empty when there is no winner at the moment.
     channel:
-      $ref: '#/channels/winnerTeamStatus'
-  
+      $ref: "#/channels/winnerTeamStatus"
+
   winnerTeamColorStatus:
     action: send
     summary: Information about the score status. Payload is empty when there is no winner at the moment.
     channel:
-      $ref: '#/channels/winnerTeamColorStatus'
-  
+      $ref: "#/channels/winnerTeamColorStatus"
+
   winnerTeamScoreStatus:
     action: send
     summary: Information about the score status. Payload is empty when there is no winner at the moment.
     channel:
-      $ref: '#/channels/winnerTeamScoreStatus'
+      $ref: "#/channels/winnerTeamScoreStatus"
 
   displayUpdate:
     action: send
     summary: Display update
     channel:
-      $ref: '#/channels/displayUpdate'
+      $ref: "#/channels/displayUpdate"
 
   ledUpdate:
     action: send
     summary: LED(s) update
     channel:
-      $ref: '#/channels/ledStripUpdate'
-
+      $ref: "#/channels/ledStripUpdate"

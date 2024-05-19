@@ -1,6 +1,5 @@
 export class RegisteredTableListPayload {
-
-  private readonly _tableIds: string[]
+  private readonly _tableIds: string[];
 
   constructor(tableIds: string[]) {
     this._tableIds = tableIds;
@@ -8,7 +7,7 @@ export class RegisteredTableListPayload {
 
   toJSON() {
     return {
-      ids: this._tableIds
-    }
+      ids: this._tableIds,
+    };
   }
 }

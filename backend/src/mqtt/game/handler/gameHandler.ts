@@ -1,8 +1,8 @@
-import {GameEventType} from "../events/gameEvent";
-import {SoccerTable} from "../../../models/soccerTable";
-import {AbstractHandler, HandlerType} from "../../abstract/abstractHandler";
-import {Game} from "../../../models/game";
-import {GameEventMapper} from "../events/gameEventMapper";
+import { GameEventType } from "../events/gameEvent";
+import { SoccerTable } from "../../../models/soccerTable";
+import { AbstractHandler, HandlerType } from "../../abstract/abstractHandler";
+import { Game } from "../../../models/game";
+import { GameEventMapper } from "../events/gameEventMapper";
 
 export class GameHandler extends AbstractHandler<GameEventType, Game> {
   public observerMap: Map<GameEventType, Function> = new Map();
@@ -10,7 +10,7 @@ export class GameHandler extends AbstractHandler<GameEventType, Game> {
 
   constructor(soccerTable: SoccerTable) {
     super(soccerTable.game, HandlerType.GAME, soccerTable);
-    this._mapper = new GameEventMapper(soccerTable)
+    this._mapper = new GameEventMapper(soccerTable);
     this.soccerTable = soccerTable;
   }
 }

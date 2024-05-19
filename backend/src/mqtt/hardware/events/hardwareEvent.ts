@@ -11,8 +11,16 @@ export enum HardwareEventType {
   BUTTON_1_LOW = HardwareEventType.BUTTON + `_1_` + HardwareEventType.LOW,
   BUTTON_2_LOW = HardwareEventType.BUTTON + `_2_` + HardwareEventType.LOW,
 
-  LIGHTBARRIER_0_HIGH = HardwareEventType.LIGHTBARRIER + `_0_` + HardwareEventType.HIGH,
-  LIGHTBARRIER_1_HIGH = HardwareEventType.LIGHTBARRIER + `_1_` + HardwareEventType.HIGH,
-  LIGHTBARRIER_0_LOW = HardwareEventType.LIGHTBARRIER + `_0_` + HardwareEventType.LOW,
-  LIGHTBARRIER_1_LOW = HardwareEventType.LIGHTBARRIER + `_1_` + HardwareEventType.LOW,
+  LIGHTBARRIER_0_HIGH = HardwareEventType.LIGHTBARRIER +
+    `_0_` +
+    HardwareEventType.HIGH,
+  LIGHTBARRIER_1_HIGH = HardwareEventType.LIGHTBARRIER +
+    `_1_` +
+    HardwareEventType.HIGH,
+  LIGHTBARRIER_0_LOW = HardwareEventType.LIGHTBARRIER +
+    `_0_` +
+    HardwareEventType.LOW,
+  LIGHTBARRIER_1_LOW = HardwareEventType.LIGHTBARRIER +
+    `_1_` +
+    HardwareEventType.LOW,
 }

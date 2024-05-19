@@ -1,5 +1,5 @@
 export class ScorePayload {
-  private readonly _score: number
+  private readonly _score: number;
 
   constructor(score: number) {
     this._score = score;
@@ -7,7 +7,7 @@ export class ScorePayload {
 
   toJSON() {
     return {
-      score: this._score
-    }
+      score: this._score,
+    };
   }
 }
