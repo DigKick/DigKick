@@ -1,7 +1,10 @@
-import {beforeEach, expect, mock, test} from "bun:test";
-import {AbstractHandler, HandlerType} from "../../../mqtt/abstract/abstractHandler";
-import {SoccerTable} from "../../../models/soccerTable";
-import type {EventMapper} from "../../../mqtt/abstract/eventMapper";
+import { beforeEach, expect, mock, test } from "bun:test";
+import {
+  AbstractHandler,
+  HandlerType,
+} from "../../../mqtt/abstract/abstractHandler";
+import { SoccerTable } from "../../../models/soccerTable";
+import type { EventMapper } from "../../../mqtt/abstract/eventMapper";
 
 enum TestEvent {
   EVENT_1 = "EVENT_1",
@@ -10,8 +13,7 @@ enum TestEvent {
 }
 
 class TestEventMapper implements EventMapper<TestEvent> {
-
-  private readonly _testObj: TestClass
+  private readonly _testObj: TestClass;
 
   constructor(testObj: TestClass) {
     this._testObj = testObj;

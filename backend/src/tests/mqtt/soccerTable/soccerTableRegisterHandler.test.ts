@@ -1,30 +1,32 @@
-import {beforeEach, expect, test} from "bun:test";
+import { beforeEach, expect, test } from "bun:test";
 import {
   SoccerTableRegisterHandler,
   SoccerTableRegisterTopic,
 } from "../../../mqtt/soccerTable/handler/soccerTableRegisterHandler";
-import {SoccerTableHandler} from "../../../mqtt/soccerTable/handler/soccerTableHandler";
-import type {TableRegisterPayload} from "../../../mqtt/soccerTable/payloads/tableRegisterPayload";
+import { SoccerTableHandler } from "../../../mqtt/soccerTable/handler/soccerTableHandler";
+import type { TableRegisterPayload } from "../../../mqtt/soccerTable/payloads/tableRegisterPayload";
 
 let soccerTableRegisterHandler: SoccerTableRegisterHandler;
 
 const validTableRegisterPayload: TableRegisterPayload = {
-  id: "validId"
-}
+  id: "validId",
+};
 
 const invalidTableRegisterPayload: TableRegisterPayload = {
-  id: ""
-}
-
+  id: "",
+};
 
 const invalidUndefinedTableRegisterPayload: TableRegisterPayload = {
   // @ts-ignore
-  tableId: undefined
-}
+  tableId: undefined,
+};
 
 beforeEach(() => {
   soccerTableRegisterHandler = new SoccerTableRegisterHandler();
-  SoccerTableRegisterHandler.soccerTableHandlers = new Map<string, SoccerTableHandler>();
+  SoccerTableRegisterHandler.soccerTableHandlers = new Map<
+    string,
+    SoccerTableHandler
+  >();
 });
 
 test("test valid table id", () => {
@@ -51,7 +53,8 @@ test("test invalid table id", () => {
 
 test("test undefined table id", () => {
   soccerTableRegisterHandler.registerSubscriber.func(
-    SoccerTableRegisterTopic.REGISTER, invalidUndefinedTableRegisterPayload
+    SoccerTableRegisterTopic.REGISTER,
+    invalidUndefinedTableRegisterPayload,
   );
 
   expect(

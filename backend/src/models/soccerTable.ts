@@ -1,8 +1,7 @@
-import {Game} from "./game";
+import { Game } from "./game";
 
 export class SoccerTable {
-
-  public id: string
+  public id: string;
   private _game: Game;
 
   constructor(id: string) {
@@ -20,7 +19,7 @@ export class SoccerTable {
 
   toJSON() {
     return {
-      game: this._game.toJSON()
-    }
+      game: this._game.toJSON(),
+    };
   }
 }

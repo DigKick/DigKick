@@ -1,7 +1,6 @@
 export class LedUpdatePayload {
-
-  colors: Array<string>
-  animation: string
+  colors: Array<string>;
+  animation: string;
 
   constructor(colors: Array<string>, animation: string) {
     this.colors = colors;
@@ -11,7 +10,7 @@ export class LedUpdatePayload {
   toJSON() {
     return {
       colors: this.colors,
-      animation: undefined
-    }
+      animation: undefined,
+    };
   }
 }

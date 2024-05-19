@@ -1,18 +1,16 @@
 export enum TeamColor {
   WHITE = "white",
-  BLACK = "black"
+  BLACK = "black",
 }
 
 export enum ScoreChange {
   DECREASE = -1,
-  INCREASE = 1
+  INCREASE = 1,
 }
 
 export class Team {
-
   public color: TeamColor;
   private _score: number;
-
 
   constructor(color: TeamColor) {
     this.color = color;
@@ -20,17 +18,17 @@ export class Team {
   }
 
   get score() {
-    return this._score
+    return this._score;
   }
 
   set score(newScore: number) {
-    this._score = Math.max(0, newScore)
+    this._score = Math.max(0, newScore);
   }
 
   toJSON() {
     return {
-      'color': this.color,
-      'score': this._score
-    }
+      color: this.color,
+      score: this._score,
+    };
   }
 }

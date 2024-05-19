@@ -1,8 +1,8 @@
 export enum PinOut {
   LOW = "LOW",
-  HIGH = "HIGH"
+  HIGH = "HIGH",
 }
 
 export interface PinStatusPayload {
-  pinOut: PinOut
+  pinOut: PinOut;
 }

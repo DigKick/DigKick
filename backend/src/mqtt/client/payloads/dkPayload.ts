@@ -1,2 +1,1 @@
-export interface DkPayload {
-}
+export interface DkPayload {}

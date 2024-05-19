@@ -1,5 +1,5 @@
-import winston, {addColors, transports} from "winston";
-import {HandlerType} from "../mqtt/abstract/abstractHandler";
+import winston, { addColors, transports } from "winston";
+import { HandlerType } from "../mqtt/abstract/abstractHandler";
 
 addColors({
   info: "bold blue", // fontStyle color
@@ -9,7 +9,6 @@ addColors({
 });
 
 export class LoggerFactory {
-
   static loggerCountMap = new Map<string, number>();
 
   static getLoggerFormat(loggerLabel: string) {
@@ -25,8 +24,8 @@ export class LoggerFactory {
       }),
       winston.format.printf(
         (info) =>
-          ` ${info.label}  ${info.timestamp}  ${info.level} : ${info.message}`
-      )
+          ` ${info.label}  ${info.timestamp}  ${info.level} : ${info.message}`,
+      ),
     );
   }
 
@@ -37,7 +36,7 @@ export class LoggerFactory {
         new transports.Console({
           format: winston.format.combine(
             winston.format.colorize(),
-            this.getLoggerFormat(loggerLabel)
+            this.getLoggerFormat(loggerLabel),
           ),
         }),
       ],
@@ -49,26 +48,35 @@ export class LoggerFactory {
   }
 
   static getHandlerLogger(handlerName: HandlerType, gameId: string) {
-    let loggerCount = LoggerFactory.loggerCountMap.get(String(handlerName.valueOf()));
+    let loggerCount = LoggerFactory.loggerCountMap.get(
+      String(handlerName.valueOf()),
+    );
     if (!loggerCount) {
       LoggerFactory.loggerCountMap.set(String(handlerName.valueOf()), 1);
     } else {
-      LoggerFactory.loggerCountMap.set(String(handlerName.valueOf()), ++loggerCount);
+      LoggerFactory.loggerCountMap.set(
+        String(handlerName.valueOf()),
+        ++loggerCount,
+      );
     }
 
-    return LoggerFactory.getLogger(`${String(handlerName.valueOf()).charAt(0).toUpperCase() + String(handlerName.valueOf()).slice(1)}Handler (${gameId})`);
+    return LoggerFactory.getLogger(
+      `${
+        String(handlerName.valueOf()).charAt(0).toUpperCase() +
+        String(handlerName.valueOf()).slice(1)
+      }Handler (${gameId})`,
+    );
   }
-
 
   static printLogo() {
     console.log(
-      '\n\n' +
-      '\t██████╗ ██╗ ██████╗ ██╗  ██╗██╗ ██████╗██╗  ██╗\n' +
-      '\t██╔══██╗██║██╔════╝ ██║ ██╔╝██║██╔════╝██║ ██╔╝\n' +
-      '\t██║  ██║██║██║  ███╗█████╔╝ ██║██║     █████╔╝ \n' +
-      '\t██║  ██║██║██║   ██║██╔═██╗ ██║██║     ██╔═██╗ \n' +
-      '\t██████╔╝██║╚██████╔╝██║  ██╗██║╚██████╗██║  ██╗\n' +
-      '\t╚═════╝ ╚═╝ ╚═════╝ ╚═╝  ╚═╝╚═╝ ╚═════╝╚═╝  ╚═╝\n\n'
-    )
+      "\n\n" +
+        "\t██████╗ ██╗ ██████╗ ██╗  ██╗██╗ ██████╗██╗  ██╗\n" +
+        "\t██╔══██╗██║██╔════╝ ██║ ██╔╝██║██╔════╝██║ ██╔╝\n" +
+        "\t██║  ██║██║██║  ███╗█████╔╝ ██║██║     █████╔╝ \n" +
+        "\t██║  ██║██║██║   ██║██╔═██╗ ██║██║     ██╔═██╗ \n" +
+        "\t██████╔╝██║╚██████╔╝██║  ██╗██║╚██████╗██║  ██╗\n" +
+        "\t╚═════╝ ╚═╝ ╚═════╝ ╚═╝  ╚═╝╚═╝ ╚═════╝╚═╝  ╚═╝\n\n",
+    );
   }
 }

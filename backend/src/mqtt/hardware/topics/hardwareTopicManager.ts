@@ -1,12 +1,13 @@
-import {BasicTerm} from "../../util/basicTerm";
-import {TeamColor} from "../../../models/team";
-import {BaseTopicFactory} from "../../util/baseTopicFactory";
-import {SoccerTable} from "../../../models/soccerTable";
+import { BasicTerm } from "../../util/basicTerm";
+import { TeamColor } from "../../../models/team";
+import { BaseTopicFactory } from "../../util/baseTopicFactory";
+import { SoccerTable } from "../../../models/soccerTable";
 
 export class HardwareTopicManager {
-
-  constructor(private _soccerTable: SoccerTable, private _teamColor: TeamColor) {
-  }
+  constructor(
+    private _soccerTable: SoccerTable,
+    private _teamColor: TeamColor,
+  ) {}
 
   private get _baseTeamTopic(): string {
     return BaseTopicFactory.getTeamTopic(this._soccerTable, this._teamColor);
@@ -33,7 +34,6 @@ export class HardwareTopicManager {
   }
 
   get lightbarriersTopic(): string {
-    return this._baseLightbarrierTopic + `/+`
+    return this._baseLightbarrierTopic + `/+`;
   }
-
 }
