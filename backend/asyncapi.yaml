@@ -252,7 +252,7 @@ channels:
         $ref: '#/components/messages/teamScoreMessage'
   
   winnerTeamStatus:
-    address: '/table/{tableId}/game/winner'
+    address: '/table/{tableId}/game/team/winner'
     parameters:
       tableId:
         $ref: '#/components/parameters/tableId'
@@ -261,6 +261,28 @@ channels:
     messages:
       scoreStatusMessage:
         $ref: '#/components/messages/teamMessage'
+
+  winnerTeamColorStatus:
+    address: '/table/{tableId}/game/team/winner/color$'
+    parameters:
+      tableId:
+        $ref: '#/components/parameters/tableId'
+      teamId:
+        $ref: '#/components/parameters/teamId'
+    messages:
+      scoreStatusMessage:
+        $ref: '#/components/messages/teamColorMessage'
+  
+  winnerTeamScoreStatus:
+    address: '/table/{tableId}/game/team/winner/score$'
+    parameters:
+      tableId:
+        $ref: '#/components/parameters/tableId'
+      teamId:
+        $ref: '#/components/parameters/teamId'
+    messages:
+      scoreStatusMessage:
+        $ref: '#/components/messages/teamScoreMessage'
 
   buttonPress:
     address: '/table/{tableId}/game/team/{teamId}/button/{buttonId}'
@@ -349,9 +371,21 @@ operations:
   
   winnerTeamStatus:
     action: send
-    summary: Information about the score status.
+    summary: Information about the score status of the winner team. Payload is empty when there is no winner at the moment.
     channel:
-      $ref: '#/channels/teamStatus'
+      $ref: '#/channels/winnerTeamStatus'
+  
+  winnerTeamColorStatus:
+    action: send
+    summary: Information about the score status. Payload is empty when there is no winner at the moment.
+    channel:
+      $ref: '#/channels/winnerTeamColorStatus'
+  
+  winnerTeamScoreStatus:
+    action: send
+    summary: Information about the score status. Payload is empty when there is no winner at the moment.
+    channel:
+      $ref: '#/channels/winnerTeamScoreStatus'
 
   displayUpdate:
     action: send
@@ -359,7 +393,7 @@ operations:
     channel:
       $ref: '#/channels/displayUpdate'
 
-  lLedUpdate:
+  ledUpdate:
     action: send
     summary: LED(s) update
     channel:
