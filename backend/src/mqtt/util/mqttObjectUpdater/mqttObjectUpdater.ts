@@ -12,7 +12,7 @@ export class MqttObjectUpdater<ObjectType> {
 
   constructor(subject: ObjectType, config?: MqttObjectUpdaterConfig) {
     this.subject = structuredClone(subject);
-    this.config = {prefix: "", instantPublish: false, publishWithRetain: false, maxDepth: -1, ...config};
+    this.config = {prefix: "", instantPublish: false, publishWithRetain: false, ...config};
     this.latestChanges = new Map<string, ChangeLog>();
 
     if (this.config.instantPublish) {
