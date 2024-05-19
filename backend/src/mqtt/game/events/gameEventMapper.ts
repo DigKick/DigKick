@@ -51,7 +51,7 @@ export class GameEventMapper implements EventMapper<GameEventType> {
 
     triggeredEvents.concat(this._triggerScoreUpdates(event))
 
-    if (prevGame?.winnerTeam !== this._game?.winnerTeam) {
+    if (prevGame?.teamWinner !== this._game?.teamWinner) {
       triggeredEvents.push(GameEventType.WINNER_CHANGE)
     }
 

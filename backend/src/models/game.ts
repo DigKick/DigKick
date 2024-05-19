@@ -5,7 +5,7 @@ export class Game {
 
   public teamWhite: Team;
   public teamBlack: Team;
-  private _winnerTeam!: Team | undefined;
+  private _teamWinner!: Team | undefined;
 
   public readonly pointsToWin: number;
 
@@ -27,18 +27,18 @@ export class Game {
   }
 
   resetWinnerTeam() {
-    this._winnerTeam = undefined;
+    this._teamWinner = undefined;
   }
 
-  set winnerTeam(team: Team | undefined) {
-    if (this._winnerTeam)
+  set teamWinner(team: Team | undefined) {
+    if (this._teamWinner)
       return;
-    this._winnerTeam = team;
+    this._teamWinner = team;
   }
 
-  get winnerTeam(): Team | undefined {
-    if (this._winnerTeam instanceof Team) {
-      return this._winnerTeam;
+  get teamWinner(): Team | undefined {
+    if (this._teamWinner instanceof Team) {
+      return this._teamWinner;
     }
     return undefined;
   }
@@ -55,10 +55,10 @@ export class Game {
     team.score = team.score + change
 
     if (team.score >= this.pointsToWin) {
-      this.winnerTeam = team
+      this.teamWinner = team
     }
 
-    if (change === ScoreChange.DECREASE && team.score === this.pointsToWin - 1 && this.winnerTeam === team) {
+    if (change === ScoreChange.DECREASE && team.score === this.pointsToWin - 1 && this.teamWinner === team) {
       this.resetWinnerTeam();
     }
   }
@@ -67,7 +67,7 @@ export class Game {
     this.teamWhite.score = 0;
     this.teamBlack.score = 0;
 
-    this._winnerTeam = undefined;
+    this._teamWinner = undefined;
   }
 
   toJSON() {
@@ -75,7 +75,7 @@ export class Game {
       teamWhite: this.teamWhite.toJSON(),
       teamBlack: this.teamBlack.toJSON(),
       pointsToWin: this.pointsToWin,
-      winner: this._winnerTeam
+      winner: this._teamWinner
     }
   }
 

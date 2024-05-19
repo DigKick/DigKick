@@ -47,7 +47,7 @@ test('white team wins', () => {
     gameObj.updateWhiteTeamScore(ScoreChange.INCREASE);
   }
 
-  expect(gameObj.winnerTeam).toEqual(gameObj.teamWhite)
+  expect(gameObj.teamWinner).toEqual(gameObj.teamWhite)
 })
 
 
@@ -60,7 +60,7 @@ test('winning team does not change', () => {
     gameObj.updateBlackTeamScore(ScoreChange.INCREASE);
   }
 
-  expect(gameObj.winnerTeam).toEqual(gameObj.teamWhite)
+  expect(gameObj.teamWinner).toEqual(gameObj.teamWhite)
 })
 
 test('winning team is reset after last goal got undo', () => {
@@ -71,7 +71,7 @@ test('winning team is reset after last goal got undo', () => {
   gameObj.updateWhiteTeamScore(ScoreChange.DECREASE)
 
 
-  expect(gameObj.winnerTeam).toBeUndefined()
+  expect(gameObj.teamWinner).toBeUndefined()
 })
 
 test('undo winning team and other team wins', () => {
@@ -86,7 +86,7 @@ test('undo winning team and other team wins', () => {
   gameObj.updateWhiteTeamScore(ScoreChange.DECREASE)
   gameObj.updateBlackTeamScore(ScoreChange.INCREASE)
 
-  expect(gameObj.winnerTeam).toEqual(gameObj.teamBlack)
+  expect(gameObj.teamWinner).toEqual(gameObj.teamBlack)
 })
 
 test('reset game', () => {
@@ -100,7 +100,7 @@ test('reset game', () => {
 
   gameObj.reset()
 
-  expect(gameObj.winnerTeam).toBeUndefined()
+  expect(gameObj.teamWinner).toBeUndefined()
   expect(gameObj.teamWhite.score).toBe(0)
   expect(gameObj.teamBlack.score).toBe(0)
 })

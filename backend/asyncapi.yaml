@@ -62,10 +62,20 @@ components:
           id:
             type: string
 
-    singleTeamScoreMessage:
+    teamMessage:
+      summary: All information about a team.
+      payload:
+        $ref: '#/components/schemas/team'
+    
+    teamColorMessage:
       summary: Information about the score of a team.
       payload:
-        $ref: '#/components/schemas/teamScore'
+        $ref: '#/components/schemas/color'
+
+    teamScoreMessage:
+      summary: Information about the score of a team.
+      payload:
+        $ref: '#/components/schemas/score'
 
     pinStatusMessage:
       summary: Action triggered by a pin output change.
@@ -98,25 +108,32 @@ components:
           $ref: '#/components/schemas/pinOut'
 
     team:
-      type: string
-      enum:
-        - WHITE
-        - BLACK
-
-    teamScore:
       type: object
       description: Describes the score of a team.
       example:
         {
-          "team": "WHITE",
+          "color": "WHITE",
           "score": 5
         }
       properties:
-        team:
-          $ref: '#/components/schemas/team'
+        color:
+          $ref: '#/components/schemas/color'
         score:
-          type: integer
-          minimum: 0
+          $ref: '#/components/schemas/score'
+
+    score:
+      type: integer
+      minimum: 0
+      example:
+        1
+
+    color:
+      type: string
+      enum:
+        - WHITE
+        - BLACK
+      example:
+        "WHITE"
 
     displayText:
       type: object
@@ -171,22 +188,15 @@ components:
       type: object
       description: Describes how many LEDs are turned in which color(s). Also defines the transmission animation.
       properties:
-        ledCount:
-          type: integer
-          minItems: 0
-          maxItems: 20
-          example: 2
-          description: Describes how many LEDs are getting turned on.
         colors:
           type: array
           items:
             type: string
             description: Describes a color in HEX
             example: "0xFF00FF"
-          minItems: 1
-          maxItems: 2
+          minItems: 0
           example: [ "0x00FF00", "0x00FFFF" ]
-          description: Describes the color of the LEDs. If the array contains two colors the LEDs will alternate between both colors.
+          description: Describes the colors of the LEDs. The led strip should light in the described colors. If the value contains an empty string, the led at this place should be turned off. 
         animation:
           type: string
           description: Describes the animation which gets played before the update of the LEDs.
@@ -208,8 +218,8 @@ channels:
       registerMessage:
         $ref: '#/components/messages/tableRegisterMessage'
 
-  teamScoreStatus:
-    address: '/table/{tableId}/team/{teamId}/score'
+  teamStatus:
+    address: '/table/{tableId}/game/team/{teamId}'
     parameters:
       tableId:
         $ref: '#/components/parameters/tableId'
@@ -217,10 +227,43 @@ channels:
         $ref: '#/components/parameters/teamId'
     messages:
       scoreStatusMessage:
-        $ref: '#/components/messages/singleTeamScoreMessage'
+        $ref: '#/components/messages/teamMessage'
+  
+  teamColorStatus:
+    address: '/table/{tableId}/game/team/{teamId}/color$'
+    parameters:
+      tableId:
+        $ref: '#/components/parameters/tableId'
+      teamId:
+        $ref: '#/components/parameters/teamId'
+    messages:
+      scoreStatusMessage:
+        $ref: '#/components/messages/teamColorMessage'
+
+  teamScoreStatus:
+    address: '/table/{tableId}/game/team/{teamId}/score$'
+    parameters:
+      tableId:
+        $ref: '#/components/parameters/tableId'
+      teamId:
+        $ref: '#/components/parameters/teamId'
+    messages:
+      scoreStatusMessage:
+        $ref: '#/components/messages/teamScoreMessage'
+  
+  winnerTeamStatus:
+    address: '/table/{tableId}/game/winner'
+    parameters:
+      tableId:
+        $ref: '#/components/parameters/tableId'
+      teamId:
+        $ref: '#/components/parameters/teamId'
+    messages:
+      scoreStatusMessage:
+        $ref: '#/components/messages/teamMessage'
 
   buttonPress:
-    address: '/table/{tableId}/team/{teamId}/button/{buttonId}'
+    address: '/table/{tableId}/game/team/{teamId}/button/{buttonId}'
     parameters:
       tableId:
         $ref: '#/components/parameters/tableId'
@@ -233,7 +276,7 @@ channels:
         $ref: '#/components/messages/pinStatusMessage'
 
   lightBarrierDetect:
-    address: '/table/{tableId}/team/{teamId}/lightBarrier/{lightBarrierId}'
+    address: '/table/{tableId}/game/team/{teamId}/lightbarrier/{lightBarrierId}'
     parameters:
       tableId:
         $ref: '#/components/parameters/tableId'
@@ -246,7 +289,7 @@ channels:
         $ref: '#/components/messages/pinStatusMessage'
 
   displayUpdate:
-    address: '/table/{tableId}/team/{teamId}/display'
+    address: '/table/{tableId}/game/team/{teamId}/display'
     parameters:
       tableId:
         $ref: '#/components/parameters/tableId'
@@ -257,7 +300,7 @@ channels:
         $ref: '#/components/messages/displayUpdateMessage'
 
   ledStripUpdate:
-    address: '/table/{tableId}/team/{teamId}/leds'
+    address: '/table/{tableId}/game/team/{teamId}/leds'
     parameters:
       tableId:
         $ref: '#/components/parameters/tableId'
@@ -268,29 +311,47 @@ channels:
         $ref: '#/components/messages/ledUpdateMessage'
 
 operations:
-  onKickerTableRegister:
+  kickerTableRegister:
     action: receive
     summary: Operation for a registration of a table with an id
     channel:
       $ref: '#/channels/kickerTableRegister'
 
-  onButtonPress:
+  buttonPress:
     action: receive
     summary: Action on button press
     channel:
       $ref: '#/channels/buttonPress'
 
-  onLightBarrierDetect:
+  lightBarrierDetect:
     action: receive
     summary: Action on a detection of the light barrier
     channel:
       $ref: '#/channels/lightBarrierDetect'
+
+  teamStatus:
+    action: send
+    summary: Information about the score status.
+    channel:
+      $ref: '#/channels/teamStatus'
+  
+  teamColorStatus:
+    action: send
+    summary: Information about the score status.
+    channel:
+      $ref: '#/channels/teamColorStatus'
 
   teamScoreStatus:
     action: send
     summary: Information about the score status.
     channel:
       $ref: '#/channels/teamScoreStatus'
+  
+  winnerTeamStatus:
+    action: send
+    summary: Information about the score status.
+    channel:
+      $ref: '#/channels/teamStatus'
 
   displayUpdate:
     action: send
@@ -298,7 +359,7 @@ operations:
     channel:
       $ref: '#/channels/displayUpdate'
 
-  ledUpdate:
+  lLedUpdate:
     action: send
     summary: LED(s) update
     channel:
