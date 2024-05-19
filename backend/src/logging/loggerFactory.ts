@@ -1,4 +1,5 @@
 import winston, {addColors, transports} from "winston";
+import {HandlerType} from "../mqtt/abstract/abstractHandler";
 
 addColors({
   info: "bold blue", // fontStyle color
@@ -47,15 +48,15 @@ export class LoggerFactory {
     return logger;
   }
 
-  static getHandlerLogger(handlerName: string, gameId: string) {
-    let loggerCount = LoggerFactory.loggerCountMap.get(handlerName);
+  static getHandlerLogger(handlerName: HandlerType, gameId: string) {
+    let loggerCount = LoggerFactory.loggerCountMap.get(String(handlerName.valueOf()));
     if (!loggerCount) {
-      LoggerFactory.loggerCountMap.set(handlerName, 1);
+      LoggerFactory.loggerCountMap.set(String(handlerName.valueOf()), 1);
     } else {
-      LoggerFactory.loggerCountMap.set(handlerName, ++loggerCount);
+      LoggerFactory.loggerCountMap.set(String(handlerName.valueOf()), ++loggerCount);
     }
 
-    return LoggerFactory.getLogger(`${handlerName.charAt(0).toUpperCase() + handlerName.slice(1)}Handler (${gameId})`);
+    return LoggerFactory.getLogger(`${String(handlerName.valueOf()).charAt(0).toUpperCase() + String(handlerName.valueOf()).slice(1)}Handler (${gameId})`);
   }
 
 

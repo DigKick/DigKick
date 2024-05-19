@@ -4,16 +4,16 @@ import {
   SoccerTableRegisterTopic,
 } from "../../../mqtt/soccerTable/handler/soccerTableRegisterHandler";
 import {SoccerTableHandler} from "../../../mqtt/soccerTable/handler/soccerTableHandler";
-import type {TableRegisterPayload} from "../../../mqtt/client/payloads/tableRegisterPayload";
+import type {TableRegisterPayload} from "../../../mqtt/soccerTable/payloads/tableRegisterPayload";
 
 let soccerTableRegisterHandler: SoccerTableRegisterHandler;
 
 const validTableRegisterPayload: TableRegisterPayload = {
-  tableId: "validId"
+  id: "validId"
 }
 
 const invalidTableRegisterPayload: TableRegisterPayload = {
-  tableId: ""
+  id: ""
 }
 
 

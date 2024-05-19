@@ -56,16 +56,17 @@ export class HardwareHandler extends AbstractHandler<HardwareEventType, SoccerTa
 
     try {
       toTriggerEvent = this.mapTypeAndIdToEvent(hardwareType, hardwareId, pinStatusPayload.pinOut)
-      this.triggerEvent(toTriggerEvent)
     } catch (e) {
       this._logger.error(`No hardware event: "${String(`${hardwareType}_${hardwareId}_${pinStatusPayload.pinOut}`).toUpperCase()}"`)
       return;
     }
+
+    this.triggerEvent(toTriggerEvent)
   }
 
   constructor(subject: SoccerTableHandler, teamColor: TeamColor) {
-    super(subject, new HardwareEventMapper(subject, teamColor), HandlerType.HARDWARE, subject.subject);
-
+    super(subject, HandlerType.HARDWARE, subject.subject);
+    this._mapper = new HardwareEventMapper(subject, teamColor);
     this._soccerTableHandler = subject;
     this._hardwareTopicManager = new HardwareTopicManager(this._soccerTableHandler.subject, teamColor);
     this._dkMqttClient = DkMqttClient.getInstance();
@@ -84,7 +85,7 @@ export class HardwareHandler extends AbstractHandler<HardwareEventType, SoccerTa
 
   mapTypeAndIdToEvent(hardwareType: BasicTerm, hardwareId: number,
                       pinStatus: PinOut) {
-    const eventTypeString = String(`${hardwareType}.${hardwareId}.${pinStatus}`).toUpperCase();
+    const eventTypeString = String(`${hardwareType}_${hardwareId}_${pinStatus}`).toUpperCase();
     if (HardwareEventType[eventTypeString as keyof typeof HardwareEventType]) {
       return HardwareEventType[eventTypeString as keyof typeof HardwareEventType];
     } else {

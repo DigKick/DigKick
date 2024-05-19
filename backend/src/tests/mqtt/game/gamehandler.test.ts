@@ -53,7 +53,7 @@ test('test event white score increase', () => {
   gameHandler.subscribe(GameEventType.SCORE_CHANGE, gameObs)
   gameHandler.triggerEvent(GameEventType.WHITE_SCORE_INCREASE)
 
-  expect(cbGame!.whiteTeam.score).toEqual(1)
+  expect(gameHandler.subject.teamWhite.score).toEqual(1)
 })
 
 
@@ -61,13 +61,13 @@ test('test event white team score decrease', () => {
   gameHandler.subscribe(GameEventType.WHITE_SCORE_DECREASE, gameObs)
   gameHandler.triggerEvent(GameEventType.WHITE_SCORE_INCREASE)
   gameHandler.triggerEvent(GameEventType.WHITE_SCORE_DECREASE)
-  expect(cbGame!.whiteTeam.score).toEqual(0)
+  expect(cbGame!.teamWhite.score).toEqual(0)
 })
 
 
 test('test event black team score increase', () => {
   subscribeObserverAndTriggerEvent(GameEventType.BLACK_SCORE_INCREASE)
-  expect(cbGame!.blackTeam.score).toEqual(1)
+  expect(cbGame!.teamBlack.score).toEqual(1)
 })
 
 
@@ -75,7 +75,7 @@ test('test event black score decrease', () => {
   subscribeObserverAndTriggerEvent(GameEventType.BLACK_SCORE_INCREASE)
   gameHandler.triggerEvent(GameEventType.BLACK_SCORE_DECREASE)
 
-  expect(cbGame!.blackTeam.score).toEqual(0)
+  expect(cbGame!.teamBlack.score).toEqual(0)
 })
 
 test(`test trigger all events`, () => {

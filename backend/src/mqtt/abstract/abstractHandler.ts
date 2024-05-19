@@ -1,8 +1,8 @@
 import {Logger} from "winston";
 import {LoggerFactory} from "../../logging/loggerFactory";
-import {BasicTerm} from "../util/basicTerm";
 import {SoccerTable} from "../../models/soccerTable";
 import type {EventMapper} from "./eventMapper";
+import {BasicTerm} from "../util/basicTerm";
 
 
 export enum HandlerType {
@@ -18,12 +18,11 @@ export class AbstractHandler<EventType, SubjectType> {
   public subject: SubjectType;
 
   protected _logger: Logger;
-  private readonly _mapper: EventMapper<EventType>
+  protected _mapper?: EventMapper<EventType>
 
 
-  constructor(subject: SubjectType, mapper: EventMapper<EventType>, handlerType: HandlerType, soccerTable: SoccerTable) {
+  constructor(subject: SubjectType, handlerType: HandlerType, soccerTable: SoccerTable) {
     this.subject = subject;
-    this._mapper = mapper;
 
     this._logger = LoggerFactory.getHandlerLogger(handlerType, soccerTable.id)
     this._logger.debug(`${handlerType}Handler created.`);
@@ -55,6 +54,11 @@ export class AbstractHandler<EventType, SubjectType> {
   }
 
   public triggerEvent(event: EventType) {
+    if (!this._mapper) {
+      this._logger.error("No mapper defined.")
+      return;
+    }
+
     const triggeredEvents = this._mapper.map(event)
     if (!triggeredEvents) {
       this._logger.warn(`Got "undefined" when triggering event "${event}"`)

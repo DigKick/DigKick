@@ -177,3 +177,5 @@ dist
 package-lock.json
 
 bun.lockb
+
+**/*.env

@@ -15,10 +15,13 @@ export class SoccerTableHandler extends AbstractHandler<
   private readonly _hardwareHandlerBlack: HardwareHandler;
 
   constructor(soccerTable: SoccerTable) {
-    super(soccerTable, new SoccerTableEventMapper(soccerTable), HandlerType.SOCCERTABLE, soccerTable);
+    super(soccerTable, HandlerType.SOCCERTABLE, soccerTable);
     this._hardwareHandlerWhite = new HardwareHandler(this, TeamColor.WHITE)
     this._hardwareHandlerBlack = new HardwareHandler(this, TeamColor.BLACK)
     this._gameHandler = new GameHandler(this.subject);
+    this._mapper = new SoccerTableEventMapper(soccerTable, this._gameHandler);
+
+    this.triggerEvent(SoccerTableEventType.NEW_GAME);
   }
 
   get gameHandler() {

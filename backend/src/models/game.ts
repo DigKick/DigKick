@@ -3,69 +3,79 @@ import {ScoreChange, Team, TeamColor} from "./team";
 export class Game {
   public static STANDARDGAME_WINNINGSCORE = 10;
 
-  public whiteTeam: Team;
-  public blackTeam: Team;
-  private _winnerTeam!: Team | undefined;
+  public teamWhite: Team;
+  public teamBlack: Team;
+  private _teamWinner!: Team | undefined;
 
   public readonly pointsToWin: number;
 
   // Constructor for standard game
   constructor() {
-    this.whiteTeam = new Team(TeamColor.WHITE, this);
-    this.blackTeam = new Team(TeamColor.BLACK, this);
+    this.teamWhite = new Team(TeamColor.WHITE);
+    this.teamBlack = new Team(TeamColor.BLACK);
 
     this.pointsToWin = Game.STANDARDGAME_WINNINGSCORE;
   }
 
+  public getTeamByColor(teamColor: TeamColor): Team {
+    switch (teamColor) {
+      case TeamColor.BLACK:
+        return this.teamBlack
+      case TeamColor.WHITE:
+        return this.teamWhite
+    }
+  }
+
   resetWinnerTeam() {
-    this._winnerTeam = undefined;
+    this._teamWinner = undefined;
   }
 
-  set winnerTeam(team: Team | undefined) {
-    if (this._winnerTeam)
+  set teamWinner(team: Team | undefined) {
+    if (this._teamWinner)
       return;
-    this._winnerTeam = team;
+    this._teamWinner = team;
   }
 
-  get winnerTeam(): Team | undefined {
-    if (this._winnerTeam instanceof Team) {
-      return this._winnerTeam;
+  get teamWinner(): Team | undefined {
+    if (this._teamWinner instanceof Team) {
+      return this._teamWinner;
     }
     return undefined;
   }
 
   updateWhiteTeamScore(change: ScoreChange) {
-    this._updateTeamScoreAndWinner(this.whiteTeam, change);
+    this._updateTeamScoreAndWinner(this.teamWhite, change);
   }
 
   updateBlackTeamScore(change: ScoreChange) {
-    this._updateTeamScoreAndWinner(this.blackTeam, change)
+    this._updateTeamScoreAndWinner(this.teamBlack, change)
   }
 
   private _updateTeamScoreAndWinner(team: Team, change: ScoreChange) {
     team.score = team.score + change
 
     if (team.score >= this.pointsToWin) {
-      this.winnerTeam = team
+      this.teamWinner = team
     }
 
-    if (change === ScoreChange.DECREASE && team.score === this.pointsToWin - 1 && this.winnerTeam === team) {
+    if (change === ScoreChange.DECREASE && team.score === this.pointsToWin - 1 && this.teamWinner === team) {
       this.resetWinnerTeam();
     }
   }
 
   public reset() {
-    this.whiteTeam.score = 0;
-    this.blackTeam.score = 0;
+    this.teamWhite.score = 0;
+    this.teamBlack.score = 0;
 
-    this._winnerTeam = undefined;
+    this._teamWinner = undefined;
   }
 
   toJSON() {
     return {
-      teams: [this.blackTeam, this.whiteTeam],
+      teamWhite: this.teamWhite.toJSON(),
+      teamBlack: this.teamBlack.toJSON(),
       pointsToWin: this.pointsToWin,
-      winner: this._winnerTeam
+      winner: this._teamWinner
     }
   }
 
