@@ -67,7 +67,7 @@ export class DkMqttClient {
     });
 
     this._mqttClient.on("message", (topic, payload, packet) => {
-      this._logger.debug(`Message on ${topic}:\n${payload}`);
+      this._logger.debug(`Message on ${topic}:\n${payload.toString()}`);
       let jsonPayload = "";
 
       try {
@@ -148,7 +148,7 @@ export class DkMqttClient {
   }
 
   public publish(topic: string, message: string, options?: IClientPublishOptions) {
-    this._logger.debug(`Publishing to topic "${topic}", message: ${message}`);
+    this._logger.debug(`Publishing to topic: "${topic}", message: ${message.replaceAll("\n", " ")}`);
     this._mqttClient.publish(topic, message, options);
   }
 }
