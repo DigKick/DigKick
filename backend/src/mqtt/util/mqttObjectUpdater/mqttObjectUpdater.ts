@@ -102,6 +102,15 @@ export class MqttObjectUpdater<ObjectType> {
         } else {
           changes.set(this.makeNewPath(localPath, key), new ChangeLog(oldVal, newVal));
         }
+
+        // this is for the recursive delete / set empty values if an object gets removed
+        if (typeof oldVal === 'object' && newVal === undefined) {
+          const objChanges = MqttObjectUpdater.generateInitialChangeMap(oldVal, this.makeNewPath(localPath, key))
+          Array.from(objChanges.entries()).forEach(entry => {
+            objChanges.set(entry[0], new ChangeLog(entry[1].oldValue, undefined));
+          })
+          changes = new Map<string, ChangeLog>([...changes, ...objChanges]);
+        }
       }
     });
 
