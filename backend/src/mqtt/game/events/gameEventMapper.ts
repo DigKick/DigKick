@@ -11,12 +11,12 @@ export class GameEventMapper implements EventMapper<GameEventType> {
 
   private readonly _game: Game
   private readonly _soccerTable: SoccerTable
-  private readonly _mqttObjectUpdaterGame: MqttObjectUpdater<Game>
+  private readonly _mqttObjectUpdaterGame: MqttObjectUpdater<SoccerTable>
 
   constructor(soccerTable: SoccerTable) {
     this._soccerTable = soccerTable;
     this._game = soccerTable.game;
-    this._mqttObjectUpdaterGame = MqttObjectUpdaterFactory.getMqttObjectUpdater(this._game, {prefix: `/${BasicTerm.TABLE}/${this._soccerTable.id}/${BasicTerm.GAME}`, instantPublish: true, publishWithRetain: false, maxDepth: 4})
+    this._mqttObjectUpdaterGame = MqttObjectUpdaterFactory.getMqttObjectUpdater(this._soccerTable, {prefix: `/${BasicTerm.TABLE}`, instantPublish: true, publishWithRetain: false})
   }
 
 
@@ -75,7 +75,7 @@ export class GameEventMapper implements EventMapper<GameEventType> {
   }
 
   private publishNewGameValues() {
-    this._mqttObjectUpdaterGame.commit(this._game)
+    this._mqttObjectUpdaterGame.commit(this._soccerTable)
     this._mqttObjectUpdaterGame.publish()
   }
 }
