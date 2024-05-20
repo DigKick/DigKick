@@ -56,8 +56,10 @@ components:
 
     gameMessage:
       summary: All information about a team.
-      payload:
-        $ref: "#/components/schemas/game"
+      payload:        
+          $ref: "#/components/schemas/game"
+
+
 
     teamMessage:
       summary: All information about a team.
@@ -90,6 +92,13 @@ components:
         $ref: "#/components/schemas/ledStatus"
 
   schemas:
+    gameMode:
+      type: string
+      enum:
+        - DEFAULT
+      example:
+        - "DEFAULT"
+
     pinOut:
       type: string
       enum:
@@ -106,26 +115,44 @@ components:
     game:
       type: object
       description: Describes all information about a game.
+      example: {
+        "gameMode": "DEFAULT",
+        "teamWhite": {
+            "color": "white",
+            "score": 4,
+            "isWinner": false
+        },
+        "teamBlack": {
+            "color": "black",
+            "score": 10,
+            "isWinner": true
+        },
+        "pointsToWin": 10
+      }
       properties:
+        gameMode:
+          $ref: '#/components/schemas/gameMode'
         teamWhite:
           $ref: "#/components/schemas/team"
         teamBlack:
           $ref: "#/components/schemas/team"
-        teamWinner:
-          $ref: "#/components/schemas/team"
         pointsToWin:
           type: number
           minimum: 0
+        
+          
 
     team:
       type: object
       description: Describes all information about a team.
-      example: { "color": "WHITE", "score": 5 }
+      example: { "color": "WHITE", "score": 5, "isWinner": false }
       properties:
         color:
           $ref: "#/components/schemas/color"
         score:
           $ref: "#/components/schemas/score"
+        isWinner:
+          type: boolean
 
     score:
       type: integer
