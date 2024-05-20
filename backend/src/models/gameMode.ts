@@ -1,3 +1,3 @@
 export enum GameMode {
-  DEFAULT = "DEFAULT"
+  DEFAULT = "DEFAULT",
 }

@@ -167,11 +167,15 @@ export class MqttObjectUpdater<ObjectType> {
     return changes;
   }
 
-  private static makeNewPath(path: string, key: string | symbol, isObject = true) {
-    let newPath = path + String("/" + String(key)).replaceAll("_", "")
+  private static makeNewPath(
+    path: string,
+    key: string | symbol,
+    isObject = true,
+  ) {
+    let newPath = path + String("/" + String(key)).replaceAll("_", "");
 
     if (isObject) {
-      newPath = newPath.replace(/[A-Z]/g, (match) => "/" + match.toLowerCase())
+      newPath = newPath.replace(/[A-Z]/g, (match) => "/" + match.toLowerCase());
     }
 
     return newPath;

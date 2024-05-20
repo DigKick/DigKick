@@ -31,7 +31,7 @@ export class Team {
     return {
       color: this.color,
       score: this._score,
-      isWinner: this.isWinner
+      isWinner: this.isWinner,
     };
   }
 }

@@ -1,5 +1,5 @@
-import {ScoreChange, Team, TeamColor} from "./team";
-import {GameMode} from "./gameMode";
+import { ScoreChange, Team, TeamColor } from "./team";
+import { GameMode } from "./gameMode";
 
 export class Game {
   public static STANDARDGAME_WINNINGSCORE = 10;
@@ -28,8 +28,8 @@ export class Game {
   }
 
   resetWinnerTeam() {
-    this.teamWhite.isWinner = false
-    this.teamBlack.isWinner = false
+    this.teamWhite.isWinner = false;
+    this.teamBlack.isWinner = false;
   }
 
   set teamWinner(team: Team) {
@@ -41,12 +41,12 @@ export class Game {
 
   get teamWinner(): Team | undefined {
     if (this.teamBlack.isWinner) {
-      return this.teamBlack
+      return this.teamBlack;
     }
     if (this.teamWhite.isWinner) {
-      return this.teamWhite
+      return this.teamWhite;
     }
-    return undefined
+    return undefined;
   }
 
   updateWhiteTeamScore(change: ScoreChange) {
@@ -77,7 +77,7 @@ export class Game {
     this.teamWhite.score = 0;
     this.teamBlack.score = 0;
 
-    this.resetWinnerTeam()
+    this.resetWinnerTeam();
   }
 
   toJSON() {
