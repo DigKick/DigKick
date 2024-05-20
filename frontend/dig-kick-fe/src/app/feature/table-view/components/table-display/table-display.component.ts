@@ -14,7 +14,7 @@ import { CommonModule } from '@angular/common';
   selector: 'app-table-display',
   standalone: true,
   imports: [RouterModule, CommonModule],
-  providers: [DkMqttClientService],
+  providers: [DkMqttClientService, ScoreService],
   templateUrl: './table-display.component.html',
   styleUrl: './table-display.component.css'
 })
@@ -55,7 +55,7 @@ export class TableDisplayComponent implements OnInit{
     this.whiteScore$ = this.mqttClient.subscribe(`/table/${this.tableId}/team/white/score`)
     this.whiteScore$.subscribe((message: String) => {
       try {
-        this.whiteScoreSignal.set(Number(JSON.parse(message.toString()).score));
+        this.scoreService.whiteScoreSignal.set(Number(JSON.parse(message.toString()).score));
       } catch(e) {
         console.log(e);
         console.log('WHITE SCORE CATCH')
@@ -65,7 +65,7 @@ export class TableDisplayComponent implements OnInit{
     this.blackScore$ = this.mqttClient.subscribe(`/table/${this.tableId}/team/black/score`)
     this.blackScore$.subscribe((message: String) => {
       try {
-        this.blackScoreSignal.set(Number(JSON.parse(message.toString()).score));
+        this.scoreService.blackScoreSignal.set(Number(JSON.parse(message.toString()).score));
       } catch(e) {
         console.log(e);
         console.log('BLACK SCORE CATCH')

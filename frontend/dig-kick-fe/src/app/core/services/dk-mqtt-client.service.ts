@@ -7,7 +7,9 @@ import {
 import { BehaviorSubject, Observable, Subject, Subscription } from 'rxjs';
 import { Table } from '../static/models/table.model';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class DkMqttClientService {
   private curSubscription: Subscription | undefined;
 

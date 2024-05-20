@@ -23,7 +23,6 @@ export class TableViewComponent implements OnInit {
   constructor(private mqttClient: DkMqttClientService) {
     this.tableIds$ = mqttClient.activeTableIds.asObservable();
     this.tablesSignal = mqttClient.signalTableIds;
-
   }
 
   ngOnInit(): void {
