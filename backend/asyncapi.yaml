@@ -56,10 +56,8 @@ components:
 
     gameMessage:
       summary: All information about a team.
-      payload:        
-          $ref: "#/components/schemas/game"
-
-
+      payload:
+        $ref: "#/components/schemas/game"
 
     teamMessage:
       summary: All information about a team.
@@ -115,23 +113,16 @@ components:
     game:
       type: object
       description: Describes all information about a game.
-      example: {
-        "gameMode": "DEFAULT",
-        "teamWhite": {
-            "color": "white",
-            "score": 4,
-            "isWinner": false
-        },
-        "teamBlack": {
-            "color": "black",
-            "score": 10,
-            "isWinner": true
-        },
-        "pointsToWin": 10
-      }
+      example:
+        {
+          "gameMode": "DEFAULT",
+          "teamWhite": { "color": "white", "score": 4, "isWinner": false },
+          "teamBlack": { "color": "black", "score": 10, "isWinner": true },
+          "pointsToWin": 10,
+        }
       properties:
         gameMode:
-          $ref: '#/components/schemas/gameMode'
+          $ref: "#/components/schemas/gameMode"
         teamWhite:
           $ref: "#/components/schemas/team"
         teamBlack:
@@ -139,8 +130,6 @@ components:
         pointsToWin:
           type: number
           minimum: 0
-        
-          
 
     team:
       type: object
