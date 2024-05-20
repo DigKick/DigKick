@@ -1,5 +1,10 @@
 # Backend
 
+## Docs
+
+- Website: [Link](https://makoeta.github.io/digkickDoc/#operation-send-gameStatus)
+- [Local Markdown](./docs/asyncapi.md)
+
 ## Install bun on Mac:
 
 ```bash

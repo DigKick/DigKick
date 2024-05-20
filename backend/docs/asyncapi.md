@@ -1,6 +1,6 @@
 # DigKick (Backend) 1.0.0 documentation
 
-- Website: [Link](https://makoeta.github.io/digkickDoc/#operation-send-gameStatus)
+- [Website](https://makoeta.github.io/digkickDoc/#operation-send-gameStatus)
 - Email support: [mkoenig2@stud.hs-heilbronn.de](mailto:mkoenig2@stud.hs-heilbronn.de)
 
 Digital system for kicker tables.
@@ -84,37 +84,36 @@ _All information about a team._
 
 ##### Payload
 
-| Name             | Type    | Description                             | Value                          | Constraints | Notes                                 |
-| ---------------- | ------- | --------------------------------------- | ------------------------------ | ----------- | ------------------------------------- |
-| (root)           | object  | Describes all information about a game. | -                              | -           | **additional properties are allowed** |
-| teamWhite        | object  | Describes all information about a team. | -                              | -           | **additional properties are allowed** |
-| teamWhite.color  | string  | -                                       | allowed (`"WHITE"`, `"BLACK"`) | -           | -                                     |
-| teamWhite.score  | integer | -                                       | -                              | >= 0        | -                                     |
-| teamBlack        | object  | Describes all information about a team. | -                              | -           | **additional properties are allowed** |
-| teamBlack.color  | string  | -                                       | allowed (`"WHITE"`, `"BLACK"`) | -           | -                                     |
-| teamBlack.score  | integer | -                                       | -                              | >= 0        | -                                     |
-| teamWinner       | object  | Describes all information about a team. | -                              | -           | **additional properties are allowed** |
-| teamWinner.color | string  | -                                       | allowed (`"WHITE"`, `"BLACK"`) | -           | -                                     |
-| teamWinner.score | integer | -                                       | -                              | >= 0        | -                                     |
-| pointsToWin      | number  | -                                       | -                              | >= 0        | -                                     |
+| Name               | Type    | Description                             | Value                          | Constraints | Notes                                 |
+| ------------------ | ------- | --------------------------------------- | ------------------------------ | ----------- | ------------------------------------- |
+| (root)             | object  | Describes all information about a game. | -                              | -           | **additional properties are allowed** |
+| gameMode           | string  | -                                       | allowed (`"DEFAULT"`)          | -           | -                                     |
+| teamWhite          | object  | Describes all information about a team. | -                              | -           | **additional properties are allowed** |
+| teamWhite.color    | string  | -                                       | allowed (`"WHITE"`, `"BLACK"`) | -           | -                                     |
+| teamWhite.score    | integer | -                                       | -                              | >= 0        | -                                     |
+| teamWhite.isWinner | boolean | -                                       | -                              | -           | -                                     |
+| teamBlack          | object  | Describes all information about a team. | -                              | -           | **additional properties are allowed** |
+| teamBlack.color    | string  | -                                       | allowed (`"WHITE"`, `"BLACK"`) | -           | -                                     |
+| teamBlack.score    | integer | -                                       | -                              | >= 0        | -                                     |
+| teamBlack.isWinner | boolean | -                                       | -                              | -           | -                                     |
+| pointsToWin        | number  | -                                       | -                              | >= 0        | -                                     |
 
 > Examples of payload _(generated)_
 
 ```json
 {
+  "gameMode": "DEFAULT",
   "teamWhite": {
-    "color": "WHITE",
-    "score": 5
+    "color": "white",
+    "score": 4,
+    "isWinner": false
   },
   "teamBlack": {
-    "color": "WHITE",
-    "score": 5
+    "color": "black",
+    "score": 10,
+    "isWinner": true
   },
-  "teamWinner": {
-    "color": "WHITE",
-    "score": 5
-  },
-  "pointsToWin": 0
+  "pointsToWin": 10
 }
 ```
 
@@ -137,18 +136,20 @@ _All information about a team._
 
 ##### Payload
 
-| Name   | Type    | Description                             | Value                          | Constraints | Notes                                 |
-| ------ | ------- | --------------------------------------- | ------------------------------ | ----------- | ------------------------------------- |
-| (root) | object  | Describes all information about a team. | -                              | -           | **additional properties are allowed** |
-| color  | string  | -                                       | allowed (`"WHITE"`, `"BLACK"`) | -           | -                                     |
-| score  | integer | -                                       | -                              | >= 0        | -                                     |
+| Name     | Type    | Description                             | Value                          | Constraints | Notes                                 |
+| -------- | ------- | --------------------------------------- | ------------------------------ | ----------- | ------------------------------------- |
+| (root)   | object  | Describes all information about a team. | -                              | -           | **additional properties are allowed** |
+| color    | string  | -                                       | allowed (`"WHITE"`, `"BLACK"`) | -           | -                                     |
+| score    | integer | -                                       | -                              | >= 0        | -                                     |
+| isWinner | boolean | -                                       | -                              | -           | -                                     |
 
 > Examples of payload _(generated)_
 
 ```json
 {
   "color": "WHITE",
-  "score": 5
+  "score": 5,
+  "isWinner": false
 }
 ```
 
@@ -229,18 +230,20 @@ _All information about a team._
 
 ##### Payload
 
-| Name   | Type    | Description                             | Value                          | Constraints | Notes                                 |
-| ------ | ------- | --------------------------------------- | ------------------------------ | ----------- | ------------------------------------- |
-| (root) | object  | Describes all information about a team. | -                              | -           | **additional properties are allowed** |
-| color  | string  | -                                       | allowed (`"WHITE"`, `"BLACK"`) | -           | -                                     |
-| score  | integer | -                                       | -                              | >= 0        | -                                     |
+| Name     | Type    | Description                             | Value                          | Constraints | Notes                                 |
+| -------- | ------- | --------------------------------------- | ------------------------------ | ----------- | ------------------------------------- |
+| (root)   | object  | Describes all information about a team. | -                              | -           | **additional properties are allowed** |
+| color    | string  | -                                       | allowed (`"WHITE"`, `"BLACK"`) | -           | -                                     |
+| score    | integer | -                                       | -                              | >= 0        | -                                     |
+| isWinner | boolean | -                                       | -                              | -           | -                                     |
 
 > Examples of payload _(generated)_
 
 ```json
 {
   "color": "WHITE",
-  "score": 5
+  "score": 5,
+  "isWinner": false
 }
 ```
 
