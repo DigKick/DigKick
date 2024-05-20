@@ -31,11 +31,13 @@ MQTT_HOST=MQTT_HOST
 ## Generate files from asyncapi.yaml
 
 ### Markdown
+
 ```bash
 asyncapi generate fromTemplate asyncapi.yaml @asyncapi/markdown-template -o docs --force-write
 ```
 
 ### Html
+
 ```bash
 asyncapi generate fromTemplate asyncapi.yaml @asyncapi/html-template -o docs --force-write
 ```
