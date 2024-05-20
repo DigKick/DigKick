@@ -102,12 +102,12 @@ export class MqttObjectUpdater<ObjectType> {
       if (!oldObj || !newObj) {
         if (oldObj) {
           changes.set(
-            this.makeNewPath(localPath, key),
+            this.makeNewPath(localPath, key, typeof oldObj === "object"),
             new ChangeLog(oldObj[key], undefined),
           );
         } else {
           changes.set(
-            this.makeNewPath(localPath, key),
+            this.makeNewPath(localPath, key, typeof oldObj === "object"),
             new ChangeLog(undefined, newObj[key]),
           );
         }
@@ -123,18 +123,18 @@ export class MqttObjectUpdater<ObjectType> {
           const objChanges = MqttObjectUpdater.compareObjects(
             oldVal,
             newVal,
-            this.makeNewPath(localPath, key),
+            this.makeNewPath(localPath, key, typeof newVal === "object"),
           );
           if (objChanges.size > 0) {
             changes.set(
-              this.makeNewPath(localPath, key),
+              this.makeNewPath(localPath, key, typeof oldVal === "object"),
               new ChangeLog(oldVal, newVal),
             );
           }
           changes = new Map<string, ChangeLog>([...changes, ...objChanges]);
         } else {
           changes.set(
-            this.makeNewPath(localPath, key),
+            this.makeNewPath(localPath, key, false),
             new ChangeLog(oldVal, newVal),
           );
         }
@@ -143,7 +143,7 @@ export class MqttObjectUpdater<ObjectType> {
         if (typeof oldVal === "object" && newVal === undefined) {
           const objChanges = MqttObjectUpdater.generateInitialChangeMap(
             oldVal,
-            this.makeNewPath(localPath, key),
+            this.makeNewPath(localPath, key, typeof oldVal === "object"),
           );
           Array.from(objChanges.entries()).forEach((entry) => {
             objChanges.set(
@@ -157,7 +157,7 @@ export class MqttObjectUpdater<ObjectType> {
         if (typeof newVal === "object" && oldVal === undefined) {
           const objChanges = MqttObjectUpdater.generateInitialChangeMap(
             newVal,
-            this.makeNewPath(localPath, key),
+            this.makeNewPath(localPath, key, typeof newVal === "object"),
           );
           changes = new Map<string, ChangeLog>([...changes, ...objChanges]);
         }
@@ -167,12 +167,13 @@ export class MqttObjectUpdater<ObjectType> {
     return changes;
   }
 
-  private static makeNewPath(path: string, key: string | symbol) {
-    return (
-      path +
-      String("/" + String(key))
-        .replace(/[A-Z]/g, (match) => "/" + match.toLowerCase())
-        .replaceAll("_", "")
-    );
+  private static makeNewPath(path: string, key: string | symbol, isObject = true) {
+    let newPath = path + String("/" + String(key)).replaceAll("_", "")
+
+    if (isObject) {
+      newPath = newPath.replace(/[A-Z]/g, (match) => "/" + match.toLowerCase())
+    }
+
+    return newPath;
   }
 }
