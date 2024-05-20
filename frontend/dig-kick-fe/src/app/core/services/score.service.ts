@@ -6,6 +6,7 @@ import { Injectable, signal } from '@angular/core';
 export class ScoreService {
 
   whiteScoreSignal = signal<number>(0);
+  blackScoreSignal = signal<number>(0);
   
   constructor() { }
 }

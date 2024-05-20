@@ -11,6 +11,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
   selector: 'app-table-view',
   standalone: true,
   imports: [TableDisplayComponent, CommonModule],
+  providers: [DkMqttClientService],
   templateUrl: './table-view.component.html',
   styleUrl: './table-view.component.css'
 })

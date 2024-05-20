@@ -2,9 +2,9 @@
     <!-- Mobile view -->
     <div class="flex justify-center items-center mx-auto card h-32 w-64 bg-accent-content rounded-lg lg:hidden">
         <div class="flex justify-center items-center">
-            <div class="text-[6rem] mr-3">{{white.score}}</div>
+            <div class="text-[6rem] mr-3">{{whiteScoreSignal()}}</div>
             <div class="text-[6rem]">:</div>
-            <div class="text-[6rem] ml-3">{{black.score}}</div>
+            <div class="text-[6rem] ml-3">{{blackScoreSignal()}}</div>
         </div>
     </div>
 
@@ -19,14 +19,14 @@
     <!-- Desktop view -->
     <div class="hidden lg:flex items-center justify-center "> 
         <div class="flex items-center space-x-[6rem]"> 
-            <div class="card h-32 w-64 bg-accent-content flex justify-center items-center text-[11rem]">{{white.score}}</div>
+            <div class="card h-32 w-64 bg-accent-content flex justify-center items-center text-[11rem]">{{whiteScoreSignal()}}</div>
             <img src="../assets/images/Sprite-0003.png" class="rotate-90 h-full" alt="Your Image">
-            <div class="card h-32 w-64 bg-accent-content flex justify-center items-center text-[11rem]">{{black.score}}</div>
+            <div class="card h-32 w-64 bg-accent-content flex justify-center items-center text-[11rem]">{{blackScoreSignal()}}</div>
         </div>
     </div>
 </div>
 
-    <div class="text-[2.5rem] lg:text-[4rem] text-red-800 flex justify-center mb-[1rem] lg:mb-[3rem] custom-font" *ngIf="game.mode === 'ranked'; else hiddenContent">ranked</div>
+    <div class="text-[2.5rem] lg:text-[4rem] text-red-800 flex justify-center mb-[1rem] lg:mb-[3rem] custom-font" *ngIf="rankedSignal() === 'ranked'; else hiddenContent">ranked</div>
         <ng-template #hiddenContent>
         <div class="hidden lg:hidden">
          </div>

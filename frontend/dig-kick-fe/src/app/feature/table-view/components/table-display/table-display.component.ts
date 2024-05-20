@@ -8,11 +8,13 @@ import { DkMqttClientService } from 'src/app/core/services/dk-mqtt-client.servic
 import { Observable, catchError, throwError } from 'rxjs';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ScoreService } from 'src/app/core/services/score.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-table-display',
   standalone: true,
-  imports: [RouterModule],
+  imports: [RouterModule, CommonModule],
+  providers: [DkMqttClientService],
   templateUrl: './table-display.component.html',
   styleUrl: './table-display.component.css'
 })
@@ -22,11 +24,8 @@ export class TableDisplayComponent implements OnInit{
 
   whiteScore$!: Observable<string>;
   blackScore$!: Observable<String>;
-
-  
-
   whiteScoreSignal = signal<number>(0);
-  blackScoreSignal = signal(0);
+  blackScoreSignal = signal<number>(0);
 
   team1: Team = {
     color: 'white',
@@ -41,7 +40,7 @@ export class TableDisplayComponent implements OnInit{
     id: String(1),
     teams: [this.team1, this.team2],
     pointsToWin: String(10),
-    winner: '',
+    winner: undefined,
     mode: 'normal'
   }
 
@@ -51,10 +50,12 @@ export class TableDisplayComponent implements OnInit{
   
   ngOnInit(): void {
     this.random = this.randomImagePath();
+    console.log(this.tableId)
+    console.log(``)
     this.whiteScore$ = this.mqttClient.subscribe(`/table/${this.tableId}/team/white/score`)
     this.whiteScore$.subscribe((message: String) => {
       try {
-        this.scoreService.whiteScoreSignal.set(Number(JSON.parse(message.toString()).score));
+        this.whiteScoreSignal.set(Number(JSON.parse(message.toString()).score));
       } catch(e) {
         console.log(e);
         console.log('WHITE SCORE CATCH')
@@ -64,7 +65,7 @@ export class TableDisplayComponent implements OnInit{
     this.blackScore$ = this.mqttClient.subscribe(`/table/${this.tableId}/team/black/score`)
     this.blackScore$.subscribe((message: String) => {
       try {
-        this.team2.score = Number(JSON.parse(message.toString()).score);
+        this.blackScoreSignal.set(Number(JSON.parse(message.toString()).score));
       } catch(e) {
         console.log(e);
         console.log('BLACK SCORE CATCH')

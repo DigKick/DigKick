@@ -1,5 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component, Signal } from '@angular/core';
+import { Component, Input, OnInit, Signal, signal } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs';
 import { DkMqttClientService } from 'src/app/core/services/dk-mqtt-client.service';
 import { Game } from 'src/app/core/static/models/game.model';
 import { Player } from 'src/app/core/static/models/player.model';
@@ -9,10 +11,11 @@ import { Team } from 'src/app/core/static/models/team.model';
   selector: 'app-game-view',
   standalone: true,
   imports: [CommonModule],
+  providers: [DkMqttClientService],
   templateUrl: './game-view.component.html',
   styleUrl: './game-view.component.css'
 })
-export class GameViewComponent {
+export class GameViewComponent implements OnInit {
   player1: Player;
   player2: Player;
   player3: Player;
@@ -25,7 +28,16 @@ export class GameViewComponent {
 
   tables: Signal<String[]>;
 
-  constructor(private mqttClient: DkMqttClientService) {
+  game$!: Observable<String>;
+  blackScore$!: Observable<String>;
+  whiteScoreSignal = signal<number>(0);
+  blackScoreSignal = signal<number>(0);
+  winnerSignal = signal<string>('');
+  rankedSignal = signal<string>('');
+
+  tableId!: string | null;
+
+  constructor(private mqttClient: DkMqttClientService, private route: ActivatedRoute) {
     this.tables = mqttClient.signalTableIds;
     this.player1 = {
       id: String(1),
@@ -61,11 +73,29 @@ export class GameViewComponent {
     }
 
     this.game = {
-      id: '1',
+      id: `1`,
       teams: [this.white, this.black],
       pointsToWin: '2',
-      winner: '',
-      mode: 'ranked'
+      winner: undefined,
+      mode: ''
     }
+    
   } 
+  ngOnInit(): void {
+    this.route.paramMap.subscribe(params => {
+      this.tableId = params.get('tableId');
+    });
+   this.game$ = this.mqttClient.subscribe(`/table/${this.tableId}/game`)
+   this.game$.subscribe((message: String) => {
+    try {
+      this.whiteScoreSignal.set(Number(JSON.parse(message.toString()).teamWhite.score));
+      this.blackScoreSignal.set(Number(JSON.parse(message.toString()).teamBlack.score));
+      this.winnerSignal.set((JSON.parse(message.toString()).teamWinner.color).toString())
+      //this.rankedSignal.set((JSON.parse(message.toString()).gameMode).toString())
+    } catch(e) {
+      console.log(e);
+      console.log('GAME CATCH')
+    }
+  })
+  }
 }

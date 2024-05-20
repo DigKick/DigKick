@@ -4,6 +4,6 @@ export interface Game {
     id: string;
     teams: Team[];
     pointsToWin: string;
-    winner: string;
+    winner: Team | undefined;
     mode: string;
 }
