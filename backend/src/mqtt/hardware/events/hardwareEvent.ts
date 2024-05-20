@@ -1,3 +1,6 @@
+// noinspection JSUnusedGlobalSymbols
+// noinspection JSUnusedGlobalSymbols
+
 export enum HardwareEventType {
   HIGH = "HIGH",
   LOW = "LOW",

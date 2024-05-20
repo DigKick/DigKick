@@ -1,8 +1,10 @@
+// noinspection JSUnusedGlobalSymbols
+
 import { Game } from "./game";
 
 export class SoccerTable {
   public id: string;
-  private _game: Game;
+  private readonly _game: Game;
 
   constructor(id: string) {
     this.id = id;
