@@ -1,11 +1,12 @@
-import { ScoreChange, Team, TeamColor } from "./team";
+import {ScoreChange, Team, TeamColor} from "./team";
+import {GameMode} from "./gameMode";
 
 export class Game {
   public static STANDARDGAME_WINNINGSCORE = 10;
 
+  public gameMode: GameMode;
   public teamWhite: Team;
   public teamBlack: Team;
-  private _teamWinner!: Team | undefined;
 
   public readonly pointsToWin: number;
 
@@ -13,7 +14,7 @@ export class Game {
   constructor() {
     this.teamWhite = new Team(TeamColor.WHITE);
     this.teamBlack = new Team(TeamColor.BLACK);
-
+    this.gameMode = GameMode.DEFAULT;
     this.pointsToWin = Game.STANDARDGAME_WINNINGSCORE;
   }
 
@@ -27,19 +28,25 @@ export class Game {
   }
 
   resetWinnerTeam() {
-    this._teamWinner = undefined;
+    this.teamWhite.isWinner = false
+    this.teamBlack.isWinner = false
   }
 
-  set teamWinner(team: Team | undefined) {
-    if (this._teamWinner) return;
-    this._teamWinner = team;
+  set teamWinner(team: Team) {
+    this.teamWhite.isWinner = false;
+    this.teamBlack.isWinner = false;
+
+    team.isWinner = true;
   }
 
   get teamWinner(): Team | undefined {
-    if (this._teamWinner instanceof Team) {
-      return this._teamWinner;
+    if (this.teamBlack.isWinner) {
+      return this.teamBlack
     }
-    return undefined;
+    if (this.teamWhite.isWinner) {
+      return this.teamWhite
+    }
+    return undefined
   }
 
   updateWhiteTeamScore(change: ScoreChange) {
@@ -53,7 +60,7 @@ export class Game {
   private _updateTeamScoreAndWinner(team: Team, change: ScoreChange) {
     team.score = team.score + change;
 
-    if (team.score >= this.pointsToWin) {
+    if (team.score >= this.pointsToWin && !this.teamWinner) {
       this.teamWinner = team;
     }
 
@@ -70,7 +77,7 @@ export class Game {
     this.teamWhite.score = 0;
     this.teamBlack.score = 0;
 
-    this._teamWinner = undefined;
+    this.resetWinnerTeam()
   }
 
   toJSON() {
@@ -78,7 +85,6 @@ export class Game {
       teamWhite: this.teamWhite.toJSON(),
       teamBlack: this.teamBlack.toJSON(),
       pointsToWin: this.pointsToWin,
-      winner: this._teamWinner,
     };
   }
 }

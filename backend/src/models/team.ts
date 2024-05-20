@@ -11,10 +11,12 @@ export enum ScoreChange {
 export class Team {
   public color: TeamColor;
   private _score: number;
+  public isWinner: boolean;
 
   constructor(color: TeamColor) {
     this.color = color;
     this._score = 0;
+    this.isWinner = false;
   }
 
   get score() {
@@ -29,6 +31,7 @@ export class Team {
     return {
       color: this.color,
       score: this._score,
+      isWinner: this.isWinner
     };
   }
 }
