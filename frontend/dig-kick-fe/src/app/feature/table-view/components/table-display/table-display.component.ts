@@ -65,6 +65,7 @@ export class TableDisplayComponent implements OnInit{
     this.blackScore$ = this.mqttClient.subscribe(`/table/${this.tableId}/team/black/score`)
     this.blackScore$.subscribe((message: String) => {
       try {
+        console.log(Number(JSON.parse(message.toString()).score))
         this.scoreService.blackScoreSignal.set(Number(JSON.parse(message.toString()).score));
       } catch(e) {
         console.log(e);

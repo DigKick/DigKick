@@ -3,6 +3,7 @@ import { Component, Input, OnInit, Signal, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { DkMqttClientService } from 'src/app/core/services/dk-mqtt-client.service';
+import { ScoreService } from 'src/app/core/services/score.service';
 import { Game } from 'src/app/core/static/models/game.model';
 import { Player } from 'src/app/core/static/models/player.model';
 import { Team } from 'src/app/core/static/models/team.model';
@@ -11,7 +12,7 @@ import { Team } from 'src/app/core/static/models/team.model';
   selector: 'app-game-view',
   standalone: true,
   imports: [CommonModule],
-  providers: [DkMqttClientService],
+  providers: [DkMqttClientService, ScoreService],
   templateUrl: './game-view.component.html',
   styleUrl: './game-view.component.css'
 })
@@ -29,6 +30,7 @@ export class GameViewComponent implements OnInit {
   tables: Signal<String[]>;
 
   game$!: Observable<String>;
+  whiteScore$!: Observable<String>;
   blackScore$!: Observable<String>;
   whiteScoreSignal = signal<number>(0);
   blackScoreSignal = signal<number>(0);
@@ -37,7 +39,7 @@ export class GameViewComponent implements OnInit {
 
   tableId!: string | null;
 
-  constructor(private mqttClient: DkMqttClientService, private route: ActivatedRoute) {
+  constructor(private mqttClient: DkMqttClientService, private route: ActivatedRoute, public scoreService: ScoreService) {
     this.tables = mqttClient.signalTableIds;
     this.player1 = {
       id: String(1),
@@ -88,8 +90,8 @@ export class GameViewComponent implements OnInit {
    this.game$ = this.mqttClient.subscribe(`/table/${this.tableId}/game`)
    this.game$.subscribe((message: String) => {
     try {
-      this.whiteScoreSignal.set(Number(JSON.parse(message.toString()).teamWhite.score));
-      this.blackScoreSignal.set(Number(JSON.parse(message.toString()).teamBlack.score));
+      this.scoreService.whiteScoreSignal.set(Number(JSON.parse(message.toString()).teamWhite.score));
+      this.scoreService.blackScoreSignal.set(Number(JSON.parse(message.toString()).teamBlack.score));
       this.winnerSignal.set((JSON.parse(message.toString()).teamWinner.color).toString())
       //this.rankedSignal.set((JSON.parse(message.toString()).gameMode).toString())
     } catch(e) {
@@ -97,5 +99,24 @@ export class GameViewComponent implements OnInit {
       console.log('GAME CATCH')
     }
   })
+  this.blackScore$ = this.mqttClient.subscribe(`/table/${this.tableId}/team/black/score`)
+    this.blackScore$.subscribe((message: String) => {
+      try {
+        console.log(Number(JSON.parse(message.toString()).score))
+        this.scoreService.blackScoreSignal.set(Number(JSON.parse(message.toString()).score));
+      } catch(e) {
+        console.log(e);
+        console.log('BLACK SCORE CATCH')
+      }
+    })
+    this.whiteScore$ = this.mqttClient.subscribe(`/table/${this.tableId}/team/white/score`)
+    this.whiteScore$.subscribe((message: String) => {
+      try {
+        this.scoreService.whiteScoreSignal.set(Number(JSON.parse(message.toString()).score));
+      } catch(e) {
+        console.log(e);
+        console.log('WHITE SCORE CATCH')
+      }
+    })
   }
 }
