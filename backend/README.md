@@ -20,7 +20,7 @@ bun run index.ts
 
 ## Setup .env
 
-Before starting you have to setup a .env files with your MQTT host and credentials.
+Before starting you have to set up a .env files with your MQTT host and credentials.
 
 ```txt
 MQTT_LOGIN_USERNAME=MQTT_USERNAME

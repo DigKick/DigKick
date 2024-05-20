@@ -1,7 +1,7 @@
 import type { EventMapper } from "../../abstract/eventMapper";
 import { GameEventType } from "./gameEvent";
 import { Game } from "../../../models/game";
-import { ScoreChange, Team, TeamColor } from "../../../models/team";
+import { ScoreChange, TeamColor } from "../../../models/team";
 import { SoccerTable } from "../../../models/soccerTable";
 import { MqttObjectUpdater } from "../../util/mqttObjectUpdater/mqttObjectUpdater";
 import { BasicTerm } from "../../util/basicTerm";
