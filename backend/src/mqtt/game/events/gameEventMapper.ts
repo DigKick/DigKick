@@ -1,11 +1,11 @@
-import type { EventMapper } from "../../abstract/eventMapper";
-import { GameEventType } from "./gameEvent";
-import { Game } from "../../../models/game";
-import { ScoreChange, TeamColor } from "../../../models/team";
-import { SoccerTable } from "../../../models/soccerTable";
-import { MqttObjectUpdater } from "../../util/mqttObjectUpdater/mqttObjectUpdater";
-import { BasicTerm } from "../../util/basicTerm";
-import { MqttObjectUpdaterFactory } from "../../util/mqttObjectUpdater/mqttObjectUpdaterFactory";
+import type {EventMapper} from "../../abstract/eventMapper";
+import {GameEventType} from "./gameEvent";
+import {Game} from "../../../models/game";
+import {ScoreChange, TeamColor} from "../../../models/team";
+import {SoccerTable} from "../../../models/soccerTable";
+import {MqttObjectUpdater} from "../../util/mqttObjectUpdater/mqttObjectUpdater";
+import {BasicTerm} from "../../util/basicTerm";
+import {MqttObjectUpdaterFactory} from "../../util/mqttObjectUpdater/mqttObjectUpdaterFactory";
 
 export class GameEventMapper implements EventMapper<GameEventType> {
   private readonly _game: Game;
@@ -20,7 +20,7 @@ export class GameEventMapper implements EventMapper<GameEventType> {
       {
         prefix: `/${BasicTerm.TABLE}`,
         instantPublish: true,
-        publishWithRetain: false,
+        publishWithRetain: true,
       },
     );
   }
