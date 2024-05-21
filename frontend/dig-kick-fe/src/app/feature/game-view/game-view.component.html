@@ -2,9 +2,9 @@
     <!-- Mobile view -->
     <div class="flex justify-center items-center mx-auto card h-32 w-64 bg-accent-content rounded-lg lg:hidden">
         <div class="flex justify-center items-center">
-            <div class="text-[6rem] mr-3">{{this.scoreService.whiteScoreSignal()}}</div>
+            <div class="text-[6rem] mr-3">{{this.gameService.whiteScoreSignal()}}</div>
             <div class="text-[6rem]">:</div>
-            <div class="text-[6rem] ml-3">{{this.scoreService.blackScoreSignal()}}</div>
+            <div class="text-[6rem] ml-3">{{this.gameService.blackScoreSignal()}}</div>
         </div>
     </div>
 
@@ -19,9 +19,9 @@
     <!-- Desktop view -->
     <div class="hidden lg:flex items-center justify-center "> 
         <div class="flex items-center space-x-[6rem]"> 
-            <div class="card h-32 w-64 bg-accent-content flex justify-center items-center text-[11rem]">{{this.scoreService.whiteScoreSignal()}}</div>
+            <div class="card h-32 w-64 bg-accent-content flex justify-center items-center text-[11rem]">{{this.gameService.whiteScoreSignal()}}</div>
             <img src="../assets/images/Sprite-0003.png" class="rotate-90 h-full" alt="Your Image">
-            <div class="card h-32 w-64 bg-accent-content flex justify-center items-center text-[11rem]">{{this.scoreService.blackScoreSignal()}}</div>
+            <div class="card h-32 w-64 bg-accent-content flex justify-center items-center text-[11rem]">{{this.gameService.blackScoreSignal()}}</div>
         </div>
     </div>
 </div>

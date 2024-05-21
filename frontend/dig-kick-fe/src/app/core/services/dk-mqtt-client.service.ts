@@ -4,8 +4,7 @@ import {
   IMqttServiceOptions,
   MqttService,
 } from 'ngx-mqtt';
-import { BehaviorSubject, Observable, Subject, Subscription } from 'rxjs';
-import { Table } from '../static/models/table.model';
+import { Observable, Subject, Subscription } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -27,7 +26,6 @@ export class DkMqttClientService {
     protocol: 'ws',
   }
 
-  public activeTableIds = new BehaviorSubject<String[]>([]);
   private topics: { [topic: string]: Subject<string> } = {};
   signalTableIds = signal<String[]>([]);
 
@@ -53,13 +51,8 @@ export class DkMqttClientService {
     this._mqttService.onMessage.subscribe((packet: any) => {
       if(packet.topic === '/tables') {
         try {
-          console.log(JSON.parse(packet.payload.toString()));
           const ids = JSON.parse(packet.payload.toString()).ids;
-          console.log(ids);
-          this.activeTableIds.next(ids);
           this.signalTableIds.set(ids);
-          console.log('signal tIds')
-          console.log(this.signalTableIds());
         }
         catch(e) {
           console.log(e);
@@ -70,11 +63,9 @@ export class DkMqttClientService {
   }
 
 subscribe(topic: string): Observable<string> {
-    console.log(topic)
     if (!this.topics[topic]) {
       this.topics[topic] = new Subject<string>();  
     this._mqttService.observe(topic).subscribe((message: IMqttMessage) => {
-      console.log(message)
       this.topics[topic].next(message.payload.toString());
     })
     }

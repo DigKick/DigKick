@@ -15,18 +15,12 @@ import { BehaviorSubject, Observable } from 'rxjs';
   templateUrl: './table-view.component.html',
   styleUrl: './table-view.component.css'
 })
-export class TableViewComponent implements OnInit {
+export class TableViewComponent {
 
-  tableIds$: Observable<String[]>;
   tablesSignal: Signal<String[]>;
 
   constructor(private mqttClient: DkMqttClientService) {
-    this.tableIds$ = mqttClient.activeTableIds.asObservable();
     this.tablesSignal = mqttClient.signalTableIds;
-  }
-
-  ngOnInit(): void {
-    this.mqttClient.activeTableIds
   }
 
 }
