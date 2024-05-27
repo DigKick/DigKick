@@ -6,3 +6,4 @@ pages:
   artifacts:
     paths:
       - backend/docs/
+  publish: backend/docs
