@@ -5,4 +5,4 @@ pages:
     - echo "Deploying pre-built static files"
   artifacts:
     paths:
-      - docs/
+      - backend/docs/
