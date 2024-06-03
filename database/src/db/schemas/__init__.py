@@ -1,7 +1,7 @@
-from .gameSchemas import GameBase, GameCreate, Game
-from .tableSchemas import TableBase, TableCreate, Table
-from .teamSchemas import TeamBase, TeamCreate, Team
+from .gameSchemas import GameBaseSchema, GameCreateSchema, GameSchema
+from .tableSchemas import TableBaseSchema, TableCreateSchema, TableSchema
+from .teamSchemas import TeamBaseSchema, TeamCreateSchema, TeamSchema
 
-game_schemas = [GameBase, GameCreate, Game]
-table_schemas = [TableBase, TableCreate, Table]
-team_schemas = [TeamBase, TeamCreate, Team]
+game_schemas = [GameBaseSchema, GameCreateSchema, GameSchema]
+table_schemas = [TableBaseSchema, TableCreateSchema, TableSchema]
+team_schemas = [TeamBaseSchema, TeamCreateSchema, TeamSchema]

@@ -3,14 +3,15 @@ from pydantic import BaseModel
 from src.db.schemas.baseSchema import BaseSchema
 
 
-class TableBase(BaseModel):
+class TableBaseSchema(BaseModel):
     name: str
 
 
-class TableCreate(TableBase):
+class TableCreateSchema(TableBaseSchema):
     pass
 
 
-class Table(TableBase, BaseSchema):
+class TableSchema(TableBaseSchema, BaseSchema):
     class Config:
         from_attribute = True
+        arbitrary_types_allowed = True

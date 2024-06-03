@@ -1,7 +1,8 @@
 from datetime import datetime
+from uuid import UUID
 
 
 class BaseSchema:
-    uuid: str
+    uuid: UUID
     created_at: datetime
     updated_at: datetime

@@ -1,24 +1,28 @@
+from uuid import UUID
+
 from pydantic import BaseModel
 
-from src.db.models import Table
+from src.db.schemas.tableSchemas import TableSchema
 from src.db.schemas.baseSchema import BaseSchema
-from src.db.schemas.teamSchemas import Team
+from src.db.schemas.teamSchemas import TeamSchema, TeamCreateSchema
 
 
-class GameBase(BaseModel):
+class GameBaseSchema(BaseModel):
     game_mode: str
     points_to_win: int
 
-    team_white: Team
-    team_black: Team
 
-    table: Table
-
-
-class GameCreate(GameBase):
-    pass
+class GameCreateSchema(GameBaseSchema):
+    table_name: str
+    team_white: TeamCreateSchema
+    team_black: TeamCreateSchema
 
 
-class Game(GameBase, BaseSchema):
+class GameSchema(GameBaseSchema, BaseSchema):
+    table: TableSchema
+    team_white: TeamSchema
+    team_black: TeamSchema
+
     class Config:
         from_attribute = True
+        arbitrary_types_allowed = True
