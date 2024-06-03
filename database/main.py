@@ -4,10 +4,6 @@ from src.db import models
 from src.db.database import SessionLocal, engine
 
 for model in models.models:
-    print("----->" + model.__name__)
-
-for model in models.models:
-    print("----->" + model.__name__)
     if model.__name__ == "BaseModel":
         continue
     model.metadata.create_all(bind=engine)
