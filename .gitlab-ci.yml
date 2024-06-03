@@ -5,5 +5,5 @@ pages:
     - echo "Deploying pre-built static files"
   artifacts:
     paths:
-      - backend/docs/
-  publish: backend/docs
+      - gameManager/docs/
+  publish: gameManager/docs
