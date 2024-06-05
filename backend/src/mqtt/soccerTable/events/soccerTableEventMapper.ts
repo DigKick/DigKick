@@ -3,6 +3,7 @@ import {SoccerTableEventType} from "./soccerTableEventType";
 import {Table} from "../../../models/table.ts";
 import {GameHandler} from "../../game/handler/gameHandler";
 import {GameEventType} from "../../game/events/gameEvent";
+import {GameService} from "../../../database/modules/game/gameService.ts";
 
 export class SoccerTableEventMapper
   implements EventMapper<SoccerTableEventType> {
@@ -17,6 +18,8 @@ export class SoccerTableEventMapper
   map(event: SoccerTableEventType) {
     let triggeredEvents = [event];
 
+    console.log(event)
+
     switch (event) {
       case SoccerTableEventType.NEW_GAME:
         this._soccerTable.newGame();
@@ -25,6 +28,7 @@ export class SoccerTableEventMapper
         break;
 
       case SoccerTableEventType.FINISH_GAME:
+        GameService.saveGame(this._soccerTable.game).then()
         this._soccerTable.newGame();
         this._gameHandler.triggerEvent(GameEventType.WHITE_SCORE_CHANGE);
         this._gameHandler.triggerEvent(GameEventType.BLACK_SCORE_CHANGE);
