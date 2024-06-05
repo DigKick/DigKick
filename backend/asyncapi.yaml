@@ -49,9 +49,9 @@ components:
       payload:
         type: object
         description: Information for a table registration.
-        example: { "id": "table1" }
+        example: { "name": "table1" }
         properties:
-          id:
+          name:
             type: string
 
     gameMessage:
