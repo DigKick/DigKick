@@ -27,10 +27,12 @@ bun run index.ts
 
 Before starting you have to set up a .env files with your MQTT host and credentials.
 
-```txt
+```dotenv
 MQTT_LOGIN_USERNAME=MQTT_USERNAME
 MQTT_LOGIN_PASSWORD=MQTT_PASSWORD
 MQTT_HOST=MQTT_HOST
+DATABASE_FILE_NAME=database
+DATABASE_FILE_SUFFIX=db
 ```
 
 ## Generate files from asyncapi.yaml

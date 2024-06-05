@@ -6,13 +6,12 @@ import {TeamEntity} from "./modules/team/teamEntity.ts";
 import {Logger} from "winston";
 import {LoggerFactory} from "../logging/loggerFactory.ts";
 
-
 const logger: Logger = LoggerFactory.getLogger("DataSourceInitializer");
-const database = new Database("database.db")
+new Database(`${process.env.DATABASE_FILE_NAME}.${process.env.DATABASE_FILE_SUFFIX}`)
 
 export const dataSource: DataSource = new DataSource({
   type: "sqlite",
-  database: "database.db",
+  database: `${process.env.DATABASE_FILE_NAME}.${process.env.DATABASE_FILE_SUFFIX}`,
   entities: [GameEntity, TableEntity, TeamEntity],
   logger: "advanced-console",
   synchronize: true,
@@ -23,7 +22,7 @@ export const dataSource: DataSource = new DataSource({
 export const initializeDatabase = async () => {
   try {
     await dataSource.initialize();
-    logger.info("Data Source has been initialized!");
+    logger.info("DataSource has been initialized in/at: " + dataSource.options.database);
   } catch (e) {
     logger.error("Error during Data Source initialization:", e);
   }
