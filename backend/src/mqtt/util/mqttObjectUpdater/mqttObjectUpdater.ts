@@ -1,6 +1,6 @@
-import { DkMqttClient } from "../../client/client";
-import { ChangeLog } from "./changeLog";
-import type { MqttObjectUpdaterConfig } from "./mqttObjectUpdaterConfig";
+import {DkMqttClient} from "../../client/client";
+import {ChangeLog} from "./changeLog";
+import type {MqttObjectUpdaterConfig} from "./mqttObjectUpdaterConfig";
 
 /**
  * if someone wants to change something here - may the force be with you
@@ -52,7 +52,7 @@ export class MqttObjectUpdater<ObjectType> {
 
       const publishTopic = String(
         entry[0] +
-          (publishString.startsWith("{") || publishString === " " ? "" : "$"),
+        (publishString.startsWith("{") || publishString === " " ? "" : "$"),
       );
 
       if (!publishString) {
@@ -92,7 +92,7 @@ export class MqttObjectUpdater<ObjectType> {
     const keys = Object.keys(newObj);
     let localPath = structuredClone(path);
 
-    if (keys.includes("id")) {
+    if (keys.includes("name")) {
       localPath += "/" + newObj["id"];
     }
 

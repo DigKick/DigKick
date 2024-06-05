@@ -1,8 +1,8 @@
-import { Logger } from "winston";
-import { LoggerFactory } from "../../logging/loggerFactory";
-import { SoccerTable } from "../../models/soccerTable";
-import type { EventMapper } from "./eventMapper";
-import { BasicTerm } from "../util/basicTerm";
+import {Logger} from "winston";
+import {LoggerFactory} from "../../logging/loggerFactory";
+import {Table} from "../../models/table.ts";
+import type {EventMapper} from "./eventMapper";
+import {BasicTerm} from "../util/basicTerm";
 
 export enum HandlerType {
   GAME = BasicTerm.GAME,
@@ -21,11 +21,11 @@ export class AbstractHandler<EventType, SubjectType> {
   constructor(
     subject: SubjectType,
     handlerType: HandlerType,
-    soccerTable: SoccerTable,
+    soccerTable: Table,
   ) {
     this.subject = subject;
 
-    this._logger = LoggerFactory.getHandlerLogger(handlerType, soccerTable.id);
+    this._logger = LoggerFactory.getHandlerLogger(handlerType, soccerTable.name);
     this._logger.debug(`${handlerType}Handler created.`);
   }
 

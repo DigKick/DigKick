@@ -1,13 +1,13 @@
-import { SoccerTable } from "../../models/soccerTable";
-import { BasicTerm } from "./basicTerm";
-import { TeamColor } from "../../models/team";
+import {Table} from "../../models/table.ts";
+import {BasicTerm} from "./basicTerm";
+import {TeamColor} from "../../models/team";
 
 export class BaseTopicFactory {
-  static getBaseTopic(soccerTable: SoccerTable): string {
-    return `/${BasicTerm.TABLE}/${soccerTable.id}`;
+  static getBaseTopic(soccerTable: Table): string {
+    return `/${BasicTerm.TABLE}/${soccerTable.name}`;
   }
 
-  static getTeamTopic(soccerTable: SoccerTable, teamColor: TeamColor): string {
+  static getTeamTopic(soccerTable: Table, teamColor: TeamColor): string {
     return (
       this.getBaseTopic(soccerTable) +
       `/${BasicTerm.GAME}/${BasicTerm.TEAM}/${teamColor}`
@@ -15,7 +15,7 @@ export class BaseTopicFactory {
   }
 
   static getLedUpdateTopic(
-    soccerTable: SoccerTable,
+    soccerTable: Table,
     teamColor: TeamColor,
   ): string {
     return this.getTeamTopic(soccerTable, teamColor) + `/leds`;

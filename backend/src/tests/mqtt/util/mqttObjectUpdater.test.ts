@@ -1,11 +1,11 @@
-import { expect, test } from "bun:test";
-import { MqttObjectUpdater } from "../../../mqtt/util/mqttObjectUpdater/mqttObjectUpdater";
-import { SoccerTable } from "../../../models/soccerTable";
-import { BasicTerm } from "../../../mqtt/util/basicTerm";
+import {expect, test} from "bun:test";
+import {MqttObjectUpdater} from "../../../mqtt/util/mqttObjectUpdater/mqttObjectUpdater";
+import {Table} from "../../../models/table.ts";
+import {BasicTerm} from "../../../mqtt/util/basicTerm";
 
 test("compare function table", () => {
-  let table = new SoccerTable("test");
-  let updater = new MqttObjectUpdater<SoccerTable>(table, {
+  let table = new Table("test");
+  let updater = new MqttObjectUpdater<Table>(table, {
     prefix: `/${BasicTerm.TABLE}`,
     instantPublish: true,
     publishWithRetain: true,
@@ -19,8 +19,8 @@ test("compare function table", () => {
 });
 
 test("compare init table", () => {
-  let table = new SoccerTable("test");
-  let updater = new MqttObjectUpdater<SoccerTable>(table, {
+  let table = new Table("test");
+  let updater = new MqttObjectUpdater<Table>(table, {
     prefix: `/${BasicTerm.TABLE}`,
     instantPublish: true,
     publishWithRetain: true,

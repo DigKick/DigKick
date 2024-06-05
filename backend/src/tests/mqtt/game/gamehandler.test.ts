@@ -1,10 +1,10 @@
-import { beforeEach, expect, mock, test } from "bun:test";
-import { Game } from "../../../models/game";
-import { GameHandler } from "../../../mqtt/game/handler/gameHandler";
-import { GameEventType } from "../../../mqtt/game/events/gameEvent";
-import { SoccerTable } from "../../../models/soccerTable";
+import {beforeEach, expect, mock, test} from "bun:test";
+import {Game} from "../../../models/game";
+import {GameHandler} from "../../../mqtt/game/handler/gameHandler";
+import {GameEventType} from "../../../mqtt/game/events/gameEvent";
+import {Table} from "../../../models/table.ts";
 
-let gameHandler = new GameHandler(new SoccerTable("table"));
+let gameHandler = new GameHandler(new Table("table"));
 let emptyMockFunc = mock();
 
 let cbGame!: Game | undefined;
@@ -13,7 +13,7 @@ const gameObs = (game: Game) => {
 };
 
 beforeEach(() => {
-  gameHandler = new GameHandler(new SoccerTable("table"));
+  gameHandler = new GameHandler(new Table("table"));
   emptyMockFunc = mock();
   cbGame = undefined;
 });

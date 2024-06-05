@@ -1,13 +1,14 @@
-import { BasicTerm } from "../../util/basicTerm";
-import { TeamColor } from "../../../models/team";
-import { BaseTopicFactory } from "../../util/baseTopicFactory";
-import { SoccerTable } from "../../../models/soccerTable";
+import {BasicTerm} from "../../util/basicTerm";
+import {TeamColor} from "../../../models/team";
+import {BaseTopicFactory} from "../../util/baseTopicFactory";
+import {Table} from "../../../models/table.ts";
 
 export class HardwareTopicManager {
   constructor(
-    private _soccerTable: SoccerTable,
+    private _soccerTable: Table,
     private _teamColor: TeamColor,
-  ) {}
+  ) {
+  }
 
   private get _baseTeamTopic(): string {
     return BaseTopicFactory.getTeamTopic(this._soccerTable, this._teamColor);

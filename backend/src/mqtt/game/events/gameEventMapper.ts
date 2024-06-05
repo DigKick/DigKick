@@ -2,17 +2,17 @@ import type {EventMapper} from "../../abstract/eventMapper";
 import {GameEventType} from "./gameEvent";
 import {Game} from "../../../models/game";
 import {ScoreChange, TeamColor} from "../../../models/team";
-import {SoccerTable} from "../../../models/soccerTable";
+import {Table} from "../../../models/table.ts";
 import {MqttObjectUpdater} from "../../util/mqttObjectUpdater/mqttObjectUpdater";
 import {BasicTerm} from "../../util/basicTerm";
 import {MqttObjectUpdaterFactory} from "../../util/mqttObjectUpdater/mqttObjectUpdaterFactory";
 
 export class GameEventMapper implements EventMapper<GameEventType> {
   private readonly _game: Game;
-  private readonly _soccerTable: SoccerTable;
-  private readonly _mqttObjectUpdaterGame: MqttObjectUpdater<SoccerTable>;
+  private readonly _soccerTable: Table;
+  private readonly _mqttObjectUpdaterGame: MqttObjectUpdater<Table>;
 
-  constructor(soccerTable: SoccerTable) {
+  constructor(soccerTable: Table) {
     this._soccerTable = soccerTable;
     this._game = soccerTable.game;
     this._mqttObjectUpdaterGame = MqttObjectUpdaterFactory.getMqttObjectUpdater(

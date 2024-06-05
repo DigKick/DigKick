@@ -1,15 +1,15 @@
-import { beforeEach, expect, mock, test } from "bun:test";
-import { SoccerTableHandler } from "../../../mqtt/soccerTable/handler/soccerTableHandler";
-import { SoccerTable } from "../../../models/soccerTable";
-import { SoccerTableEventType } from "../../../mqtt/soccerTable/events/soccerTableEventType";
-import { GameEventType } from "../../../mqtt/game/events/gameEvent";
+import {beforeEach, expect, mock, test} from "bun:test";
+import {SoccerTableHandler} from "../../../mqtt/soccerTable/handler/soccerTableHandler";
+import {Table} from "../../../models/table.ts";
+import {SoccerTableEventType} from "../../../mqtt/soccerTable/events/soccerTableEventType";
+import {GameEventType} from "../../../mqtt/game/events/gameEvent";
 
 let emptyMockFunc = mock();
 let soccerTableHandler: SoccerTableHandler = new SoccerTableHandler(
-  new SoccerTable("table"),
+  new Table("table"),
 );
-let soccerTableCb: SoccerTable = new SoccerTable("gameId");
-const soccerTableCallback = (soccerTable: SoccerTable) => {
+let soccerTableCb: Table = new Table("gameId");
+const soccerTableCallback = (soccerTable: Table) => {
   soccerTableCb = soccerTable;
 };
 
@@ -24,9 +24,9 @@ const subscribeMockAndTriggerEvent = (event: SoccerTableEventType) => {
 };
 
 beforeEach(() => {
-  soccerTableHandler = new SoccerTableHandler(new SoccerTable("table"));
+  soccerTableHandler = new SoccerTableHandler(new Table("table"));
   emptyMockFunc = mock();
-  soccerTableCb = new SoccerTable("gameId");
+  soccerTableCb = new Table("gameId");
 });
 
 test("Game gets restarted correctly", () => {

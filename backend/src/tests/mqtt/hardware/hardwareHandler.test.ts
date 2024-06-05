@@ -1,13 +1,13 @@
-import { HardwareHandler } from "../../../mqtt/hardware/handler/hardwareHandler";
-import { SoccerTable } from "../../../models/soccerTable";
-import { SoccerTableHandler } from "../../../mqtt/soccerTable/handler/soccerTableHandler";
-import { TeamColor } from "../../../models/team";
-import { expect, test } from "bun:test";
-import { BasicTerm } from "../../../mqtt/util/basicTerm";
-import { PinOut } from "../../../mqtt/client/payloads/pinStatusPayload";
+import {HardwareHandler} from "../../../mqtt/hardware/handler/hardwareHandler";
+import {Table} from "../../../models/table.ts";
+import {SoccerTableHandler} from "../../../mqtt/soccerTable/handler/soccerTableHandler";
+import {TeamColor} from "../../../models/team";
+import {expect, test} from "bun:test";
+import {BasicTerm} from "../../../mqtt/util/basicTerm";
+import {PinOut} from "../../../mqtt/client/payloads/pinStatusPayload";
 
 const hardwareHandler = new HardwareHandler(
-  new SoccerTableHandler(new SoccerTable("table")),
+  new SoccerTableHandler(new Table("table")),
   TeamColor.WHITE,
 );
 

@@ -1,12 +1,12 @@
-import { SoccerTable } from "../../../models/soccerTable";
-import { BasicTerm } from "../../util/basicTerm";
-import { DkMqttClient } from "../../client/client";
-import type { TopicSubscriber } from "../../client/topicSubscriber";
-import { SoccerTableHandler } from "./soccerTableHandler";
-import { LoggerFactory } from "../../../logging/loggerFactory";
-import { Logger } from "winston";
-import type { TableRegisterPayload } from "../payloads/tableRegisterPayload";
-import { RegisteredTableListPayload } from "../payloads/registeredTableListPayload";
+import {Table} from "../../../models/table.ts";
+import {BasicTerm} from "../../util/basicTerm";
+import {DkMqttClient} from "../../client/client";
+import type {TopicSubscriber} from "../../client/topicSubscriber";
+import {SoccerTableHandler} from "./soccerTableHandler";
+import {LoggerFactory} from "../../../logging/loggerFactory";
+import {Logger} from "winston";
+import type {TableRegisterPayload} from "../payloads/tableRegisterPayload";
+import {RegisteredTableListPayload} from "../payloads/registeredTableListPayload";
 
 export enum SoccerTableRegisterTopic {
   REGISTER = `/${BasicTerm.TABLE}/register`,
@@ -42,7 +42,7 @@ export class SoccerTableRegisterHandler {
       if (!SoccerTableRegisterHandler.soccerTableHandlers.get(soccerTableId)) {
         SoccerTableRegisterHandler.soccerTableHandlers.set(
           soccerTableId,
-          new SoccerTableHandler(new SoccerTable(soccerTableId)),
+          new SoccerTableHandler(new Table(soccerTableId)),
         );
         this._dkMqttClient.publishWithRetain(
           "/tables",

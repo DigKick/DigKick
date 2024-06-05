@@ -1,13 +1,13 @@
 // noinspection JSUnusedGlobalSymbols
 
-import { Game } from "./game";
+import {Game} from "./game";
 
-export class SoccerTable {
-  public id: string;
+export class Table {
+  public name: string;
   private readonly _game: Game;
 
-  constructor(id: string) {
-    this.id = id;
+  constructor(name: string) {
+    this.name = name;
     this._game = new Game();
   }
 

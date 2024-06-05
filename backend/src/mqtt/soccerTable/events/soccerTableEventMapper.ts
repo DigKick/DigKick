@@ -1,16 +1,15 @@
-import type { EventMapper } from "../../abstract/eventMapper";
-import { SoccerTableEventType } from "./soccerTableEventType";
-import { SoccerTable } from "../../../models/soccerTable";
-import { GameHandler } from "../../game/handler/gameHandler";
-import { GameEventType } from "../../game/events/gameEvent";
+import type {EventMapper} from "../../abstract/eventMapper";
+import {SoccerTableEventType} from "./soccerTableEventType";
+import {Table} from "../../../models/table.ts";
+import {GameHandler} from "../../game/handler/gameHandler";
+import {GameEventType} from "../../game/events/gameEvent";
 
 export class SoccerTableEventMapper
-  implements EventMapper<SoccerTableEventType>
-{
+  implements EventMapper<SoccerTableEventType> {
   private _gameHandler: GameHandler;
-  private readonly _soccerTable: SoccerTable;
+  private readonly _soccerTable: Table;
 
-  constructor(soccerTable: SoccerTable, gameHandler: GameHandler) {
+  constructor(soccerTable: Table, gameHandler: GameHandler) {
     this._soccerTable = soccerTable;
     this._gameHandler = gameHandler;
   }

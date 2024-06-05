@@ -1,10 +1,7 @@
-import { beforeEach, expect, mock, test } from "bun:test";
-import {
-  AbstractHandler,
-  HandlerType,
-} from "../../../mqtt/abstract/abstractHandler";
-import { SoccerTable } from "../../../models/soccerTable";
-import type { EventMapper } from "../../../mqtt/abstract/eventMapper";
+import {beforeEach, expect, mock, test} from "bun:test";
+import {AbstractHandler, HandlerType,} from "../../../mqtt/abstract/abstractHandler";
+import {Table} from "../../../models/table.ts";
+import type {EventMapper} from "../../../mqtt/abstract/eventMapper";
 
 enum TestEvent {
   EVENT_1 = "EVENT_1",
@@ -40,6 +37,7 @@ class TestEventMapper implements EventMapper<TestEvent> {
     return new Set(triggeredEvents);
   }
 }
+
 class TestClass {
   lastEvent: string;
 
@@ -50,7 +48,7 @@ class TestClass {
 
 class TestHandler extends AbstractHandler<TestEvent, TestClass> {
   constructor(testObj: TestClass) {
-    super(testObj, HandlerType.ABSTRACT, new SoccerTable("TEST"));
+    super(testObj, HandlerType.ABSTRACT, new Table("TEST"));
     this._mapper = new TestEventMapper(testObj);
   }
 }
