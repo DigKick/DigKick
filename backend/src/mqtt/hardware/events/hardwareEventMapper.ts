@@ -1,12 +1,12 @@
-import type { EventMapper } from "../../abstract/eventMapper";
-import { HardwareEventType } from "./hardwareEvent";
-import { SoccerTableHandler } from "../../soccerTable/handler/soccerTableHandler";
-import { ScoreChange, TeamColor } from "../../../models/team";
-import { DkMqttClient } from "../../client/client";
-import { SoccerTableEventType } from "../../soccerTable/events/soccerTableEventType";
-import { GameEventType } from "../../game/events/gameEvent";
-import { BaseTopicFactory } from "../../util/baseTopicFactory";
-import { LedUpdatePayload } from "../payloads/ledUpdate";
+import type {EventMapper} from "../../abstract/eventMapper";
+import {HardwareEventType} from "./hardwareEvent";
+import {SoccerTableHandler} from "../../soccerTable/handler/soccerTableHandler";
+import {ScoreChange, TeamColor} from "../../../models/team";
+import {DkMqttClient} from "../../client/client";
+import {SoccerTableEventType} from "../../soccerTable/events/soccerTableEventType";
+import {GameEventType} from "../../game/events/gameEvent";
+import {BaseTopicFactory} from "../../util/baseTopicFactory";
+import {LedUpdatePayload} from "../payloads/ledUpdate";
 
 export class HardwareEventMapper implements EventMapper<HardwareEventType> {
   private _soccerTableHandler: SoccerTableHandler;
@@ -23,6 +23,7 @@ export class HardwareEventMapper implements EventMapper<HardwareEventType> {
 
     switch (HardwareEventType[event] as HardwareEventType) {
       case HardwareEventType.BUTTON_0_LOW:
+        this._soccerTableHandler.triggerEvent(SoccerTableEventType.FINISH_GAME);
         this._soccerTableHandler.triggerEvent(SoccerTableEventType.NEW_GAME);
         break;
 
@@ -47,7 +48,7 @@ export class HardwareEventMapper implements EventMapper<HardwareEventType> {
 
     dkMqttClient.publishWithRetain(
       BaseTopicFactory.getBaseTopic(this._soccerTableHandler.subject) +
-        "/debug",
+      "/debug",
       `{ "lastEvents": "${Array.from(triggeredEvents).join(", ")}" }`,
     );
     this._updateLeds();
