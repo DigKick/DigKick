@@ -1,5 +1,5 @@
-import { ScoreChange, Team, TeamColor } from "./team";
-import { GameMode } from "./gameMode";
+import {ScoreChange, Team, TeamColor} from "./team";
+import {GameMode} from "./gameMode";
 
 export class Game {
   public static STANDARDGAME_WINNINGSCORE = 10;
@@ -8,7 +8,7 @@ export class Game {
   public teamWhite: Team;
   public teamBlack: Team;
 
-  public readonly pointsToWin: number;
+  public pointsToWin: number;
 
   // Constructor for standard game
   constructor() {
