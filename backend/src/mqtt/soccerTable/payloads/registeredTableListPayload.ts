@@ -1,13 +1,13 @@
 export class RegisteredTableListPayload {
-  private readonly _tableIds: string[];
+  private readonly _tableNames: string[];
 
-  constructor(tableIds: string[]) {
-    this._tableIds = tableIds;
+  constructor(tableNames: string[]) {
+    this._tableNames = tableNames;
   }
 
   toJSON() {
     return {
-      ids: this._tableIds,
+      names: this._tableNames,
     };
   }
 }

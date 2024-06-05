@@ -18,13 +18,13 @@ servers:
 
 components:
   parameters:
-    tableId:
+    tableName:
       description: Identifier of a table.
       examples:
         - "table1"
         - "kjb14123b1jk"
 
-    teamId:
+    teamColor:
       description: Identifier of a team.
       examples:
         - "WHITE"
@@ -163,12 +163,12 @@ components:
           "snippets":
             [
               {
-                "cursorPosition": [1, 2],
+                "cursorPosition": [ 1, 2 ],
                 "text": "WHITE 1 : 2 BLACK",
                 "inverted": false,
               },
               {
-                "cursorPosition": [1, 3],
+                "cursorPosition": [ 1, 3 ],
                 "text": "LAST SCORED: TEAM WHITE",
                 "inverted": true,
               },
@@ -187,7 +187,7 @@ components:
                 description: The cursor position defines where the text is written on the display. First value = x position - Second value = y position
                 minItems: 2
                 maxItems: 2
-                example: [1, 2]
+                example: [ 1, 2 ]
               text:
                 type: string
                 description: Defines the text.
@@ -208,7 +208,7 @@ components:
             description: Describes a color in HEX
             example: "0xFF00FF"
           minItems: 0
-          example: ["0x00FF00", "0x00FFFF"]
+          example: [ "0x00FF00", "0x00FFFF" ]
           description: Describes the colors of the LEDs. The led strip should light in the described colors. If the value contains an empty string, the led at this place should be turned off.
         animation:
           type: string
@@ -231,87 +231,87 @@ channels:
         $ref: "#/components/messages/tableRegisterMessage"
 
   gameStatus:
-    address: "/table/{tableId}/game"
+    address: "/table/{tableName}/game"
     parameters:
-      tableId:
-        $ref: "#/components/parameters/tableId"
+      tableName:
+        $ref: "#/components/parameters/tableName"
     messages:
       gameStatusMessage:
         $ref: "#/components/messages/gameMessage"
 
   teamStatus:
-    address: "/table/{tableId}/game/team/{teamId}"
+    address: "/table/{tableName}/game/team/{teamColor}"
     parameters:
-      tableId:
-        $ref: "#/components/parameters/tableId"
-      teamId:
-        $ref: "#/components/parameters/teamId"
+      tableName:
+        $ref: "#/components/parameters/tableName"
+      teamColor:
+        $ref: "#/components/parameters/teamColor"
     messages:
       teamMessage:
         $ref: "#/components/messages/teamMessage"
 
   teamColorStatus:
-    address: "/table/{tableId}/game/team/{teamId}/color$"
+    address: "/table/{tableName}/game/team/{teamColor}/color$"
     parameters:
-      tableId:
-        $ref: "#/components/parameters/tableId"
-      teamId:
-        $ref: "#/components/parameters/teamId"
+      tableName:
+        $ref: "#/components/parameters/tableName"
+      teamColor:
+        $ref: "#/components/parameters/teamColor"
     messages:
       teamColorMessage:
         $ref: "#/components/messages/teamColorMessage"
 
   teamScoreStatus:
-    address: "/table/{tableId}/game/team/{teamId}/score$"
+    address: "/table/{tableName}/game/team/{teamteamColorId}/score$"
     parameters:
-      tableId:
-        $ref: "#/components/parameters/tableId"
-      teamId:
-        $ref: "#/components/parameters/teamId"
+      tableName:
+        $ref: "#/components/parameters/tableName"
+      teamColor:
+        $ref: "#/components/parameters/teamColor"
     messages:
       teamScoreMessage:
         $ref: "#/components/messages/teamScoreMessage"
 
   winnerTeamStatus:
-    address: "/table/{tableId}/game/team/winner"
+    address: "/table/{tableName}/game/team/winner"
     parameters:
-      tableId:
-        $ref: "#/components/parameters/tableId"
-      teamId:
-        $ref: "#/components/parameters/teamId"
+      tableName:
+        $ref: "#/components/parameters/tableName"
+      teamColor:
+        $ref: "#/components/parameters/teamColor"
     messages:
       teamMessage:
         $ref: "#/components/messages/teamMessage"
 
   winnerTeamColorStatus:
-    address: "/table/{tableId}/game/team/winner/color$"
+    address: "/table/{tableName}/game/team/winner/color$"
     parameters:
-      tableId:
-        $ref: "#/components/parameters/tableId"
-      teamId:
-        $ref: "#/components/parameters/teamId"
+      tableName:
+        $ref: "#/components/parameters/tableName"
+      teamColor:
+        $ref: "#/components/parameters/teamColor"
     messages:
       scoreStatusMessage:
         $ref: "#/components/messages/teamColorMessage"
 
   winnerTeamScoreStatus:
-    address: "/table/{tableId}/game/team/winner/score$"
+    address: "/table/{tableName}/game/team/winner/score$"
     parameters:
-      tableId:
-        $ref: "#/components/parameters/tableId"
-      teamId:
-        $ref: "#/components/parameters/teamId"
+      tableName:
+        $ref: "#/components/parameters/tableName"
+      teamColor:
+        $ref: "#/components/parameters/teamColor"
     messages:
       scoreStatusMessage:
         $ref: "#/components/messages/teamScoreMessage"
 
   buttonPress:
-    address: "/table/{tableId}/game/team/{teamId}/button/{buttonId}"
+    address: "/table/{tableName}/game/team/{teamColor}/button/{buttonId}"
     parameters:
-      tableId:
-        $ref: "#/components/parameters/tableId"
-      teamId:
-        $ref: "#/components/parameters/teamId"
+      tableName:
+        $ref: "#/components/parameters/tableName"
+      teamColor:
+        $ref: "#/components/parameters/teamColor"
       buttonId:
         $ref: "#/components/parameters/buttonId"
     messages:
@@ -319,12 +319,12 @@ channels:
         $ref: "#/components/messages/pinStatusMessage"
 
   lightBarrierDetect:
-    address: "/table/{tableId}/game/team/{teamId}/lightbarrier/{lightBarrierId}"
+    address: "/table/{tableName}/game/team/{teamColor}/lightbarrier/{lightBarrierId}"
     parameters:
-      tableId:
-        $ref: "#/components/parameters/tableId"
-      teamId:
-        $ref: "#/components/parameters/teamId"
+      tableName:
+        $ref: "#/components/parameters/tableName"
+      teamColor:
+        $ref: "#/components/parameters/teamColor"
       lightBarrierId:
         $ref: "#/components/parameters/lightBarrierId"
     messages:
@@ -332,23 +332,23 @@ channels:
         $ref: "#/components/messages/pinStatusMessage"
 
   displayUpdate:
-    address: "/table/{tableId}/game/team/{teamId}/display"
+    address: "/table/{tableName}/game/team/{teamColor}/display"
     parameters:
-      tableId:
-        $ref: "#/components/parameters/tableId"
-      teamId:
-        $ref: "#/components/parameters/teamId"
+      tableName:
+        $ref: "#/components/parameters/tableName"
+      teamColor:
+        $ref: "#/components/parameters/teamColor"
     messages:
       displayMessage:
         $ref: "#/components/messages/displayUpdateMessage"
 
   ledStripUpdate:
-    address: "/table/{tableId}/game/team/{teamId}/leds"
+    address: "/table/{tableName}/game/team/{teamColor}/leds"
     parameters:
-      tableId:
-        $ref: "#/components/parameters/tableId"
-      teamId:
-        $ref: "#/components/parameters/teamId"
+      tableName:
+        $ref: "#/components/parameters/tableName"
+      teamColor:
+        $ref: "#/components/parameters/teamColor"
     messages:
       ledMessage:
         $ref: "#/components/messages/ledUpdateMessage"

@@ -9,11 +9,11 @@ import type {TableRegisterPayload} from "../../../src/mqtt/soccerTable/payloads/
 let soccerTableRegisterHandler: SoccerTableRegisterHandler;
 
 const validTableRegisterPayload: TableRegisterPayload = {
-  id: "validId",
+  name: "validId",
 };
 
 const invalidTableRegisterPayload: TableRegisterPayload = {
-  id: "",
+  name: "",
 };
 
 const invalidUndefinedTableRegisterPayload: TableRegisterPayload = {

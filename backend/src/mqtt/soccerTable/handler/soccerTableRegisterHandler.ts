@@ -27,11 +27,11 @@ export class SoccerTableRegisterHandler {
   registerSubscriber: TopicSubscriber = {
     topic: SoccerTableRegisterTopic.REGISTER,
     func: (_: any, payload: TableRegisterPayload) => {
-      if (!payload || !payload.id) {
+      if (!payload || !payload.name) {
         this._logger.error("Table register payload invalid.");
         return;
       }
-      const soccerTableId = payload.id.toLowerCase();
+      const soccerTableId = payload.name.toLowerCase();
       if (!this._validateTableId(soccerTableId)) {
         this._logger.error(
           `"${soccerTableId}" is not a valid id for a soccer table.`,
