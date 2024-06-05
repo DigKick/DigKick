@@ -6,18 +6,18 @@ import {TableEntity} from "./tableEntity.ts";
 @Entity("game")
 export class GameEntity extends DkBaseEntity {
 
-  @OneToOne(type => TableEntity, table => table.uuid)
+  @OneToOne(type => TableEntity, table => table.id)
   @JoinColumn()
   table!: TableEntity;
 
   @Column()
   gameMode!: string;
 
-  @OneToOne(type => TeamEntity, team => team.uuid, {onDelete: "CASCADE"})
+  @OneToOne(type => TeamEntity, team => team.id, {onDelete: "CASCADE"})
   @JoinColumn()
   teamWhite!: TeamEntity;
 
-  @OneToOne(type => TeamEntity, team => team.uuid, {onDelete: "CASCADE"})
+  @OneToOne(type => TeamEntity, team => team.id, {onDelete: "CASCADE"})
   @JoinColumn()
   teamBlack!: TeamEntity;
 
