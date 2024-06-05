@@ -1,6 +1,6 @@
 import {TableEntity} from "./tableEntity.ts";
 import {Table} from "../../../models/table.ts";
-import {DkParseException} from "../../DkParseException.ts";
+import {DkParseException} from "../../dkParseException.ts";
 
 export class TableParser {
 

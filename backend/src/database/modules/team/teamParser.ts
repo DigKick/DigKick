@@ -1,6 +1,6 @@
 import {TeamEntity} from "./teamEntity.ts";
 import {Team, TeamColor} from "../../../models/team.ts";
-import {DkParseException} from "../../DkParseException.ts";
+import {DkParseException} from "../../dkParseException.ts";
 
 export class TeamParser {
 

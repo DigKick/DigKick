@@ -2,7 +2,7 @@ import {Game} from "../../../models/game.ts";
 import {GameEntity} from "./gameEntity.ts";
 import {GameMode} from "../../../models/gameMode.ts";
 import {TeamParser} from "../team/teamParser.ts";
-import {DkParseException} from "../../DkParseException.ts";
+import {DkParseException} from "../../dkParseException.ts";
 
 export class GameParser {
 
