@@ -1,7 +1,7 @@
 import {Column, Entity, JoinColumn, OneToOne} from "typeorm";
-import {DkBaseEntity} from "./dkBaseEntity.ts";
-import {TeamEntity} from "./teamEntity.ts";
-import {TableEntity} from "./tableEntity.ts";
+import {TeamEntity} from "../team/teamEntity.ts";
+import {TableEntity} from "../table/tableEntity.ts";
+import {DkBaseEntity} from "../abstract/dkBaseEntity.ts";
 
 @Entity("game")
 export class GameEntity extends DkBaseEntity {
@@ -24,4 +24,10 @@ export class GameEntity extends DkBaseEntity {
   @Column()
   pointsToWin!: number;
 
+
+  toString(): string {
+    return `{table: ${this.table.toString()}, gameMode: ${this.gameMode},
+            teamWhite: ${this.teamWhite.toString()}, teamBlack: ${this.teamBlack.toString()},
+            pointsToWin: ${this.pointsToWin},}`;
+  }
 }

@@ -1,13 +1,13 @@
 import {Database} from "bun:sqlite"
 import {DataSource} from "typeorm"
-import {GameEntity} from "../models/gameEntity.ts";
-import {TableEntity} from "../models/tableEntity.ts";
-import {TeamEntity} from "../models/teamEntity.ts";
+import {GameEntity} from "./modules/game/gameEntity.ts";
+import {TableEntity} from "./modules/table/tableEntity.ts";
+import {TeamEntity} from "./modules/team/teamEntity.ts";
 import {Logger} from "winston";
-import {LoggerFactory} from "../../logging/loggerFactory.ts";
+import {LoggerFactory} from "../logging/loggerFactory.ts";
 
 
-const logger: Logger = LoggerFactory.getLogger("DatabaseHandler");
+const logger: Logger = LoggerFactory.getLogger("DataSourceInitializer");
 const database = new Database("database.db")
 
 export const dataSource: DataSource = new DataSource({
@@ -24,7 +24,7 @@ export const initializeDatabase = async () => {
   try {
     await dataSource.initialize();
     logger.info("Data Source has been initialized!");
-  } catch (err) {
-    logger.info("Error during Data Source initialization:", err);
+  } catch (e) {
+    logger.error("Error during Data Source initialization:", e);
   }
 };

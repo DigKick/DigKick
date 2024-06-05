@@ -1,5 +1,5 @@
 import {Column, Entity} from "typeorm";
-import {DkBaseEntity} from "./dkBaseEntity.ts";
+import {DkBaseEntity} from "../abstract/dkBaseEntity.ts";
 
 @Entity("team")
 export class TeamEntity extends DkBaseEntity {
@@ -13,4 +13,8 @@ export class TeamEntity extends DkBaseEntity {
   @Column()
   isWinner!: boolean;
 
+
+  toString(): string {
+    return `{color: ${this.color}, score: ${this.score}, isWinner: ${this.isWinner}}`;
+  }
 }
