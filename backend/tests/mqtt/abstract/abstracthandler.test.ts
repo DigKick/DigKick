@@ -1,7 +1,7 @@
 import {beforeEach, expect, mock, test} from "bun:test";
-import {AbstractHandler, HandlerType,} from "../../../mqtt/abstract/abstractHandler";
-import {Table} from "../../../models/table.ts";
-import type {EventMapper} from "../../../mqtt/abstract/eventMapper";
+import {AbstractHandler, HandlerType,} from "../../../src/mqtt/abstract/abstractHandler.ts";
+import {Table} from "../../../src/models/table.ts";
+import type {EventMapper} from "../../../src/mqtt/abstract/eventMapper.ts";
 
 enum TestEvent {
   EVENT_1 = "EVENT_1",

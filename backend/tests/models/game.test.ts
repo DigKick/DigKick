@@ -1,6 +1,6 @@
-import { beforeEach, expect, test } from "bun:test";
-import { Game } from "../../models/game";
-import { ScoreChange } from "../../models/team";
+import {beforeEach, expect, test} from "bun:test";
+import {Game} from "../../src/models/game.ts";
+import {ScoreChange} from "../../src/models/team.ts";
 
 let gameObj = new Game();
 

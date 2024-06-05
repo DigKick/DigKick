@@ -1,8 +1,8 @@
 import {beforeEach, expect, mock, test} from "bun:test";
-import {SoccerTableHandler} from "../../../mqtt/soccerTable/handler/soccerTableHandler";
-import {Table} from "../../../models/table.ts";
-import {SoccerTableEventType} from "../../../mqtt/soccerTable/events/soccerTableEventType";
-import {GameEventType} from "../../../mqtt/game/events/gameEvent";
+import {SoccerTableHandler} from "../../../src/mqtt/soccerTable/handler/soccerTableHandler.ts";
+import {Table} from "../../../src/models/table.ts";
+import {SoccerTableEventType} from "../../../src/mqtt/soccerTable/events/soccerTableEventType.ts";
+import {GameEventType} from "../../../src/mqtt/game/events/gameEvent.ts";
 
 let emptyMockFunc = mock();
 let soccerTableHandler: SoccerTableHandler = new SoccerTableHandler(

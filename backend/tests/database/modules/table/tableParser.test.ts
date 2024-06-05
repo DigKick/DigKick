@@ -1,7 +1,7 @@
-import {TableEntity} from "../../../../database/modules/table/tableEntity.ts";
 import {expect, test} from "bun:test";
-import {TableParser} from "../../../../database/modules/table/tableParser.ts";
-import {Table} from "../../../../models/table.ts";
+import {TableEntity} from "../../../../src/database/modules/table/tableEntity.ts";
+import {TableParser} from "../../../../src/database/modules/table/tableParser.ts";
+import {Table} from "../../../../src/models/table.ts";
 
 
 function createValidTableEntity() {

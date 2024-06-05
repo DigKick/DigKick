@@ -1,9 +1,9 @@
 import {expect, test} from "bun:test";
-import {GameEntity} from "../../../../database/modules/game/gameEntity.ts";
-import {GameMode} from "../../../../models/gameMode.ts";
 import {createValidBlackTeamEntity, createValidWhiteTeamEntity} from "../team/teamParser.test.ts";
-import {Game} from "../../../../models/game.ts";
-import {GameParser} from "../../../../database/modules/game/gameParser.ts";
+import {GameEntity} from "../../../../src/database/modules/game/gameEntity.ts";
+import {GameMode} from "../../../../src/models/gameMode.ts";
+import {Game} from "../../../../src/models/game.ts";
+import {GameParser} from "../../../../src/database/modules/game/gameParser.ts";
 
 
 function createValidGameEntity() {

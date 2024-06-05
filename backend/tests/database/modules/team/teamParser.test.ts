@@ -1,7 +1,7 @@
-import {TeamEntity} from "../../../../database/modules/team/teamEntity.ts";
-import {Team, TeamColor} from "../../../../models/team.ts";
 import {expect, test} from "bun:test";
-import {TeamParser} from "../../../../database/modules/team/teamParser.ts";
+import {Team, TeamColor} from "../../../../src/models/team.ts";
+import {TeamEntity} from "../../../../src/database/modules/team/teamEntity.ts";
+import {TeamParser} from "../../../../src/database/modules/team/teamParser.ts";
 
 export function createValidWhiteTeamEntity() {
   return createValidTeamEntity(TeamColor.WHITE)

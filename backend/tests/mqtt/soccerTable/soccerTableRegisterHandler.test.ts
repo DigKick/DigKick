@@ -1,10 +1,10 @@
-import { beforeEach, expect, test } from "bun:test";
+import {beforeEach, expect, test} from "bun:test";
 import {
   SoccerTableRegisterHandler,
   SoccerTableRegisterTopic,
-} from "../../../mqtt/soccerTable/handler/soccerTableRegisterHandler";
-import { SoccerTableHandler } from "../../../mqtt/soccerTable/handler/soccerTableHandler";
-import type { TableRegisterPayload } from "../../../mqtt/soccerTable/payloads/tableRegisterPayload";
+} from "../../../src/mqtt/soccerTable/handler/soccerTableRegisterHandler.ts";
+import {SoccerTableHandler} from "../../../src/mqtt/soccerTable/handler/soccerTableHandler.ts";
+import type {TableRegisterPayload} from "../../../src/mqtt/soccerTable/payloads/tableRegisterPayload.ts";
 
 let soccerTableRegisterHandler: SoccerTableRegisterHandler;
 

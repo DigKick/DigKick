@@ -1,8 +1,8 @@
 import {beforeEach, expect, mock, test} from "bun:test";
-import {Game} from "../../../models/game";
-import {GameHandler} from "../../../mqtt/game/handler/gameHandler";
-import {GameEventType} from "../../../mqtt/game/events/gameEvent";
-import {Table} from "../../../models/table.ts";
+import {Game} from "../../../src/models/game.ts";
+import {GameHandler} from "../../../src/mqtt/game/handler/gameHandler.ts";
+import {GameEventType} from "../../../src/mqtt/game/events/gameEvent.ts";
+import {Table} from "../../../src/models/table.ts";
 
 let gameHandler = new GameHandler(new Table("table"));
 let emptyMockFunc = mock();

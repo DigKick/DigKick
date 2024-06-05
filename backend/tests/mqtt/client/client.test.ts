@@ -1,7 +1,7 @@
-import { expect, test } from "bun:test";
-import { BasicTerm } from "../../../mqtt/util/basicTerm";
-import { TeamColor } from "../../../models/team";
-import { DkMqttClient } from "../../../mqtt/client/client";
+import {expect, test} from "bun:test";
+import {BasicTerm} from "../../../src/mqtt/util/basicTerm.ts";
+import {TeamColor} from "../../../src/models/team.ts";
+import {DkMqttClient} from "../../../src/mqtt/client/client.ts";
 
 const dkMqttClient = DkMqttClient.getInstance();
 
