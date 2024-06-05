@@ -12,11 +12,7 @@ export class GameService {
     try {
       const gameEntity = GameParser.toGameEntity(game)
 
-      //gameEntity.teamWhite = await TeamEntity.save(gameEntity.teamWhite);
-      //gameEntity.teamBlack = await TeamEntity.save(gameEntity.teamBlack);
-
-      const savedGameEntity = await GameEntity.save(gameEntity);
-
+      await GameEntity.save(gameEntity);
     } catch (e) {
       this.logger.error(`Could not save or parse game ${game} to database: ${e}`)
     }
