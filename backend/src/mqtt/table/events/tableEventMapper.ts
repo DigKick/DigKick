@@ -26,7 +26,7 @@ export class TableEventMapper
         break;
 
       case TableEventType.FINISH_GAME:
-        GameRepository.saveGame(this._soccerTable.game).then()
+        GameRepository.saveGame(this._soccerTable.game, this._soccerTable).then()
         this._soccerTable.newGame();
         this._gameHandler.triggerEvent(GameEventType.WHITE_SCORE_CHANGE);
         this._gameHandler.triggerEvent(GameEventType.BLACK_SCORE_CHANGE);
