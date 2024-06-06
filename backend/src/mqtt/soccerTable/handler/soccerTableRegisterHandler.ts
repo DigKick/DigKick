@@ -32,20 +32,20 @@ export class SoccerTableRegisterHandler {
         this._logger.error("Table register payload invalid.");
         return;
       }
-      const tableId = payload.name.toLowerCase();
-      if (!this._validateTableId(tableId)) {
+      const tableName = payload.name.toLowerCase();
+      if (!this._validateTableName(tableName)) {
         this._logger.error(
-          `"${tableId}" is not a valid id for a soccer table.`,
+          `"${tableName}" is not a valid id for a soccer table.`,
         );
         return;
       }
 
-      const table = new Table(tableId)
+      const table = new Table(tableName)
 
-      if (!SoccerTableRegisterHandler.tableHandlers.get(tableId)) {
+      if (!SoccerTableRegisterHandler.tableHandlers.get(tableName)) {
         SoccerTableRegisterHandler.tableHandlers.set(
-          tableId,
-          new SoccerTableHandler(table),
+          tableName,
+          new SoccerTableHandler(new Table(tableName)),
         );
         this._dkMqttClient.publishWithRetain(
           "/tables",
@@ -55,12 +55,12 @@ export class SoccerTableRegisterHandler {
             ),
           ),
         );
-        this._logger.info("New table registered: " + tableId);
+        this._logger.info("New table registered: " + tableName);
 
         TableRepository.saveTable(table).then()
       } else {
         this._logger.warn(
-          "Table with id " + tableId + " already registered.",
+          "Table with id " + tableName + " already registered.",
         );
       }
     },
@@ -71,7 +71,7 @@ export class SoccerTableRegisterHandler {
     this._dkMqttClient.subscribeOnTopic(this.registerSubscriber);
   }
 
-  private _validateTableId(tableId: string): boolean {
+  private _validateTableName(tableId: string): boolean {
     if (tableId != tableId.toLowerCase()) {
       return false;
     }
