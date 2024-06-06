@@ -18,8 +18,6 @@ export class SoccerTableEventMapper
   map(event: SoccerTableEventType) {
     let triggeredEvents = [event];
 
-    console.log(event)
-
     switch (event) {
       case SoccerTableEventType.NEW_GAME:
         this._soccerTable.newGame();
