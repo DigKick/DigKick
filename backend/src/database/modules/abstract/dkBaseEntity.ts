@@ -4,7 +4,7 @@ import {BaseEntity, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDate
 export class DkBaseEntity extends BaseEntity {
 
   @PrimaryGeneratedColumn("increment")
-  id!: string;
+  id!: number;
 
   @CreateDateColumn()
   createdAt!: Date;
