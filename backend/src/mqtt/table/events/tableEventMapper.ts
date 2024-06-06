@@ -1,12 +1,12 @@
 import type {EventMapper} from "../../abstract/eventMapper";
-import {SoccerTableEventType} from "./soccerTableEventType";
+import {TableEventType} from "./tableEventType.ts";
 import {Table} from "../../../models/table.ts";
 import {GameHandler} from "../../game/handler/gameHandler";
 import {GameEventType} from "../../game/events/gameEvent";
 import {GameRepository} from "../../../database/modules/game/gameRepository.ts";
 
-export class SoccerTableEventMapper
-  implements EventMapper<SoccerTableEventType> {
+export class TableEventMapper
+  implements EventMapper<TableEventType> {
   private _gameHandler: GameHandler;
   private readonly _soccerTable: Table;
 
@@ -15,24 +15,24 @@ export class SoccerTableEventMapper
     this._gameHandler = gameHandler;
   }
 
-  map(event: SoccerTableEventType) {
+  map(event: TableEventType) {
     let triggeredEvents = [event];
 
     switch (event) {
-      case SoccerTableEventType.NEW_GAME:
+      case TableEventType.NEW_GAME:
         this._soccerTable.newGame();
         this._gameHandler.triggerEvent(GameEventType.WHITE_SCORE_CHANGE);
         this._gameHandler.triggerEvent(GameEventType.BLACK_SCORE_CHANGE);
         break;
 
-      case SoccerTableEventType.FINISH_GAME:
+      case TableEventType.FINISH_GAME:
         GameRepository.saveGame(this._soccerTable.game).then()
         this._soccerTable.newGame();
         this._gameHandler.triggerEvent(GameEventType.WHITE_SCORE_CHANGE);
         this._gameHandler.triggerEvent(GameEventType.BLACK_SCORE_CHANGE);
         break;
 
-      case SoccerTableEventType.CANCEL_GAME:
+      case TableEventType.CANCEL_GAME:
         this._soccerTable.newGame();
         this._gameHandler.triggerEvent(GameEventType.WHITE_SCORE_CHANGE);
         this._gameHandler.triggerEvent(GameEventType.BLACK_SCORE_CHANGE);
@@ -42,8 +42,8 @@ export class SoccerTableEventMapper
         break;
     }
 
-    if (event.includes(SoccerTableEventType.GAME)) {
-      triggeredEvents.push(SoccerTableEventType.NEW_GAME);
+    if (event.includes(TableEventType.GAME)) {
+      triggeredEvents.push(TableEventType.NEW_GAME);
     }
 
     return new Set(triggeredEvents);

@@ -1,13 +1,13 @@
 import {Table} from "../../../models/table.ts";
 import {GameHandler} from "../../game/handler/gameHandler";
-import {SoccerTableEventType} from "../events/soccerTableEventType";
+import {TableEventType} from "../events/tableEventType.ts";
 import {AbstractHandler, HandlerType} from "../../abstract/abstractHandler";
 import {HardwareHandler} from "../../hardware/handler/hardwareHandler";
 import {TeamColor} from "../../../models/team";
-import {SoccerTableEventMapper} from "../events/soccerTableEventMapper";
+import {TableEventMapper} from "../events/tableEventMapper.ts";
 
-export class SoccerTableHandler extends AbstractHandler<
-  SoccerTableEventType,
+export class TableHandler extends AbstractHandler<
+  TableEventType,
   Table
 > {
   private readonly _gameHandler: GameHandler;
@@ -19,9 +19,9 @@ export class SoccerTableHandler extends AbstractHandler<
     this._hardwareHandlerWhite = new HardwareHandler(this, TeamColor.WHITE);
     this._hardwareHandlerBlack = new HardwareHandler(this, TeamColor.BLACK);
     this._gameHandler = new GameHandler(this.subject);
-    this._mapper = new SoccerTableEventMapper(soccerTable, this._gameHandler);
+    this._mapper = new TableEventMapper(soccerTable, this._gameHandler);
 
-    this.triggerEvent(SoccerTableEventType.NEW_GAME);
+    this.triggerEvent(TableEventType.NEW_GAME);
   }
 
   get gameHandler() {

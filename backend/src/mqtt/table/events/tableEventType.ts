@@ -1,4 +1,4 @@
-export enum SoccerTableEventType {
+export enum TableEventType {
   GAME = "GAME",
 
   NEW_GAME = `NEW_${GAME}`,

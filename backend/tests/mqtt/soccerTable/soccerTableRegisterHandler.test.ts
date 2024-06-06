@@ -1,12 +1,9 @@
 import {beforeEach, expect, test} from "bun:test";
-import {
-  SoccerTableRegisterHandler,
-  SoccerTableRegisterTopic,
-} from "../../../src/mqtt/soccerTable/handler/soccerTableRegisterHandler.ts";
-import {SoccerTableHandler} from "../../../src/mqtt/soccerTable/handler/soccerTableHandler.ts";
-import type {TableRegisterPayload} from "../../../src/mqtt/soccerTable/payloads/tableRegisterPayload.ts";
+import {SoccerTableRegisterTopic, TableRegisterHandler,} from "../../../src/mqtt/table/handler/tableRegisterHandler.ts";
+import {TableHandler} from "../../../src/mqtt/table/handler/tableHandler.ts";
+import type {TableRegisterPayload} from "../../../src/mqtt/table/payloads/tableRegisterPayload.ts";
 
-let soccerTableRegisterHandler: SoccerTableRegisterHandler;
+let soccerTableRegisterHandler: TableRegisterHandler;
 
 const validTableRegisterPayload: TableRegisterPayload = {
   name: "validId",
@@ -22,10 +19,10 @@ const invalidUndefinedTableRegisterPayload: TableRegisterPayload = {
 };
 
 beforeEach(() => {
-  soccerTableRegisterHandler = new SoccerTableRegisterHandler();
-  SoccerTableRegisterHandler.tableHandlers = new Map<
+  soccerTableRegisterHandler = new TableRegisterHandler();
+  TableRegisterHandler.tableHandlers = new Map<
     string,
-    SoccerTableHandler
+    TableHandler
   >();
 });
 
@@ -36,7 +33,7 @@ test("test valid table id", () => {
   );
 
   expect(
-    Array.from(SoccerTableRegisterHandler.tableHandlers.entries()).length,
+    Array.from(TableRegisterHandler.tableHandlers.entries()).length,
   ).toBe(1);
 });
 
@@ -47,7 +44,7 @@ test("test invalid table id", () => {
   );
 
   expect(
-    Array.from(SoccerTableRegisterHandler.tableHandlers.entries()).length,
+    Array.from(TableRegisterHandler.tableHandlers.entries()).length,
   ).toBe(0);
 });
 
@@ -58,6 +55,6 @@ test("test undefined table id", () => {
   );
 
   expect(
-    Array.from(SoccerTableRegisterHandler.tableHandlers.entries()).length,
+    Array.from(TableRegisterHandler.tableHandlers.entries()).length,
   ).toBe(0);
 });

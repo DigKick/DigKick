@@ -1,22 +1,19 @@
-import { SoccerTableHandler } from "../../soccerTable/handler/soccerTableHandler";
-import { AbstractHandler, HandlerType } from "../../abstract/abstractHandler";
-import { HardwareEventType } from "../events/hardwareEvent";
-import { DkMqttClient } from "../../client/client";
-import { HardwareTopicManager } from "../topics/hardwareTopicManager";
-import type {
-  PinOut,
-  PinStatusPayload,
-} from "../../client/payloads/pinStatusPayload";
-import { BasicTerm } from "../../util/basicTerm";
-import type { TopicSubscriber } from "../../client/topicSubscriber";
-import { HardwareEventMapper } from "../events/hardwareEventMapper";
-import { TeamColor } from "../../../models/team";
+import {TableHandler} from "../../table/handler/tableHandler.ts";
+import {AbstractHandler, HandlerType} from "../../abstract/abstractHandler";
+import {HardwareEventType} from "../events/hardwareEvent";
+import {DkMqttClient} from "../../client/client";
+import {HardwareTopicManager} from "../topics/hardwareTopicManager";
+import type {PinOut, PinStatusPayload,} from "../../client/payloads/pinStatusPayload";
+import {BasicTerm} from "../../util/basicTerm";
+import type {TopicSubscriber} from "../../client/topicSubscriber";
+import {HardwareEventMapper} from "../events/hardwareEventMapper";
+import {TeamColor} from "../../../models/team";
 
 export class HardwareHandler extends AbstractHandler<
   HardwareEventType,
-  SoccerTableHandler
+  TableHandler
 > {
-  private _soccerTableHandler: SoccerTableHandler;
+  private _soccerTableHandler: TableHandler;
   private _hardwareTopicManager: HardwareTopicManager;
   private _dkMqttClient: DkMqttClient;
 
@@ -82,7 +79,7 @@ export class HardwareHandler extends AbstractHandler<
     this.triggerEvent(toTriggerEvent);
   };
 
-  constructor(subject: SoccerTableHandler, teamColor: TeamColor) {
+  constructor(subject: TableHandler, teamColor: TeamColor) {
     super(subject, HandlerType.HARDWARE, subject.subject);
     this._mapper = new HardwareEventMapper(subject, teamColor);
     this._soccerTableHandler = subject;
@@ -115,7 +112,7 @@ export class HardwareHandler extends AbstractHandler<
     if (HardwareEventType[eventTypeString as keyof typeof HardwareEventType]) {
       return HardwareEventType[
         eventTypeString as keyof typeof HardwareEventType
-      ];
+        ];
     } else {
       this._logger.error(`Enum entry for '${eventTypeString}' does not exist.`);
       throw new Error(`Enum entry for '${eventTypeString}' does not exist.`);

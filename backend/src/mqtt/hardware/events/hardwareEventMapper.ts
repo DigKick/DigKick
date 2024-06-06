@@ -1,18 +1,18 @@
 import type {EventMapper} from "../../abstract/eventMapper";
 import {HardwareEventType} from "./hardwareEvent";
-import {SoccerTableHandler} from "../../soccerTable/handler/soccerTableHandler";
+import {TableHandler} from "../../table/handler/tableHandler.ts";
 import {ScoreChange, TeamColor} from "../../../models/team";
 import {DkMqttClient} from "../../client/client";
-import {SoccerTableEventType} from "../../soccerTable/events/soccerTableEventType";
+import {TableEventType} from "../../table/events/tableEventType.ts";
 import {GameEventType} from "../../game/events/gameEvent";
 import {BaseTopicFactory} from "../../util/baseTopicFactory";
 import {LedUpdatePayload} from "../payloads/ledUpdate";
 
 export class HardwareEventMapper implements EventMapper<HardwareEventType> {
-  private _soccerTableHandler: SoccerTableHandler;
+  private _soccerTableHandler: TableHandler;
   private readonly _teamColor: TeamColor;
 
-  constructor(soccerTableHandler: SoccerTableHandler, teamColor: TeamColor) {
+  constructor(soccerTableHandler: TableHandler, teamColor: TeamColor) {
     this._soccerTableHandler = soccerTableHandler;
     this._teamColor = teamColor;
   }
@@ -23,8 +23,8 @@ export class HardwareEventMapper implements EventMapper<HardwareEventType> {
 
     switch (HardwareEventType[event] as HardwareEventType) {
       case HardwareEventType.BUTTON_0_LOW:
-        this._soccerTableHandler.triggerEvent(SoccerTableEventType.FINISH_GAME);
-        this._soccerTableHandler.triggerEvent(SoccerTableEventType.NEW_GAME);
+        this._soccerTableHandler.triggerEvent(TableEventType.FINISH_GAME);
+        this._soccerTableHandler.triggerEvent(TableEventType.NEW_GAME);
         break;
 
       case HardwareEventType.BUTTON_1_LOW:
