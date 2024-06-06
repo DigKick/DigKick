@@ -3,7 +3,6 @@ import {TableEntity} from "../../../../src/database/modules/table/tableEntity.ts
 import {TableParser} from "../../../../src/database/modules/table/tableParser.ts";
 import {Table} from "../../../../src/models/table.ts";
 
-
 function createValidTableEntity() {
   const validTableEntity: TableEntity = new TableEntity()
 
@@ -12,7 +11,7 @@ function createValidTableEntity() {
   return validTableEntity
 }
 
-function createValidTable() {
+export function createValidTable() {
   return new Table("tableForTest")
 }
 
