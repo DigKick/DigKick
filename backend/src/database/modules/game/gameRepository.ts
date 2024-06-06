@@ -5,8 +5,8 @@ import {GameEntity} from "./gameEntity.ts";
 import {GameParser} from "./gameParser.ts";
 
 
-export class GameService {
-  private static logger: Logger = LoggerFactory.getLogger(GameService.name);
+export class GameRepository {
+  private static logger: Logger = LoggerFactory.getLogger(GameRepository.name);
 
   public static async saveGame(game: Game) {
     try {
