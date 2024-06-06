@@ -93,7 +93,7 @@ export class MqttObjectUpdater<ObjectType> {
     let localPath = structuredClone(path);
 
     if (keys.includes("name")) {
-      localPath += "/" + newObj["id"];
+      localPath += "/" + newObj["name"];
     }
 
     keys.forEach((key) => {
