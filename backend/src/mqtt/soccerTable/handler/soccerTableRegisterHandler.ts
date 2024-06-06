@@ -7,6 +7,7 @@ import {LoggerFactory} from "../../../logging/loggerFactory";
 import {Logger} from "winston";
 import type {TableRegisterPayload} from "../payloads/tableRegisterPayload";
 import {RegisteredTableListPayload} from "../payloads/registeredTableListPayload";
+import {TableRepository} from "../../../database/modules/table/tableRepository.ts";
 
 export enum SoccerTableRegisterTopic {
   REGISTER = `/${BasicTerm.TABLE}/register`,
@@ -19,7 +20,7 @@ export class SoccerTableRegisterHandler {
 
   private _dkMqttClient: DkMqttClient;
 
-  public static soccerTableHandlers: Map<string, SoccerTableHandler> = new Map<
+  public static tableHandlers: Map<string, SoccerTableHandler> = new Map<
     string,
     SoccerTableHandler
   >();
@@ -31,31 +32,35 @@ export class SoccerTableRegisterHandler {
         this._logger.error("Table register payload invalid.");
         return;
       }
-      const soccerTableId = payload.name.toLowerCase();
-      if (!this._validateTableId(soccerTableId)) {
+      const tableId = payload.name.toLowerCase();
+      if (!this._validateTableId(tableId)) {
         this._logger.error(
-          `"${soccerTableId}" is not a valid id for a soccer table.`,
+          `"${tableId}" is not a valid id for a soccer table.`,
         );
         return;
       }
 
-      if (!SoccerTableRegisterHandler.soccerTableHandlers.get(soccerTableId)) {
-        SoccerTableRegisterHandler.soccerTableHandlers.set(
-          soccerTableId,
-          new SoccerTableHandler(new Table(soccerTableId)),
+      const table = new Table(tableId)
+
+      if (!SoccerTableRegisterHandler.tableHandlers.get(tableId)) {
+        SoccerTableRegisterHandler.tableHandlers.set(
+          tableId,
+          new SoccerTableHandler(table),
         );
         this._dkMqttClient.publishWithRetain(
           "/tables",
           JSON.stringify(
             new RegisteredTableListPayload(
-              Array.from(SoccerTableRegisterHandler.soccerTableHandlers.keys()),
+              Array.from(SoccerTableRegisterHandler.tableHandlers.keys()),
             ),
           ),
         );
-        this._logger.info("New table registered: " + soccerTableId);
+        this._logger.info("New table registered: " + tableId);
+
+        TableRepository.saveTable(table).then()
       } else {
         this._logger.warn(
-          "Table with id " + soccerTableId + " already registered.",
+          "Table with id " + tableId + " already registered.",
         );
       }
     },

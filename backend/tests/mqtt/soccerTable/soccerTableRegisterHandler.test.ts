@@ -23,7 +23,7 @@ const invalidUndefinedTableRegisterPayload: TableRegisterPayload = {
 
 beforeEach(() => {
   soccerTableRegisterHandler = new SoccerTableRegisterHandler();
-  SoccerTableRegisterHandler.soccerTableHandlers = new Map<
+  SoccerTableRegisterHandler.tableHandlers = new Map<
     string,
     SoccerTableHandler
   >();
@@ -36,7 +36,7 @@ test("test valid table id", () => {
   );
 
   expect(
-    Array.from(SoccerTableRegisterHandler.soccerTableHandlers.entries()).length,
+    Array.from(SoccerTableRegisterHandler.tableHandlers.entries()).length,
   ).toBe(1);
 });
 
@@ -47,7 +47,7 @@ test("test invalid table id", () => {
   );
 
   expect(
-    Array.from(SoccerTableRegisterHandler.soccerTableHandlers.entries()).length,
+    Array.from(SoccerTableRegisterHandler.tableHandlers.entries()).length,
   ).toBe(0);
 });
 
@@ -58,6 +58,6 @@ test("test undefined table id", () => {
   );
 
   expect(
-    Array.from(SoccerTableRegisterHandler.soccerTableHandlers.entries()).length,
+    Array.from(SoccerTableRegisterHandler.tableHandlers.entries()).length,
   ).toBe(0);
 });
