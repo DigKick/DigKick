@@ -6,18 +6,18 @@ import {DkBaseEntity} from "../abstract/dkBaseEntity.ts";
 @Entity("game")
 export class GameEntity extends DkBaseEntity {
 
-  @ManyToOne(() => TableEntity, {cascade: false})
+  @ManyToOne(() => TableEntity, {cascade: false, eager: true})
   @JoinColumn()
   table!: TableEntity;
 
   @Column()
   gameMode!: string;
 
-  @OneToOne(() => TeamEntity, {onDelete: "CASCADE", cascade: true})
+  @OneToOne(() => TeamEntity, {onDelete: "CASCADE", cascade: true, eager: true})
   @JoinColumn()
   teamWhite!: TeamEntity;
 
-  @OneToOne(() => TeamEntity, {onDelete: "CASCADE", cascade: true})
+  @OneToOne(() => TeamEntity, {onDelete: "CASCADE", cascade: true, eager: true})
   @JoinColumn()
   teamBlack!: TeamEntity;
 
