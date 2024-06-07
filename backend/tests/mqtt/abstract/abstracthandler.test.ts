@@ -1,5 +1,5 @@
 import {beforeEach, expect, mock, test} from "bun:test";
-import {AbstractHandler, HandlerType,} from "../../../src/mqtt/abstract/abstractHandler.ts";
+import {DkModelHandler, HandlerType,} from "../../../src/mqtt/abstract/dkModelHandler.ts";
 import {Table} from "../../../src/models/table.ts";
 import type {EventMapper} from "../../../src/mqtt/abstract/eventMapper.ts";
 
@@ -46,7 +46,7 @@ class TestClass {
   }
 }
 
-class TestHandler extends AbstractHandler<TestEvent, TestClass> {
+class TestHandler extends DkModelHandler<TestEvent, TestClass> {
   constructor(testObj: TestClass) {
     super(testObj, HandlerType.ABSTRACT, new Table("TEST"));
     this._mapper = new TestEventMapper(testObj);

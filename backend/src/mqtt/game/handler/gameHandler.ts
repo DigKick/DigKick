@@ -1,10 +1,10 @@
 import {GameEventType} from "../events/gameEvent";
 import {Table} from "../../../models/table.ts";
-import {AbstractHandler, HandlerType} from "../../abstract/abstractHandler";
+import {DkModelHandler, HandlerType} from "../../abstract/dkModelHandler.ts";
 import {Game} from "../../../models/game";
 import {GameEventMapper} from "../events/gameEventMapper";
 
-export class GameHandler extends AbstractHandler<GameEventType, Game> {
+export class GameHandler extends DkModelHandler<GameEventType, Game> {
   public observerMap: Map<GameEventType, Function> = new Map();
   public soccerTable: Table;
 

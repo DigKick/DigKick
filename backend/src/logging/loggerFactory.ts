@@ -1,5 +1,5 @@
-import winston, { addColors, transports } from "winston";
-import { HandlerType } from "../mqtt/abstract/abstractHandler";
+import winston, {addColors, transports} from "winston";
+import {HandlerType} from "../mqtt/abstract/dkModelHandler.ts";
 
 addColors({
   info: "bold blue", // fontStyle color
@@ -71,12 +71,12 @@ export class LoggerFactory {
   static printLogo() {
     console.log(
       "\n\n" +
-        "\t██████╗ ██╗ ██████╗ ██╗  ██╗██╗ ██████╗██╗  ██╗\n" +
-        "\t██╔══██╗██║██╔════╝ ██║ ██╔╝██║██╔════╝██║ ██╔╝\n" +
-        "\t██║  ██║██║██║  ███╗█████╔╝ ██║██║     █████╔╝ \n" +
-        "\t██║  ██║██║██║   ██║██╔═██╗ ██║██║     ██╔═██╗ \n" +
-        "\t██████╔╝██║╚██████╔╝██║  ██╗██║╚██████╗██║  ██╗\n" +
-        "\t╚═════╝ ╚═╝ ╚═════╝ ╚═╝  ╚═╝╚═╝ ╚═════╝╚═╝  ╚═╝\n\n",
+      "\t██████╗ ██╗ ██████╗ ██╗  ██╗██╗ ██████╗██╗  ██╗\n" +
+      "\t██╔══██╗██║██╔════╝ ██║ ██╔╝██║██╔════╝██║ ██╔╝\n" +
+      "\t██║  ██║██║██║  ███╗█████╔╝ ██║██║     █████╔╝ \n" +
+      "\t██║  ██║██║██║   ██║██╔═██╗ ██║██║     ██╔═██╗ \n" +
+      "\t██████╔╝██║╚██████╔╝██║  ██╗██║╚██████╗██║  ██╗\n" +
+      "\t╚═════╝ ╚═╝ ╚═════╝ ╚═╝  ╚═╝╚═╝ ╚═════╝╚═╝  ╚═╝\n\n",
     );
   }
 }

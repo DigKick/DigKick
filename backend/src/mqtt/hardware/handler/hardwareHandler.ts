@@ -1,5 +1,5 @@
 import {TableHandler} from "../../table/handler/tableHandler.ts";
-import {AbstractHandler, HandlerType} from "../../abstract/abstractHandler";
+import {DkModelHandler, HandlerType} from "../../abstract/dkModelHandler.ts";
 import {HardwareEventType} from "../events/hardwareEvent";
 import {DkMqttClient} from "../../client/client";
 import {HardwareTopicManager} from "../topics/hardwareTopicManager";
@@ -9,7 +9,7 @@ import type {TopicSubscriber} from "../../client/topicSubscriber";
 import {HardwareEventMapper} from "../events/hardwareEventMapper";
 import {TeamColor} from "../../../models/team";
 
-export class HardwareHandler extends AbstractHandler<
+export class HardwareHandler extends DkModelHandler<
   HardwareEventType,
   TableHandler
 > {
