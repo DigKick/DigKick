@@ -103,8 +103,9 @@ export class TableRegisterHandler {
       tables.forEach(table => {
         this._registerTable(table.name)
       })
+    }).finally(() => {
+      this.publishRegisteredTables()
     })
-    this.publishRegisteredTables()
   }
 
   private _validateTableName(tableId: string): boolean {
