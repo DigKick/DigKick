@@ -4,7 +4,7 @@ import {TableHandler} from "../../../src/mqtt/table/handler/tableHandler.ts";
 import {TeamColor} from "../../../src/models/team.ts";
 import {expect, test} from "bun:test";
 import {BasicTerm} from "../../../src/mqtt/util/basicTerm.ts";
-import {PinOut} from "../../../src/mqtt/client/payloads/pinStatusPayload.ts";
+import {PinOut} from "../../../src/mqtt/hardware/payloads/pinStatusPayload.ts";
 
 const hardwareHandler = new HardwareHandler(
   new TableHandler(new Table("table")),
