@@ -14,6 +14,8 @@ export class TableRepository {
       const tableEntity = TableParser.toTableEntity(table)
 
       await TableEntity.save(tableEntity)
+
+      return table
     } catch (e) {
       if (e instanceof QueryFailedError) {
         if (e.message.includes("SQLITE_CONSTRAINT: UNIQUE")) {
@@ -23,6 +25,14 @@ export class TableRepository {
       }
       this.logger.error(`Could not save or parse table: ${e}`)
     }
+  }
+
+  public static async getAllTables(): Promise<Table[]> {
+    const allTableEntities = await TableEntity.find()
+
+    return allTableEntities.map((tableEntity: TableEntity) => {
+      return TableParser.toTable(tableEntity)
+    })
   }
 
 }
