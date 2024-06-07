@@ -14,6 +14,15 @@ export enum SoccerTableRegisterTopic {
 }
 
 export class TableRegisterHandler {
+  private static instance: TableRegisterHandler
+
+  public static getInstance(): TableRegisterHandler {
+    if (!TableRegisterHandler.instance) {
+      TableRegisterHandler.instance = new TableRegisterHandler();
+    }
+    return this.instance
+  }
+
   private _logger: Logger = LoggerFactory.getLogger(
     TableRegisterHandler.name,
   );
@@ -28,7 +37,7 @@ export class TableRegisterHandler {
   registerSubscriber: TopicSubscriber = {
     topic: SoccerTableRegisterTopic.REGISTER,
     func: (_: any, payload: TableRegisterPayload) => {
-      if (!this._checkIfTableRegisterPayloadIsValid(payload)) {
+      if (!TableRegisterHandler._checkIfTableRegisterPayloadIsValid(payload)) {
         this._logger.warn("Table register payload invalid.");
         return;
       }
@@ -42,15 +51,36 @@ export class TableRegisterHandler {
         return;
       }
 
-      this._registerTable(tableName);
+      const registeredTable = this._registerTable(tableName)
+      if (registeredTable) {
+        TableRepository.saveTable(registeredTable).then()
+        this.publishRegisteredTables();
+      }
     },
   };
 
-  private _checkIfTableRegisterPayloadIsValid(payload: TableRegisterPayload) {
+  private constructor() {
+    this._dkMqttClient = DkMqttClient.getInstance();
+    this._dkMqttClient.subscribeOnTopic(this.registerSubscriber);
+    this._registerTablesFromDb();
+  }
+
+  private publishRegisteredTables() {
+    this._dkMqttClient.publishWithRetain(
+      "/tables",
+      JSON.stringify(
+        new RegisteredTableListPayload(
+          Array.from(TableRegisterHandler.tableHandlers.keys()),
+        ),
+      ),
+    );
+  }
+
+  private static _checkIfTableRegisterPayloadIsValid(payload: TableRegisterPayload) {
     return payload && payload.name;
   }
 
-  private _registerTable(tableName: string) {
+  private _registerTable(tableName: string): Table | undefined {
     const table = new Table(tableName)
 
     if (!TableRegisterHandler.tableHandlers.get(tableName)) {
@@ -58,27 +88,23 @@ export class TableRegisterHandler {
         tableName,
         new TableHandler(new Table(tableName)),
       );
-      this._dkMqttClient.publishWithRetain(
-        "/tables",
-        JSON.stringify(
-          new RegisteredTableListPayload(
-            Array.from(TableRegisterHandler.tableHandlers.keys()),
-          ),
-        ),
-      );
       this._logger.info("New table registered: " + tableName);
 
-      TableRepository.saveTable(table).then()
-    } else {
-      this._logger.warn(
-        "Table with id " + tableName + " already registered.",
-      );
+      return table
     }
+    this._logger.warn(
+      "Table with id " + tableName + " already registered.",
+    );
+    return
   }
 
-  constructor() {
-    this._dkMqttClient = DkMqttClient.getInstance();
-    this._dkMqttClient.subscribeOnTopic(this.registerSubscriber);
+  private _registerTablesFromDb() {
+    TableRepository.getAllTables().then(tables => {
+      tables.forEach(table => {
+        this._registerTable(table.name)
+      })
+    })
+    this.publishRegisteredTables()
   }
 
   private _validateTableName(tableId: string): boolean {
