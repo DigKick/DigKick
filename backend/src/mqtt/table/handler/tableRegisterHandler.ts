@@ -28,43 +28,53 @@ export class TableRegisterHandler {
   registerSubscriber: TopicSubscriber = {
     topic: SoccerTableRegisterTopic.REGISTER,
     func: (_: any, payload: TableRegisterPayload) => {
-      if (!payload || !payload.name) {
-        this._logger.error("Table register payload invalid.");
+      if (!this._checkIfTableRegisterPayloadIsValid(payload)) {
+        this._logger.warn("Table register payload invalid.");
         return;
       }
+
       const tableName = payload.name.toLowerCase();
+
       if (!this._validateTableName(tableName)) {
         this._logger.error(
-          `"${tableName}" is not a valid id for a soccer table.`,
+          `"${tableName}" is not a valid name for a table.`,
         );
         return;
       }
 
-      const table = new Table(tableName)
-
-      if (!TableRegisterHandler.tableHandlers.get(tableName)) {
-        TableRegisterHandler.tableHandlers.set(
-          tableName,
-          new TableHandler(new Table(tableName)),
-        );
-        this._dkMqttClient.publishWithRetain(
-          "/tables",
-          JSON.stringify(
-            new RegisteredTableListPayload(
-              Array.from(TableRegisterHandler.tableHandlers.keys()),
-            ),
-          ),
-        );
-        this._logger.info("New table registered: " + tableName);
-
-        TableRepository.saveTable(table).then()
-      } else {
-        this._logger.warn(
-          "Table with id " + tableName + " already registered.",
-        );
-      }
+      this._registerTable(tableName);
     },
   };
+
+  private _checkIfTableRegisterPayloadIsValid(payload: TableRegisterPayload) {
+    return payload && payload.name;
+  }
+
+  private _registerTable(tableName: string) {
+    const table = new Table(tableName)
+
+    if (!TableRegisterHandler.tableHandlers.get(tableName)) {
+      TableRegisterHandler.tableHandlers.set(
+        tableName,
+        new TableHandler(new Table(tableName)),
+      );
+      this._dkMqttClient.publishWithRetain(
+        "/tables",
+        JSON.stringify(
+          new RegisteredTableListPayload(
+            Array.from(TableRegisterHandler.tableHandlers.keys()),
+          ),
+        ),
+      );
+      this._logger.info("New table registered: " + tableName);
+
+      TableRepository.saveTable(table).then()
+    } else {
+      this._logger.warn(
+        "Table with id " + tableName + " already registered.",
+      );
+    }
+  }
 
   constructor() {
     this._dkMqttClient = DkMqttClient.getInstance();
