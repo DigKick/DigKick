@@ -3,7 +3,7 @@ import {AbstractHandler, HandlerType} from "../../abstract/abstractHandler";
 import {HardwareEventType} from "../events/hardwareEvent";
 import {DkMqttClient} from "../../client/client";
 import {HardwareTopicManager} from "../topics/hardwareTopicManager";
-import type {PinOut, PinStatusPayload,} from "../../client/payloads/pinStatusPayload";
+import type {PinOut, PinStatusPayload,} from "../payloads/pinStatusPayload.ts";
 import {BasicTerm} from "../../util/basicTerm";
 import type {TopicSubscriber} from "../../client/topicSubscriber";
 import {HardwareEventMapper} from "../events/hardwareEventMapper";
