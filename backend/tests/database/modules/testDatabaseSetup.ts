@@ -6,7 +6,7 @@ import {TeamEntity} from "../../../src/database/modules/team/teamEntity.ts";
 let dataSource: DataSource;
 
 export async function createNewTestDatabase() {
-  const dataSource = new DataSource({
+  dataSource = new DataSource({
     type: "sqlite",
     database: `:memory:`,
     entities: [GameEntity, TableEntity, TeamEntity],

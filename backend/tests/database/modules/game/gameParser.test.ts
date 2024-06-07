@@ -26,7 +26,7 @@ function createInvalidGameEntity() {
   return invalidGameEntity
 }
 
-function createValidGame() {
+export function createValidGame() {
   return new Game();
 }
 

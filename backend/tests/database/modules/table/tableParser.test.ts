@@ -15,6 +15,10 @@ export function createValidTable() {
   return new Table("tableForTest")
 }
 
+export function createSecondValidTable() {
+  return new Table("secondTableForTest")
+}
+
 
 test("valid parse TableEntity to Table: name field", () => {
   const parsedTable: Table = TableParser.toTable(createValidTableEntity())
