@@ -14,7 +14,7 @@ export class GameDataPublisher extends DataPublisher {
         return
       }
 
-      DkMqttClient.getInstance().publishWithRetain(GameDataPublishTopics.RECENT, Obj2StringParser.arrayToString(games) || "[]")
+      DkMqttClient.getInstance().publishWithRetain(GameDataPublishTopics.RECENT, Obj2StringParser.objectToString(games) || "[]")
     })
   }
 }
