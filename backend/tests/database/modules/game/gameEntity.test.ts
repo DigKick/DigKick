@@ -44,7 +44,6 @@ test('save multiple games on different to database: table names', async () => {
   await GameRepository.saveGame(createValidGame(), createSecondValidTable())
 
   const gamesInDb = await GameEntity.find()
-  console.log(gamesInDb)
   expect(gamesInDb[0].table.name).toBe(createValidTable().name)
   expect(gamesInDb[1].table.name).toBe(createSecondValidTable().name)
 })
