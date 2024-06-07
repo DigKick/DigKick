@@ -59,25 +59,25 @@ const matchingTopicsWithHashtagWildcards: [string, string][] = [
   ],
 ];
 
-test("test valid topic matcher - topics with out wildcards", () => {
+test("valid topic matcher - topics with out wildcards", () => {
   matchingTopicsWithoutWildcards.forEach((topicPair) => {
     expect(dkMqttClient.matchTopic(topicPair[0], topicPair[1])).toBeTrue();
   });
 });
 
-test("test invalid topic matcher - topics with out wildcards", () => {
+test("invalid topic matcher - topics with out wildcards", () => {
   nonMatchingTopicsWithoutWildcards.forEach((topicPair) => {
     expect(dkMqttClient.matchTopic(topicPair[0], topicPair[1])).toBeFalse();
   });
 });
 
-test("test invalid topic matcher - topics with + wildcard", () => {
+test("invalid topic matcher - topics with + wildcard", () => {
   matchingTopicsWithPlusWildcards.forEach((topicPair) => {
     expect(dkMqttClient.matchTopic(topicPair[0], topicPair[1])).toBeTrue();
   });
 });
 
-test("test invalid topic matcher - topics with # wildcard", () => {
+test("invalid topic matcher - topics with # wildcard", () => {
   matchingTopicsWithHashtagWildcards.forEach((topicPair) => {
     expect(dkMqttClient.matchTopic(topicPair[0], topicPair[1])).toBeTrue();
   });
