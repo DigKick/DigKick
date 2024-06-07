@@ -1,10 +1,10 @@
 import {Column, Entity, JoinColumn, ManyToOne, OneToOne} from "typeorm";
 import {TeamEntity} from "../team/teamEntity.ts";
 import {TableEntity} from "../table/tableEntity.ts";
-import {DkBaseEntity} from "../abstract/dkBaseEntity.ts";
+import {DkEntity} from "../abstract/dkEntity.ts";
 
 @Entity("game")
-export class GameEntity extends DkBaseEntity {
+export class GameEntity extends DkEntity {
 
   @ManyToOne(() => TableEntity, {cascade: false, eager: true})
   @JoinColumn()

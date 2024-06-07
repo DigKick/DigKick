@@ -1,7 +1,7 @@
 import {BaseEntity, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn} from "typeorm"
 
 @Entity()
-export class DkBaseEntity extends BaseEntity {
+export class DkEntity extends BaseEntity {
 
   @PrimaryGeneratedColumn("increment")
   id!: number;

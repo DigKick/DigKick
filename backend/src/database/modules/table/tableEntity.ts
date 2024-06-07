@@ -1,8 +1,8 @@
 import {Column, Entity} from "typeorm";
-import {DkBaseEntity} from "../abstract/dkBaseEntity.ts";
+import {DkEntity} from "../abstract/dkEntity.ts";
 
 @Entity("table")
-export class TableEntity extends DkBaseEntity {
+export class TableEntity extends DkEntity {
 
   @Column({unique: true})
   name!: string;

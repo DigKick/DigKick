@@ -1,8 +1,8 @@
 import {Column, Entity} from "typeorm";
-import {DkBaseEntity} from "../abstract/dkBaseEntity.ts";
+import {DkEntity} from "../abstract/dkEntity.ts";
 
 @Entity("team")
-export class TeamEntity extends DkBaseEntity {
+export class TeamEntity extends DkEntity {
 
   @Column()
   color!: string;
