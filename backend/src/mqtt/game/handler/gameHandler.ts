@@ -1,6 +1,6 @@
 import {GameEventType} from "../events/gameEvent";
 import {Table} from "../../../models/table.ts";
-import {DkModelHandler, HandlerType} from "../../abstract/dkModelHandler.ts";
+import {DkModelHandler, HandlerType} from "../../global/dkModelHandler.ts";
 import {Game} from "../../../models/game";
 import {GameEventMapper} from "../events/gameEventMapper";
 

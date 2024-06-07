@@ -1,4 +1,4 @@
-import type {EventMapper} from "../../abstract/eventMapper";
+import type {EventMapper} from "../../global/eventMapper";
 import {GameEventType} from "./gameEvent";
 import {Game} from "../../../models/game";
 import {ScoreChange, TeamColor} from "../../../models/team";

@@ -1,5 +1,5 @@
 import winston, {addColors, transports} from "winston";
-import {HandlerType} from "../mqtt/abstract/dkModelHandler.ts";
+import {HandlerType} from "../mqtt/global/dkModelHandler.ts";
 
 addColors({
   info: "bold blue", // fontStyle color

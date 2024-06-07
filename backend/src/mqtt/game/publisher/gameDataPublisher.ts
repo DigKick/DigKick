@@ -1,6 +1,6 @@
 import {DkMqttClient} from "../../client/client.ts";
 import {GameDataPublishTopics} from "../topics/gameDataPublishTopics.ts";
-import {DataPublisher} from "../../abstract/dataPublisher.ts";
+import {DataPublisher} from "../../global/publishing/dataPublisher.ts";
 import {Obj2StringParser} from "../../util/obj2stringParser.ts";
 import {GameEntity} from "../../../database/modules/game/gameEntity.ts";
 

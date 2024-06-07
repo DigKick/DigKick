@@ -1,7 +1,7 @@
 import {Table} from "../../../models/table.ts";
 import {GameHandler} from "../../game/handler/gameHandler";
 import {TableEventType} from "../events/tableEventType.ts";
-import {DkModelHandler, HandlerType} from "../../abstract/dkModelHandler.ts";
+import {DkModelHandler, HandlerType} from "../../global/dkModelHandler.ts";
 import {HardwareHandler} from "../../hardware/handler/hardwareHandler";
 import {TeamColor} from "../../../models/team";
 import {TableEventMapper} from "../events/tableEventMapper.ts";

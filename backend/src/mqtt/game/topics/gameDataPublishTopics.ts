@@ -1,4 +1,4 @@
-import {DataPublishTopic} from "../../abstract/dataPublishTopic.ts";
+import {DataPublishTopic} from "../../global/publishing/dataPublishTopic.ts";
 import {BasicTerm} from "../../util/basicTerm.ts";
 
 export enum GameDataPublishTopics {

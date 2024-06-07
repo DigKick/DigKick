@@ -1,4 +1,4 @@
-import type {EventMapper} from "../../abstract/eventMapper";
+import type {EventMapper} from "../../global/eventMapper";
 import {HardwareEventType} from "./hardwareEvent";
 import {TableHandler} from "../../table/handler/tableHandler.ts";
 import {ScoreChange, TeamColor} from "../../../models/team";

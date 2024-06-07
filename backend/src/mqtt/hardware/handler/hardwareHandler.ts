@@ -1,5 +1,5 @@
 import {TableHandler} from "../../table/handler/tableHandler.ts";
-import {DkModelHandler, HandlerType} from "../../abstract/dkModelHandler.ts";
+import {DkModelHandler, HandlerType} from "../../global/dkModelHandler.ts";
 import {HardwareEventType} from "../events/hardwareEvent";
 import {DkMqttClient} from "../../client/client";
 import {HardwareTopicManager} from "../topics/hardwareTopicManager";
