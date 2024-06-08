@@ -4,5 +4,5 @@ export enum DataPublishTopic {
   ID = 'id',
   REQUEST = 'request',
 
-  REQUEST_TOPIC = `${DataPublishTopic.BASE}/+/${DataPublishTopic.REQUEST}`,
+  REQUEST_TOPIC = `/${DataPublishTopic.BASE}/+/${DataPublishTopic.REQUEST}`,
 }
