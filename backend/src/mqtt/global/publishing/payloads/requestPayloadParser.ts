@@ -14,25 +14,26 @@ export class RequestPayloadParser {
       throw new RequestPayloadParseException("Payload has no type.")
     }
 
-    if (!Object.values(RequestPayloadType).includes(payload.type)) {
+    if (!Object.values(RequestPayloadType).map(value => value.toLowerCase())
+      .includes(payload.type.toString().toLowerCase())) {
       throw new RequestPayloadParseException(`Payload type has no valid type: ${payload.type}`)
     }
 
-    switch (payload.type) {
-      case RequestPayloadType.BY_ID:
+    switch (payload.type.toString().toLowerCase()) {
+      case RequestPayloadType.BY_ID.toLowerCase():
         if (this._isExactRequestPayloadById(payload)) {
           return payload as RequestPayloadById;
         }
         throw new RequestPayloadParseException(`Payload could not be parsed to type: ${payload.type}`)
 
-      case RequestPayloadType.BY_RECENT:
+      case RequestPayloadType.BY_RECENT.toLowerCase():
         if (this._isExactRequestPayloadByRecent(payload)) {
           return payload as RequestPayloadByRecent;
         }
         throw new RequestPayloadParseException(`Payload could not be parsed to type: ${payload.type}`)
 
 
-      case RequestPayloadType.BY_TIME:
+      case RequestPayloadType.BY_TIME.toLowerCase():
         if (this._isExactRequestPayloadByTimeSpan(payload)) {
           return payload as RequestPayloadByTimeSpan;
         }
@@ -47,14 +48,14 @@ export class RequestPayloadParser {
   private static _isExactRequestPayloadById(payload: any): payload is RequestPayloadById {
     return payload &&
       typeof payload.id === 'number' &&
-      payload.type === RequestPayloadType.BY_ID &&
+      String(payload.type).toLowerCase() === RequestPayloadType.BY_ID.toLowerCase() &&
       this._arraysEqual(Object.keys(payload), ["type", "id"]);
   }
 
   private static _isExactRequestPayloadByRecent(payload: any): payload is RequestPayloadByRecent {
     return payload &&
       typeof payload.amount === 'number' &&
-      payload.type === RequestPayloadType.BY_RECENT &&
+      String(payload.type).toLowerCase() === RequestPayloadType.BY_RECENT.toLowerCase() &&
       this._arraysEqual(Object.keys(payload), ["type", "amount"]);
   }
 
@@ -62,7 +63,7 @@ export class RequestPayloadParser {
     return payload &&
       typeof payload.from === 'object' &&
       typeof payload.to === 'object' &&
-      payload.type === RequestPayloadType.BY_TIME &&
+      String(payload.type).toLowerCase() === RequestPayloadType.BY_TIME.toLowerCase() &&
       this._arraysEqual(Object.keys(payload), ["type", "from", "to"]);
   }
 
