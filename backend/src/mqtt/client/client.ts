@@ -4,6 +4,7 @@ import type {TopicSubscriber} from "./topicSubscriber";
 import {Logger} from "winston";
 import {LoggerFactory} from "../../logging/loggerFactory";
 import {TableRegisterHandler} from "../table/handler/tableRegisterHandler.ts";
+import {DataRequestHandler} from "../global/publishing/dataRequestHandler.ts";
 
 export class DkMqttClient {
   private _logger: Logger = LoggerFactory.getLogger(DkMqttClient.name);
@@ -45,6 +46,7 @@ export class DkMqttClient {
     this._mqttClient.on("connect", () => {
       this._logger.info("Connected to Broker.");
       TableRegisterHandler.getInstance()
+      DataRequestHandler.getInstance()
     });
 
     this._mqttClient.on("end", () => {
