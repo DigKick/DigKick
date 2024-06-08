@@ -1,14 +1,19 @@
-export abstract class DataPublisher {
+import type {RequestPayload} from "./payloads/requestPayload.ts";
+
+export class DataPublisher {
 
   protected static recentItemCount = 10;
 
-  public static publishRecent() {
+  public publishRecent(amount: number) {
   }
 
-  public static publishById(id: number) {
+  public publishById(id: number) {
   }
 
-  public static publishRequested() {
+  public publishRequested(request: RequestPayload) {
+  }
+
+  public publishByTimeSpan(from: Date, to: Date) {
   }
 
 }
