@@ -13,6 +13,7 @@ import {
 import {RequestPayloadParser} from "./payloads/requestPayloadParser.ts";
 import {TopicTool} from "../../util/topicTool.ts";
 import {DkMqttClient} from "../../client/client.ts";
+import {GameDataPublisher} from "../../game/publisher/gameDataPublisher.ts";
 
 export class DataRequestHandler {
   private static _logger = LoggerFactory.getLogger(DataRequestHandler.name)
@@ -36,6 +37,8 @@ export class DataRequestHandler {
   private constructor() {
     this._dkMqttClient = DkMqttClient.getInstance();
     this._dkMqttClient.subscribeOnTopic(DataRequestHandler.requestSubscriber);
+
+    this.registerDataPublisher(BasicTerm.GAME, GameDataPublisher.getInstance())
   }
 
   public registerDataPublisher(type: BasicTerm, publisher: DataPublisher) {
