@@ -12,11 +12,13 @@ import {
 } from "./payloads/requestPayload.ts";
 import {RequestPayloadParser} from "./payloads/requestPayloadParser.ts";
 import {TopicTool} from "../../util/topicTool.ts";
+import {DkMqttClient} from "../../client/client.ts";
 
 export class DataRequestHandler {
   private static _logger = LoggerFactory.getLogger(DataRequestHandler.name)
+  private _dkMqttClient: DkMqttClient
 
-  private static instance: DataRequestHandler = DataRequestHandler.getInstance();
+  private static instance: DataRequestHandler;
 
   private static dataPublisher: Map<BasicTerm, DataPublisher> = new Map();
   private static requestSubscriber: TopicSubscriber = {
@@ -32,24 +34,26 @@ export class DataRequestHandler {
   }
 
   private constructor() {
+    this._dkMqttClient = DkMqttClient.getInstance();
+    this._dkMqttClient.subscribeOnTopic(DataRequestHandler.requestSubscriber);
   }
 
-  public static registerDataPublisher(type: BasicTerm, publisher: DataPublisher) {
-    if (this.dataPublisher.get(type)) {
-      this._logger.warn(`DataPublisher for '${type}' already registered.`);
+  public registerDataPublisher(type: BasicTerm, publisher: DataPublisher) {
+    if (DataRequestHandler.dataPublisher.get(type)) {
+      DataRequestHandler._logger.warn(`DataPublisher for '${type}' already registered.`);
       return
     }
-    this.dataPublisher.set(type, publisher);
-    this._logger.debug(`DataPublisher for '${type}' registered.`)
+    DataRequestHandler.dataPublisher.set(type, publisher);
+    DataRequestHandler._logger.debug(`DataPublisher for '${type}' registered.`)
   }
 
   private static handleRequest(topic: string, payload: RequestPayload) {
-    let parsedPayload;
+    let parsedPayload = JSON.parse(JSON.stringify(payload));
 
     try {
       parsedPayload = RequestPayloadParser.parseRequestPayload(payload);
     } catch (error) {
-      this._logger.warn(`Could not parse payload: ${payload}`)
+      this._logger.warn(`Could not parse payload: ${JSON.stringify(payload)}: ${error}`)
       return
     }
 
@@ -65,18 +69,18 @@ export class DataRequestHandler {
   }
 
   private static _publishRequestPayload(parsedPayload: any, matchingPublisher: DataPublisher) {
-    switch (parsedPayload.type) {
-      case RequestPayloadType.BY_ID:
+    switch (parsedPayload.type.toString().toLowerCase()) {
+      case RequestPayloadType.BY_ID.toLowerCase():
         parsedPayload = parsedPayload as RequestPayloadById
         matchingPublisher.publishById(parsedPayload.id)
         break
 
-      case RequestPayloadType.BY_RECENT:
+      case RequestPayloadType.BY_RECENT.toLowerCase():
         parsedPayload = parsedPayload as RequestPayloadByRecent
         matchingPublisher.publishRecent(parsedPayload.amount)
         break
 
-      case RequestPayloadType.BY_TIME:
+      case RequestPayloadType.BY_TIME.toLowerCase():
         parsedPayload = parsedPayload as RequestPayloadByTimeSpan
         matchingPublisher.publishByTimeSpan(parsedPayload.from, parsedPayload.to)
         break
