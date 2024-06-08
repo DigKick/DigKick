@@ -1,6 +1,8 @@
 export enum DataPublishTopic {
-  BASE = 'data',
+  BASE = 'api',
   RECENT = 'recent',
   ID = 'id',
-  REQUESTED = 'requested'
+  REQUEST = 'request',
+
+  REQUEST_TOPIC = `${DataPublishTopic.BASE}/+/${DataPublishTopic.REQUEST}`,
 }
