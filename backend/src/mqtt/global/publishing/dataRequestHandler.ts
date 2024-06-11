@@ -75,17 +75,17 @@ export class DataRequestHandler {
     switch (parsedPayload.type.toString().toLowerCase()) {
       case RequestPayloadType.BY_ID.toLowerCase():
         parsedPayload = parsedPayload as RequestPayloadById
-        matchingPublisher.publishById(parsedPayload.id)
+        matchingPublisher.publishById(parsedPayload.id).then()
         break
 
       case RequestPayloadType.BY_RECENT.toLowerCase():
         parsedPayload = parsedPayload as RequestPayloadByRecent
-        matchingPublisher.publishRecent(parsedPayload.amount)
+        matchingPublisher.publishRecent(parsedPayload.amount).then()
         break
 
       case RequestPayloadType.BY_TIME.toLowerCase():
         parsedPayload = parsedPayload as RequestPayloadByTimeSpan
-        matchingPublisher.publishByTimeSpan(parsedPayload.from, parsedPayload.to)
+        matchingPublisher.publishByTimeSpan(parsedPayload.from, parsedPayload.to).then()
         break
 
       default:
