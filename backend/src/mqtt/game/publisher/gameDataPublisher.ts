@@ -3,6 +3,7 @@ import {GameDataPublishTopics} from "../topics/gameDataPublishTopics.ts";
 import {DataPublisher} from "../../global/publishing/dataPublisher.ts";
 import {Obj2StringParser} from "../../util/obj2stringParser.ts";
 import {GameEntity} from "../../../database/modules/game/gameEntity.ts";
+import {Between} from "typeorm";
 
 export class GameDataPublisher extends DataPublisher {
 
@@ -20,9 +21,9 @@ export class GameDataPublisher extends DataPublisher {
   }
 
   public async publishRecent() {
-    const games = GameEntity.find({take: GameDataPublisher.recentItemCount})
+    const gamePromises = GameEntity.find({take: GameDataPublisher.recentItemCount})
 
-    games.then(games => {
+    gamePromises.then(games => {
       if (games.length === 0) {
         return
       }
@@ -32,13 +33,30 @@ export class GameDataPublisher extends DataPublisher {
   }
 
   public async publishById(id: number) {
-    const game = await GameEntity.findOneBy({id: id})
+    const gameEntity = await GameEntity.findOneBy({id: id})
 
-    if (!game) {
+    if (!gameEntity) {
       DkMqttClient.getInstance().publish(GameDataPublishTopics.BASE + "/" + id, "{}")
       return
     }
 
-    DkMqttClient.getInstance().publish(GameDataPublishTopics.BASE + "/" + id, JSON.stringify(game))
+    DkMqttClient.getInstance().publish(GameDataPublishTopics.BASE + "/" + id, JSON.stringify(gameEntity))
+  }
+
+  public async publishByTimeSpan(from: Date, to: Date) {
+    const gameEntities = await GameEntity.find({
+      where: {
+        createdAt: Between(from, to)
+      }
+    })
+
+    if (!gameEntities) {
+      DkMqttClient.getInstance().publish(GameDataPublishTopics.BASE + "/" + from.toDateString() + "/"
+        + to.toDateString(), "{}")
+      return
+    }
+
+    DkMqttClient.getInstance().publish(GameDataPublishTopics.BASE + "/"
+      + from.toDateString() + "/" + to.toDateString(), JSON.stringify(gameEntities));
   }
 }
