@@ -1,4 +1,4 @@
-import type {EventMapper} from "../../abstract/eventMapper";
+import type {EventMapper} from "../../global/eventMapper";
 import {TableEventType} from "./tableEventType.ts";
 import {Table} from "../../../models/table.ts";
 import {GameHandler} from "../../game/handler/gameHandler";

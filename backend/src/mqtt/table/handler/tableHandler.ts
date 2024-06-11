@@ -1,12 +1,12 @@
 import {Table} from "../../../models/table.ts";
 import {GameHandler} from "../../game/handler/gameHandler";
 import {TableEventType} from "../events/tableEventType.ts";
-import {AbstractHandler, HandlerType} from "../../abstract/abstractHandler";
+import {DkModelHandler, HandlerType} from "../../global/dkModelHandler.ts";
 import {HardwareHandler} from "../../hardware/handler/hardwareHandler";
 import {TeamColor} from "../../../models/team";
 import {TableEventMapper} from "../events/tableEventMapper.ts";
 
-export class TableHandler extends AbstractHandler<
+export class TableHandler extends DkModelHandler<
   TableEventType,
   Table
 > {

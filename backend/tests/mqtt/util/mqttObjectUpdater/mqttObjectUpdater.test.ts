@@ -1,7 +1,7 @@
 import {expect, test} from "bun:test";
-import {MqttObjectUpdater} from "../../../src/mqtt/util/mqttObjectUpdater/mqttObjectUpdater.ts";
-import {Table} from "../../../src/models/table.ts";
-import {BasicTerm} from "../../../src/mqtt/util/basicTerm.ts";
+import {MqttObjectUpdater} from "../../../../src/mqtt/util/mqttObjectUpdater/mqttObjectUpdater.ts";
+import {Table} from "../../../../src/models/table.ts";
+import {BasicTerm} from "../../../../src/mqtt/util/basicTerm.ts";
 
 test("compare function table", () => {
   let table = new Table("test");

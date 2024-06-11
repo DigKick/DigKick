@@ -11,7 +11,7 @@ export enum HandlerType {
   ABSTRACT = "ABSTRACT",
 }
 
-export class AbstractHandler<EventType, SubjectType> {
+export class DkModelHandler<EventType, SubjectType> {
   public observerMap: Map<EventType, Function> = new Map();
   public subject: SubjectType;
 

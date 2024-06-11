@@ -14,6 +14,8 @@ export class TableRepository {
       const tableEntity = TableParser.toTableEntity(table)
 
       await TableEntity.save(tableEntity)
+
+      return table
     } catch (e) {
       if (e instanceof QueryFailedError) {
         if (e.message.includes("SQLITE_CONSTRAINT: UNIQUE")) {
@@ -23,6 +25,27 @@ export class TableRepository {
       }
       this.logger.error(`Could not save or parse table: ${e}`)
     }
+  }
+
+  public static async getAllTables(): Promise<Table[]> {
+    let allTableEntities
+
+    try {
+      allTableEntities = await TableEntity.find()
+    } catch (e) {
+      if (e instanceof Error) {
+        if (e.message === `DataSource is not set for this entity.`) {
+          this.logger.warn("Could not register tables from database: ")
+        }
+      } else {
+        this.logger.error("Error while trying to access tables from db: ", e)
+      }
+      return Promise.resolve([]);
+    }
+
+    return allTableEntities.map((tableEntity: TableEntity) => {
+      return TableParser.toTable(tableEntity)
+    })
   }
 
 }

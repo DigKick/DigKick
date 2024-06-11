@@ -1,15 +1,17 @@
-import mqtt, { type IClientPublishOptions, MqttClient } from "mqtt";
-import { MqttConfig } from "./config";
-import type { TopicSubscriber } from "./topicSubscriber";
-import { Logger } from "winston";
-import { LoggerFactory } from "../../logging/loggerFactory";
+import mqtt, {type IClientPublishOptions, MqttClient} from "mqtt";
+import {MqttConfig} from "./config";
+import type {TopicSubscriber} from "./topicSubscriber";
+import {Logger} from "winston";
+import {LoggerFactory} from "../../logging/loggerFactory";
+import {TableRegisterHandler} from "../table/handler/tableRegisterHandler.ts";
+import {DataRequestHandler} from "../global/publishing/dataRequestHandler.ts";
 
 export class DkMqttClient {
   private _logger: Logger = LoggerFactory.getLogger(DkMqttClient.name);
 
-  private static instance: DkMqttClient;
   public static _topicObservers: Array<TopicSubscriber> =
     new Array<TopicSubscriber>();
+  private static instance: DkMqttClient;
   private _mqttConfig = new MqttConfig();
   private _mqttClient!: MqttClient;
 
@@ -43,6 +45,8 @@ export class DkMqttClient {
   private _setupClient() {
     this._mqttClient.on("connect", () => {
       this._logger.info("Connected to Broker.");
+      TableRegisterHandler.getInstance()
+      DataRequestHandler.getInstance()
     });
 
     this._mqttClient.on("end", () => {
