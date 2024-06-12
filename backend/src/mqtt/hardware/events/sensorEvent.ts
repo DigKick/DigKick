@@ -1,29 +1,29 @@
 // noinspection JSUnusedGlobalSymbols
 // noinspection JSUnusedGlobalSymbols
 
-export enum HardwareEventType {
+export enum SensorEventType {
   HIGH = "HIGH",
   LOW = "LOW",
   BUTTON = "BUTTON",
   LIGHTBARRIER = "LIGHTBARRIER",
 
-  BUTTON_0_HIGH = HardwareEventType.BUTTON + `_0_` + HardwareEventType.HIGH,
-  BUTTON_1_HIGH = HardwareEventType.BUTTON + `_1_` + HardwareEventType.HIGH,
-  BUTTON_2_HIGH = HardwareEventType.BUTTON + `_2_` + HardwareEventType.HIGH,
-  BUTTON_0_LOW = HardwareEventType.BUTTON + `_0_` + HardwareEventType.LOW,
-  BUTTON_1_LOW = HardwareEventType.BUTTON + `_1_` + HardwareEventType.LOW,
-  BUTTON_2_LOW = HardwareEventType.BUTTON + `_2_` + HardwareEventType.LOW,
+  BUTTON_0_HIGH = SensorEventType.BUTTON + `_0_` + SensorEventType.HIGH,
+  BUTTON_1_HIGH = SensorEventType.BUTTON + `_1_` + SensorEventType.HIGH,
+  BUTTON_2_HIGH = SensorEventType.BUTTON + `_2_` + SensorEventType.HIGH,
+  BUTTON_0_LOW = SensorEventType.BUTTON + `_0_` + SensorEventType.LOW,
+  BUTTON_1_LOW = SensorEventType.BUTTON + `_1_` + SensorEventType.LOW,
+  BUTTON_2_LOW = SensorEventType.BUTTON + `_2_` + SensorEventType.LOW,
 
-  LIGHTBARRIER_0_HIGH = HardwareEventType.LIGHTBARRIER +
+  LIGHTBARRIER_0_HIGH = SensorEventType.LIGHTBARRIER +
     `_0_` +
-    HardwareEventType.HIGH,
-  LIGHTBARRIER_1_HIGH = HardwareEventType.LIGHTBARRIER +
+    SensorEventType.HIGH,
+  LIGHTBARRIER_1_HIGH = SensorEventType.LIGHTBARRIER +
     `_1_` +
-    HardwareEventType.HIGH,
-  LIGHTBARRIER_0_LOW = HardwareEventType.LIGHTBARRIER +
+    SensorEventType.HIGH,
+  LIGHTBARRIER_0_LOW = SensorEventType.LIGHTBARRIER +
     `_0_` +
-    HardwareEventType.LOW,
-  LIGHTBARRIER_1_LOW = HardwareEventType.LIGHTBARRIER +
+    SensorEventType.LOW,
+  LIGHTBARRIER_1_LOW = SensorEventType.LIGHTBARRIER +
     `_1_` +
-    HardwareEventType.LOW,
+    SensorEventType.LOW,
 }

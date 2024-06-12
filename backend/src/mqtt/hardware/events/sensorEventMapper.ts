@@ -1,5 +1,5 @@
 import type {EventMapper} from "../../global/eventMapper";
-import {HardwareEventType} from "./sensorEvent.ts";
+import {SensorEventType} from "./sensorEvent.ts";
 import {TableHandler} from "../../table/handler/tableHandler.ts";
 import {ScoreChange, TeamColor} from "../../../models/team";
 import {DkMqttClient} from "../../client/client";
@@ -8,7 +8,7 @@ import {GameEventType} from "../../game/events/gameEvent";
 import {BaseTopicFactory} from "../../util/baseTopicFactory";
 import {LedUpdatePayload} from "../payloads/ledUpdate";
 
-export class SensorEventMapper implements EventMapper<HardwareEventType> {
+export class SensorEventMapper implements EventMapper<SensorEventType> {
   private _soccerTableHandler: TableHandler;
   private readonly _teamColor: TeamColor;
 
@@ -17,28 +17,28 @@ export class SensorEventMapper implements EventMapper<HardwareEventType> {
     this._teamColor = teamColor;
   }
 
-  map(event: HardwareEventType) {
-    const triggeredEvents = new Set<HardwareEventType>([event]);
+  map(event: SensorEventType) {
+    const triggeredEvents = new Set<SensorEventType>([event]);
     const dkMqttClient: DkMqttClient = DkMqttClient.getInstance();
 
-    switch (HardwareEventType[event] as HardwareEventType) {
-      case HardwareEventType.BUTTON_0_LOW:
+    switch (SensorEventType[event] as SensorEventType) {
+      case SensorEventType.BUTTON_0_LOW:
         this._soccerTableHandler.triggerEvent(TableEventType.FINISH_GAME);
         this._soccerTableHandler.triggerEvent(TableEventType.NEW_GAME);
         break;
 
-      case HardwareEventType.BUTTON_1_LOW:
+      case SensorEventType.BUTTON_1_LOW:
         this._teamScoreChange(ScoreChange.INCREASE);
         break;
 
-      case HardwareEventType.BUTTON_2_LOW:
+      case SensorEventType.BUTTON_2_LOW:
         this._teamScoreChange(ScoreChange.DECREASE);
         break;
 
-      case HardwareEventType.LIGHTBARRIER_0_LOW:
+      case SensorEventType.LIGHTBARRIER_0_LOW:
         this._teamScoreChange(ScoreChange.INCREASE);
         break;
-      case HardwareEventType.LIGHTBARRIER_1_LOW:
+      case SensorEventType.LIGHTBARRIER_1_LOW:
         this._teamScoreChange(ScoreChange.INCREASE);
         break;
 

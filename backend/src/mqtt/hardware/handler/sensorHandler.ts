@@ -1,6 +1,6 @@
 import {TableHandler} from "../../table/handler/tableHandler.ts";
 import {DkModelHandler, HandlerType} from "../../global/dkModelHandler.ts";
-import {HardwareEventType} from "../events/sensorEvent.ts";
+import {SensorEventType} from "../events/sensorEvent.ts";
 import {DkMqttClient} from "../../client/client";
 import {SensorTopicManager} from "../topics/sensorTopicManager.ts";
 import type {PinOut, PinStatusPayload,} from "../payloads/pinStatusPayload.ts";
@@ -10,7 +10,7 @@ import {SensorEventMapper} from "../events/sensorEventMapper.ts";
 import {TeamColor} from "../../../models/team";
 
 export class SensorHandler extends DkModelHandler<
-  HardwareEventType,
+  SensorEventType,
   TableHandler
 > {
   private _soccerTableHandler: TableHandler;
@@ -59,7 +59,7 @@ export class SensorHandler extends DkModelHandler<
       return;
     }
 
-    let toTriggerEvent: HardwareEventType;
+    let toTriggerEvent: SensorEventType;
 
     try {
       toTriggerEvent = this.mapTypeAndIdToEvent(
@@ -109,9 +109,9 @@ export class SensorHandler extends DkModelHandler<
     const eventTypeString = String(
       `${hardwareType}_${hardwareId}_${pinStatus}`,
     ).toUpperCase();
-    if (HardwareEventType[eventTypeString as keyof typeof HardwareEventType]) {
-      return HardwareEventType[
-        eventTypeString as keyof typeof HardwareEventType
+    if (SensorEventType[eventTypeString as keyof typeof SensorEventType]) {
+      return SensorEventType[
+        eventTypeString as keyof typeof SensorEventType
         ];
     } else {
       this._logger.error(`Enum entry for '${eventTypeString}' does not exist.`);
