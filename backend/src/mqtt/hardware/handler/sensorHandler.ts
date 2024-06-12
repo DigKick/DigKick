@@ -1,20 +1,20 @@
 import {TableHandler} from "../../table/handler/tableHandler.ts";
 import {DkModelHandler, HandlerType} from "../../global/dkModelHandler.ts";
-import {HardwareEventType} from "../events/hardwareEvent";
+import {HardwareEventType} from "../events/sensorEvent.ts";
 import {DkMqttClient} from "../../client/client";
-import {HardwareTopicManager} from "../topics/hardwareTopicManager";
+import {SensorTopicManager} from "../topics/sensorTopicManager.ts";
 import type {PinOut, PinStatusPayload,} from "../payloads/pinStatusPayload.ts";
 import {BasicTerm} from "../../util/basicTerm";
 import type {TopicSubscriber} from "../../client/topicSubscriber";
-import {HardwareEventMapper} from "../events/hardwareEventMapper";
+import {SensorEventMapper} from "../events/sensorEventMapper.ts";
 import {TeamColor} from "../../../models/team";
 
-export class HardwareHandler extends DkModelHandler<
+export class SensorHandler extends DkModelHandler<
   HardwareEventType,
   TableHandler
 > {
   private _soccerTableHandler: TableHandler;
-  private _hardwareTopicManager: HardwareTopicManager;
+  private _hardwareTopicManager: SensorTopicManager;
   private _dkMqttClient: DkMqttClient;
 
   private readonly lightbarrierSubscriber: TopicSubscriber;
@@ -81,9 +81,9 @@ export class HardwareHandler extends DkModelHandler<
 
   constructor(subject: TableHandler, teamColor: TeamColor) {
     super(subject, HandlerType.HARDWARE, subject.subject);
-    this._mapper = new HardwareEventMapper(subject, teamColor);
+    this._mapper = new SensorEventMapper(subject, teamColor);
     this._soccerTableHandler = subject;
-    this._hardwareTopicManager = new HardwareTopicManager(
+    this._hardwareTopicManager = new SensorTopicManager(
       this._soccerTableHandler.subject,
       teamColor,
     );

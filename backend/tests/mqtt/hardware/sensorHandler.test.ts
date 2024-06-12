@@ -1,4 +1,4 @@
-import {HardwareHandler} from "../../../src/mqtt/hardware/handler/hardwareHandler.ts";
+import {SensorHandler} from "../../../src/mqtt/hardware/handler/sensorHandler.ts";
 import {Table} from "../../../src/models/table.ts";
 import {TableHandler} from "../../../src/mqtt/table/handler/tableHandler.ts";
 import {TeamColor} from "../../../src/models/team.ts";
@@ -6,7 +6,7 @@ import {expect, test} from "bun:test";
 import {BasicTerm} from "../../../src/mqtt/util/basicTerm.ts";
 import {PinOut} from "../../../src/mqtt/hardware/payloads/pinStatusPayload.ts";
 
-const hardwareHandler = new HardwareHandler(
+const hardwareHandler = new SensorHandler(
   new TableHandler(new Table("table")),
   TeamColor.WHITE,
 );

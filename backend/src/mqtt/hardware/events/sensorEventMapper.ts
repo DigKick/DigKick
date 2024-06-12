@@ -1,5 +1,5 @@
 import type {EventMapper} from "../../global/eventMapper";
-import {HardwareEventType} from "./hardwareEvent";
+import {HardwareEventType} from "./sensorEvent.ts";
 import {TableHandler} from "../../table/handler/tableHandler.ts";
 import {ScoreChange, TeamColor} from "../../../models/team";
 import {DkMqttClient} from "../../client/client";
@@ -8,7 +8,7 @@ import {GameEventType} from "../../game/events/gameEvent";
 import {BaseTopicFactory} from "../../util/baseTopicFactory";
 import {LedUpdatePayload} from "../payloads/ledUpdate";
 
-export class HardwareEventMapper implements EventMapper<HardwareEventType> {
+export class SensorEventMapper implements EventMapper<HardwareEventType> {
   private _soccerTableHandler: TableHandler;
   private readonly _teamColor: TeamColor;
 
