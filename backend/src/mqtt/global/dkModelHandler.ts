@@ -55,7 +55,7 @@ export class DkModelHandler<EventType, SubjectType> {
     }
   }
 
-  public triggerEvent(event: EventType, topic?: string | undefined, payload?: any) {
+  public triggerEvent(event: EventType, topic: string, payload?: any) {
     if (!this._mapper) {
       this._logger.error("No mapper defined.");
       return;
