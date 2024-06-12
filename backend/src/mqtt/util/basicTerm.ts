@@ -4,4 +4,5 @@ export enum BasicTerm {
   TEAM = "team",
   LIGHTBARRIER = "lightbarrier",
   BUTTON = "button",
+  PLAYER = "player"
 }
