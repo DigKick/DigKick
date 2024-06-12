@@ -35,10 +35,10 @@ export class SensorEventMapper implements EventMapper<SensorEventType> {
         this._teamScoreChange(ScoreChange.DECREASE);
         break;
 
-      case SensorEventType.LIGHTBARRIER_0_LOW:
+      case SensorEventType.LIGHT_BARRIER_0_LOW:
         this._teamScoreChange(ScoreChange.INCREASE);
         break;
-      case SensorEventType.LIGHTBARRIER_1_LOW:
+      case SensorEventType.LIGHT_BARRIER_1_LOW:
         this._teamScoreChange(ScoreChange.INCREASE);
         break;
 
