@@ -83,7 +83,7 @@ export class SensorEventMapper implements EventMapper<SensorEventType> {
   }
 
   private _teamScoreChange(change: ScoreChange, topic: string, payload: any) {
-    const eventMap = {
+    const eventCombiner = {
       [TeamColor.WHITE]: {
         [ScoreChange.INCREASE]: GameEventType.WHITE_SCORE_INCREASE,
         [ScoreChange.DECREASE]: GameEventType.WHITE_SCORE_DECREASE,
@@ -94,7 +94,7 @@ export class SensorEventMapper implements EventMapper<SensorEventType> {
       },
     };
 
-    const eventType = eventMap[this._teamColor]?.[change];
+    const eventType = eventCombiner[this._teamColor]?.[change];
     if (eventType) {
       this._soccerTableHandler.gameHandler.triggerEvent(eventType, topic, payload);
     }
