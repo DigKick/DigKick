@@ -16,7 +16,6 @@ export const dataSource: DataSource = new DataSource({
   entities: [GameEntity, TableEntity, TeamEntity, PlayerEntity],
   logger: "advanced-console",
   synchronize: true,
-  migrations: ['./**/*.ts'],
 })
 
 
