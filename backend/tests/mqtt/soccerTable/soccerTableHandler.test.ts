@@ -15,12 +15,12 @@ const soccerTableCallback = (soccerTable: Table) => {
 
 const subscribeObserverAndTriggerEvent = (event: TableEventType) => {
   soccerTableHandler.subscribe(event, soccerTableCallback);
-  soccerTableHandler.triggerEvent(event);
+  soccerTableHandler.triggerEvent(event, "", {});
 };
 
 const subscribeMockAndTriggerEvent = (event: TableEventType) => {
   soccerTableHandler.subscribe(event, emptyMockFunc);
-  soccerTableHandler.triggerEvent(event);
+  soccerTableHandler.triggerEvent(event, "", {});
 };
 
 beforeEach(() => {
@@ -32,11 +32,13 @@ beforeEach(() => {
 test("Game gets restarted correctly", () => {
   soccerTableHandler.gameHandler.triggerEvent(
     GameEventType.WHITE_SCORE_INCREASE,
+    "",
+    {}
   );
 
   expect(soccerTableHandler.gameHandler.subject.teamWhite.score).toBe(1);
 
-  soccerTableHandler.triggerEvent(TableEventType.NEW_GAME);
+  soccerTableHandler.triggerEvent(TableEventType.NEW_GAME, "", {});
 
   expect(soccerTableHandler.gameHandler.subject.teamWhite.score).toBe(0);
 });
