@@ -14,7 +14,7 @@ export class PlayerEntity extends DkEntity {
   hashedKey!: string;
 
   toString(): string {
-    return ""
+    return `{elo:${this.elo}, name:${this.name}, hashedKey:${this.hashedKey}}`;
   }
 
 }
