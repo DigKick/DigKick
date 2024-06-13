@@ -76,7 +76,7 @@ export class SensorHandler extends DkModelHandler<
       return;
     }
 
-    this.triggerEvent(toTriggerEvent);
+    this.triggerEvent(toTriggerEvent, topic, payload);
   };
 
   constructor(subject: TableHandler, teamColor: TeamColor) {

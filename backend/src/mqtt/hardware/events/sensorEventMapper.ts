@@ -17,29 +17,29 @@ export class SensorEventMapper implements EventMapper<SensorEventType> {
     this._teamColor = teamColor;
   }
 
-  map(event: SensorEventType) {
+  map(event: SensorEventType, topic: string, payload: any) {
     const triggeredEvents = new Set<SensorEventType>([event]);
     const dkMqttClient: DkMqttClient = DkMqttClient.getInstance();
 
-    switch (SensorEventType[event] as SensorEventType) {
+    switch (event) {
       case SensorEventType.BUTTON_0_LOW:
-        this._soccerTableHandler.triggerEvent(TableEventType.FINISH_GAME);
-        this._soccerTableHandler.triggerEvent(TableEventType.NEW_GAME);
+        this._soccerTableHandler.triggerEvent(TableEventType.FINISH_GAME, topic, payload);
+        this._soccerTableHandler.triggerEvent(TableEventType.NEW_GAME, topic, payload);
         break;
 
       case SensorEventType.BUTTON_1_LOW:
-        this._teamScoreChange(ScoreChange.INCREASE);
+        this._teamScoreChange(ScoreChange.INCREASE, topic, payload);
         break;
 
       case SensorEventType.BUTTON_2_LOW:
-        this._teamScoreChange(ScoreChange.DECREASE);
+        this._teamScoreChange(ScoreChange.DECREASE, topic, payload);
         break;
 
       case SensorEventType.LIGHT_BARRIER_0_LOW:
-        this._teamScoreChange(ScoreChange.INCREASE);
+        this._teamScoreChange(ScoreChange.INCREASE, topic, payload);
         break;
       case SensorEventType.LIGHT_BARRIER_1_LOW:
-        this._teamScoreChange(ScoreChange.INCREASE);
+        this._teamScoreChange(ScoreChange.INCREASE, topic, payload);
         break;
 
       default:
@@ -82,7 +82,7 @@ export class SensorEventMapper implements EventMapper<SensorEventType> {
     );
   }
 
-  private _teamScoreChange(change: ScoreChange) {
+  private _teamScoreChange(change: ScoreChange, topic: string, payload: any) {
     const eventMap = {
       [TeamColor.WHITE]: {
         [ScoreChange.INCREASE]: GameEventType.WHITE_SCORE_INCREASE,
@@ -96,7 +96,7 @@ export class SensorEventMapper implements EventMapper<SensorEventType> {
 
     const eventType = eventMap[this._teamColor]?.[change];
     if (eventType) {
-      this._soccerTableHandler.gameHandler.triggerEvent(eventType);
+      this._soccerTableHandler.gameHandler.triggerEvent(eventType, topic, payload);
     }
   }
 }

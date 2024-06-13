@@ -5,7 +5,7 @@ export enum SensorEventType {
   HIGH = "HIGH",
   LOW = "LOW",
   BUTTON = "BUTTON",
-  LIGHT_BARRIER = "LIGHT_BARRIER",
+  LIGHT_BARRIER = "LIGHTBARRIER",
 
   BUTTON_0_HIGH = SensorEventType.BUTTON + `_0_` + SensorEventType.HIGH,
   BUTTON_1_HIGH = SensorEventType.BUTTON + `_1_` + SensorEventType.HIGH,

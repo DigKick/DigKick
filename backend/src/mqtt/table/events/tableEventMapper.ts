@@ -15,27 +15,27 @@ export class TableEventMapper
     this._gameHandler = gameHandler;
   }
 
-  map(event: TableEventType) {
+  map(event: TableEventType, topic: string, payload: any) {
     let triggeredEvents = [event];
 
     switch (event) {
       case TableEventType.NEW_GAME:
         this._soccerTable.newGame();
-        this._gameHandler.triggerEvent(GameEventType.WHITE_SCORE_CHANGE);
-        this._gameHandler.triggerEvent(GameEventType.BLACK_SCORE_CHANGE);
+        this._gameHandler.triggerEvent(GameEventType.WHITE_SCORE_CHANGE, topic, payload);
+        this._gameHandler.triggerEvent(GameEventType.BLACK_SCORE_CHANGE, topic, payload);
         break;
 
       case TableEventType.FINISH_GAME:
         GameRepository.saveGame(this._soccerTable.game, this._soccerTable).then()
         this._soccerTable.newGame();
-        this._gameHandler.triggerEvent(GameEventType.WHITE_SCORE_CHANGE);
-        this._gameHandler.triggerEvent(GameEventType.BLACK_SCORE_CHANGE);
+        this._gameHandler.triggerEvent(GameEventType.WHITE_SCORE_CHANGE, topic, payload);
+        this._gameHandler.triggerEvent(GameEventType.BLACK_SCORE_CHANGE, topic, payload);
         break;
 
       case TableEventType.CANCEL_GAME:
         this._soccerTable.newGame();
-        this._gameHandler.triggerEvent(GameEventType.WHITE_SCORE_CHANGE);
-        this._gameHandler.triggerEvent(GameEventType.BLACK_SCORE_CHANGE);
+        this._gameHandler.triggerEvent(GameEventType.WHITE_SCORE_CHANGE, topic, payload);
+        this._gameHandler.triggerEvent(GameEventType.BLACK_SCORE_CHANGE, topic, payload);
         break;
 
       default:

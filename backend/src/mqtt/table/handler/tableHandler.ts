@@ -21,7 +21,7 @@ export class TableHandler extends DkModelHandler<
     this._gameHandler = new GameHandler(this.subject);
     this._mapper = new TableEventMapper(soccerTable, this._gameHandler);
 
-    this.triggerEvent(TableEventType.NEW_GAME);
+    this.triggerEvent(TableEventType.NEW_GAME, "", {});
   }
 
   get gameHandler() {
