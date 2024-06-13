@@ -14,15 +14,15 @@ export class TeamEntity extends DkEntity {
   @Column()
   isWinner!: boolean;
 
-  @OneToOne(() => PlayerEntity)
+  @OneToOne(() => PlayerEntity, {nullable: true})
   @JoinColumn()
   playerOne!: PlayerEntity;
 
-  @OneToOne(() => PlayerEntity)
+  @OneToOne(() => PlayerEntity, {nullable: true})
   @JoinColumn()
   playerTwo!: PlayerEntity;
 
   toString(): string {
-    return `{color: ${this.color}, score: ${this.score}, isWinner: ${this.isWinner}}`;
+    return `{color: ${this.color}, score: ${this.score}, isWinner: ${this.isWinner}`;
   }
 }
