@@ -14,11 +14,11 @@ export class TeamEntity extends DkEntity {
   @Column()
   isWinner!: boolean;
 
-  @OneToOne(() => PlayerEntity, {nullable: true})
+  @OneToOne(() => PlayerEntity, {nullable: true, eager: true})
   @JoinColumn()
   playerOne!: PlayerEntity;
 
-  @OneToOne(() => PlayerEntity, {nullable: true})
+  @OneToOne(() => PlayerEntity, {nullable: true, eager: true})
   @JoinColumn()
   playerTwo!: PlayerEntity;
 
