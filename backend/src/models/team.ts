@@ -57,8 +57,8 @@ export class Team {
     return {
       color: this.color,
       score: this._score,
-      playerOne: this._playerOne ? this._playerOne.toJSON() : "{}",
-      playerTwo: this._playerTwo ? this._playerTwo.toJSON() : "{}",
+      playerOne: this._playerOne ? this._playerOne.toJSON() : null,
+      playerTwo: this._playerTwo ? this._playerTwo.toJSON() : null,
       isWinner: this.isWinner,
     };
   }
