@@ -1,9 +1,8 @@
 import {TableHandler} from "../../table/handler/tableHandler.ts";
 import {DkModelHandler, HandlerType} from "../../global/dkModelHandler.ts";
 import {SensorEventType} from "../events/sensorEvent.ts";
-import {DkMqttClient} from "../../client/client";
 import {SensorTopicManager} from "../topics/sensorTopicManager.ts";
-import type {PinOut, PinStatusPayload,} from "../payloads/pinStatusPayload.ts";
+import type {PinOut, PinStatusPayload} from "../payloads/pinStatusPayload.ts";
 import {BasicTerm} from "../../util/basicTerm";
 import type {TopicSubscriber} from "../../client/topicSubscriber";
 import {SensorEventMapper} from "../events/sensorEventMapper.ts";
@@ -14,8 +13,7 @@ export class SensorHandler extends DkModelHandler<
   TableHandler
 > {
   private _soccerTableHandler: TableHandler;
-  private _hardwareTopicManager: SensorTopicManager;
-  private _dkMqttClient: DkMqttClient;
+  private _sensorTopicManager: SensorTopicManager;
 
   private readonly lightbarrierSubscriber: TopicSubscriber;
   private readonly buttonSubscriber: TopicSubscriber;
@@ -83,18 +81,17 @@ export class SensorHandler extends DkModelHandler<
     super(subject, HandlerType.HARDWARE, subject.subject);
     this._mapper = new SensorEventMapper(subject, teamColor);
     this._soccerTableHandler = subject;
-    this._hardwareTopicManager = new SensorTopicManager(
+    this._sensorTopicManager = new SensorTopicManager(
       this._soccerTableHandler.subject,
       teamColor,
     );
-    this._dkMqttClient = DkMqttClient.getInstance();
 
     this.lightbarrierSubscriber = {
-      topic: this._hardwareTopicManager.lightbarriersTopic,
+      topic: this._sensorTopicManager.lightbarriersTopic,
       func: this._topicToEventRouter,
     };
     this.buttonSubscriber = {
-      topic: this._hardwareTopicManager.buttonsTopic,
+      topic: this._sensorTopicManager.buttonsTopic,
       func: this._topicToEventRouter,
     };
 
