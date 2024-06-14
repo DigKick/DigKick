@@ -1,20 +1,21 @@
 import {Column, Entity} from "typeorm";
 import {DkEntity} from "../global/dkEntity.ts";
+import {generateUsername} from "unique-username-generator";
 
 @Entity("player")
 export class PlayerEntity extends DkEntity {
 
-  @Column()
+  @Column({default: 100})
   elo!: number;
 
-  @Column()
+  @Column({default: generateUsername()})
   name!: string;
 
   @Column()
-  hashedKey!: string;
+  hashSerialNumber!: string;
 
   toString(): string {
-    return `{elo:${this.elo}, name:${this.name}, hashedKey:${this.hashedKey}}`;
+    return `{elo:${this.elo}, name:${this.name}, hashedKey:${this.hashSerialNumber}}`;
   }
 
 }
