@@ -3,6 +3,7 @@ import {LoggerFactory} from "../../logging/loggerFactory";
 import {Table} from "../../models/table.ts";
 import type {EventMapper} from "./eventMapper";
 import {BasicTerm} from "../util/basicTerm";
+import {DkMqttClient} from "../client/client.ts";
 
 export enum HandlerType {
   GAME = BasicTerm.GAME,
@@ -13,6 +14,8 @@ export enum HandlerType {
 }
 
 export class DkModelHandler<EventType, SubjectType> {
+  protected _dkMqttClient: DkMqttClient;
+
   public observerMap: Map<EventType, Function> = new Map();
   public subject: SubjectType;
 
@@ -25,6 +28,8 @@ export class DkModelHandler<EventType, SubjectType> {
     soccerTable: Table,
   ) {
     this.subject = subject;
+
+    this._dkMqttClient = DkMqttClient.getInstance();
 
     this._logger = LoggerFactory.getHandlerLogger(handlerType, soccerTable.name);
     this._logger.debug(`${handlerType}Handler created.`);
@@ -61,6 +66,7 @@ export class DkModelHandler<EventType, SubjectType> {
       return;
     }
 
+    console.log("mapper call: ", event)
     const triggeredEvents = this._mapper.map(event, topic, payload);
     if (!triggeredEvents) {
       this._logger.warn(`Got "undefined" when triggering event "${event}"`);
