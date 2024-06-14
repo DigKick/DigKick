@@ -16,7 +16,8 @@ export class Team {
   public color: TeamColor;
   public isWinner: boolean;
   private _score: number;
-  private _players: Array<Player> = [];
+  private _playerOne?: Player;
+  private _playerTwo?: Player;
 
   constructor(color: TeamColor) {
     this.color = color;
@@ -32,18 +33,23 @@ export class Team {
     this._score = Math.max(0, newScore);
   }
 
-  get players() {
-    return this._players;
-  }
-
   addPlayer(newPlayer: Player) {
-    if (this._players.includes(newPlayer)) {
-      return
+    if (this._playerOne === newPlayer || this._playerTwo === newPlayer) {
+      return;
     }
-    if (this._players.length > Team.TEAM_SIZE) {
-      this._players.shift()
+
+    if (!this._playerOne) {
+      this._playerOne = newPlayer;
+      return;
     }
-    this._players.push(newPlayer);
+
+    if (this._playerOne && !this._playerTwo) {
+      this._playerTwo = newPlayer;
+      return;
+    }
+
+    this._playerTwo = this._playerOne;
+    this._playerOne = newPlayer
   }
 
 
@@ -51,6 +57,8 @@ export class Team {
     return {
       color: this.color,
       score: this._score,
+      playerOne: this._playerOne ? this._playerOne.toJSON() : "{}",
+      playerTwo: this._playerTwo ? this._playerTwo.toJSON() : "{}",
       isWinner: this.isWinner,
     };
   }
