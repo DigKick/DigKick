@@ -23,6 +23,10 @@ export class Player {
   }
 
   toJSON() {
-    return `{name: ${this._name}, key: ${this._key}, elo: ${this._elo}`
+    return {
+      name: this._name,
+      key: this._key,
+      elo: this._elo,
+    }
   }
 }
