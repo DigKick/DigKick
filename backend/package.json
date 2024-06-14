@@ -26,6 +26,7 @@
     "reflect-metadata": "^0.2.2",
     "sqlite3": "^5.1.7",
     "typeorm": "^0.3.20",
+    "unique-username-generator": "^1.3.0",
     "winston": "^3.13.0"
   }
 }
