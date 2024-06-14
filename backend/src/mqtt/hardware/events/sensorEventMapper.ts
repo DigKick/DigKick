@@ -9,11 +9,11 @@ import {BaseTopicFactory} from "../../util/baseTopicFactory";
 import {LedUpdatePayload} from "../payloads/ledUpdate";
 
 export class SensorEventMapper implements EventMapper<SensorEventType> {
-  private _soccerTableHandler: TableHandler;
+  private _tableHandler: TableHandler;
   private readonly _teamColor: TeamColor;
 
   constructor(soccerTableHandler: TableHandler, teamColor: TeamColor) {
-    this._soccerTableHandler = soccerTableHandler;
+    this._tableHandler = soccerTableHandler;
     this._teamColor = teamColor;
   }
 
@@ -23,8 +23,8 @@ export class SensorEventMapper implements EventMapper<SensorEventType> {
 
     switch (event) {
       case SensorEventType.BUTTON_0_LOW:
-        this._soccerTableHandler.triggerEvent(TableEventType.FINISH_GAME, topic, payload);
-        this._soccerTableHandler.triggerEvent(TableEventType.NEW_GAME, topic, payload);
+        this._tableHandler.triggerEvent(TableEventType.FINISH_GAME, topic, payload);
+        this._tableHandler.triggerEvent(TableEventType.NEW_GAME, topic, payload);
         break;
 
       case SensorEventType.BUTTON_1_LOW:
@@ -47,7 +47,7 @@ export class SensorEventMapper implements EventMapper<SensorEventType> {
     }
 
     dkMqttClient.publishWithRetain(
-      BaseTopicFactory.getBaseTopic(this._soccerTableHandler.subject) +
+      BaseTopicFactory.getBaseTopic(this._tableHandler.subject) +
       "/debug",
       `{ "lastEvents": "${Array.from(triggeredEvents).join(", ")}" }`,
     );
@@ -60,7 +60,7 @@ export class SensorEventMapper implements EventMapper<SensorEventType> {
     const dkMqttClient: DkMqttClient = DkMqttClient.getInstance();
     dkMqttClient.publish(
       BaseTopicFactory.getLedUpdateTopic(
-        this._soccerTableHandler.subject,
+        this._tableHandler.subject,
         this._teamColor,
       ),
       JSON.stringify(
@@ -68,7 +68,7 @@ export class SensorEventMapper implements EventMapper<SensorEventType> {
           Array.from(
             {
               length:
-                this._soccerTableHandler.subject.game.getTeamByColor(
+                this._tableHandler.subject.game.getTeamByColor(
                   this._teamColor,
                 ).score * 2,
             },
@@ -96,7 +96,7 @@ export class SensorEventMapper implements EventMapper<SensorEventType> {
 
     const eventType = eventCombiner[this._teamColor]?.[change];
     if (eventType) {
-      this._soccerTableHandler.gameHandler.triggerEvent(eventType, topic, payload);
+      this._tableHandler.gameHandler.triggerEvent(eventType, topic, payload);
     }
   }
 }
