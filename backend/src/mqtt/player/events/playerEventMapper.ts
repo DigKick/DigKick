@@ -1,31 +1,47 @@
 import type {EventMapper} from "../../global/eventMapper.ts";
-import type {PlayerEventType} from "./playerEvent.ts";
+import {PlayerEventType} from "./playerEvent.ts";
 import {Game} from "../../../models/game.ts";
 import {Table} from "../../../models/table.ts";
-import {MqttObjectUpdater} from "../../util/mqttObjectUpdater/mqttObjectUpdater.ts";
-import {MqttObjectUpdaterFactory} from "../../util/mqttObjectUpdater/mqttObjectUpdaterFactory.ts";
-import {BasicTerm} from "../../util/basicTerm.ts";
+import type {NfcReaderPayload} from "../../hardware/payloads/nfcReaderPayload.ts";
+import {PlayerRepository} from "../../../database/modules/player/playerRepository.ts";
+import type {TableHandler} from "../../table/handler/tableHandler.ts";
+import {GameEventType} from "../../game/events/gameEvent.ts";
 
 export class PlayerEventMapper implements EventMapper<PlayerEventType> {
 
   private readonly _game: Game;
-  private readonly _soccerTable: Table;
-  private readonly _mqttObjectUpdaterGame: MqttObjectUpdater<Table>;
+  private readonly _table: Table;
+  private readonly _tableHandler: TableHandler;
 
-  constructor(soccerTable: Table) {
-    this._soccerTable = soccerTable;
-    this._game = soccerTable.game;
-    this._mqttObjectUpdaterGame = MqttObjectUpdaterFactory.getMqttObjectUpdater(
-      this._soccerTable,
-      {
-        prefix: `/${BasicTerm.TABLE}`,
-        instantPublish: true,
-        publishWithRetain: true,
-      },
-    );
+  constructor(tableHandler: TableHandler, table: Table) {
+    this._table = table;
+    this._game = table.game;
+
+    this._tableHandler = tableHandler
   }
 
-  map(event: PlayerEventType, topic?: string | undefined, payload?: any) {
+  map(event: PlayerEventType, topic: string, payload: NfcReaderPayload) {
+
+    console.log("event mapper: ", event)
+    switch (event) {
+      case PlayerEventType.PLAYER_REGISTER_BLACK_TEAM:
+        console.log("new player for black")
+        PlayerRepository.getOrCreatePlayer(payload.serialNumber).then((player) => {
+          this._game.teamBlack.addPlayer(player)
+          console.log(this._game.toJSON())
+          this._tableHandler.gameHandler.triggerEvent(GameEventType.PLAYER_CHANGE, topic, payload)
+        })
+        break
+
+      case PlayerEventType.PLAYER_REGISTER_WHITE_TEAM:
+        PlayerRepository.getOrCreatePlayer(payload.serialNumber).then((player) => {
+          this._game.teamWhite.addPlayer(player)
+        })
+        break
+
+      default:
+        break
+    }
 
     return new Set([event]);
   };
