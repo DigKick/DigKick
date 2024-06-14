@@ -1,11 +1,11 @@
 import {TeamColor} from "../../../models/team";
-import {BasicTerm} from "../../util/basicTerm.ts";
 
 export enum GameEventType {
   _SCORE = "SCORE",
   _INCREASE = "INCREASE",
   _DECREASE = "DECREASE",
   _CHANGE = "CHANGE",
+  _PLAYER = "PLAYER",
 
   SCORE_CHANGE = `${_SCORE}_${_CHANGE}`,
 
@@ -24,5 +24,5 @@ export enum GameEventType {
 
   WINNER_CHANGE = `${_CHANGE}_${_WINNER}`,
 
-  PLAYER_CHANGE = BasicTerm.PLAYER + "_" + _CHANGE,
+  PLAYER_CHANGE = _PLAYER + "_" + _CHANGE,
 }
