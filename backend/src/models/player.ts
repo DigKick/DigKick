@@ -21,4 +21,8 @@ export class Player {
   get elo(): number {
     return this._elo;
   }
+
+  toJSON() {
+    return `{name: ${this._name}, key: ${this._key}, elo: ${this._elo}`
+  }
 }
