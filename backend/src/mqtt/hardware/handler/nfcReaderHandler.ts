@@ -13,8 +13,6 @@ export class NfcReaderHandler extends DkModelHandler<NfcReaderEventType, TableHa
   private _topicToEventRouter = (topic: string, payload: any) => {
     let nfcReaderPayload: NfcReaderPayload
 
-    this._logger.info("HELLO FROM NFC READER")
-
     try {
       nfcReaderPayload = payload as NfcReaderPayload
     } catch (e) {
