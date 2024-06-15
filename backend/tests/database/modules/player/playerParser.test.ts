@@ -3,7 +3,7 @@ import {Player} from "../../../../src/models/player.ts";
 import {expect, test} from "bun:test";
 import {PlayerParser} from "../../../../src/database/modules/player/playerParser.ts";
 
-function createValidPlayerEntity() {
+export function createValidPlayerEntity() {
   const validPlayerEntity = new PlayerEntity()
 
   validPlayerEntity.name = 'validPlayerEntity'
@@ -11,7 +11,7 @@ function createValidPlayerEntity() {
   return validPlayerEntity
 }
 
-function createValidPlayer() {
+export function createValidPlayer() {
   return new Player("validPlayer", "key", 100);
 }
 
