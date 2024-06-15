@@ -8,4 +8,8 @@ export class SerialNumberHasher {
     return await hashedSerialNumber
   }
 
+  public static async hashValidator(hashedSerialNumber: string, unhashedSerialNumber: string): Promise<boolean> {
+    return Bun.password.verify(unhashedSerialNumber, hashedSerialNumber)
+  }
+
 }
