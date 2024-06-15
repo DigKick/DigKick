@@ -33,6 +33,14 @@ export class Team {
     this._score = Math.max(0, newScore);
   }
 
+  get playerOne() {
+    return this._playerOne
+  }
+
+  get playerTwo() {
+    return this._playerTwo
+  }
+
   addPlayer(newPlayer: Player) {
     if (this._playerOne === newPlayer || this._playerTwo === newPlayer) {
       return;
