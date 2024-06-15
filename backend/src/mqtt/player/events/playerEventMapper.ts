@@ -21,14 +21,10 @@ export class PlayerEventMapper implements EventMapper<PlayerEventType> {
   }
 
   map(event: PlayerEventType, topic: string, payload: NfcReaderPayload) {
-
-    console.log("event mapper: ", event)
     switch (event) {
       case PlayerEventType.PLAYER_REGISTER_BLACK_TEAM:
-        console.log("new player for black")
         PlayerRepository.getOrCreatePlayer(payload.serialNumber).then((player) => {
           this._game.teamBlack.addPlayer(player)
-          console.log(this._game.toJSON())
           this._tableHandler.gameHandler.triggerEvent(GameEventType.PLAYER_CHANGE, topic, payload)
         })
         break

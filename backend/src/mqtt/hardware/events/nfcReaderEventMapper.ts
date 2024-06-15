@@ -27,8 +27,6 @@ export class NfcReaderEventMapper implements EventMapper<NfcReaderEventType> {
 
     switch (event) {
       case NfcReaderEventType.READER_NFC_TAG_SERIAL_NUMBER:
-        console.log("hey he" +
-          "re: ", this._registerEventMapper[this._teamColor])
         this._tableHandler.playerHandler.triggerEvent(this._registerEventMapper[this._teamColor], topic, nfcReaderPayload)
         this._tableHandler.gameHandler.triggerEvent(GameEventType.PLAYER_CHANGE, topic, {});
         break
