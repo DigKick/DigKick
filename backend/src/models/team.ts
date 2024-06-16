@@ -52,7 +52,8 @@ export class Team {
     }
 
     if (this._playerOne && !this._playerTwo) {
-      this._playerTwo = newPlayer;
+      this._playerTwo = this._playerOne;
+      this._playerOne = newPlayer;
       return;
     }
 
