@@ -88,6 +88,11 @@ components:
       summary: Updates the LEDs strip.
       payload:
         $ref: "#/components/schemas/ledStatus"
+    
+    nfcReaderMessage:
+      summary: Information from the nfc reader about the chip.
+      payload:
+        $ref: "#/components/schemas/nfcReaderSerialNumber"
 
   schemas:
     gameMode:
@@ -154,6 +159,15 @@ components:
         - WHITE
         - BLACK
       example: "WHITE"
+
+    nfcReaderSerialNumber:
+      type: object
+      properties:
+        serialNumber:
+          type: string
+          description: Serial number of the read nfc chip
+      example:
+          {  "serialNumber": "serialNumberFromChip" }
 
     displayText:
       type: object
@@ -352,6 +366,17 @@ channels:
     messages:
       ledMessage:
         $ref: "#/components/messages/ledUpdateMessage"
+  
+  nfcReaderSerialNumberUpdate:
+    address: "/table/{tableName}/game/team/{teamColor}/nfc-reader"
+    parameters:
+      tableName:
+        $ref: "#/components/parameters/tableName"
+      teamColor:
+        $ref: "#/components/parameters/teamColor"
+    messages:
+      ledMessage:
+        $ref: "#/components/messages/nfcReaderMessage"
 
 operations:
   kickerTableRegister:
@@ -371,6 +396,12 @@ operations:
     summary: Action on a detection of the light barrier
     channel:
       $ref: "#/channels/lightBarrierDetect"
+  
+  nfcReaderSerialUpdate:
+    action: receive
+    summary: Read nfc chip serial number for player registration.
+    channel:
+      $ref: '#/channels/nfcReaderSerialNumberUpdate'
 
   gameStatus:
     action: send
