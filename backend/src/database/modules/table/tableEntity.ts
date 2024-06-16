@@ -1,5 +1,5 @@
 import {Column, Entity} from "typeorm";
-import {DkEntity} from "../abstract/dkEntity.ts";
+import {DkEntity} from "../global/dkEntity.ts";
 
 @Entity("table")
 export class TableEntity extends DkEntity {

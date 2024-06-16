@@ -63,12 +63,12 @@ const testCallback = (testObj: TestClass) => {
 
 const subscribeObserverAndTriggerEvent = (event: TestEvent) => {
   testHandler.subscribe(event, testCallback);
-  testHandler.triggerEvent(event);
+  testHandler.triggerEvent(event, "", {});
 };
 
 const subscribeMockAndTriggerEvent = (event: TestEvent) => {
   testHandler.subscribe(event, emptyMockFunc);
-  testHandler.triggerEvent(event);
+  testHandler.triggerEvent(event, "", {});
 };
 
 beforeEach(() => {

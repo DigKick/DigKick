@@ -20,12 +20,12 @@ beforeEach(() => {
 
 const subscribeObserverAndTriggerEvent = (event: GameEventType) => {
   gameHandler.subscribe(event, gameObs);
-  gameHandler.triggerEvent(event);
+  gameHandler.triggerEvent(event, "", {});
 };
 
 const subscribeMockAndTriggerEvent = (event: GameEventType) => {
   gameHandler.subscribe(event, emptyMockFunc);
-  gameHandler.triggerEvent(event);
+  gameHandler.triggerEvent(event, "", {});
 };
 
 test("add new observer", () => {
@@ -43,21 +43,21 @@ test("remove observer", () => {
 
 test("test callback", () => {
   gameHandler.subscribe(GameEventType.WHITE_SCORE_CHANGE, emptyMockFunc);
-  gameHandler.triggerEvent(GameEventType.WHITE_SCORE_INCREASE);
+  gameHandler.triggerEvent(GameEventType.WHITE_SCORE_INCREASE, "", {});
   expect(emptyMockFunc.mock.calls.length).toEqual(1);
 });
 
 test("test event white score increase", () => {
   gameHandler.subscribe(GameEventType.SCORE_CHANGE, gameObs);
-  gameHandler.triggerEvent(GameEventType.WHITE_SCORE_INCREASE);
+  gameHandler.triggerEvent(GameEventType.WHITE_SCORE_INCREASE, "", {});
 
   expect(gameHandler.subject.teamWhite.score).toEqual(1);
 });
 
 test("test event white team score decrease", () => {
   gameHandler.subscribe(GameEventType.WHITE_SCORE_DECREASE, gameObs);
-  gameHandler.triggerEvent(GameEventType.WHITE_SCORE_INCREASE);
-  gameHandler.triggerEvent(GameEventType.WHITE_SCORE_DECREASE);
+  gameHandler.triggerEvent(GameEventType.WHITE_SCORE_INCREASE, "", {});
+  gameHandler.triggerEvent(GameEventType.WHITE_SCORE_DECREASE, "", {});
   expect(cbGame!.teamWhite.score).toEqual(0);
 });
 
@@ -68,7 +68,7 @@ test("test event black team score increase", () => {
 
 test("test event black score decrease", () => {
   subscribeObserverAndTriggerEvent(GameEventType.BLACK_SCORE_INCREASE);
-  gameHandler.triggerEvent(GameEventType.BLACK_SCORE_DECREASE);
+  gameHandler.triggerEvent(GameEventType.BLACK_SCORE_DECREASE, "", {});
 
   expect(cbGame!.teamBlack.score).toEqual(0);
 });

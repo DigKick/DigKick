@@ -65,20 +65,20 @@ test('invalid parse TeamEntity to Team: color field', () => {
 
 
 // Table to TableEntity
-test('valid parse Team to TeamEntity: color field', () => {
-  const parsedTeamEntity = TeamParser.toTeamEntity(createValidWhiteTeam())
+test('valid parse Team to TeamEntity: color field', async () => {
+  const parsedTeamEntity = await TeamParser.toTeamEntity(createValidWhiteTeam())
 
   expect(parsedTeamEntity.color).not.toBeUndefined();
 })
 
-test('valid parse Team to TeamEntity: score field', () => {
-  const parsedTeamEntity = TeamParser.toTeamEntity(createValidWhiteTeam())
+test('valid parse Team to TeamEntity: score field', async () => {
+  const parsedTeamEntity = await TeamParser.toTeamEntity(createValidWhiteTeam())
 
   expect(parsedTeamEntity.score).not.toBeUndefined();
 })
 
-test('valid parse Team to TeamEntity: color field', () => {
-  const parsedTeamEntity = TeamParser.toTeamEntity(createValidWhiteTeam())
+test('valid parse Team to TeamEntity: color field', async () => {
+  const parsedTeamEntity = await TeamParser.toTeamEntity(createValidWhiteTeam())
 
   expect(parsedTeamEntity.color).not.toBeUndefined();
 })

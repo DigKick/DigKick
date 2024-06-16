@@ -44,20 +44,24 @@ export class MqttObjectUpdater<ObjectType> {
   publish() {
     const dkMqttClient = DkMqttClient.getInstance();
     Array.from(this.latestChanges.entries()).forEach((entry) => {
-      if (!entry || !entry[0] || !entry[1]) return;
-      let publishString = " ";
+      let publishString = "null";
+      if (!entry || !entry[0] || !entry[1]) {
+        return;
+      }
+
       if (entry[1].newValue !== undefined) {
-        publishString = JSON.stringify(entry[1].newValue).replaceAll("_", "");
+        publishString = JSON.stringify(entry[1].newValue, MqttObjectUpdater.undefinedReplace).replaceAll("_", "").trim();
       }
 
       const publishTopic = String(
         entry[0] +
-        (publishString.startsWith("{") || publishString === " " ? "" : "$"),
+        (publishString.startsWith("{") || publishString === "null" ? "" : "$"),
       );
 
       if (!publishString) {
         return;
       }
+
       if (this.config.instantPublish) {
         dkMqttClient.publishWithRetain(publishTopic, publishString);
       } else {
@@ -67,11 +71,15 @@ export class MqttObjectUpdater<ObjectType> {
     this.latestChanges.clear();
   }
 
+  private static undefinedReplace(key: string, value: any) {
+    return value === undefined ? null : value;
+  }
+
   private static generateInitialChangeMap(
     obj: any,
     path: string,
   ): Map<string, ChangeLog> {
-    return MqttObjectUpdater.compareObjects({}, obj, path);
+    return MqttObjectUpdater.compareObjects(undefined, obj, path);
   }
 
   private static compareObjects(
@@ -103,12 +111,12 @@ export class MqttObjectUpdater<ObjectType> {
         if (oldObj) {
           changes.set(
             this.makeNewPath(localPath, key, typeof oldObj === "object"),
-            new ChangeLog(oldObj[key], undefined),
+            new ChangeLog(oldObj[key], null),
           );
         } else {
           changes.set(
             this.makeNewPath(localPath, key, typeof oldObj === "object"),
-            new ChangeLog(undefined, newObj[key]),
+            new ChangeLog(null, newObj[key]),
           );
         }
 
@@ -148,7 +156,7 @@ export class MqttObjectUpdater<ObjectType> {
           Array.from(objChanges.entries()).forEach((entry) => {
             objChanges.set(
               entry[0],
-              new ChangeLog(entry[1].oldValue, undefined),
+              new ChangeLog(entry[1].oldValue, null),
             );
           });
           changes = new Map<string, ChangeLog>([...changes, ...objChanges]);

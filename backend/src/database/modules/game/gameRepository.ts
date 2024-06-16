@@ -12,7 +12,7 @@ export class GameRepository {
 
   public static async saveGame(game: Game, table: Table) {
     try {
-      const gameEntity = GameParser.toGameEntity(game)
+      const gameEntity = await GameParser.toGameEntity(game)
 
       const tableEntity = await TableEntity.findOneBy({name: table.name})
 

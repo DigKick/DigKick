@@ -1,7 +1,7 @@
 import {Column, Entity, JoinColumn, ManyToOne, OneToOne} from "typeorm";
 import {TeamEntity} from "../team/teamEntity.ts";
 import {TableEntity} from "../table/tableEntity.ts";
-import {DkEntity} from "../abstract/dkEntity.ts";
+import {DkEntity} from "../global/dkEntity.ts";
 
 @Entity("game")
 export class GameEntity extends DkEntity {

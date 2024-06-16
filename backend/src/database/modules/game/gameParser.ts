@@ -29,13 +29,13 @@ export class GameParser {
     }
   }
 
-  public static toGameEntity(game: Game): GameEntity {
+  public static async toGameEntity(game: Game): Promise<GameEntity> {
     try {
       const gameEntity = new GameEntity();
 
       gameEntity.gameMode = game.gameMode.toString();
-      gameEntity.teamWhite = TeamParser.toTeamEntity(game.teamWhite);
-      gameEntity.teamBlack = TeamParser.toTeamEntity(game.teamBlack);
+      gameEntity.teamWhite = await TeamParser.toTeamEntity(game.teamWhite);
+      gameEntity.teamBlack = await TeamParser.toTeamEntity(game.teamBlack);
       gameEntity.pointsToWin = game.pointsToWin;
 
       return gameEntity

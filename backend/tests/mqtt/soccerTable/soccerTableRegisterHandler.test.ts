@@ -19,7 +19,7 @@ const invalidUndefinedTableRegisterPayload: TableRegisterPayload = {
 };
 
 beforeEach(() => {
-  soccerTableRegisterHandler = new TableRegisterHandler();
+  soccerTableRegisterHandler = TableRegisterHandler.getInstance();
   TableRegisterHandler.tableHandlers = new Map<
     string,
     TableHandler

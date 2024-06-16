@@ -1,5 +1,5 @@
 import type {EventMapper} from "../../global/eventMapper";
-import {HardwareEventType} from "./hardwareEvent";
+import {SensorEventType} from "./sensorEvent.ts";
 import {TableHandler} from "../../table/handler/tableHandler.ts";
 import {ScoreChange, TeamColor} from "../../../models/team";
 import {DkMqttClient} from "../../client/client";
@@ -8,38 +8,38 @@ import {GameEventType} from "../../game/events/gameEvent";
 import {BaseTopicFactory} from "../../util/baseTopicFactory";
 import {LedUpdatePayload} from "../payloads/ledUpdate";
 
-export class HardwareEventMapper implements EventMapper<HardwareEventType> {
-  private _soccerTableHandler: TableHandler;
+export class SensorEventMapper implements EventMapper<SensorEventType> {
+  private _tableHandler: TableHandler;
   private readonly _teamColor: TeamColor;
 
   constructor(soccerTableHandler: TableHandler, teamColor: TeamColor) {
-    this._soccerTableHandler = soccerTableHandler;
+    this._tableHandler = soccerTableHandler;
     this._teamColor = teamColor;
   }
 
-  map(event: HardwareEventType) {
-    const triggeredEvents = new Set<HardwareEventType>([event]);
+  map(event: SensorEventType, topic: string, payload: any) {
+    const triggeredEvents = new Set<SensorEventType>([event]);
     const dkMqttClient: DkMqttClient = DkMqttClient.getInstance();
 
-    switch (HardwareEventType[event] as HardwareEventType) {
-      case HardwareEventType.BUTTON_0_LOW:
-        this._soccerTableHandler.triggerEvent(TableEventType.FINISH_GAME);
-        this._soccerTableHandler.triggerEvent(TableEventType.NEW_GAME);
+    switch (event) {
+      case SensorEventType.BUTTON_0_LOW:
+        this._tableHandler.triggerEvent(TableEventType.FINISH_GAME, topic, payload);
+        this._tableHandler.triggerEvent(TableEventType.NEW_GAME, topic, payload);
         break;
 
-      case HardwareEventType.BUTTON_1_LOW:
-        this._teamScoreChange(ScoreChange.INCREASE);
+      case SensorEventType.BUTTON_1_LOW:
+        this._teamScoreChange(ScoreChange.INCREASE, topic, payload);
         break;
 
-      case HardwareEventType.BUTTON_2_LOW:
-        this._teamScoreChange(ScoreChange.DECREASE);
+      case SensorEventType.BUTTON_2_LOW:
+        this._teamScoreChange(ScoreChange.DECREASE, topic, payload);
         break;
 
-      case HardwareEventType.LIGHTBARRIER_0_LOW:
-        this._teamScoreChange(ScoreChange.INCREASE);
+      case SensorEventType.LIGHT_BARRIER_0_LOW:
+        this._teamScoreChange(ScoreChange.INCREASE, topic, payload);
         break;
-      case HardwareEventType.LIGHTBARRIER_1_LOW:
-        this._teamScoreChange(ScoreChange.INCREASE);
+      case SensorEventType.LIGHT_BARRIER_1_LOW:
+        this._teamScoreChange(ScoreChange.INCREASE, topic, payload);
         break;
 
       default:
@@ -47,7 +47,7 @@ export class HardwareEventMapper implements EventMapper<HardwareEventType> {
     }
 
     dkMqttClient.publishWithRetain(
-      BaseTopicFactory.getBaseTopic(this._soccerTableHandler.subject) +
+      BaseTopicFactory.getBaseTopic(this._tableHandler.subject) +
       "/debug",
       `{ "lastEvents": "${Array.from(triggeredEvents).join(", ")}" }`,
     );
@@ -60,7 +60,7 @@ export class HardwareEventMapper implements EventMapper<HardwareEventType> {
     const dkMqttClient: DkMqttClient = DkMqttClient.getInstance();
     dkMqttClient.publish(
       BaseTopicFactory.getLedUpdateTopic(
-        this._soccerTableHandler.subject,
+        this._tableHandler.subject,
         this._teamColor,
       ),
       JSON.stringify(
@@ -68,7 +68,7 @@ export class HardwareEventMapper implements EventMapper<HardwareEventType> {
           Array.from(
             {
               length:
-                this._soccerTableHandler.subject.game.getTeamByColor(
+                this._tableHandler.subject.game.getTeamByColor(
                   this._teamColor,
                 ).score * 2,
             },
@@ -82,8 +82,8 @@ export class HardwareEventMapper implements EventMapper<HardwareEventType> {
     );
   }
 
-  private _teamScoreChange(change: ScoreChange) {
-    const eventMap = {
+  private _teamScoreChange(change: ScoreChange, topic: string, payload: any) {
+    const eventCombiner = {
       [TeamColor.WHITE]: {
         [ScoreChange.INCREASE]: GameEventType.WHITE_SCORE_INCREASE,
         [ScoreChange.DECREASE]: GameEventType.WHITE_SCORE_DECREASE,
@@ -94,9 +94,9 @@ export class HardwareEventMapper implements EventMapper<HardwareEventType> {
       },
     };
 
-    const eventType = eventMap[this._teamColor]?.[change];
+    const eventType = eventCombiner[this._teamColor]?.[change];
     if (eventType) {
-      this._soccerTableHandler.gameHandler.triggerEvent(eventType);
+      this._tableHandler.gameHandler.triggerEvent(eventType, topic, payload);
     }
   }
 }

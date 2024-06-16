@@ -3,7 +3,7 @@ import {TeamColor} from "../../../models/team";
 import {BaseTopicFactory} from "../../util/baseTopicFactory";
 import {Table} from "../../../models/table.ts";
 
-export class HardwareTopicManager {
+export class SensorTopicManager {
   constructor(
     private _soccerTable: Table,
     private _teamColor: TeamColor,

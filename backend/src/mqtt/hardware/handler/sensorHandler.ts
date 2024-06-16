@@ -1,21 +1,19 @@
 import {TableHandler} from "../../table/handler/tableHandler.ts";
 import {DkModelHandler, HandlerType} from "../../global/dkModelHandler.ts";
-import {HardwareEventType} from "../events/hardwareEvent";
-import {DkMqttClient} from "../../client/client";
-import {HardwareTopicManager} from "../topics/hardwareTopicManager";
-import type {PinOut, PinStatusPayload,} from "../payloads/pinStatusPayload.ts";
+import {SensorEventType} from "../events/sensorEvent.ts";
+import {SensorTopicManager} from "../topics/sensorTopicManager.ts";
+import type {PinOut, PinStatusPayload} from "../payloads/pinStatusPayload.ts";
 import {BasicTerm} from "../../util/basicTerm";
 import type {TopicSubscriber} from "../../client/topicSubscriber";
-import {HardwareEventMapper} from "../events/hardwareEventMapper";
+import {SensorEventMapper} from "../events/sensorEventMapper.ts";
 import {TeamColor} from "../../../models/team";
 
-export class HardwareHandler extends DkModelHandler<
-  HardwareEventType,
+export class SensorHandler extends DkModelHandler<
+  SensorEventType,
   TableHandler
 > {
   private _soccerTableHandler: TableHandler;
-  private _hardwareTopicManager: HardwareTopicManager;
-  private _dkMqttClient: DkMqttClient;
+  private _sensorTopicManager: SensorTopicManager;
 
   private readonly lightbarrierSubscriber: TopicSubscriber;
   private readonly buttonSubscriber: TopicSubscriber;
@@ -59,7 +57,7 @@ export class HardwareHandler extends DkModelHandler<
       return;
     }
 
-    let toTriggerEvent: HardwareEventType;
+    let toTriggerEvent: SensorEventType;
 
     try {
       toTriggerEvent = this.mapTypeAndIdToEvent(
@@ -76,25 +74,24 @@ export class HardwareHandler extends DkModelHandler<
       return;
     }
 
-    this.triggerEvent(toTriggerEvent);
+    this.triggerEvent(toTriggerEvent, topic, payload);
   };
 
   constructor(subject: TableHandler, teamColor: TeamColor) {
     super(subject, HandlerType.HARDWARE, subject.subject);
-    this._mapper = new HardwareEventMapper(subject, teamColor);
+    this._mapper = new SensorEventMapper(subject, teamColor);
     this._soccerTableHandler = subject;
-    this._hardwareTopicManager = new HardwareTopicManager(
+    this._sensorTopicManager = new SensorTopicManager(
       this._soccerTableHandler.subject,
       teamColor,
     );
-    this._dkMqttClient = DkMqttClient.getInstance();
 
     this.lightbarrierSubscriber = {
-      topic: this._hardwareTopicManager.lightbarriersTopic,
+      topic: this._sensorTopicManager.lightbarriersTopic,
       func: this._topicToEventRouter,
     };
     this.buttonSubscriber = {
-      topic: this._hardwareTopicManager.buttonsTopic,
+      topic: this._sensorTopicManager.buttonsTopic,
       func: this._topicToEventRouter,
     };
 
@@ -109,9 +106,9 @@ export class HardwareHandler extends DkModelHandler<
     const eventTypeString = String(
       `${hardwareType}_${hardwareId}_${pinStatus}`,
     ).toUpperCase();
-    if (HardwareEventType[eventTypeString as keyof typeof HardwareEventType]) {
-      return HardwareEventType[
-        eventTypeString as keyof typeof HardwareEventType
+    if (SensorEventType[eventTypeString as keyof typeof SensorEventType]) {
+      return SensorEventType[
+        eventTypeString as keyof typeof SensorEventType
         ];
     } else {
       this._logger.error(`Enum entry for '${eventTypeString}' does not exist.`);

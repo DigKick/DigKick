@@ -1,6 +1,7 @@
 import {TeamEntity} from "./teamEntity.ts";
 import {Team, TeamColor} from "../../../models/team.ts";
 import {DkParseException} from "../../dkParseException.ts";
+import {PlayerEntity} from "../player/playerEntity.ts";
 
 export class TeamParser {
 
@@ -25,7 +26,7 @@ export class TeamParser {
     }
   }
 
-  public static toTeamEntity(team: Team): TeamEntity {
+  public static async toTeamEntity(team: Team): Promise<TeamEntity> {
     try {
       const teamEntity = new TeamEntity();
 
@@ -33,10 +34,36 @@ export class TeamParser {
       teamEntity.isWinner = team.isWinner;
       teamEntity.score = team.score;
 
+      if (team.playerOne) {
+        const maybePlayerOne = await PlayerEntity.findOneBy({
+          hashSerialNumber: team.playerOne.key
+        })
+
+        if (maybePlayerOne != null) {
+          teamEntity.playerOne = maybePlayerOne
+        }
+      }
+
+      if (team.playerTwo) {
+        const maybePlayerTwo = await PlayerEntity.findOneBy({
+          hashSerialNumber: team.playerTwo.key
+        })
+
+        if (maybePlayerTwo != null) {
+          teamEntity.playerTwo = maybePlayerTwo
+        }
+      }
+
       return teamEntity
     } catch (e) {
       throw new DkParseException(Team.constructor.name, TeamEntity.constructor.name)
     }
   }
 
+
+  private static async getPlayerByHashedSerialNumber(hashedSerialNumber: string) {
+    return await PlayerEntity.findOneBy({
+      hashSerialNumber: hashedSerialNumber
+    });
+  }
 }
