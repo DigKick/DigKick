@@ -27,8 +27,8 @@ components:
     teamColor:
       description: Identifier of a team.
       examples:
-        - "WHITE"
-        - "BLACK"
+        - white
+        - black
 
     buttonId:
       description: Identifier of a button.
@@ -93,6 +93,11 @@ components:
       summary: Information from the nfc reader about the chip.
       payload:
         $ref: "#/components/schemas/nfcReaderSerialNumber"
+    
+    newPlayerNameMessage:
+      summary: The new requested name for the last registered player.
+      payload:
+        $ref: '#/components/schemas/playerNameChange'
 
   schemas:
     gameMode:
@@ -139,7 +144,7 @@ components:
     team:
       type: object
       description: Describes all information about a team.
-      example: { "color": "WHITE", "score": 5, "isWinner": false }
+      example: { "color": "white", "score": 5, "isWinner": false }
       properties:
         color:
           $ref: "#/components/schemas/color"
@@ -156,9 +161,9 @@ components:
     color:
       type: string
       enum:
-        - WHITE
-        - BLACK
-      example: "WHITE"
+        - white
+        - black
+      example: white
 
     nfcReaderSerialNumber:
       type: object
@@ -168,6 +173,17 @@ components:
           description: Serial number of the read nfc chip
       example:
           {  "serialNumber": "serialNumberFromChip" }
+    
+    playerNameChange:
+      type: object
+      properties:
+        newName:
+          type: string
+          description: New name for the player
+      example:
+        {
+          "newName": "new player name"
+        }
 
     displayText:
       type: object
@@ -375,8 +391,20 @@ channels:
       teamColor:
         $ref: "#/components/parameters/teamColor"
     messages:
-      ledMessage:
+      nfcReaderMessage:
         $ref: "#/components/messages/nfcReaderMessage"
+  
+  playerNameUpdate:
+    address: "/table/{tableName}/game/team/{teamColor}/changename"
+    parameters:
+      tableName:
+        $ref: "#/components/parameters/tableName"
+      teamColor:
+        $ref: "#/components/parameters/teamColor"
+    messages:
+      newPlayerNameMessage:
+        $ref: '#/components/messages/newPlayerNameMessage'
+
 
 operations:
   kickerTableRegister:
@@ -402,6 +430,12 @@ operations:
     summary: Read nfc chip serial number for player registration.
     channel:
       $ref: '#/channels/nfcReaderSerialNumberUpdate'
+  
+  playerNameUpdate:
+    action: receive
+    summary: Action to update the name of the player who registrated last to the table.
+    channel:
+      $ref: '#/channels/playerNameUpdate'
 
   gameStatus:
     action: send
