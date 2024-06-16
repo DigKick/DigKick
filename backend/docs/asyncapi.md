@@ -13,6 +13,7 @@ Digital system for kicker tables.
   * [RECEIVE /table/{tableName}/game/team/{teamColor}/button/{buttonId}](#receive-tabletablenamegameteamteamcolorbuttonbuttonid-operation)
   * [RECEIVE /table/{tableName}/game/team/{teamColor}/lightbarrier/{lightBarrierId}](#receive-tabletablenamegameteamteamcolorlightbarrierlightbarrierid-operation)
   * [RECEIVE /table/{tableName}/game/team/{teamColor}/nfc-reader](#receive-tabletablenamegameteamteamcolornfc-reader-operation)
+  * [RECEIVE /table/{tableName}/game/team/{teamColor}/changename](#receive-tabletablenamegameteamteamcolorchangename-operation)
   * [SEND /table/{tableName}/game](#send-tabletablenamegame-operation)
   * [SEND /table/{tableName}/game/team/{teamColor}](#send-tabletablenamegameteamteamcolor-operation)
   * [SEND /table/{tableName}/game/team/{teamColor}/color$](#send-tabletablenamegameteamteamcolorcolor-operation)
@@ -97,11 +98,11 @@ The MQTT broker for development and production.
 | (root) | object | Describes all information about a game. | - | - | **additional properties are allowed** |
 | gameMode | string | - | allowed (`"DEFAULT"`) | - | - |
 | teamWhite | object | Describes all information about a team. | - | - | **additional properties are allowed** |
-| teamWhite.color | string | - | allowed (`"WHITE"`, `"BLACK"`) | - | - |
+| teamWhite.color | string | - | allowed (`"white"`, `"black"`) | - | - |
 | teamWhite.score | integer | - | - | >= 0 | - |
 | teamWhite.isWinner | boolean | - | - | - | - |
 | teamBlack | object | Describes all information about a team. | - | - | **additional properties are allowed** |
-| teamBlack.color | string | - | allowed (`"WHITE"`, `"BLACK"`) | - | - |
+| teamBlack.color | string | - | allowed (`"white"`, `"black"`) | - | - |
 | teamBlack.score | integer | - | - | >= 0 | - |
 | teamBlack.isWinner | boolean | - | - | - | - |
 | pointsToWin | number | - | - | >= 0 | - |
@@ -138,7 +139,7 @@ The MQTT broker for development and production.
 | Name | Type | Description | Value | Constraints | Notes |
 |---|---|---|---|---|---|
 | tableName | string | Identifier of a table. | examples (`"table1"`, `"kjb14123b1jk"`) | - | **required** |
-| teamColor | string | Identifier of a team. | examples (`"WHITE"`, `"BLACK"`) | - | **required** |
+| teamColor | string | Identifier of a team. | examples (`"white"`, `"black"`) | - | **required** |
 
 
 #### Message `teamMessage`
@@ -150,7 +151,7 @@ The MQTT broker for development and production.
 | Name | Type | Description | Value | Constraints | Notes |
 |---|---|---|---|---|---|
 | (root) | object | Describes all information about a team. | - | - | **additional properties are allowed** |
-| color | string | - | allowed (`"WHITE"`, `"BLACK"`) | - | - |
+| color | string | - | allowed (`"white"`, `"black"`) | - | - |
 | score | integer | - | - | >= 0 | - |
 | isWinner | boolean | - | - | - | - |
 
@@ -158,7 +159,7 @@ The MQTT broker for development and production.
 
 ```json
 {
-  "color": "WHITE",
+  "color": "white",
   "score": 5,
   "isWinner": false
 }
@@ -177,7 +178,7 @@ The MQTT broker for development and production.
 | Name | Type | Description | Value | Constraints | Notes |
 |---|---|---|---|---|---|
 | tableName | string | Identifier of a table. | examples (`"table1"`, `"kjb14123b1jk"`) | - | **required** |
-| teamColor | string | Identifier of a team. | examples (`"WHITE"`, `"BLACK"`) | - | **required** |
+| teamColor | string | Identifier of a team. | examples (`"white"`, `"black"`) | - | **required** |
 
 
 #### Message `teamColorMessage`
@@ -188,12 +189,12 @@ The MQTT broker for development and production.
 
 | Name | Type | Description | Value | Constraints | Notes |
 |---|---|---|---|---|---|
-| (root) | string | - | allowed (`"WHITE"`, `"BLACK"`) | - | - |
+| (root) | string | - | allowed (`"white"`, `"black"`) | - | - |
 
 > Examples of payload _(generated)_
 
 ```json
-"WHITE"
+"white"
 ```
 
 
@@ -209,7 +210,7 @@ The MQTT broker for development and production.
 | Name | Type | Description | Value | Constraints | Notes |
 |---|---|---|---|---|---|
 | tableName | string | Identifier of a table. | examples (`"table1"`, `"kjb14123b1jk"`) | - | **required** |
-| teamColor | string | Identifier of a team. | examples (`"WHITE"`, `"BLACK"`) | - | **required** |
+| teamColor | string | Identifier of a team. | examples (`"white"`, `"black"`) | - | **required** |
 
 
 #### Message `teamScoreMessage`
@@ -241,7 +242,7 @@ The MQTT broker for development and production.
 | Name | Type | Description | Value | Constraints | Notes |
 |---|---|---|---|---|---|
 | tableName | string | Identifier of a table. | examples (`"table1"`, `"kjb14123b1jk"`) | - | **required** |
-| teamColor | string | Identifier of a team. | examples (`"WHITE"`, `"BLACK"`) | - | **required** |
+| teamColor | string | Identifier of a team. | examples (`"white"`, `"black"`) | - | **required** |
 
 
 #### Message `teamMessage`
@@ -253,7 +254,7 @@ The MQTT broker for development and production.
 | Name | Type | Description | Value | Constraints | Notes |
 |---|---|---|---|---|---|
 | (root) | object | Describes all information about a team. | - | - | **additional properties are allowed** |
-| color | string | - | allowed (`"WHITE"`, `"BLACK"`) | - | - |
+| color | string | - | allowed (`"white"`, `"black"`) | - | - |
 | score | integer | - | - | >= 0 | - |
 | isWinner | boolean | - | - | - | - |
 
@@ -261,7 +262,7 @@ The MQTT broker for development and production.
 
 ```json
 {
-  "color": "WHITE",
+  "color": "white",
   "score": 5,
   "isWinner": false
 }
@@ -280,7 +281,7 @@ The MQTT broker for development and production.
 | Name | Type | Description | Value | Constraints | Notes |
 |---|---|---|---|---|---|
 | tableName | string | Identifier of a table. | examples (`"table1"`, `"kjb14123b1jk"`) | - | **required** |
-| teamColor | string | Identifier of a team. | examples (`"WHITE"`, `"BLACK"`) | - | **required** |
+| teamColor | string | Identifier of a team. | examples (`"white"`, `"black"`) | - | **required** |
 
 
 #### Message `scoreStatusMessage`
@@ -291,12 +292,12 @@ The MQTT broker for development and production.
 
 | Name | Type | Description | Value | Constraints | Notes |
 |---|---|---|---|---|---|
-| (root) | string | - | allowed (`"WHITE"`, `"BLACK"`) | - | - |
+| (root) | string | - | allowed (`"white"`, `"black"`) | - | - |
 
 > Examples of payload _(generated)_
 
 ```json
-"WHITE"
+"white"
 ```
 
 
@@ -312,7 +313,7 @@ The MQTT broker for development and production.
 | Name | Type | Description | Value | Constraints | Notes |
 |---|---|---|---|---|---|
 | tableName | string | Identifier of a table. | examples (`"table1"`, `"kjb14123b1jk"`) | - | **required** |
-| teamColor | string | Identifier of a team. | examples (`"WHITE"`, `"BLACK"`) | - | **required** |
+| teamColor | string | Identifier of a team. | examples (`"white"`, `"black"`) | - | **required** |
 
 
 #### Message `scoreStatusMessage`
@@ -344,7 +345,7 @@ The MQTT broker for development and production.
 | Name | Type | Description | Value | Constraints | Notes |
 |---|---|---|---|---|---|
 | tableName | string | Identifier of a table. | examples (`"table1"`, `"kjb14123b1jk"`) | - | **required** |
-| teamColor | string | Identifier of a team. | examples (`"WHITE"`, `"BLACK"`) | - | **required** |
+| teamColor | string | Identifier of a team. | examples (`"white"`, `"black"`) | - | **required** |
 | buttonId | string | Identifier of a button. | examples (`"1"`, `"2"`, `"3"`) | - | **required** |
 
 
@@ -380,7 +381,7 @@ The MQTT broker for development and production.
 | Name | Type | Description | Value | Constraints | Notes |
 |---|---|---|---|---|---|
 | tableName | string | Identifier of a table. | examples (`"table1"`, `"kjb14123b1jk"`) | - | **required** |
-| teamColor | string | Identifier of a team. | examples (`"WHITE"`, `"BLACK"`) | - | **required** |
+| teamColor | string | Identifier of a team. | examples (`"white"`, `"black"`) | - | **required** |
 | lightBarrierId | string | Identifier of a light barrier. | examples (`"1"`, `"2"`) | - | **required** |
 
 
@@ -416,7 +417,7 @@ The MQTT broker for development and production.
 | Name | Type | Description | Value | Constraints | Notes |
 |---|---|---|---|---|---|
 | tableName | string | Identifier of a table. | examples (`"table1"`, `"kjb14123b1jk"`) | - | **required** |
-| teamColor | string | Identifier of a team. | examples (`"WHITE"`, `"BLACK"`) | - | **required** |
+| teamColor | string | Identifier of a team. | examples (`"white"`, `"black"`) | - | **required** |
 
 
 #### Message `displayMessage`
@@ -471,7 +472,7 @@ The MQTT broker for development and production.
 | Name | Type | Description | Value | Constraints | Notes |
 |---|---|---|---|---|---|
 | tableName | string | Identifier of a table. | examples (`"table1"`, `"kjb14123b1jk"`) | - | **required** |
-| teamColor | string | Identifier of a team. | examples (`"WHITE"`, `"BLACK"`) | - | **required** |
+| teamColor | string | Identifier of a team. | examples (`"white"`, `"black"`) | - | **required** |
 
 
 #### Message `ledMessage`
@@ -512,10 +513,10 @@ The MQTT broker for development and production.
 | Name | Type | Description | Value | Constraints | Notes |
 |---|---|---|---|---|---|
 | tableName | string | Identifier of a table. | examples (`"table1"`, `"kjb14123b1jk"`) | - | **required** |
-| teamColor | string | Identifier of a team. | examples (`"WHITE"`, `"BLACK"`) | - | **required** |
+| teamColor | string | Identifier of a team. | examples (`"white"`, `"black"`) | - | **required** |
 
 
-#### Message `ledMessage`
+#### Message `nfcReaderMessage`
 
 *Information from the nfc reader about the chip.*
 
@@ -531,6 +532,41 @@ The MQTT broker for development and production.
 ```json
 {
   "serialNumber": "serialNumberFromChip"
+}
+```
+
+
+
+### RECEIVE `/table/{tableName}/game/team/{teamColor}/changename` Operation
+
+*Action to update the name of the player who registrated last to the table.*
+
+* Operation ID: `playerNameUpdate`
+
+#### Parameters
+
+| Name | Type | Description | Value | Constraints | Notes |
+|---|---|---|---|---|---|
+| tableName | string | Identifier of a table. | examples (`"table1"`, `"kjb14123b1jk"`) | - | **required** |
+| teamColor | string | Identifier of a team. | examples (`"white"`, `"black"`) | - | **required** |
+
+
+#### Message `newPlayerNameMessage`
+
+*The new requested name for the last registered player.*
+
+##### Payload
+
+| Name | Type | Description | Value | Constraints | Notes |
+|---|---|---|---|---|---|
+| (root) | object | - | - | - | **additional properties are allowed** |
+| newName | string | New name for the player | - | - | - |
+
+> Examples of payload _(generated)_
+
+```json
+{
+  "newName": "new player name"
 }
 ```
 
