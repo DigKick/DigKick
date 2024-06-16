@@ -61,26 +61,26 @@ test('invalid parse GameEntity to Game: gameMode field', () => {
 
 
 // Game to GameEntity
-test('valid parse Game to GameEntity: teamWhite field', () => {
-  const parsedGameEntity = GameParser.toGameEntity(createValidGame())
+test('valid parse Game to GameEntity: teamWhite field', async () => {
+  const parsedGameEntity = await GameParser.toGameEntity(createValidGame())
 
   expect(parsedGameEntity.teamWhite).not.toBeUndefined()
 })
 
-test('valid parse Game to GameEntity: teamBlack field', () => {
-  const parsedGameEntity = GameParser.toGameEntity(createValidGame())
+test('valid parse Game to GameEntity: teamBlack field', async () => {
+  const parsedGameEntity = await GameParser.toGameEntity(createValidGame())
 
   expect(parsedGameEntity.teamBlack).not.toBeUndefined()
 })
 
-test('valid parse Game to GameEntity: pointsToWin field', () => {
-  const parsedGameEntity = GameParser.toGameEntity(createValidGame())
+test('valid parse Game to GameEntity: pointsToWin field', async () => {
+  const parsedGameEntity = await GameParser.toGameEntity(createValidGame())
 
   expect(parsedGameEntity.pointsToWin).not.toBeUndefined()
 })
 
-test('valid parse Game to GameEntity: gameMode field', () => {
-  const parsedGameEntity = GameParser.toGameEntity(createValidGame())
+test('valid parse Game to GameEntity: gameMode field', async () => {
+  const parsedGameEntity = await GameParser.toGameEntity(createValidGame())
 
   expect(parsedGameEntity.gameMode).not.toBeUndefined()
 })
