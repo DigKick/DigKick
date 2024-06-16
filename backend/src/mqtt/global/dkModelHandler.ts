@@ -9,7 +9,8 @@ export enum HandlerType {
   GAME = BasicTerm.GAME,
   SOCCERTABLE = BasicTerm.TABLE,
   HARDWARE = "Hardware",
-  PLAYER = BasicTerm.PLAYER,
+  PLAYER = "Player",
+  PLAYER_EDITOR = HandlerType.PLAYER + "Editor",
   ABSTRACT = "ABSTRACT",
 }
 
