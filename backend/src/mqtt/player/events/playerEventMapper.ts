@@ -20,12 +20,15 @@ export class PlayerEventMapper implements EventMapper<PlayerEventType> {
         PlayerRepository.getOrCreatePlayer(payload.serialNumber).then((player) => {
           this._tableHandler.subject.game.teamBlack.addPlayer(player)
           this._tableHandler.gameHandler.triggerEvent(GameEventType.PLAYER_CHANGE, topic, payload)
+          this._tableHandler.playerEditHandlerBlack.lastPlayerAdded = player
         })
         break
 
       case PlayerEventType.PLAYER_REGISTER_WHITE_TEAM:
         PlayerRepository.getOrCreatePlayer(payload.serialNumber).then((player) => {
           this._tableHandler.subject.game.teamWhite.addPlayer(player)
+          this._tableHandler.gameHandler.triggerEvent(GameEventType.PLAYER_CHANGE, topic, payload)
+          this._tableHandler.playerEditHandlerWhite.lastPlayerAdded = player
         })
         break
 
