@@ -12,7 +12,7 @@ export class PlayerTopicManager {
   }
 
   nfcReaderTopic() {
-    return BaseTopicFactory.getTeamTopic(this._soccerTable, this._teamColor) + "/" + BasicTerm.NFCREADER;
+    return BaseTopicFactory.getTeamTopic(this._soccerTable, this._teamColor) + "/" + BasicTerm.NFC_READER;
   }
 
 }
