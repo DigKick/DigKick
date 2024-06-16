@@ -15,7 +15,7 @@ export class NfcReaderTopicManager {
   }
 
   get nfcReaderTopic(): string {
-    return this._baseTeamTopic + `/${BasicTerm.NfcReader}`;
+    return this._baseTeamTopic + `/${BasicTerm.NFC_READER}`;
   }
 
 
