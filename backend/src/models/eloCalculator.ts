@@ -22,10 +22,10 @@ export class EloCalculator {
     const teamOneAvgElo = Math.floor((teamOne.playerOne.elo + teamOne.playerTwo.elo) / 2)
     const teamTwoAvgElo = Math.floor((teamTwo.playerOne.elo + teamTwo.playerTwo.elo) / 2)
 
-    const expectedTeamOneWin = 1 / (1 + Math.pow(10, (teamOneAvgElo - teamTwoAvgElo) / 400))
+    const expectedTeamOneWin = 1 / (1 + Math.pow(10, (teamTwoAvgElo - teamOneAvgElo) / 400))
     const score = teamOneIsWinner ? 1 : 0
 
-    return (score - expectedTeamOneWin) * EloCalculator.K_FACTOR
+    return Math.floor((score - expectedTeamOneWin) * EloCalculator.K_FACTOR)
   }
 
 }
