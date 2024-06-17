@@ -27,15 +27,13 @@ export class TableEventMapper
         break;
 
       case TableEventType.FINISH_GAME:
-
         GameRepository.saveGame(this._table.game, this._table).then(() => {
-          PlayerRepository.updatePlayerElo(this._table.game).then(() => {
+          PlayerRepository.updatePlayerEloInGame(this._table.game).then(() => {
             this._table.newGame();
+            this._gameHandler.triggerEvent(GameEventType.WHITE_SCORE_CHANGE, topic, payload);
+            this._gameHandler.triggerEvent(GameEventType.BLACK_SCORE_CHANGE, topic, payload);
           })
         })
-
-        this._gameHandler.triggerEvent(GameEventType.WHITE_SCORE_CHANGE, topic, payload);
-        this._gameHandler.triggerEvent(GameEventType.BLACK_SCORE_CHANGE, topic, payload);
         break;
 
       case TableEventType.CANCEL_GAME:
