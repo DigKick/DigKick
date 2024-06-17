@@ -24,7 +24,6 @@ export class SensorEventMapper implements EventMapper<SensorEventType> {
     switch (event) {
       case SensorEventType.BUTTON_0_LOW:
         this._tableHandler.triggerEvent(TableEventType.FINISH_GAME, topic, payload);
-        this._tableHandler.triggerEvent(TableEventType.NEW_GAME, topic, payload);
         break;
 
       case SensorEventType.BUTTON_1_LOW:
