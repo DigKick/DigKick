@@ -49,18 +49,20 @@ export class Team {
   }
 
   addPlayer(newPlayer: Player) {
-    if (this._playerOne === newPlayer || this._playerTwo === newPlayer) {
-      return;
-    }
-
     if (!this._playerOne) {
       this._playerOne = newPlayer;
       return;
     }
 
-    if (this._playerOne && !this._playerTwo) {
+    if (this._playerOne.key != newPlayer.key && !this._playerTwo) {
       this._playerTwo = this._playerOne;
       this._playerOne = newPlayer;
+      return;
+    } else {
+
+    }
+
+    if (this._playerOne.key == newPlayer.key || this._playerTwo!.key == newPlayer.key) {
       return;
     }
 
