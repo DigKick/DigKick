@@ -44,36 +44,33 @@ export class PlayerRepository {
     return null
   }
 
-  public static async updatePlayerElo(game: Game) {
-    const gameClone = structuredClone(game)
-    if (!gameClone.teamWhite.playerOne || !gameClone.teamWhite.playerTwo ||
-      !gameClone.teamBlack.playerOne || !gameClone.teamBlack.playerTwo) {
-      console.log(">>> not enough players")
+  public static async updatePlayerEloInGame(game: Game) {
+    if (!game.teamWhite.playerOne || !game.teamWhite.playerTwo ||
+      !game.teamBlack.playerOne || !game.teamBlack.playerTwo) {
       return
     }
 
-    const teamWhiteEloDiff = EloCalculator.getEloDifference(gameClone.teamWhite, gameClone.teamBlack)
-    const teamBlackEloDiff = EloCalculator.getEloDifference(gameClone.teamBlack, gameClone.teamWhite)
+    const teamWhiteEloDiff = EloCalculator.getEloDifference(game.teamWhite, game.teamBlack)
+    const teamBlackEloDiff = EloCalculator.getEloDifference(game.teamBlack, game.teamWhite)
 
-    console.log("team white elo: ", teamWhiteEloDiff)
-    console.log("team black elo: ", teamBlackEloDiff)
+    PlayerRepository._updatePlayerElo(game.teamWhite.playerOne, teamWhiteEloDiff)
+    PlayerRepository._updatePlayerElo(game.teamWhite.playerTwo, teamWhiteEloDiff)
+    PlayerRepository._updatePlayerElo(game.teamBlack.playerOne, teamBlackEloDiff)
+    PlayerRepository._updatePlayerElo(game.teamBlack.playerTwo, teamBlackEloDiff)
+  }
 
-    const newPlayerOneWhite = gameClone.teamWhite.playerOne
-    newPlayerOneWhite.elo += teamWhiteEloDiff
+  private static _updatePlayerElo(player: Player, eloDiff: number) {
+    PlayerEntity.findOneBy({hashSerialNumber: player.key}).then((playerEntity) => {
+      if (!playerEntity) {
+        return
+      }
+      playerEntity.elo += eloDiff
 
-    const newPlayerTwoWhite = gameClone.teamWhite.playerTwo
-    newPlayerTwoWhite.elo += teamWhiteEloDiff
+      if (playerEntity.elo < 0) {
+        playerEntity.elo = 0
+      }
 
-    const newPlayerOneBlack = gameClone.teamBlack.playerOne
-    newPlayerOneBlack.elo += teamBlackEloDiff
-
-    const newPlayerTwoBlack = gameClone.teamBlack.playerTwo
-    newPlayerTwoBlack.elo += teamBlackEloDiff
-
-    await PlayerEntity.save(newPlayerOneWhite)
-    await PlayerEntity.save(newPlayerTwoWhite)
-
-    await PlayerEntity.save(newPlayerOneBlack)
-    await PlayerEntity.save(newPlayerTwoBlack)
+      PlayerEntity.save(playerEntity).then()
+    })
   }
 }
