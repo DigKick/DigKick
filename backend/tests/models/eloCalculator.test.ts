@@ -4,8 +4,8 @@ import {Player} from "../../src/models/player.ts";
 import {EloCalculator} from "../../src/models/eloCalculator.ts";
 
 
-let teamOne!: Team
-let teamTwo!: Team
+let teamOne: Team = new Team(TeamColor.WHITE)
+let teamTwo: Team = new Team(TeamColor.BLACK)
 
 beforeEach(() => {
   teamOne = new Team(TeamColor.WHITE)
@@ -24,8 +24,45 @@ beforeEach(() => {
   teamTwo.addPlayer(playerFour)
 })
 
+test('team one has an undefined player', () => {
+  teamOne = new Team(TeamColor.WHITE)
 
-test('basic elo calculation (from 1500 / 1900)', () => {
+  expect(EloCalculator.getEloDifference(teamOne, teamTwo, true)).toBe(0)
+
+  teamOne.addPlayer(new Player("playerOne", "playerOne", 100))
+
+  expect(EloCalculator.getEloDifference(teamOne, teamTwo, true)).toBe(0)
+})
+
+test('team two has an undefined player', () => {
+  teamTwo = new Team(TeamColor.WHITE)
+
+  expect(EloCalculator.getEloDifference(teamOne, teamTwo, true)).toBe(0)
+
+  teamTwo.addPlayer(new Player("playerOne", "playerOne", 100))
+
+  expect(EloCalculator.getEloDifference(teamOne, teamTwo, true)).toBe(0)
+})
+
+test('basic elo calculation (100 - 100)', () => {
+  const teamOneEloDiff = EloCalculator.getEloDifference(teamOne, teamTwo, true)
+
+  expect(teamOneEloDiff).toBe(16)
+
+})
+
+test('basic elo calculation (1500 - 1900)', () => {
+
+  // @ts-ignore
+  teamOne.playerOne!.elo = 1500
+  // @ts-ignore
+  teamOne.playerTwo!.elo = 1500
+
+  // @ts-ignore
+  teamTwo.playerOne!.elo = 1900
+  // @ts-ignore
+  teamTwo.playerTwo!.elo = 1900
+
   const teamOneEloDiff = EloCalculator.getEloDifference(teamOne, teamTwo, true)
 
   expect(teamOneEloDiff).toBe(29)
