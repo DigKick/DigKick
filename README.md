@@ -17,7 +17,7 @@ In later steps the backend will store data about the games in a simple database.
 
 - [X] Create database and save games in it
 - [X] Player management (Register & Login)
-- [ ] Make player rankings
+- [X] Make player rankings
 
 <br>
 
