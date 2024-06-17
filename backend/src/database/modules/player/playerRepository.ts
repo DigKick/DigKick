@@ -48,11 +48,12 @@ export class PlayerRepository {
     const gameClone = structuredClone(game)
     if (!gameClone.teamWhite.playerOne || !gameClone.teamWhite.playerTwo ||
       !gameClone.teamBlack.playerOne || !gameClone.teamBlack.playerTwo) {
+      console.log(">>> not enough players")
       return
     }
 
-    const teamWhiteEloDiff = EloCalculator.getEloDifference(gameClone.teamWhite, gameClone.teamBlack, gameClone.teamWhite.isWinner)
-    const teamBlackEloDiff = EloCalculator.getEloDifference(gameClone.teamBlack, gameClone.teamWhite, gameClone.teamBlack.isWinner)
+    const teamWhiteEloDiff = EloCalculator.getEloDifference(gameClone.teamWhite, gameClone.teamBlack)
+    const teamBlackEloDiff = EloCalculator.getEloDifference(gameClone.teamBlack, gameClone.teamWhite)
 
     console.log("team white elo: ", teamWhiteEloDiff)
     console.log("team black elo: ", teamBlackEloDiff)

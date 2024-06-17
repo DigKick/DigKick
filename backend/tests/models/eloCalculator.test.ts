@@ -27,25 +27,26 @@ beforeEach(() => {
 test('team one has an undefined player', () => {
   teamOne = new Team(TeamColor.WHITE)
 
-  expect(EloCalculator.getEloDifference(teamOne, teamTwo, true)).toBe(0)
+  expect(EloCalculator.getEloDifference(teamOne, teamTwo)).toBe(0)
 
   teamOne.addPlayer(new Player("playerOne", "playerOne", 100))
 
-  expect(EloCalculator.getEloDifference(teamOne, teamTwo, true)).toBe(0)
+  expect(EloCalculator.getEloDifference(teamOne, teamTwo)).toBe(0)
 })
 
 test('team two has an undefined player', () => {
   teamTwo = new Team(TeamColor.WHITE)
 
-  expect(EloCalculator.getEloDifference(teamOne, teamTwo, true)).toBe(0)
+  expect(EloCalculator.getEloDifference(teamOne, teamTwo)).toBe(0)
 
   teamTwo.addPlayer(new Player("playerOne", "playerOne", 100))
 
-  expect(EloCalculator.getEloDifference(teamOne, teamTwo, true)).toBe(0)
+  expect(EloCalculator.getEloDifference(teamOne, teamTwo)).toBe(0)
 })
 
 test('basic elo calculation (100 - 100)', () => {
-  const teamOneEloDiff = EloCalculator.getEloDifference(teamOne, teamTwo, true)
+  teamOne.isWinner = true
+  const teamOneEloDiff = EloCalculator.getEloDifference(teamOne, teamTwo)
 
   expect(teamOneEloDiff).toBe(16)
 
@@ -58,12 +59,14 @@ test('basic elo calculation (1500 - 1900)', () => {
   // @ts-ignore
   teamOne.playerTwo!.elo = 1500
 
+  teamOne.isWinner = true
+
   // @ts-ignore
   teamTwo.playerOne!.elo = 1900
   // @ts-ignore
   teamTwo.playerTwo!.elo = 1900
 
-  const teamOneEloDiff = EloCalculator.getEloDifference(teamOne, teamTwo, true)
+  const teamOneEloDiff = EloCalculator.getEloDifference(teamOne, teamTwo)
 
   expect(teamOneEloDiff).toBe(29)
 
