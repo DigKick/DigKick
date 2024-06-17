@@ -7,6 +7,7 @@ import {TeamColor} from "../../../models/team";
 import {TableEventMapper} from "../events/tableEventMapper.ts";
 import {NfcReaderHandler} from "../../hardware/handler/nfcReaderHandler.ts";
 import {PlayerHandler} from "../../player/handler/playerHandler.ts";
+import {PlayerEditHandler} from "../../player/handler/playerEditHandler.ts";
 
 export class TableHandler extends DkModelHandler<
   TableEventType,
@@ -20,6 +21,9 @@ export class TableHandler extends DkModelHandler<
   private readonly _nfcHandlerWhite: NfcReaderHandler;
   private readonly _nfcHandlerBlack: NfcReaderHandler;
 
+  readonly playerEditHandlerWhite: PlayerEditHandler;
+  readonly playerEditHandlerBlack: PlayerEditHandler;
+
   constructor(soccerTable: Table) {
     super(soccerTable, HandlerType.SOCCERTABLE, soccerTable);
 
@@ -30,6 +34,9 @@ export class TableHandler extends DkModelHandler<
     this._nfcHandlerBlack = new NfcReaderHandler(this, TeamColor.BLACK);
 
     this._playerHandler = new PlayerHandler(this, this.subject)
+
+    this.playerEditHandlerWhite = new PlayerEditHandler(this, TeamColor.WHITE);
+    this.playerEditHandlerBlack = new PlayerEditHandler(this, TeamColor.BLACK);
 
     this._gameHandler = new GameHandler(this.subject);
     this._mapper = new TableEventMapper(soccerTable, this._gameHandler);

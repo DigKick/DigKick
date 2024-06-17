@@ -4,6 +4,6 @@ export enum BasicTerm {
   TEAM = "team",
   LIGHTBARRIER = "lightbarrier",
   BUTTON = "button",
-  NfcReader = "nfc-reader",
+  NFC_READER = "nfc-reader",
   PLAYER = "player"
 }
