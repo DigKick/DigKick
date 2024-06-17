@@ -41,6 +41,13 @@ export class Team {
     return this._playerTwo
   }
 
+  reset() {
+    this._playerOne = undefined;
+    this._playerTwo = undefined;
+    this.score = 0;
+    this.isWinner = false
+  }
+
   addPlayer(newPlayer: Player) {
     if (this._playerOne === newPlayer || this._playerTwo === newPlayer) {
       return;
