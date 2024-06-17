@@ -41,19 +41,26 @@ export class Team {
     return this._playerTwo
   }
 
-  addPlayer(newPlayer: Player) {
-    if (this._playerOne === newPlayer || this._playerTwo === newPlayer) {
-      return;
-    }
+  reset() {
+    this._playerOne = undefined;
+    this._playerTwo = undefined;
+    this.score = 0;
+    this.isWinner = false
+  }
 
+  addPlayer(newPlayer: Player) {
     if (!this._playerOne) {
       this._playerOne = newPlayer;
       return;
     }
 
-    if (this._playerOne && !this._playerTwo) {
+    if (this._playerOne.key != newPlayer.key && !this._playerTwo) {
       this._playerTwo = this._playerOne;
       this._playerOne = newPlayer;
+      return;
+    }
+
+    if (this._playerOne.key == newPlayer.key || this._playerTwo!.key == newPlayer.key) {
       return;
     }
 

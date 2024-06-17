@@ -39,3 +39,20 @@ test('add three players to white team', () => {
   expect(teamObj.playerOne).toEqual(playerThree)
   expect(teamObj.playerTwo).toEqual(playerTwo)
 })
+
+test('add players two times to a team', () => {
+  teamObj.addPlayer(playerOne)
+  teamObj.addPlayer(playerOne)
+
+  expect(teamObj.playerOne).toEqual(playerOne)
+  expect(teamObj.playerTwo).toBeUndefined()
+})
+
+test('add players two times to a team', () => {
+  teamObj.addPlayer(playerOne)
+  teamObj.addPlayer(playerTwo)
+  teamObj.addPlayer(playerOne)
+
+  expect(teamObj.playerOne).toEqual(playerTwo)
+  expect(teamObj.playerTwo).toEqual(playerOne)
+})

@@ -1,4 +1,4 @@
-import {Column, Entity, JoinColumn, OneToOne} from "typeorm";
+import {Column, Entity, JoinColumn, ManyToOne} from "typeorm";
 import {DkEntity} from "../global/dkEntity.ts";
 import {PlayerEntity} from "../player/playerEntity.ts";
 
@@ -14,11 +14,11 @@ export class TeamEntity extends DkEntity {
   @Column()
   isWinner!: boolean;
 
-  @OneToOne(() => PlayerEntity, {nullable: true, eager: true})
+  @ManyToOne(() => PlayerEntity, {nullable: true, eager: true})
   @JoinColumn()
   playerOne!: PlayerEntity;
 
-  @OneToOne(() => PlayerEntity, {nullable: true, eager: true})
+  @ManyToOne(() => PlayerEntity, {nullable: true, eager: true})
   @JoinColumn()
   playerTwo!: PlayerEntity;
 
