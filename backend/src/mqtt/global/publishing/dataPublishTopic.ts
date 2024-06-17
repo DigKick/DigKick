@@ -1,5 +1,6 @@
 export enum DataPublishTopic {
   BASE = 'api',
+  ALL = 'all',
   RECENT = 'recent',
   ID = 'id',
   REQUEST = 'request',
