@@ -74,8 +74,9 @@ export class Game {
   }
 
   public reset() {
-    this.teamWhite.score = 0;
-    this.teamBlack.score = 0;
+    this.teamWhite.reset();
+    this.teamBlack.reset();
+
 
     this.resetWinnerTeam();
   }
