@@ -4,6 +4,8 @@ import {PlayerEntity} from "./playerEntity.ts";
 import {PlayerParser} from "./playerParser.ts";
 import type {Player} from "../../../models/player.ts";
 import {SerialNumberHasher} from "./serialNumberHasher.ts";
+import type {Game} from "../../../models/game.ts";
+import {EloCalculator} from "../../../models/eloCalculator.ts";
 
 export class PlayerRepository {
 
@@ -40,5 +42,37 @@ export class PlayerRepository {
       }
     }
     return null
+  }
+
+  public static async updatePlayerElo(game: Game) {
+    const gameClone = structuredClone(game)
+    if (!gameClone.teamWhite.playerOne || !gameClone.teamWhite.playerTwo ||
+      !gameClone.teamBlack.playerOne || !gameClone.teamBlack.playerTwo) {
+      return
+    }
+
+    const teamWhiteEloDiff = EloCalculator.getEloDifference(gameClone.teamWhite, gameClone.teamBlack, gameClone.teamWhite.isWinner)
+    const teamBlackEloDiff = EloCalculator.getEloDifference(gameClone.teamBlack, gameClone.teamWhite, gameClone.teamBlack.isWinner)
+
+    console.log("team white elo: ", teamWhiteEloDiff)
+    console.log("team black elo: ", teamBlackEloDiff)
+
+    const newPlayerOneWhite = gameClone.teamWhite.playerOne
+    newPlayerOneWhite.elo += teamWhiteEloDiff
+
+    const newPlayerTwoWhite = gameClone.teamWhite.playerTwo
+    newPlayerTwoWhite.elo += teamWhiteEloDiff
+
+    const newPlayerOneBlack = gameClone.teamBlack.playerOne
+    newPlayerOneBlack.elo += teamBlackEloDiff
+
+    const newPlayerTwoBlack = gameClone.teamBlack.playerTwo
+    newPlayerTwoBlack.elo += teamBlackEloDiff
+
+    await PlayerEntity.save(newPlayerOneWhite)
+    await PlayerEntity.save(newPlayerTwoWhite)
+
+    await PlayerEntity.save(newPlayerOneBlack)
+    await PlayerEntity.save(newPlayerTwoBlack)
   }
 }
