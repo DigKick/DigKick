@@ -23,6 +23,7 @@ Digital system for kicker tables.
   * [SEND /table/{tableName}/game/team/winner/score$](#send-tabletablenamegameteamwinnerscore-operation)
   * [SEND /table/{tableName}/game/team/{teamColor}/display](#send-tabletablenamegameteamteamcolordisplay-operation)
   * [SEND /table/{tableName}/game/team/{teamColor}/leds](#send-tabletablenamegameteamteamcolorleds-operation)
+  * [SEND /api/player/all](#send-apiplayerall-operation)
 
 ## Servers
 
@@ -568,6 +569,61 @@ The MQTT broker for development and production.
 {
   "newName": "new player name"
 }
+```
+
+
+
+### SEND `/api/player/all` Operation
+
+*Publishes all the players here.*
+
+* Operation ID: `playerScoreBoard`
+
+#### Message `playerList`
+
+*List of all players sorted by elo score.*
+
+##### Payload
+
+| Name | Type | Description | Value | Constraints | Notes |
+|---|---|---|---|---|---|
+| (root) | array&lt;object&gt; | - | - | - | - |
+| id | number | Identifier of the entity | - | - | - |
+| createdAt | string | Holds the date as string when this entity got created | - | - | - |
+| updatedAt | string | Holds the date as string when this entity got updated the last time | - | - | - |
+| elo | integer | Elo score of the player | - | - | - |
+| name | string | Auto generated or set user name of the player | - | - | - |
+| hashSerialNumber | string | Hashed serial number - only used on server - censored for frontend | - | - | - |
+
+> Examples of payload _(generated)_
+
+```json
+[
+  {
+    "id": 3,
+    "createdAt": "2024-06-17T22:04:32.000Z",
+    "updatedAt": "2024-06-17T22:04:51.000Z",
+    "elo": 69420,
+    "name": "makoeta",
+    "hashSerialNumber": "CENSORED"
+  },
+  {
+    "id": 1,
+    "createdAt": "2024-06-17T19:49:17.000Z",
+    "updatedAt": "2024-06-17T19:50:28.000Z",
+    "elo": 3000,
+    "name": "voma",
+    "hashSerialNumber": "CENSORED"
+  },
+  {
+    "id": 2,
+    "createdAt": "2024-06-17T19:49:19.000Z",
+    "updatedAt": "2024-06-17T19:50:28.000Z",
+    "elo": 84,
+    "name": "random atze",
+    "hashSerialNumber": "CENSORED"
+  }
+]
 ```
 
 
