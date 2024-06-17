@@ -58,8 +58,6 @@ export class Team {
       this._playerTwo = this._playerOne;
       this._playerOne = newPlayer;
       return;
-    } else {
-
     }
 
     if (this._playerOne.key == newPlayer.key || this._playerTwo!.key == newPlayer.key) {
