@@ -20,7 +20,7 @@ bun install
 To run:
 
 ```bash
-bun run app.ts
+npm run start:dev
 ```
 
 ## Setup .env

@@ -71,4 +71,18 @@ export class PlayerRepository {
 
     return
   }
+
+  public static async updatePlayerName(player: Player, newName: string): Promise<PlayerEntity | undefined> {
+    const playerEntity = await PlayerEntity.findOneBy({
+      hashSerialNumber: player.key
+    })
+
+    if (!playerEntity) {
+      return
+    }
+
+    playerEntity.name = newName;
+
+    return await PlayerEntity.save(playerEntity)
+  }
 }

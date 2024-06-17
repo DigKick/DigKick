@@ -2,6 +2,9 @@ export class DataPublisher {
 
   protected static recentItemCount = 10;
 
+  public static async publishAll() {
+  }
+
   public async publishRecent(amount: number) {
   }
 

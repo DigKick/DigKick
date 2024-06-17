@@ -5,6 +5,7 @@ import {GameHandler} from "../../game/handler/gameHandler";
 import {GameEventType} from "../../game/events/gameEvent";
 import {GameRepository} from "../../../database/modules/game/gameRepository.ts";
 import {PlayerRepository} from "../../../database/modules/player/playerRepository.ts";
+import {PlayerDataPublisher} from "../../player/publisher/playerDataPublisher.ts";
 
 export class TableEventMapper
   implements EventMapper<TableEventType> {
@@ -28,10 +29,12 @@ export class TableEventMapper
 
       case TableEventType.FINISH_GAME:
         GameRepository.saveGame(this._table.game, this._table).then(() => {
-          PlayerRepository.updatePlayerEloInGame(this._table.game).then(() => {
+          PlayerRepository.updatePlayerEloInGame(this._table.game).then(async () => {
             this._table.newGame();
             this._gameHandler.triggerEvent(GameEventType.WHITE_SCORE_CHANGE, topic, payload);
             this._gameHandler.triggerEvent(GameEventType.BLACK_SCORE_CHANGE, topic, payload);
+
+            await PlayerDataPublisher.publishAll()
           })
         })
         break;

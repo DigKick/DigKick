@@ -98,6 +98,11 @@ components:
       summary: The new requested name for the last registered player.
       payload:
         $ref: '#/components/schemas/playerNameChange'
+    
+    playerEntityListMessage:
+      summary: List of all players sorted by elo score.
+      payload:
+        $ref: '#/components/schemas/playerEntityList'
 
   schemas:
     gameMode:
@@ -252,6 +257,85 @@ components:
             - NEON RUN RIGHT
             - PARTY
             - FIREWORK
+    
+    id:
+      type: number
+      description: Identifier of the entity
+      min: 1
+      example: 69
+
+    createdAt:
+      type: string
+      description: Holds the date as string when this entity got created
+      example: "2024-06-17T19:49:24.000Z"
+    
+    updatedAt:
+      type: string
+      description: Holds the date as string when this entity got updated the last time
+      example: "2024-06-17T19:49:24.000Z"
+
+
+    playerEntity:
+      type: object
+      properties:
+        id:
+          $ref: "#/components/schemas/id"
+        createdAt:
+          $ref: "#/components/schemas/createdAt"
+        updatedAt:
+          $ref: "#/components/schemas/updatedAt"
+        elo:
+          type: integer
+          min: 0
+          description: Elo score of the player
+        name:
+          type: string
+          description: Auto generated or set user name of the player
+        hashSerialNumber:
+          type: string
+          description: Hashed serial number - only used on server - censored for frontend
+      example:
+        {
+              "id": 1,
+              "createdAt": "2024-06-17T22:04:32.000Z",
+              "updatedAt": "2024-06-17T22:04:51.000Z",
+              "elo": 69420,
+              "name": "makoeta",
+              "hashSerialNumber": "CENSORED"
+          }
+      
+    
+    playerEntityList:
+      type: array
+      items:
+        $ref: "#/components/schemas/playerEntity"
+      example:
+        [
+          {
+              "id": 3,
+              "createdAt": "2024-06-17T22:04:32.000Z",
+              "updatedAt": "2024-06-17T22:04:51.000Z",
+              "elo": 69420,
+              "name": "makoeta",
+              "hashSerialNumber": "CENSORED"
+          },
+          {
+              "id": 1,
+              "createdAt": "2024-06-17T19:49:17.000Z",
+              "updatedAt": "2024-06-17T19:50:28.000Z",
+              "elo": 3000,
+              "name": "voma",
+              "hashSerialNumber": "CENSORED"
+          },
+          {
+              "id": 2,
+              "createdAt": "2024-06-17T19:49:19.000Z",
+              "updatedAt": "2024-06-17T19:50:28.000Z",
+              "elo": 84,
+              "name": "random atze",
+              "hashSerialNumber": "CENSORED"
+          }
+        ]
 
 channels:
   kickerTableRegister:
@@ -405,6 +489,12 @@ channels:
       newPlayerNameMessage:
         $ref: '#/components/messages/newPlayerNameMessage'
 
+  apiPlayerAll:
+    address: "/api/player/all"
+    messages:
+      playerList:
+        $ref: '#/components/messages/playerEntityListMessage'
+
 
 operations:
   kickerTableRegister:
@@ -490,3 +580,9 @@ operations:
     summary: LED(s) update
     channel:
       $ref: "#/channels/ledStripUpdate"
+
+  playerScoreBoard:
+    action: send
+    summary: Publishes all the players here.
+    channel:
+      $ref: "#/channels/apiPlayerAll"
