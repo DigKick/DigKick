@@ -81,6 +81,10 @@ export class Game {
     this.resetWinnerTeam();
   }
 
+  toString() {
+    return JSON.stringify(this.toJSON())
+  }
+
   toJSON() {
     return {
       teamWhite: this.teamWhite.toJSON(),
