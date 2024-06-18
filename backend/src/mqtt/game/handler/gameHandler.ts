@@ -1,47 +1,16 @@
+import {GameEventType} from "../events/gameEvent";
+import {Table} from "../../../models/table.ts";
+import {DkModelHandler, HandlerType} from "../../global/dkModelHandler.ts";
 import {Game} from "../../../models/game";
-import {gameEventMapper, GameEventType} from "../events/gameEvent";
+import {GameEventMapper} from "../events/gameEventMapper";
 
-export class GameHandler {
-
+export class GameHandler extends DkModelHandler<GameEventType, Game> {
   public observerMap: Map<GameEventType, Function> = new Map();
-  public game!: Game
+  public soccerTable: Table;
 
-  constructor() {
-    this.newGame()
-  }
-
-  public newGame() {
-    this.game = new Game()
-    this._notifyObserver(GameEventType.START)
-  }
-
-  public triggerEvent(event: GameEventType) {
-    const triggeredEvents = gameEventMapper(event, this.game)
-    triggeredEvents.forEach((event) => {
-      this._notifyObserver(event);
-    })
-  }
-
-  private _notifyObserver(event: GameEventType) {
-    const callback = this.observerMap.get(event)
-    if (callback) {
-      callback(this.game)
-    }
-  }
-
-  public subscribe(event: GameEventType, observer: Function) {
-    if (Array.from(this.observerMap.values()).includes(observer)) {
-      // observer already subscribed
-      return;
-    }
-    this.observerMap.set(event, observer)
-  }
-
-  public unsubscribe(observer: Function) {
-    Array.from(this.observerMap.entries()).forEach((entry) => {
-      if (entry[1] === observer) {
-        this.observerMap.delete(entry[0])
-      }
-    })
+  constructor(soccerTable: Table) {
+    super(soccerTable.game, HandlerType.GAME, soccerTable);
+    this._mapper = new GameEventMapper(soccerTable);
+    this.soccerTable = soccerTable;
   }
 }

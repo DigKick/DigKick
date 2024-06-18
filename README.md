@@ -2,20 +2,22 @@
 
 ## Backend 🕹️
 
-### Framework: [NodeJS](https://nodejs.org/) / [Bun](https://bun.sh/)
+### Framework: [Bun](https://bun.sh/)
 
 The backend handles the basic game logic and manages all kicker tables and games played on them. It subscribes to hardware sensors via the MQTT broker. Conversely, the hardware subscribes to topics that allow the backend to control the LED strip and the display.
 
 In later steps the backend will store data about the games in a simple database. Further features will be automated statistics about the games played, player registration and an Elo system.
 
 - [X] Implement class for game logic
-- [ ] Implement class for kicker tables
-- [ ] Wire it up to the MQTT Broker
-- [ ] Make a websocket for the frontend
+- [X] Implement class for kicker tables
+- [X] Wire it up to the MQTT Broker
+- [X] Make a websocket for the frontend (emqx already provides a feature like this)
 
 <br>
 
-- [ ] Create database and save games in it
+- [X] Create database and save games in it
+- [X] Player management (Register & Login)
+- [X] Make player rankings
 
 <br>
 
