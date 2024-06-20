@@ -26,14 +26,14 @@ test("test valid lightbarrier mappings", () => {
   for (let i = 0; i < 2; i++) {
     expect(() =>
       hardwareHandler.mapTypeAndIdToEvent(
-        BasicTerm.LIGHTBARRIER,
+        BasicTerm.LIGHT_BARRIER,
         i,
         PinOut.HIGH,
       ),
     ).not.toThrowError();
     expect(() =>
       hardwareHandler.mapTypeAndIdToEvent(
-        BasicTerm.LIGHTBARRIER,
+        BasicTerm.LIGHT_BARRIER,
         i,
         PinOut.LOW,
       ),
