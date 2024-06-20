@@ -28,7 +28,7 @@ export class DkMqttClientService {
   }
 
   private topics: { [topic: string]: Subject<string> } = {};
-  signalTableIds = signal<String[]>([]);
+  signalTableNames = signal<String[]>([]);
 
   publish = {
     topic: 'topic/browser',
@@ -58,8 +58,8 @@ export class DkMqttClientService {
     this._mqttService.onMessage.subscribe((packet: any) => {
       if (packet.topic === '/tables') {
         try {
-          const ids = JSON.parse(packet.payload.toString()).ids;
-          this.signalTableIds.set(ids);
+          const names = JSON.parse(packet.payload.toString()).names;
+          this.signalTableNames.set(names);
         }
         catch (e) {
           console.log(e);
