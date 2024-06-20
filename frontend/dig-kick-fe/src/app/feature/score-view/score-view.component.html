@@ -1,0 +1,22 @@
+<div class="md:container md:mx-auto">
+  <div class="overflow-x-auto mt-[3rem]">
+    <table class=" bg-base-300 table table-zebra lg:w-[40%] lg:md:w-[50%] mx-auto">
+      <!-- head -->
+      <thead class="text-[1.5rem]">
+        <tr>
+          <th></th>
+          <th>Name</th>
+          <th class="text-right">Score</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- loop over players and generate rows -->
+        <tr *ngFor="let player of data; let i = index" class="text-[1.25rem]">
+          <th class="text-right">{{ i + 1 }}</th>
+          <td>{{ player.name }} </td>
+          <td class="text-right text-orange-400">{{ player.elo }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
