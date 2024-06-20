@@ -21,6 +21,8 @@ export class SensorEventMapper implements EventMapper<SensorEventType> {
     const triggeredEvents = new Set<SensorEventType>([event]);
     const dkMqttClient: DkMqttClient = DkMqttClient.getInstance();
 
+    console.log(event)
+
     switch (event) {
       case SensorEventType.BUTTON_0_LOW:
         this._tableHandler.triggerEvent(TableEventType.FINISH_GAME, topic, payload);
@@ -34,7 +36,8 @@ export class SensorEventMapper implements EventMapper<SensorEventType> {
         this._teamScoreChange(ScoreChange.DECREASE, topic, payload);
         break;
 
-      case SensorEventType.LIGHT_BARRIER_0_LOW:
+      case SensorEventType.LIGHT_BARRIER_0_HIGH:
+        console.log("here")
         this._teamScoreChange(ScoreChange.INCREASE, topic, payload);
         break;
       case SensorEventType.LIGHT_BARRIER_1_LOW:

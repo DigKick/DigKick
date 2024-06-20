@@ -19,6 +19,7 @@ export class SensorHandler extends DkModelHandler<
   private readonly buttonSubscriber: TopicSubscriber;
 
   _topicToEventRouter = (topic: string, payload: any) => {
+    console.log(topic, payload)
     let pinStatusPayload: PinStatusPayload;
     try {
       pinStatusPayload = payload as PinStatusPayload;

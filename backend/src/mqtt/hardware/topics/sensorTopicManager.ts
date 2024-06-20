@@ -27,7 +27,7 @@ export class SensorTopicManager {
   }
 
   private get _baseLightbarrierTopic(): string {
-    return this._baseTeamTopic + `/${BasicTerm.LIGHTBARRIER}`;
+    return this._baseTeamTopic + `/${BasicTerm.LIGHT_BARRIER}`;
   }
 
   lightBarrierTopic(lightbarrierId: number): string {
