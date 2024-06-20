@@ -2,6 +2,7 @@ import { Injectable, signal } from '@angular/core';
 import {
   IMqttMessage,
   IMqttServiceOptions,
+  IPublishOptions,
   MqttService,
 } from 'ngx-mqtt';
 import { Observable, Subject, Subscription } from 'rxjs';
@@ -29,11 +30,17 @@ export class DkMqttClientService {
   private topics: { [topic: string]: Subject<string> } = {};
   signalTableIds = signal<String[]>([]);
 
+  publish = {
+    topic: 'topic/browser',
+    qos: 0,
+    payload: '{ "msg": "Hello, I am browser." }',
+  };
+
 
   constructor(private _mqttService: MqttService) {
     this.createConnection();
     this._mqttService.observe('/tables');
-   }
+  }
 
   // Create a connection
   createConnection() {
@@ -49,12 +56,12 @@ export class DkMqttClientService {
       console.log('Connection failed', error);
     });
     this._mqttService.onMessage.subscribe((packet: any) => {
-      if(packet.topic === '/tables') {
+      if (packet.topic === '/tables') {
         try {
           const ids = JSON.parse(packet.payload.toString()).ids;
           this.signalTableIds.set(ids);
         }
-        catch(e) {
+        catch (e) {
           console.log(e);
         }
       }
@@ -62,16 +69,21 @@ export class DkMqttClientService {
     })
   }
 
-subscribe(topic: string): Observable<string> {
+  subscribe(topic: string): Observable<string> {
     if (!this.topics[topic]) {
-      this.topics[topic] = new Subject<string>();  
-    this._mqttService.observe(topic).subscribe((message: IMqttMessage) => {
-      this.topics[topic].next(message.payload.toString());
-    })
+      this.topics[topic] = new Subject<string>();
+      this._mqttService.observe(topic).subscribe((message: IMqttMessage) => {
+        this.topics[topic].next(message.payload.toString());
+      })
     }
     this._mqttService.observe(topic);
 
     return this.topics[topic].asObservable();
+  }
+
+  doPublish(topic: string, qos: any, payload: string) {
+    console.log(this.publish)
+    this._mqttService?.unsafePublish(topic, payload, qos as IPublishOptions)
   }
 
   /*

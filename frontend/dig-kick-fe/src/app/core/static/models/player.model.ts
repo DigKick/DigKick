@@ -1,6 +1,8 @@
 export interface Player {
     id: string,
-    firstname: string,
-    lastname: string,
-    score: number,
+    createdAt: string,
+    updatedAt: string,
+    elo: number,
+    name: string,
+    hashSerialNumber: string,
 }

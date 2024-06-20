@@ -1,9 +1,13 @@
 import { Team } from "./team.model";
 
 export interface Game {
-    id: string;
-    teams: Team[];
-    pointsToWin: string;
-    winner: Team | undefined;
-    mode: string;
+    gameMode: GameMode;
+    teamWhite: Team;
+    teamBlack: Team;
+    pointsToWin: number;
+}
+
+export enum GameMode {
+    DEFAULT = 'DEFAULT',
+    RANKED = 'RANKED'
 }
