@@ -177,7 +177,7 @@ components:
           type: string
           description: Serial number of the read nfc chip
       example:
-          {  "serialNumber": "serialNumberFromChip" }
+        { "serialNumber": "serialNumberFromChip" }
     
     playerNameChange:
       type: object
@@ -296,14 +296,14 @@ components:
           description: Hashed serial number - only used on server - censored for frontend
       example:
         {
-              "id": 1,
-              "createdAt": "2024-06-17T22:04:32.000Z",
-              "updatedAt": "2024-06-17T22:04:51.000Z",
-              "elo": 69420,
-              "name": "makoeta",
-              "hashSerialNumber": "CENSORED"
-          }
-      
+          "id": 1,
+          "createdAt": "2024-06-17T22:04:32.000Z",
+          "updatedAt": "2024-06-17T22:04:51.000Z",
+          "elo": 69420,
+          "name": "makoeta",
+          "hashSerialNumber": "CENSORED"
+        }
+
     
     playerEntityList:
       type: array
@@ -312,28 +312,28 @@ components:
       example:
         [
           {
-              "id": 3,
-              "createdAt": "2024-06-17T22:04:32.000Z",
-              "updatedAt": "2024-06-17T22:04:51.000Z",
-              "elo": 69420,
-              "name": "makoeta",
-              "hashSerialNumber": "CENSORED"
+            "id": 3,
+            "createdAt": "2024-06-17T22:04:32.000Z",
+            "updatedAt": "2024-06-17T22:04:51.000Z",
+            "elo": 69420,
+            "name": "makoeta",
+            "hashSerialNumber": "CENSORED"
           },
           {
-              "id": 1,
-              "createdAt": "2024-06-17T19:49:17.000Z",
-              "updatedAt": "2024-06-17T19:50:28.000Z",
-              "elo": 3000,
-              "name": "voma",
-              "hashSerialNumber": "CENSORED"
+            "id": 1,
+            "createdAt": "2024-06-17T19:49:17.000Z",
+            "updatedAt": "2024-06-17T19:50:28.000Z",
+            "elo": 3000,
+            "name": "voma",
+            "hashSerialNumber": "CENSORED"
           },
           {
-              "id": 2,
-              "createdAt": "2024-06-17T19:49:19.000Z",
-              "updatedAt": "2024-06-17T19:50:28.000Z",
-              "elo": 84,
-              "name": "random atze",
-              "hashSerialNumber": "CENSORED"
+            "id": 2,
+            "createdAt": "2024-06-17T19:49:19.000Z",
+            "updatedAt": "2024-06-17T19:50:28.000Z",
+            "elo": 84,
+            "name": "random atze",
+            "hashSerialNumber": "CENSORED"
           }
         ]
 
@@ -433,7 +433,7 @@ channels:
         $ref: "#/components/messages/pinStatusMessage"
 
   lightBarrierDetect:
-    address: "/table/{tableName}/game/team/{teamColor}/lightbarrier/{lightBarrierId}"
+    address: "/table/{tableName}/game/team/{teamColor}/light_barrier/{lightBarrierId}"
     parameters:
       tableName:
         $ref: "#/components/parameters/tableName"

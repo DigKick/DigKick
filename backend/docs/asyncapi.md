@@ -11,7 +11,7 @@ Digital system for kicker tables.
 * [Operations](#operations)
   * [RECEIVE /table/register](#receive-tableregister-operation)
   * [RECEIVE /table/{tableName}/game/team/{teamColor}/button/{buttonId}](#receive-tabletablenamegameteamteamcolorbuttonbuttonid-operation)
-  * [RECEIVE /table/{tableName}/game/team/{teamColor}/lightbarrier/{lightBarrierId}](#receive-tabletablenamegameteamteamcolorlightbarrierlightbarrierid-operation)
+  * [RECEIVE /table/{tableName}/game/team/{teamColor}/light_barrier/{lightBarrierId}](#receive-tabletablenamegameteamteamcolorlight_barrierlightbarrierid-operation)
   * [RECEIVE /table/{tableName}/game/team/{teamColor}/nfc-reader](#receive-tabletablenamegameteamteamcolornfc-reader-operation)
   * [RECEIVE /table/{tableName}/game/team/{teamColor}/changename](#receive-tabletablenamegameteamteamcolorchangename-operation)
   * [SEND /table/{tableName}/game](#send-tabletablenamegame-operation)
@@ -371,7 +371,7 @@ The MQTT broker for development and production.
 
 
 
-### RECEIVE `/table/{tableName}/game/team/{teamColor}/lightbarrier/{lightBarrierId}` Operation
+### RECEIVE `/table/{tableName}/game/team/{teamColor}/light_barrier/{lightBarrierId}` Operation
 
 *Action on a detection of the light barrier*
 
