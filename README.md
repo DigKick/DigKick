@@ -29,16 +29,15 @@ The frontend mainly displays the data provided by the backend. It shows an overv
 
 In later steps, the web application will also be used to register new players via NFC chips. New players can use their smartphone to register the ID on the chips in our database to enable features like having an Elo score or personalized stats.
 
-- [ ] Create MockUps
-- [ ] Overview of all active games
-- [ ] Game view
+- [X] Create MockUps
+- [X] Overview of all active games
+- [X] Game view
 
 <br>
 
 - [ ] Statistics view
-- [ ] NFC Chip register
-- [ ] Player scoreboard
-- [ ] Personilized stats overview
+- [X] NFC Chip register
+- [X] Player scoreboard
 
 <br>
 
