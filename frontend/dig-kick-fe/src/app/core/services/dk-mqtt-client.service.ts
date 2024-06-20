@@ -85,17 +85,4 @@ export class DkMqttClientService {
     console.log(this.publish)
     this._mqttService?.unsafePublish(topic, payload, qos as IPublishOptions)
   }
-
-  /*
-  unsubscribe(topic: string): void {
-    if (this.topics[topic]) {
-      this.client.unsubscribe(topic, (err) => {
-        if (!err) {
-          this.topics[topic].complete();
-          delete this.topics[topic];
-        }
-      });
-    }
-  }
-  */
 }
