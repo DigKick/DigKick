@@ -9,14 +9,14 @@ export class ScoreService {
 
     tableId = signal<String>('');
     message$!: Observable<String>;
-    players$ = signal<Player[]>([]);
+    playersSignal = signal<Player[]>([]);
 
     constructor(private mqttClient: DkMqttClientService) {
         effect(() => {
             this.message$ = this.mqttClient.subscribe(`/api/player/all`)
             this.message$.subscribe((message: String) => {
                 try {
-                    this.players$.set(JSON.parse(message.toString()));
+                    this.playersSignal.set(JSON.parse(message.toString()));
                 } catch (e) {
                     console.log(e);
                     console.log('GAME CATCH')
