@@ -20,7 +20,7 @@ export class TableViewComponent {
   tablesSignal: Signal<String[]>;
 
   constructor(private mqttClient: DkMqttClientService) {
-    this.tablesSignal = mqttClient.signalTableIds;
+    this.tablesSignal = mqttClient.signalTableNames;
   }
 
 }

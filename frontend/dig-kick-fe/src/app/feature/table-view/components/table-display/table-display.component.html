@@ -14,9 +14,9 @@
         <p class="mt-0">{{game.teamBlack.playerTwo?.name}}</p>
       </div>
     </div>
-    <div class="card-actions justify-center m-3" *ngIf="tableId">
+    <div class="card-actions justify-center m-3" *ngIf="tableName">
       <button class="btn w-5/6 items-center btn-primary text-[1.25rem] btn-outline"
-        [routerLink]="['/game', tableId]">View</button>
+        [routerLink]="['/game', tableName]">View</button>
     </div>
   </div>
   }
