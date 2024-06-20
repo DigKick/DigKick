@@ -79,7 +79,8 @@
     </div>
 
     <div *ngIf="this.renameWhite" class="flex w-full lg:justify-center justify-center text-[1.2rem] mt-5">
-        <input id="input" (keyup)="onKey($event)" type="text" placeholder="{{this.lastRegisteredPlayerWhiteSignal()}}"
+        <input id="input" (keyup)="onKey($event)" type="text"
+            placeholder="{{gameService.gameSignal().teamWhite.playerOne?.name}}"
             class="input input-bordered input-error w-full max-w-xs" />
         <button class="btn btn-success ml-5" (click)="submit(this.whiteColor)">Submit</button>
     </div>
@@ -91,7 +92,8 @@
 
     </div>
     <div *ngIf="this.renameBlack" class="flex w-full lg:justify-center justify-center text-[1.2rem] mt-5">
-        <input id="input" (keyup)="onKey($event)" type="text" placeholder="{{this.lastRegisteredPlayerBlackSignal()}}"
+        <input id="input" (keyup)="onKey($event)" type="text"
+            placeholder="{{gameService.gameSignal().teamBlack.playerOne?.name}}"
             class="input input-bordered input-error w-full max-w-xs" />
         <button class="btn btn-success ml-5" (click)="submit(this.blackColor)">Submit</button>
     </div>

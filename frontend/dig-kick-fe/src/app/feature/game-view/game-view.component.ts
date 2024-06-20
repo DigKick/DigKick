@@ -127,7 +127,7 @@ export class GameViewComponent implements OnInit {
     let topic = ''
     if (color === this.whiteColor) {
       this.lastRegisteredPlayerWhiteSignal.set(str);
-      const playerOneWhite = this.game.teamWhite.playerOne
+      const playerOneWhite = this.gameService.gameSignal().teamWhite.playerOne
       if (playerOneWhite) {
         playerOneWhite.name = str;
       }
@@ -135,7 +135,7 @@ export class GameViewComponent implements OnInit {
       this.renameWhite = false;
     } else {
       this.lastRegisteredPlayerBlackSignal.set(str);
-      const playerOneBlack = this.game.teamBlack.playerOne
+      const playerOneBlack = this.gameService.gameSignal().teamBlack.playerOne
       if (playerOneBlack) {
         playerOneBlack.name = str;
       }
