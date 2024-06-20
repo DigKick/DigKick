@@ -14,13 +14,7 @@ import { Player } from 'src/app/core/static/models/player.model';
 })
 export class ScoreViewComponent {
 
-  data: Player[];
 
-
-
-  constructor(private mqttClient: DkMqttClientService, private scoreService: ScoreService) {
-    this.data = scoreService.players$()
-    this.data.sort((a, b) => b.elo - a.elo);
-  }
+  constructor(private mqttClient: DkMqttClientService, protected scoreService: ScoreService) { }
 
 }
