@@ -1,22 +1,23 @@
 <div class="grid-layout">
-
-  <div class="card card-compact w-64 md:w-80  shadow-xl mt-4 md:mt-8 mx-auto bg-accent-content">
+  @if(gameService.gameSignal(); as game) {
+  <div class="card card-compact w-72 md:w-72 lg:w-96   shadow-xl mt-4 md:mt-8 mx-auto bg-accent-content">
     <figure><img src="../assets/images/fun_table{{random}}.png" alt="table" class="mx-auto w-full"></figure>
-    <div class="card-body grid grid-cols-3 gap-x-4 items-center mt-1">
+    <div class="card-body grid grid-cols-3 gap-x-4 items-center mt-1 text-pretty">
       <div class="flex flex-col justify-center pl-2 lg:pl-8 text-[1.1rem]">
-        <p class="mb-1">{{gameService.gameSignal().teamWhite.playerOne?.name}}</p>
-        <p class="mt-0">{{gameService.gameSignal().teamWhite.playerTwo?.name}}</p>
+        <p class="mb-1">{{game.teamWhite.playerOne?.name}}</p>
+        <p class="mt-0">{{game.teamWhite.playerTwo?.name}}</p>
       </div>
       <p class="col-span-1 text-center text-[3rem]">
-        {{gameService.gameSignal().teamWhite.score}}:{{gameService.gameSignal().teamBlack.score}}</p>
-      <div class="flex flex-col justify-center pr-4 text-[1.1rem]">
-        <p class="mb-1">{{gameService.gameSignal().teamBlack.playerOne?.name}}</p>
-        <p class="mt-0">{{gameService.gameSignal().teamBlack.playerTwo?.name}}</p>
+        {{game.teamWhite.score}}:{{game.teamBlack.score}}</p>
+      <div class="flex flex-col justify-center pr-4 text-[1.1rem] text-pretty">
+        <p class="mb-1">{{game.teamBlack.playerOne?.name}}</p>
+        <p class="mt-0">{{game.teamBlack.playerTwo?.name}}</p>
       </div>
     </div>
     <div class="card-actions justify-center m-3" *ngIf="tableId">
-      <button class="btn btn-wide w-5/6 items-center btn-primary text-[1.25rem] btn-outline"
+      <button class="btn w-5/6 items-center btn-primary text-[1.25rem] btn-outline"
         [routerLink]="['/game', tableId]">View</button>
     </div>
   </div>
+  }
 </div>
