@@ -131,7 +131,7 @@ export class GameViewComponent implements OnInit {
       if (playerOneWhite) {
         playerOneWhite.name = str;
       }
-      topic = `/table/${this.tableId}/game/team/${color}/changeName`;
+      topic = `/table/${this.tableId}/game/team/${color}/changename`;
       this.renameWhite = false;
     } else {
       this.lastRegisteredPlayerBlackSignal.set(str);
@@ -139,11 +139,11 @@ export class GameViewComponent implements OnInit {
       if (playerOneBlack) {
         playerOneBlack.name = str;
       }
-      topic = `/table/${this.tableId}/game/team/${color}/changeName`;
+      topic = `/table/${this.tableId}/game/team/${color}/changename`;
       this.renameBlack = false;
     }
     console.log('topic', topic)
-    this.mqttClient.doPublish(topic, 0, str);
+    this.mqttClient.doPublish(topic, 0, `{"newName": "${str}"}`);
   }
 
   onKey(event: any) {
