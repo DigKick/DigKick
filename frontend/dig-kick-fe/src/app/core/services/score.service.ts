@@ -6,8 +6,6 @@ import { Player } from '../static/models/player.model';
 @Injectable({ providedIn: 'root' })
 export class ScoreService {
 
-
-    tableId = signal<String>('');
     message$!: Observable<String>;
     playersSignal = signal<Player[]>([]);
 
@@ -19,7 +17,6 @@ export class ScoreService {
                     this.playersSignal.set(JSON.parse(message.toString()));
                 } catch (e) {
                     console.log(e);
-                    console.log('GAME CATCH')
                 }
             })
         })
