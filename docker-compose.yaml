@@ -1,0 +1,21 @@
+services:
+  backend:
+    build: ./backend
+    env_file:
+      - .env-be
+
+  emqx:
+    image: emqx/emqx:latest
+    ports:
+      - "1883:1883"
+      - "1884:1884"
+      - "8083:8083"
+      - "8084:8084"
+      - "8883:8883"
+      - "18083:18083"
+
+  digkick:
+    build: ./frontend/dig-kick-fe
+    ports:
+      - "80:80"
+

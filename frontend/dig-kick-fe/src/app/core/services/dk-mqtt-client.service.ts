@@ -6,6 +6,7 @@ import {
   MqttService,
 } from 'ngx-mqtt';
 import { Observable, Subject, Subscription } from 'rxjs';
+import {environment} from "../../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
@@ -14,16 +15,16 @@ export class DkMqttClientService {
   private curSubscription: Subscription | undefined;
 
   connection = {
-    hostname: 'localhost',
-    port: 8083,
-    path: '/mqtt',
+    hostname: environment.broker_hostname,
+    port: environment.broker_port,
+    path: environment.broker_path,
     clean: true, // Retain session
     connectTimeout: 4000, // Timeout period
     reconnectPeriod: 4000, // Reconnect period
     // Authentication information
-    clientId: 'mqttx_597046f4',
-    username: 'emqx_test',
-    password: 'emqx_test',
+    clientId: environment.broker_clientId,
+    username: environment.broker_username,
+    password: environment.broker_password,
     protocol: 'ws',
   }
 
