@@ -2,14 +2,9 @@ version: '3.8'
 
 services:
   backend:
-    build:
-      context: ./backend
-      dockerfile: Dockerfile
-    ports:
-      - "8000:8000"
+    build: ./backend
     env_file:
       - .env-be
-    network_mode: host
 
   emqx:
     image: emqx/emqx:latest
