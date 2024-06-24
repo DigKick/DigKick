@@ -174,10 +174,6 @@ dist
 # Finder (MacOS) folder config
 .DS_Store
 
-# module lock
-package-lock.json
-bun.lockb
-
 # env files
 **/*.env
 
