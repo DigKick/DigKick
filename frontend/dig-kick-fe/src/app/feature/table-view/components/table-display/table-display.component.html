@@ -4,14 +4,14 @@
     <figure><img src="../assets/images/fun_table{{random}}.png" alt="table" class="mx-auto w-full"></figure>
     <div class="card-body grid grid-cols-3 gap-x-4 items-center mt-1 text-pretty">
       <div class="flex flex-col justify-center pl-2 lg:pl-8 text-[1.1rem]">
-        <p class="mb-1">{{game.teamWhite.playerOne?.name}}</p>
-        <p class="mt-0">{{game.teamWhite.playerTwo?.name}}</p>
+        <p class="mb-1 break-words">{{game.teamWhite.playerOne?.name}}</p>
+        <p class="mt-0 break-words">{{game.teamWhite.playerTwo?.name}}</p>
       </div>
       <p class="col-span-1 text-center text-[3rem]">
         {{game.teamWhite.score}}:{{game.teamBlack.score}}</p>
       <div class="flex flex-col justify-center pr-4 text-[1.1rem] text-pretty">
-        <p class="mb-1">{{game.teamBlack.playerOne?.name}}</p>
-        <p class="mt-0">{{game.teamBlack.playerTwo?.name}}</p>
+        <p class="mb-1 break-words">{{game.teamBlack.playerOne?.name}}</p>
+        <p class="mt-0 break-words">{{game.teamBlack.playerTwo?.name}}</p>
       </div>
     </div>
     <div class="card-actions justify-center m-3" *ngIf="tableName">
