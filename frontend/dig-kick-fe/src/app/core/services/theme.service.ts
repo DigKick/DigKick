@@ -1,14 +1,14 @@
 import { Injectable, signal } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Theme } from '../static/models/theme.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ThemeService {
-  private currentTheme: string = 'night';
+  private currentTheme: string = Theme.NIGHT;
   themeSignal = signal<string>(this.currentTheme);
 
-  constructor() {}
+  constructor() { }
 
   getCurrentTheme(): string {
     return this.currentTheme;
@@ -20,7 +20,7 @@ export class ThemeService {
   }
 
   toggleTheme(): void {
-    this.currentTheme = this.currentTheme === 'night' ? 'retro' : 'night';
+    this.currentTheme = this.currentTheme === Theme.NIGHT ? Theme.RETRO : Theme.NIGHT;
     this.themeSignal.set(this.currentTheme)
     document.documentElement.setAttribute('data-theme', this.themeSignal());
   }

@@ -9,7 +9,6 @@ import { ThemeService } from './core/services/theme.service';
 import { CommonModule } from '@angular/common';
 
 
-
 @Component({
   standalone: true,
   imports: [RouterModule, NavbarComponent, GameViewComponent, TableViewComponent,
@@ -22,9 +21,6 @@ import { CommonModule } from '@angular/common';
 export class AppComponent {
 
   title = 'dig-kick-fe';
-  theme: string = 'dark'
-
-  public currentTheme: string = 'dark';
 
   constructor(private themeService: ThemeService) {
     document.body.classList.add('data-theme', this.themeService.themeSignal());

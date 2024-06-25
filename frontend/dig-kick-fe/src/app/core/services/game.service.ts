@@ -20,7 +20,7 @@ export class GameService {
         createdAt: '',
         updatedAt: '',
         name: 'Player 1',
-        elo: 8,
+        elo: 0,
         hashSerialNumber: "CENSORED",
       },
       playerTwo: {
@@ -28,7 +28,7 @@ export class GameService {
         createdAt: '',
         updatedAt: '',
         name: 'Player 2',
-        elo: 8,
+        elo: 0,
         hashSerialNumber: "CENSORED",
       },
     },
@@ -41,7 +41,7 @@ export class GameService {
         createdAt: '',
         updatedAt: '',
         name: 'Player 1',
-        elo: 8,
+        elo: 0,
         hashSerialNumber: "CENSORED",
       },
       playerTwo: {
@@ -49,30 +49,23 @@ export class GameService {
         createdAt: '',
         updatedAt: '',
         name: 'Player 2',
-        elo: 8,
+        elo: 0,
         hashSerialNumber: "CENSORED",
       },
     },
     pointsToWin: 10
   }
   );
-  whiteScore$!: Observable<String>;
-  blackScore$!: Observable<String>;
 
   constructor(private mqttClient: DkMqttClientService) {
     effect(() => {
       this.game$ = this.mqttClient.subscribe(`/table/${this.tableId()}/game`)
-      console.log(this.game$);
       this.game$.subscribe((message: String) => {
         try {
           const game: Game = JSON.parse(message.toString());
-          console.log('try', message);
           this.gameSignal.set(game)
-          console.log('gameSignal', this.gameSignal());
-          console.log(this.gameSignal().teamBlack.playerOne?.name);
         } catch (e) {
           console.log(e);
-          console.log('GAME CATCH')
         }
       })
     })

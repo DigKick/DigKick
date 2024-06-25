@@ -31,13 +31,6 @@ export class DkMqttClientService {
   private topics: { [topic: string]: Subject<string> } = {};
   signalTableNames = signal<String[]>([]);
 
-  publish = {
-    topic: 'topic/browser',
-    qos: 0,
-    payload: '{ "msg": "Hello, I am browser." }',
-  };
-
-
   constructor(private _mqttService: MqttService) {
     this.createConnection();
     this._mqttService.observe('/tables');
@@ -78,12 +71,10 @@ export class DkMqttClientService {
       })
     }
     this._mqttService.observe(topic);
-
     return this.topics[topic].asObservable();
   }
 
   doPublish(topic: string, qos: any, payload: string) {
-    console.log(this.publish)
     this._mqttService?.unsafePublish(topic, payload, qos as IPublishOptions)
   }
 }
