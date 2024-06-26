@@ -3,6 +3,7 @@ services:
     build: ./backend
     env_file:
       - .env-be
+    restart: unless-stopped
 
   emqx:
     image: emqx/emqx:latest
@@ -13,9 +14,10 @@ services:
       - "8084:8084"
       - "8883:8883"
       - "18083:18083"
+    restart: unless-stopped
 
   digkick:
     build: ./frontend/dig-kick-fe
     ports:
       - "80:80"
-
+    restart: unless-stopped
