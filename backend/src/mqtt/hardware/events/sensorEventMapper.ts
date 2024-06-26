@@ -88,7 +88,7 @@ export class SensorEventMapper implements EventMapper<SensorEventType> {
             {
               length:
                 this._tableHandler.subject.game.getTeamByColor(
-                  this._teamColor,
+                  teamColor,
                 ).score * 2,
             },
             () => {
