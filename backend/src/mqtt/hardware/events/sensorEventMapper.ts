@@ -23,24 +23,40 @@ export class SensorEventMapper implements EventMapper<SensorEventType> {
     const triggeredEvents = new Set<SensorEventType>([event]);
     const dkMqttClient: DkMqttClient = DkMqttClient.getInstance();
 
+    const teamColorsLedUpdates: TeamColor[] = []
+
     switch (event) {
       case SensorEventType.BUTTON_0_LOW:
         this._tableHandler.triggerEvent(TableEventType.FINISH_GAME, topic, payload);
+        teamColorsLedUpdates.push(this._teamColor)
         break;
 
       case SensorEventType.BUTTON_1_LOW:
         this._teamScoreChange(ScoreChange.INCREASE, topic, payload);
+        teamColorsLedUpdates.push(this._teamColor)
         break;
 
       case SensorEventType.BUTTON_2_LOW:
         this._teamScoreChange(ScoreChange.DECREASE, topic, payload);
+        teamColorsLedUpdates.push(this._teamColor)
         break;
 
       case SensorEventType.LIGHT_BARRIER_0_HIGH:
         this._teamScoreChange(ScoreChange.INCREASE, topic, payload);
+        if (this._teamColor == TeamColor.WHITE) {
+          teamColorsLedUpdates.push(TeamColor.BLACK)
+        } else {
+          teamColorsLedUpdates.push(TeamColor.WHITE)
+        }
+
         break;
       case SensorEventType.LIGHT_BARRIER_1_LOW:
         this._teamScoreChange(ScoreChange.INCREASE, topic, payload);
+        if (this._teamColor == TeamColor.WHITE) {
+          teamColorsLedUpdates.push(TeamColor.BLACK)
+        } else {
+          teamColorsLedUpdates.push(TeamColor.WHITE)
+        }
         break;
 
       default:
@@ -52,17 +68,21 @@ export class SensorEventMapper implements EventMapper<SensorEventType> {
       "/debug",
       `{ "lastEvents": "${Array.from(triggeredEvents).join(", ")}" }`,
     );
-    this._updateLeds();
+
+    new Set(teamColorsLedUpdates).forEach((teamColor) => {
+      this._updateLeds(teamColor);
+    })
+
 
     return triggeredEvents;
   }
 
-  private _updateLeds() {
+  private _updateLeds(teamColor: TeamColor) {
     const dkMqttClient: DkMqttClient = DkMqttClient.getInstance();
     dkMqttClient.publish(
       BaseTopicFactory.getLedUpdateTopic(
         this._tableHandler.subject,
-        this._teamColor,
+        teamColor,
       ),
       JSON.stringify(
         new LedUpdatePayload(
