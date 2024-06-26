@@ -7,6 +7,8 @@ import {TableEventType} from "../../table/events/tableEventType.ts";
 import {GameEventType} from "../../game/events/gameEvent";
 import {BaseTopicFactory} from "../../util/baseTopicFactory";
 import {LedUpdatePayload} from "../payloads/ledUpdate";
+import {TopicTool} from "../../util/topicTool.ts";
+import {BasicTerm} from "../../util/basicTerm.ts";
 
 export class SensorEventMapper implements EventMapper<SensorEventType> {
   private _tableHandler: TableHandler;
@@ -82,6 +84,19 @@ export class SensorEventMapper implements EventMapper<SensorEventType> {
   }
 
   private _teamScoreChange(change: ScoreChange, topic: string, payload: any) {
+    const topicTool = new TopicTool(topic)
+
+    let teamColor: TeamColor = this._teamColor;
+
+    if (topicTool.getSegment(5) == BasicTerm.LIGHT_BARRIER) {
+      // Add score to other team if light barrier is triggered.
+      if (teamColor == TeamColor.WHITE) {
+        teamColor = TeamColor.BLACK;
+      } else {
+        teamColor = TeamColor.WHITE;
+      }
+    }
+
     const eventCombiner = {
       [TeamColor.WHITE]: {
         [ScoreChange.INCREASE]: GameEventType.WHITE_SCORE_INCREASE,
@@ -93,7 +108,7 @@ export class SensorEventMapper implements EventMapper<SensorEventType> {
       },
     };
 
-    const eventType = eventCombiner[this._teamColor]?.[change];
+    const eventType = eventCombiner[teamColor]?.[change];
     if (eventType) {
       this._tableHandler.gameHandler.triggerEvent(eventType, topic, payload);
     }

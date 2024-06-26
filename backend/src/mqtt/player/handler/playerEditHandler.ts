@@ -15,6 +15,11 @@ export class PlayerEditHandler extends DkModelHandler<PlayerEditEvent, Table> {
 
   playerEditorSubscriber: TopicSubscriber
 
+
+  get tableHandler() {
+    return this._tableHandler;
+  }
+
   editorSubscriberFunc = (topic: string, payload: any) => {
     let playerNameEditPayload: PlayerNameEditPayload
     try {
