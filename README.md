@@ -46,3 +46,28 @@ In later steps, the web application will also be used to register new players vi
 ### Framework: Arduino Framework (on an ESP32)
 
 Our hardware will provide the backend with the given data from its sensors. The detection sensors are currently a pair of light barriers. It also provides three buttons that are used to start or cancel a game, or to manually increase or decrease the score.
+
+<br>
+
+## Quick setup
+
+1. Set up a .env-be file for the backend config
+    <br><br>
+    .env-be file should look like this:
+
+    ```env
+    MQTT_LOGIN_USERNAME=MQTT_USERNAME
+    MQTT_LOGIN_PASSWORD=MQTT_PASSWORD
+    MQTT_HOST=localhost
+    
+    DATABASE_FILE_NAME=database
+    DATABASE_FILE_SUFFIX=db
+    ```
+   
+    > Normally the broker credentials are not set. If they are not set, they do not matter for the login.
+
+2. Simply run backend, frontend and emqx broker with:
+
+    ```bash
+    docker compose up
+    ```
