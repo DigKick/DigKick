@@ -1,0 +1,32 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "Digital Kicker Backend",
+  "main": "src/app.ts",
+  "scripts": {
+    "start:dev": "bun run src/app.ts",
+    "gen:doc:md": "asyncapi generate fromTemplate asyncapi.yaml @asyncapi/markdown-template -o ./docs ",
+    "test": "bun test"
+  },
+  "keywords": [],
+  "author": "Marvin Voss, Maximilian Koenig",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "generator": {
+    "renderer": "react",
+    "apiVersion": "v2.6.0"
+  },
+  "dependencies": {
+    "mqtt": "^5.5.3",
+    "reflect-metadata": "^0.2.2",
+    "sqlite3": "^5.1.7",
+    "typeorm": "^0.3.20",
+    "unique-username-generator": "^1.3.0",
+    "winston": "^3.13.0"
+  }
+}

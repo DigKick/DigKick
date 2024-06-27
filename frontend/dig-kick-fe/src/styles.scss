@@ -1,0 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* You can add global styles to this file, and also import other style files */
+@layer base {
+    @font-face {
+        font-family: 'pixel';
+        src: url("assets/fonts/edit.ttf");
+    }
+    @font-face {
+        font-family: 'ranked';
+        src: url('assets/fonts/8-bitanco.ttf');
+    }
+}
+
+body {
+    font-family: 'pixel';
+    color: #4f9066;
+}
