@@ -1,0 +1,6 @@
+# Using DICK
+
+1. Install [https://platformio.org/platformio-ide](PlattformIO)
+2. Edit /src/CONFIG.h
+3. Change PlattformIO env to main
+4. Click on Upload
