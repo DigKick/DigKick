@@ -1,4 +1,4 @@
-# Digital Kicker (group 6) 👟
+# Digital Kicker 👟
 
 ## Backend 🕹️
 
