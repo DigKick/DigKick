@@ -11,7 +11,7 @@ jobs:
       - run: ls
       - run: |
           cd backend
-      - run: ls
-      - run: bun install
-      - run: bun index.ts
-      - run: bun run build
+          bun install
+      - run: |
+          cd backend
+          bun test
