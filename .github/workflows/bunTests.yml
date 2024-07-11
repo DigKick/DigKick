@@ -12,6 +12,4 @@ jobs:
       - run: |
           cd backend
           bun install
-      - run: |
-          cd backend
           bun test
