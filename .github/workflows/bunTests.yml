@@ -17,7 +17,4 @@ jobs:
           bun install
       - run: |
           cd ./backend
-          bun ./src/app.ts
-      - run: |
-          cd ./backend
           bun run build
