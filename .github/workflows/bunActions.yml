@@ -17,3 +17,20 @@ jobs:
         run: |
           cd ./backend
           bun build --target=bun ./src/app.ts
+  
+  test:
+    name: Run backend tests with bun
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.1.12
+      - name: Install packages via bun
+        run: |
+          cd ./backend
+          bun install
+      - name: Run tests with bun
+        run: |
+          cd ./backend
+          bun test
