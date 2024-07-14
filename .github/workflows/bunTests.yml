@@ -14,4 +14,4 @@ jobs:
           bun install
       - run: |
           cd ./backend
-          bun build --target=bun .\src\app.ts
+          bun build --target=bun ./src/app.ts
