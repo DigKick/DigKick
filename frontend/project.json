@@ -1,5 +1,5 @@
 {
-  "name": "dig-kick-fe",
+  "name": "dig-kick-frontend",
   "$schema": "node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
   "prefix": "app",
@@ -10,7 +10,7 @@
       "executor": "@angular-devkit/build-angular:application",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/dig-kick-fe",
+        "outputPath": "dist/frontend",
         "index": "./src/index.html",
         "browser": "./src/main.ts",
         "polyfills": ["zone.js"],
@@ -56,10 +56,10 @@
       "executor": "@angular-devkit/build-angular:dev-server",
       "configurations": {
         "production": {
-          "buildTarget": "dig-kick-fe:build:production"
+          "buildTarget": "dig-kick-frontend:build:production"
         },
         "development": {
-          "buildTarget": "dig-kick-fe:build:development"
+          "buildTarget": "dig-kick-frontend:build:development"
         }
       },
       "defaultConfiguration": "development"
@@ -67,7 +67,7 @@
     "extract-i18n": {
       "executor": "@angular-devkit/build-angular:extract-i18n",
       "options": {
-        "buildTarget": "dig-kick-fe:build"
+        "buildTarget": "dig-kick-frontend:build"
       }
     },
     "lint": {
