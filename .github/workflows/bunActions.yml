@@ -20,7 +20,7 @@ jobs:
   
   test:
     name: Run backend tests with bun
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: oven-sh/setup-bun@v2
@@ -30,6 +30,9 @@ jobs:
         run: |
           cd ./backend
           bun install
+      - run: |
+          cd ./backend
+          npm install
       - name: Run tests with bun
         run: |
           cd ./backend
