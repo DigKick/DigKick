@@ -1,17 +1,19 @@
-name: Run bun tests for backend
+name: Bun actions
 on: push
 jobs:
-  test_job:
-    name: test_job
+  build:
+    name: Build backend with bun
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: oven-sh/setup-bun@v2
         with:
           bun-version: 1.1.12
-      - run: |
+      - name: Install packages via bun
+        run: |
           cd ./backend
           bun install
-      - run: |
+      - name: Build with bun
+        run: |
           cd ./backend
           bun build --target=bun ./src/app.ts
