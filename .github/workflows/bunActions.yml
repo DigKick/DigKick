@@ -20,7 +20,7 @@ jobs:
   
   test:
     name: Run backend tests with bun
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v4
       - uses: oven-sh/setup-bun@v2
