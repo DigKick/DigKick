@@ -1,5 +1,9 @@
 name: Bun actions
-on: push
+on:
+  pull_request:
+    branches: ["develop", "main"]
+  push:
+    branches: ["develop", "main", "**action**"]
 jobs:
   build:
     name: Build backend with bun
@@ -17,4 +21,3 @@ jobs:
         run: |
           cd ./backend
           bun build --target=bun ./src/app.ts
-          
