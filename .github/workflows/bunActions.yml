@@ -20,15 +20,12 @@ jobs:
   
   test:
     name: Run backend tests with bun
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v4
       - uses: oven-sh/setup-bun@v2
         with:
           bun-version: 1.1.12
-      - name: Setup SQLite environment
-        uses: ccorsi/setup-sqlite@v1.0.1
-      
       - name: Install packages via bun
         run: |
           cd ./backend
