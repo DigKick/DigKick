@@ -9,12 +9,9 @@ jobs:
       - uses: oven-sh/setup-bun@v2
         with:
           bun-version: 1.1.12
-
-      
-      # run any `bun` or `bunx` command
       - run: |
           cd ./backend
           bun install
       - run: |
           cd ./backend
-          bun run build
+          bun build --target=bun .\src\app.ts
