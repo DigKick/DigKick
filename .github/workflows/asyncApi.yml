@@ -11,3 +11,18 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+
+      - name: Generating HTML from my AsyncAPI document
+        uses: asyncapi/github-action-for-generator@v3
+        with:
+          template: '@asyncapi/html-template@0.3.0' #In case of template from npm, because of @ it must be in quotes
+          filepath: backend/asyncapi.yml
+          parameters: baseHref=/test-experiment/ sidebarOrganization=byTags #space separated list of key/values
+          output: generated-html
+
+      - name: Deploy GH page
+        uses: JamesIves/github-pages-deploy-action
+        with:
+          ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH: gh-pages
+          FOLDER: generated-html
