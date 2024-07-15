@@ -23,6 +23,12 @@ To run:
 npm run start:dev
 ```
 
+## Setup EMQX via Docker
+
+```bash
+docker run -d --name emqx -p 1883:1883 -p 8083:8083 -p 8084:8084 -p 8883:8883 -p 18083:18083  emqx:5.7.1
+```
+
 ## Setup .env
 
 Before starting you have to set up a .env files with your MQTT host and credentials.
