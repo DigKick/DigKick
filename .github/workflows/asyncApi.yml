@@ -12,7 +12,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Generating HTML from my AsyncAPI document
-        uses: asyncapi/github-action-for-generator@v3
+        uses: asyncapi/github-action-for-generator@v0.2.0
         with:
           template: '@asyncapi/html-template@0.3.0' #In case of template from npm, because of @ it must be in quotes
           filepath: backend/asyncapi.yml
