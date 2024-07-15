@@ -2,7 +2,7 @@ name: AsyncAPI documents processing
 
 on:
   push:
-    branches: [ "main", "develop”, "9-update-gitlab-cli-to-github-action-pages" ]
+    branches: [ "develop", "main", "**pages**" ]
 
 jobs:
   generate:
