@@ -17,5 +17,10 @@ jobs:
           command: generate
           filepath: ./backend/asyncapi.yaml
           template: "@asyncapi/html-template" #In case of template from npm. Or can use a link.
-          output: ./generated-html
+          output: ./asyncapi-generated-html
           parameters: "-p baseHref=/test-experiment/ sidebarOrganization=byTags"
+
+      - name: Deploy pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: ./asyncapi-generated-html
