@@ -12,7 +12,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Generator, Validator, Converter and others - all in one for your AsyncAPI docs
-        uses: asyncapi/github-action-for-cli@v3.0.0
+        uses: asyncapi/github-action-for-cli@v3.1.1
         with:
           command: generate
           filepath: ./backend/asyncapi.yaml
