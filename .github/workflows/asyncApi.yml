@@ -11,6 +11,3 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
-
-      - name: Generating HTML from my AsyncAPI document
-        uses: asyncapi/github-action-for-generator
