@@ -12,6 +12,6 @@ jobs:
         uses: actions/checkout@v4
 
       - name: asyncapi-github-action
-        uses: WaleedAshraf/asyncapi-github-action
+        uses: WaleedAshraf/asyncapi-github-action@v0.0.10
         with:
           filepath: 'backend/asyncapi.yaml'
