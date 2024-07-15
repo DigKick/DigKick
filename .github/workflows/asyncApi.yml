@@ -16,6 +16,6 @@ jobs:
         with:
           command: generate
           filepath: ./backend/asyncapi.yaml
-          template: "@asyncapi/html-template@0.9.0" #In case of template from npm. Or can use a link.
+          template: "@asyncapi/html-template" #In case of template from npm. Or can use a link.
           output: ./generated-html
           parameters: "-p baseHref=/test-experiment/ sidebarOrganization=byTags"
