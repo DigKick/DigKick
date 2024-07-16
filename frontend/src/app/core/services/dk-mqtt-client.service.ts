@@ -29,7 +29,7 @@ export class DkMqttClientService {
   }
 
   private topics: { [topic: string]: Subject<string> } = {};
-  signalTableNames = signal<String[]>([]);
+  signalTableNames = signal<string[]>([]);
 
   constructor(private _mqttService: MqttService) {
     this.createConnection();
