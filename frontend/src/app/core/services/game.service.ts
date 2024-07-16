@@ -1,61 +1,14 @@
-import { Injectable, effect, signal } from '@angular/core';
-import { DkMqttClientService } from './dk-mqtt-client.service';
-import { Observable } from 'rxjs';
-import { Game, GameMode } from '../static/models/game.model';
-import { TeamColor } from '../static/models/team.model';
+import {effect, Injectable, signal} from '@angular/core';
+import {DkMqttClientService} from './dk-mqtt-client.service';
+import {Observable} from 'rxjs';
+import {emptyGame, Game} from '../static/models/game.model';
 
 @Injectable()
 export class GameService {
 
   tableId = signal<string>('');
   game$!: Observable<string>;
-  gameSignal = signal<Game>({
-    gameMode: GameMode.DEFAULT,
-    teamBlack: {
-      color: TeamColor.BLACK,
-      score: 0,
-      isWinner: false,
-      playerOne: {
-        id: '',
-        createdAt: '',
-        updatedAt: '',
-        name: '',
-        elo: 0,
-        hashSerialNumber: "CENSORED",
-      },
-      playerTwo: {
-        id: '',
-        createdAt: '',
-        updatedAt: '',
-        name: '',
-        elo: 0,
-        hashSerialNumber: "CENSORED",
-      },
-    },
-    teamWhite: {
-      color: TeamColor.WHITE,
-      score: 0,
-      isWinner: false,
-      playerOne: {
-        id: '',
-        createdAt: '',
-        updatedAt: '',
-        name: '',
-        elo: 0,
-        hashSerialNumber: "CENSORED",
-      },
-      playerTwo: {
-        id: '',
-        createdAt: '',
-        updatedAt: '',
-        name: '',
-        elo: 0,
-        hashSerialNumber: "CENSORED",
-      },
-    },
-    pointsToWin: 10
-  }
-  );
+  gameSignal = signal<Game>(emptyGame);
 
   constructor(private mqttClient: DkMqttClientService) {
     effect(() => {
@@ -65,7 +18,7 @@ export class GameService {
           const game: Game = JSON.parse(message.toString());
           this.gameSignal.set(game)
         } catch (e) {
-          console.log(e);
+          console.error(e);
         }
       })
     })
