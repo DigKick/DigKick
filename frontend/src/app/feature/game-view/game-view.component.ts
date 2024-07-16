@@ -5,11 +5,12 @@ import {Observable, take} from 'rxjs';
 import { DkMqttClientService } from 'src/app/core/services/dk-mqtt-client.service';
 import { GameService } from 'src/app/core/services/game.service';
 import { TeamColor } from 'src/app/core/static/models/team.model';
+import {FormsModule} from "@angular/forms";
 
 @Component({
   selector: 'app-game-view',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   providers: [DkMqttClientService, GameService],
   templateUrl: './game-view.component.html',
   styleUrl: './game-view.component.css'
@@ -19,18 +20,13 @@ export class GameViewComponent implements OnInit {
   whiteColor: string = TeamColor.WHITE;
   blackColor: string = TeamColor.BLACK;
 
-  game$!: Observable<string>;
-  whiteScore$!: Observable<string>;
-  blackScore$!: Observable<string>;
-  whiteScoreSignal = signal<number>(0);
-  blackScoreSignal = signal<number>(0);
-  winnerSignal = signal<string>('');
-  rankedSignal = signal<string>('');
-
   tableId!: string | null;
 
-  renameWhite = false;
-  renameBlack = false;
+  showWhiteRenameSubmitButton = false;
+  showBlackRenameSubmitButton = false;
+
+  newPlayerNameBlack = ""
+  newPlayerNameWhite = ""
 
   constructor(private mqttClient: DkMqttClientService, private route: ActivatedRoute, public gameService: GameService) { }
 
@@ -43,36 +39,22 @@ export class GameViewComponent implements OnInit {
     });
   }
 
-  changeName(color: string) {
+  toggleChangeNameSubmitButton(color: string): void {
     if (color === TeamColor.WHITE) {
-      this.renameWhite = true;
+      this.showWhiteRenameSubmitButton = true;
     } else {
-      this.renameBlack = true;
+      this.showBlackRenameSubmitButton = true;
     }
   }
 
   submit(color: string) {
-    const changeNameInputValue: string = (<HTMLInputElement>document.getElementById("input")).value;
-    let topic = ''
-    if (color === TeamColor.WHITE) {
-      const playerOneWhite = this.gameService.gameSignal().teamWhite.playerOne
-      if (playerOneWhite) {
-        playerOneWhite.name = changeNameInputValue;
-      }
-      topic = `/table/${this.tableId}/game/team/${color}/changename`;
-      this.renameWhite = false;
-    } else {
-      const playerOneBlack = this.gameService.gameSignal().teamBlack.playerOne
-      if (playerOneBlack) {
-        playerOneBlack.name = changeNameInputValue;
-      }
-      topic = `/table/${this.tableId}/game/team/${color}/changename`;
-      this.renameBlack = false;
-    }
-    this.mqttClient.doPublish(topic, 0, `{"newName": "${changeNameInputValue}"}`);
+    this.mqttClient.doPublish(`/table/${this.tableId}/game/team/${color}/changename`, 0,
+      `{"newName": "${color === TeamColor.WHITE ? this.newPlayerNameWhite : this.newPlayerNameBlack}"}`);
+    this.showWhiteRenameSubmitButton = false;
+    this.showBlackRenameSubmitButton = false;
+
+    this.newPlayerNameWhite = ""
+    this.newPlayerNameBlack = ""
   }
 
-  onKey(event: any) {
-    const inputValue = event.target.value;
-  }
 }

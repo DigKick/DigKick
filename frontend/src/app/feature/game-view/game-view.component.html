@@ -71,27 +71,27 @@
 </div>
 
 <div class="flex w-full justify-between">
-    <div *ngIf="!this.renameWhite" class="flex w-full lg:justify-center justify-center text-[1.2rem] mt-5">
+    <div *ngIf="!this.showWhiteRenameSubmitButton" class="flex w-full lg:justify-center justify-center text-[1.2rem] mt-5">
         <div class="tooltip tooltip-bottom tooltip-success" data-tip="of latest registered player">
-            <button class="btn btn-outline btn-error" (click)="changeName(whiteColor)">Change name</button>
+            <button class="btn btn-outline btn-error" (click)="toggleChangeNameSubmitButton(whiteColor)">Change name</button>
         </div>
 
     </div>
 
-    <div *ngIf="this.renameWhite" class="flex w-full lg:justify-center justify-center text-[1.2rem] mt-5">
-        <input id="input" (keyup)="onKey($event)" type="text" placeholder="{{game.teamWhite.playerOne?.name}}"
+    <div *ngIf="this.showWhiteRenameSubmitButton" class="flex w-full lg:justify-center justify-center text-[1.2rem] mt-5">
+        <input [(ngModel)]="newPlayerNameWhite" type="text" placeholder="{{game.teamWhite.playerOne?.name}}"
             class="input input-bordered input-error w-full max-w-xs" />
         <button class="btn btn-success ml-5" (click)="submit(this.whiteColor)">Submit</button>
     </div>
 
-    <div *ngIf="!this.renameBlack" class="flex w-full lg:justify-center justify-center text-[1.2rem] mt-5">
+    <div *ngIf="!this.showBlackRenameSubmitButton" class="flex w-full lg:justify-center justify-center text-[1.2rem] mt-5">
         <div class="tooltip tooltip-bottom tooltip-success" data-tip="of latest registered player">
-            <button class="btn btn-outline btn-error" (click)="changeName(blackColor)">Change name</button>
+            <button class="btn btn-outline btn-error" (click)="toggleChangeNameSubmitButton(blackColor)">Change name</button>
         </div>
 
     </div>
-    <div *ngIf="this.renameBlack" class="flex w-full lg:justify-center justify-center text-[1.2rem] mt-5">
-        <input id="input" (keyup)="onKey($event)" type="text" placeholder="{{game.teamBlack.playerOne?.name}}"
+    <div *ngIf="this.showBlackRenameSubmitButton" class="flex w-full lg:justify-center justify-center text-[1.2rem] mt-5">
+        <input [(ngModel)]="newPlayerNameBlack" type="text" placeholder="{{game.teamBlack.playerOne?.name}}"
             class="input input-bordered input-error w-full max-w-xs" />
         <button class="btn btn-success ml-5" (click)="submit(this.blackColor)">Submit</button>
     </div>
