@@ -4,7 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7cca5e48-bd9a-4edf-b1a0-a5fd0c9b52f3" name="Changes" comment="" />
+    <list default="true" id="7cca5e48-bd9a-4edf-b1a0-a5fd0c9b52f3" name="Changes" comment="updated app component html">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/core/services/theme.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/core/services/theme.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/core/static/models/theme.model.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/core/static/models/theme.model.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tailwind.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/tailwind.config.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -39,6 +45,10 @@
       </RecentBranches>
     </option>
   </component>
+  <component name="KubernetesApiPersistence"><![CDATA[{}]]></component>
+  <component name="KubernetesApiProvider"><![CDATA[{
+  "isMigrated": true
+}]]></component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 5
 }</component>
@@ -51,7 +61,7 @@
   "keyToString": {
     "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "35-create-game-website",
+    "git-widget-placeholder": "22-fix-alignment-from-frontend-components",
     "last_opened_file_path": "D:/WebStormProjects/group6/frontend/dig-kick-fe",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -59,13 +69,24 @@
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "settings.editor.selected.configurable": "nx-console",
+    "ts.external.directory.path": "/Users/makoeta/Documents/Projects/digkick/frontend/node_modules/typescript/lib",
     "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "dev.nx.console.project_details_files": [
+      "/Users/makoeta/Documents/Projects/digkick/frontend/project.json",
+      "/Users/makoeta/Documents/Projects/digkick/frontend/package.json",
+      "/Users/makoeta/Documents/Projects/digkick/frontend/e2e/project.json",
+      "/Users/makoeta/Documents/Projects/digkick/frontend/e2e/package.json",
+      "/Users/makoeta/Documents/Projects/digkick/frontend/e2e/playwright.config.ts",
+      "/Users/makoeta/Documents/Projects/digkick/frontend/e2e/.eslintrc.json"
+    ]
   }
 }]]></component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-1d06a55b98c1-2e7d6887c066-JavaScript-WS-241.15989.47" />
+        <option value="bundled-js-predefined-1d06a55b98c1-91d5c284f522-JavaScript-WS-241.15989.105" />
       </set>
     </attachedChunks>
   </component>
@@ -81,10 +102,47 @@
       <workItem from="1715864774896" duration="81000" />
       <workItem from="1715864863417" duration="17000" />
       <workItem from="1715864888529" duration="737000" />
+      <workItem from="1721154632335" duration="1612000" />
     </task>
+    <task id="LOCAL-00001" summary="updated app component html">
+      <option name="closed" value="true" />
+      <created>1721079117744</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1721079117744</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="updated app component html" />
+    <option name="LAST_COMMIT_MESSAGE" value="updated app component html" />
+  </component>
+  <component name="WfRunsListSearchHistory"><![CDATA[{
+  "history": [
+    {
+      "branch": "22-fix-alignment-from-frontend-components",
+      "currentBranchFilter": true
+    }
+  ],
+  "lastFilter": {
+    "branch": "22-fix-alignment-from-frontend-components",
+    "currentBranchFilter": true
+  }
+}]]></component>
 </project>

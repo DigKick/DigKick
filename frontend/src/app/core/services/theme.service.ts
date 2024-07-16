@@ -5,10 +5,12 @@ import { Theme } from '../static/models/theme.model';
   providedIn: 'root',
 })
 export class ThemeService {
-  private currentTheme: string = Theme.NIGHT;
+  private currentTheme: string = Theme.DIGKICKDARK;
   themeSignal = signal<string>(this.currentTheme);
 
-  constructor() { }
+  constructor() {
+    this.themeSignal.set(this.currentTheme);
+  }
 
   getCurrentTheme(): string {
     return this.currentTheme;
@@ -20,7 +22,7 @@ export class ThemeService {
   }
 
   toggleTheme(): void {
-    this.currentTheme = this.currentTheme === Theme.NIGHT ? Theme.RETRO : Theme.NIGHT;
+    this.currentTheme = this.currentTheme === Theme.DIGKICKDARK ? Theme.DIGKICKLIGHT : Theme.DIGKICKDARK;
     this.themeSignal.set(this.currentTheme)
     document.documentElement.setAttribute('data-theme', this.themeSignal());
   }
