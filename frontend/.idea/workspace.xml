@@ -4,12 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7cca5e48-bd9a-4edf-b1a0-a5fd0c9b52f3" name="Changes" comment="updated app component html">
+    <list default="true" id="7cca5e48-bd9a-4edf-b1a0-a5fd0c9b52f3" name="Changes" comment="changed: signal no uses Theme type">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/core/services/theme.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/core/services/theme.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/core/static/models/theme.model.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/core/static/models/theme.model.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tailwind.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/tailwind.config.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,10 +41,10 @@
       </RecentBranches>
     </option>
   </component>
-  <component name="KubernetesApiPersistence"><![CDATA[{}]]></component>
-  <component name="KubernetesApiProvider"><![CDATA[{
-  "isMigrated": true
-}]]></component>
+  <component name="KubernetesApiPersistence">{}</component>
+  <component name="KubernetesApiProvider">{
+  &quot;isMigrated&quot;: true
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 5
 }</component>
@@ -57,32 +53,32 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "22-fix-alignment-from-frontend-components",
-    "last_opened_file_path": "D:/WebStormProjects/group6/frontend/dig-kick-fe",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "nx-console",
-    "ts.external.directory.path": "/Users/makoeta/Documents/Projects/digkick/frontend/node_modules/typescript/lib",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;22-fix-alignment-from-frontend-components&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/WebStormProjects/group6/frontend/dig-kick-fe&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;nx-console&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/Users/makoeta/Documents/Projects/digkick/frontend/node_modules/typescript/lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "dev.nx.console.project_details_files": [
-      "/Users/makoeta/Documents/Projects/digkick/frontend/project.json",
-      "/Users/makoeta/Documents/Projects/digkick/frontend/package.json",
-      "/Users/makoeta/Documents/Projects/digkick/frontend/e2e/project.json",
-      "/Users/makoeta/Documents/Projects/digkick/frontend/e2e/package.json",
-      "/Users/makoeta/Documents/Projects/digkick/frontend/e2e/playwright.config.ts",
-      "/Users/makoeta/Documents/Projects/digkick/frontend/e2e/.eslintrc.json"
+  &quot;keyToStringList&quot;: {
+    &quot;dev.nx.console.project_details_files&quot;: [
+      &quot;/Users/makoeta/Documents/Projects/digkick/frontend/project.json&quot;,
+      &quot;/Users/makoeta/Documents/Projects/digkick/frontend/package.json&quot;,
+      &quot;/Users/makoeta/Documents/Projects/digkick/frontend/e2e/project.json&quot;,
+      &quot;/Users/makoeta/Documents/Projects/digkick/frontend/e2e/package.json&quot;,
+      &quot;/Users/makoeta/Documents/Projects/digkick/frontend/e2e/playwright.config.ts&quot;,
+      &quot;/Users/makoeta/Documents/Projects/digkick/frontend/e2e/.eslintrc.json&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -112,7 +108,23 @@
       <option name="project" value="LOCAL" />
       <updated>1721079117744</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="changed: theme service now reacts on signal change instead of using toggle function">
+      <option name="closed" value="true" />
+      <created>1721157240047</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1721157240047</updated>
+    </task>
+    <task id="LOCAL-00003" summary="changed: signal no uses Theme type">
+      <option name="closed" value="true" />
+      <created>1721157264025</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1721157264025</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -131,18 +143,20 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="updated app component html" />
-    <option name="LAST_COMMIT_MESSAGE" value="updated app component html" />
+    <MESSAGE value="changed: theme service now reacts on signal change instead of using toggle function" />
+    <MESSAGE value="changed: signal no uses Theme type" />
+    <option name="LAST_COMMIT_MESSAGE" value="changed: signal no uses Theme type" />
   </component>
-  <component name="WfRunsListSearchHistory"><![CDATA[{
-  "history": [
+  <component name="WfRunsListSearchHistory">{
+  &quot;history&quot;: [
     {
-      "branch": "22-fix-alignment-from-frontend-components",
-      "currentBranchFilter": true
+      &quot;branch&quot;: &quot;22-fix-alignment-from-frontend-components&quot;,
+      &quot;currentBranchFilter&quot;: true
     }
   ],
-  "lastFilter": {
-    "branch": "22-fix-alignment-from-frontend-components",
-    "currentBranchFilter": true
+  &quot;lastFilter&quot;: {
+    &quot;branch&quot;: &quot;22-fix-alignment-from-frontend-components&quot;,
+    &quot;currentBranchFilter&quot;: true
   }
-}]]></component>
+}</component>
 </project>
