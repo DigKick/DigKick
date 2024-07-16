@@ -16,7 +16,7 @@ export class TableDisplayComponent implements OnInit {
 
   @Input() tableName!: string;
 
-  constructor(private mqttClient: DkMqttClientService, public gameService: GameService) { }
+  constructor(public gameService: GameService) { }
 
   ngOnInit(): void {
     if (this.tableName) {
