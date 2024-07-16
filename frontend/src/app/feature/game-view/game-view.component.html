@@ -9,9 +9,7 @@
         </div>
     </div>
 
-    <!-- Image container -->
     <div class="flex justify-center items-center">
-        <!-- Mobile view -->
         <div class="lg:hidden">
             <img src="../assets/images/Sprite-0003.png" class="transform rotate-90 ...">
         </div>
@@ -38,13 +36,13 @@
 
 <!-- Player names -->
 <div class="flex w-full my-auto lg:justify-center items-center text-[1.2rem]">
+
     @if(gameService.gameSignal().teamWhite; as white) {
     <div class="grid h-24 flex-grow card bg-accent-content rounded-box place-items-center ml-7 lg:ml-9 ">
         <div class="flex text-[1.4rem]">
             <div>TEAM</div>
             <div class="text-orange-400">&nbsp; WHITE</div>
         </div>
-        <!-- Added mx-4 for left and right margin -->
         <div class="flex break-words">{{white.playerOne?.name}}<div class="text-orange-400">
                 &nbsp;&nbsp;{{white.playerOne?.elo}}</div>
         </div>
@@ -53,14 +51,15 @@
         </div>
     </div>
     }
-    <div class="divider divider-horizontal divider-warning text-[1.5rem]">VS</div> <!-- Spacer for mobile view -->
+
+    <div class="divider divider-horizontal divider-warning text-[1.5rem]">VS</div>
+
     @if(gameService.gameSignal().teamBlack; as black) {
     <div class="grid h-24 flex-grow card bg-accent-content rounded-box place-items-center mr-7 lg:mr-9">
         <div class="flex text-[1.3rem]">
             <div>TEAM</div>
             <div class="text-orange-400">&nbsp; BLACK</div>
         </div>
-        <!-- Added mx-4 for left and right margin -->
         <div class="flex break-words">{{black.playerOne?.name}} <div class="text-orange-400">
                 &nbsp;&nbsp;{{black.playerOne?.elo}}</div>
         </div>

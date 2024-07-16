@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
+import {Observable, take} from 'rxjs';
 import { DkMqttClientService } from 'src/app/core/services/dk-mqtt-client.service';
 import { GameService } from 'src/app/core/services/game.service';
 import { TeamColor } from 'src/app/core/static/models/team.model';
@@ -19,9 +19,9 @@ export class GameViewComponent implements OnInit {
   whiteColor: string = TeamColor.WHITE;
   blackColor: string = TeamColor.BLACK;
 
-  game$!: Observable<String>;
-  whiteScore$!: Observable<String>;
-  blackScore$!: Observable<String>;
+  game$!: Observable<string>;
+  whiteScore$!: Observable<string>;
+  blackScore$!: Observable<string>;
   whiteScoreSignal = signal<number>(0);
   blackScoreSignal = signal<number>(0);
   winnerSignal = signal<string>('');
@@ -29,13 +29,13 @@ export class GameViewComponent implements OnInit {
 
   tableId!: string | null;
 
-  renameWhite: boolean = false;
-  renameBlack: boolean = false;
+  renameWhite = false;
+  renameBlack = false;
 
   constructor(private mqttClient: DkMqttClientService, private route: ActivatedRoute, public gameService: GameService) { }
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe(params => {
+    this.route.paramMap.pipe(take(1)).subscribe(params => {
       this.tableId = params.get('tableId');
       if (this.tableId) {
         this.gameService.setId(this.tableId);
@@ -52,7 +52,7 @@ export class GameViewComponent implements OnInit {
   }
 
   submit(color: string) {
-    let changeNameInputValue: string = (<HTMLInputElement>document.getElementById("input")).value;
+    const changeNameInputValue: string = (<HTMLInputElement>document.getElementById("input")).value;
     let topic = ''
     if (color === TeamColor.WHITE) {
       const playerOneWhite = this.gameService.gameSignal().teamWhite.playerOne
