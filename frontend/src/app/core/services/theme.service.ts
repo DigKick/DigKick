@@ -5,7 +5,7 @@ import { Theme } from '../static/models/theme.model';
   providedIn: 'root',
 })
 export class ThemeService {
-  themeSignal = signal<string>(Theme.DIGKICKDARK);
+  themeSignal = signal<Theme>(Theme.DIGKICKDARK);
 
   constructor() {
     effect(() => {
