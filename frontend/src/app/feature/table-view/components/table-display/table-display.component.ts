@@ -14,9 +14,9 @@ import { CommonModule } from '@angular/common';
 })
 export class TableDisplayComponent implements OnInit {
 
-  random: number = 1;
+  random = 1;
 
-  @Input() tableName!: String;
+  @Input() tableName!: string;
 
   constructor(private mqttClient: DkMqttClientService, public gameService: GameService) { }
 
@@ -28,8 +28,7 @@ export class TableDisplayComponent implements OnInit {
   }
 
   randomImagePath(): number {
-    const imageIndex = Math.floor(Math.random() * 4) + 1;
-    return imageIndex;
+    return  Math.floor(Math.random() * 4) + 1;
   }
 
 }
