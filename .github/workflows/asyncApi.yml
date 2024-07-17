@@ -1,0 +1,46 @@
+name: AsyncAPI documents processing
+
+on:
+  push:
+    branches: ["main"]
+
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
+# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  generate:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Generator, Validator, Converter and others - all in one for your AsyncAPI docs
+        uses: asyncapi/github-action-for-cli@v3.1.1
+        with:
+          command: generate
+          filepath: ./backend/asyncapi.yaml
+          template: "@asyncapi/html-template" #In case of template from npm. Or can use a link.
+          output: ./asyncapi-generated-html
+          parameters: "-p baseHref=/test-experiment/ sidebarOrganization=byTags"
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: "./asyncapi-generated-html"
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
