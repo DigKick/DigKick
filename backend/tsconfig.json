@@ -1,4 +1,7 @@
 {
+  "types": [
+    "bun-types" // add Bun global
+  ],  
   "compilerOptions": {
     // Enable latest features
     "lib": ["ESNext", "DOM"],
