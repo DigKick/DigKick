@@ -1,0 +1,22 @@
+name: Pull Request Frontend
+on:
+  pull_request:
+    paths:
+      - "frontend/**"
+      - ".gitea/workflows/pr-frontend.yml"
+defaults:
+  run:
+    working-directory: ./frontend
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "npm"
+      - run: npm ci
+      - name: Check formatting
+        run: |
+          npm run prettier:check
