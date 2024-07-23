@@ -12,6 +12,10 @@ jobs:
         working-directory: ./frontend
     steps:
       - uses: actions/checkout@v4
+      - name: List Files and Folders
+        run: |
+          pwd
+          ls -lsah
       - uses: actions/setup-node@v4
         with:
           node-version: 20
