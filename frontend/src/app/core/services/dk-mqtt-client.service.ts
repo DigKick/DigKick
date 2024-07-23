@@ -61,7 +61,7 @@ export class DkMqttClientService {
       console.log(
         `Received message ${packet.payload.toString()} from topic ${
           packet.topic
-        }`
+        }`,
       );
     });
   }

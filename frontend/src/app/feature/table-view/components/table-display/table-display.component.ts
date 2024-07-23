@@ -19,7 +19,7 @@ export class TableDisplayComponent implements OnInit {
 
   constructor(
     private mqttClient: DkMqttClientService,
-    public gameService: GameService
+    public gameService: GameService,
   ) {}
 
   ngOnInit(): void {

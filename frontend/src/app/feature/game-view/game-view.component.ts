@@ -34,7 +34,7 @@ export class GameViewComponent implements OnInit {
   constructor(
     private mqttClient: DkMqttClientService,
     private route: ActivatedRoute,
-    public gameService: GameService
+    public gameService: GameService,
   ) {}
 
   ngOnInit(): void {
@@ -77,7 +77,7 @@ export class GameViewComponent implements OnInit {
     this.mqttClient.doPublish(
       topic,
       0,
-      `{"newName": "${changeNameInputValue}"}`
+      `{"newName": "${changeNameInputValue}"}`,
     );
   }
 

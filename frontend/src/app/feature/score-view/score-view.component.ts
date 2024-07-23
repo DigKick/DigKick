@@ -13,6 +13,6 @@ import { ScoreService } from 'src/app/core/services/score.service';
 export class ScoreViewComponent {
   constructor(
     private mqttClient: DkMqttClientService,
-    protected scoreService: ScoreService
+    protected scoreService: ScoreService,
   ) {}
 }
