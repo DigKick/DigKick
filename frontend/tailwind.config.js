@@ -9,10 +9,10 @@ module.exports = {
     ...createGlobPatternsForDependencies(__dirname),
   ],
   daisyui: {
-    themes: ["night", "retro"],
+    themes: ['night', 'retro'],
   },
   theme: {
     extend: {},
   },
-  plugins: [require("daisyui")],
+  plugins: [require('daisyui')],
 };

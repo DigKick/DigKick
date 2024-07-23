@@ -1,22 +1,37 @@
 <div class="grid-layout">
   @if(gameService.gameSignal(); as game) {
-  <div class="card card-compact w-72 md:w-72 lg:w-96   shadow-xl mt-4 md:mt-8 mx-auto bg-accent-content">
-    <figure><img src="../assets/images/fun_table{{random}}.png" alt="table" class="mx-auto w-full"></figure>
-    <div class="card-body grid grid-cols-3 gap-x-4 items-center mt-1 text-pretty">
+  <div
+    class="card card-compact w-72 md:w-72 lg:w-96 shadow-xl mt-4 md:mt-8 mx-auto bg-accent-content"
+  >
+    <figure>
+      <img
+        src="../assets/images/fun_table{{ random }}.png"
+        alt="table"
+        class="mx-auto w-full"
+      />
+    </figure>
+    <div
+      class="card-body grid grid-cols-3 gap-x-4 items-center mt-1 text-pretty"
+    >
       <div class="flex flex-col justify-center pl-2 lg:pl-8 text-[1.1rem]">
-        <p class="mb-1 break-words">{{game.teamWhite.playerOne?.name}}</p>
-        <p class="mt-0 break-words">{{game.teamWhite.playerTwo?.name}}</p>
+        <p class="mb-1 break-words">{{ game.teamWhite.playerOne?.name }}</p>
+        <p class="mt-0 break-words">{{ game.teamWhite.playerTwo?.name }}</p>
       </div>
       <p class="col-span-1 text-center text-[3rem]">
-        {{game.teamWhite.score}}:{{game.teamBlack.score}}</p>
+        {{ game.teamWhite.score }}:{{ game.teamBlack.score }}
+      </p>
       <div class="flex flex-col justify-center pr-4 text-[1.1rem] text-pretty">
-        <p class="mb-1 break-words">{{game.teamBlack.playerOne?.name}}</p>
-        <p class="mt-0 break-words">{{game.teamBlack.playerTwo?.name}}</p>
+        <p class="mb-1 break-words">{{ game.teamBlack.playerOne?.name }}</p>
+        <p class="mt-0 break-words">{{ game.teamBlack.playerTwo?.name }}</p>
       </div>
     </div>
     <div class="card-actions justify-center m-3" *ngIf="tableName">
-      <button class="btn w-5/6 items-center btn-primary text-[1.25rem] btn-outline"
-        [routerLink]="['/game', tableName]">View</button>
+      <button
+        class="btn w-5/6 items-center btn-primary text-[1.25rem] btn-outline"
+        [routerLink]="['/game', tableName]"
+      >
+        View
+      </button>
     </div>
   </div>
   }

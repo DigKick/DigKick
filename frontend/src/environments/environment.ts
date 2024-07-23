@@ -5,4 +5,4 @@ export const environment = {
   broker_clientId: 'mqttx_597046f4',
   broker_username: 'emqx_test',
   broker_password: 'emqx_test',
-}
+};

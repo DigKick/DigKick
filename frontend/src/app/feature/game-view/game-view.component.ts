@@ -12,10 +12,9 @@ import { TeamColor } from 'src/app/core/static/models/team.model';
   imports: [CommonModule],
   providers: [DkMqttClientService, GameService],
   templateUrl: './game-view.component.html',
-  styleUrl: './game-view.component.css'
+  styleUrl: './game-view.component.css',
 })
 export class GameViewComponent implements OnInit {
-
   whiteColor: string = TeamColor.WHITE;
   blackColor: string = TeamColor.BLACK;
 
@@ -32,10 +31,14 @@ export class GameViewComponent implements OnInit {
   renameWhite: boolean = false;
   renameBlack: boolean = false;
 
-  constructor(private mqttClient: DkMqttClientService, private route: ActivatedRoute, public gameService: GameService) { }
+  constructor(
+    private mqttClient: DkMqttClientService,
+    private route: ActivatedRoute,
+    public gameService: GameService
+  ) {}
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe(params => {
+    this.route.paramMap.subscribe((params) => {
       this.tableId = params.get('tableId');
       if (this.tableId) {
         this.gameService.setId(this.tableId);
@@ -52,24 +55,30 @@ export class GameViewComponent implements OnInit {
   }
 
   submit(color: string) {
-    let changeNameInputValue: string = (<HTMLInputElement>document.getElementById("input")).value;
-    let topic = ''
+    let changeNameInputValue: string = (<HTMLInputElement>(
+      document.getElementById('input')
+    )).value;
+    let topic = '';
     if (color === TeamColor.WHITE) {
-      const playerOneWhite = this.gameService.gameSignal().teamWhite.playerOne
+      const playerOneWhite = this.gameService.gameSignal().teamWhite.playerOne;
       if (playerOneWhite) {
         playerOneWhite.name = changeNameInputValue;
       }
       topic = `/table/${this.tableId}/game/team/${color}/changename`;
       this.renameWhite = false;
     } else {
-      const playerOneBlack = this.gameService.gameSignal().teamBlack.playerOne
+      const playerOneBlack = this.gameService.gameSignal().teamBlack.playerOne;
       if (playerOneBlack) {
         playerOneBlack.name = changeNameInputValue;
       }
       topic = `/table/${this.tableId}/game/team/${color}/changename`;
       this.renameBlack = false;
     }
-    this.mqttClient.doPublish(topic, 0, `{"newName": "${changeNameInputValue}"}`);
+    this.mqttClient.doPublish(
+      topic,
+      0,
+      `{"newName": "${changeNameInputValue}"}`
+    );
   }
 
   onKey(event: any) {

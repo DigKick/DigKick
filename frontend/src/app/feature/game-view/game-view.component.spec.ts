@@ -8,10 +8,9 @@ describe('GameViewComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [GameViewComponent]
-    })
-    .compileComponents();
-    
+      imports: [GameViewComponent],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(GameViewComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

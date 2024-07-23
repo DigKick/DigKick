@@ -1,12 +1,11 @@
 body {
-    background-color: #333;
+  background-color: #333;
 }
 
 path {
-    fill: transparent;
+  fill: transparent;
 }
 
 text {
-    fill: #FF9800;
+  fill: #ff9800;
 }
-

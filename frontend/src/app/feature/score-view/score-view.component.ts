@@ -8,11 +8,11 @@ import { ScoreService } from 'src/app/core/services/score.service';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './score-view.component.html',
-  styleUrl: './score-view.component.css'
+  styleUrl: './score-view.component.css',
 })
 export class ScoreViewComponent {
-
-
-  constructor(private mqttClient: DkMqttClientService, protected scoreService: ScoreService) { }
-
+  constructor(
+    private mqttClient: DkMqttClientService,
+    protected scoreService: ScoreService
+  ) {}
 }

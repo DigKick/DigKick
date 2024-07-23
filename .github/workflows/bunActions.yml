@@ -2,8 +2,14 @@ name: Bun actions
 on:
   pull_request:
     branches: ["develop", "main"]
+    paths:
+      - "backend/**"
+      - ".gitea/workflows/bunActions.yml"
   push:
     branches: ["develop", "main", "**action**"]
+    paths:
+      - "backend/**"
+      - ".gitea/workflows/bunActions.yml"
 jobs:
   build:
     name: Build backend with bun

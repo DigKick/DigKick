@@ -6,7 +6,6 @@ import { TeamColor } from '../static/models/team.model';
 
 @Injectable()
 export class GameService {
-
   tableId = signal<String>('');
   game$!: Observable<String>;
   gameSignal = signal<Game>({
@@ -21,7 +20,7 @@ export class GameService {
         updatedAt: '',
         name: 'Player 3',
         elo: 0,
-        hashSerialNumber: "CENSORED",
+        hashSerialNumber: 'CENSORED',
       },
       playerTwo: {
         id: '',
@@ -29,7 +28,7 @@ export class GameService {
         updatedAt: '',
         name: 'Player 4',
         elo: 0,
-        hashSerialNumber: "CENSORED",
+        hashSerialNumber: 'CENSORED',
       },
     },
     teamWhite: {
@@ -42,7 +41,7 @@ export class GameService {
         updatedAt: '',
         name: 'Player 1',
         elo: 0,
-        hashSerialNumber: "CENSORED",
+        hashSerialNumber: 'CENSORED',
       },
       playerTwo: {
         id: '',
@@ -50,29 +49,27 @@ export class GameService {
         updatedAt: '',
         name: 'Player 2',
         elo: 0,
-        hashSerialNumber: "CENSORED",
+        hashSerialNumber: 'CENSORED',
       },
     },
-    pointsToWin: 10
-  }
-  );
+    pointsToWin: 10,
+  });
 
   constructor(private mqttClient: DkMqttClientService) {
     effect(() => {
-      this.game$ = this.mqttClient.subscribe(`/table/${this.tableId()}/game`)
+      this.game$ = this.mqttClient.subscribe(`/table/${this.tableId()}/game`);
       this.game$.subscribe((message: String) => {
         try {
           const game: Game = JSON.parse(message.toString());
-          this.gameSignal.set(game)
+          this.gameSignal.set(game);
         } catch (e) {
           console.log(e);
         }
-      })
-    })
+      });
+    });
   }
 
   setId(id: String) {
     this.tableId.set(id);
   }
-
 }

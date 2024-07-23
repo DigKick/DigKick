@@ -1,18 +1,16 @@
 .grid-layout {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-  
-  .tile {
-    width: 30%; 
-    margin-bottom: 20px;
-  }
-  
-  @media (max-width: 768px) {
-    .tile {
-      width: 70%; 
-    }
-  }
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
 
-  
+.tile {
+  width: 30%;
+  margin-bottom: 20px;
+}
+
+@media (max-width: 768px) {
+  .tile {
+    width: 70%;
+  }
+}

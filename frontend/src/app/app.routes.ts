@@ -5,13 +5,13 @@ import { TableViewComponent } from './feature/table-view/table-view.component';
 import { NgModule } from '@angular/core';
 
 export const appRoutes: Route[] = [
-    { path: '', component: TableViewComponent },
-    { path: 'game/:tableId', component: GameViewComponent },
-    { path: 'score', component: ScoreViewComponent },
+  { path: '', component: TableViewComponent },
+  { path: 'game/:tableId', component: GameViewComponent },
+  { path: 'score', component: ScoreViewComponent },
 ];
 
 @NgModule({
-    imports: [RouterModule.forRoot(appRoutes)],
-    exports: [RouterModule]
+  imports: [RouterModule.forRoot(appRoutes)],
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

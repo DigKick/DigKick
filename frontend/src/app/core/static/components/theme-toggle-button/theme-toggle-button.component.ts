@@ -6,14 +6,12 @@ import { ThemeService } from 'src/app/core/services/theme.service';
   standalone: true,
   imports: [],
   templateUrl: './theme-toggle-button.component.html',
-  styleUrl: './theme-toggle-button.component.css'
+  styleUrl: './theme-toggle-button.component.css',
 })
 export class ThemeToggleButtonComponent {
-  
   constructor(private themeService: ThemeService) {}
 
   toggleTheme(): void {
     this.themeService.toggleTheme();
   }
-
 }
