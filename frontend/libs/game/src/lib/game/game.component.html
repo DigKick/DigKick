@@ -1,0 +1,177 @@
+@if (gameService.gameSignal(); as game) {
+  <div
+    class="flex flex-col lg:flex-row justify-center items-center mt-3 mx-auto w-5/6 lg:mx-auto lg:w-2/3"
+  >
+    <!-- Mobile view -->
+    <div
+      class="flex justify-center items-center mx-auto card h-32 w-64 bg-accent-content rounded-lg lg:hidden"
+    >
+      <div class="flex justify-center items-center">
+        <div class="text-[6rem] mr-3">{{ game.teamWhite.score }}</div>
+        <div class="text-[6rem]">:</div>
+        <div class="text-[6rem] ml-3">{{ game.teamBlack.score }}</div>
+      </div>
+    </div>
+
+    <!-- Image container -->
+    <div class="flex justify-center items-center">
+      <!-- Mobile view -->
+      <div class="lg:hidden">
+        <img
+          src="../assets/images/Sprite-0003.png"
+          class="transform rotate-90 ..."
+        />
+      </div>
+    </div>
+
+    <!-- Desktop view -->
+    <div class="hidden lg:flex items-center justify-center">
+      <div class="flex items-center space-x-[6rem]">
+        <div
+          class="card h-32 w-64 bg-accent-content flex justify-center items-center text-[11rem]"
+        >
+          {{ game.teamWhite.score }}
+        </div>
+        <img
+          src="../assets/images/Sprite-0003.png"
+          class="rotate-90 h-full"
+          alt="Your Image"
+        />
+        <div
+          class="card h-32 w-64 bg-accent-content flex justify-center items-center text-[11rem]"
+        >
+          {{ game.teamBlack.score }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="text-[2.5rem] lg:text-[4rem] text-red-800 flex justify-center mb-[1rem] lg:mb-[3rem] custom-font"
+    *ngIf="game.gameMode === 'RANKED'; else hiddenContent"
+  >
+    ranked
+  </div>
+  <ng-template #hiddenContent>
+    <div class="hidden lg:hidden"></div>
+  </ng-template>
+
+  <!-- Player names -->
+  <div class="flex w-full my-auto lg:justify-center items-center text-[1.2rem]">
+    @if (gameService.gameSignal().teamWhite; as white) {
+      <div
+        class="grid h-24 flex-grow card bg-accent-content rounded-box place-items-center ml-7 lg:ml-9"
+      >
+        <div class="flex text-[1.4rem]">
+          <div>TEAM</div>
+          <div class="text-orange-400">&nbsp; WHITE</div>
+        </div>
+        <!-- Added mx-4 for left and right margin -->
+        <div class="flex break-words">
+          {{ white.playerOne?.name }}
+          <div class="text-orange-400">
+            &nbsp;&nbsp;{{ white.playerOne?.elo }}
+          </div>
+        </div>
+        <div class="flex break-words">
+          {{ white.playerTwo?.name }}
+          <div class="text-orange-400">
+            &nbsp;&nbsp;{{ white.playerTwo?.elo }}
+          </div>
+        </div>
+      </div>
+    }
+    <div class="divider divider-horizontal divider-warning text-[1.5rem]">
+      VS
+    </div>
+    <!-- Spacer for mobile view -->
+    @if (gameService.gameSignal().teamBlack; as black) {
+      <div
+        class="grid h-24 flex-grow card bg-accent-content rounded-box place-items-center mr-7 lg:mr-9"
+      >
+        <div class="flex text-[1.3rem]">
+          <div>TEAM</div>
+          <div class="text-orange-400">&nbsp; BLACK</div>
+        </div>
+        <!-- Added mx-4 for left and right margin -->
+        <div class="flex break-words">
+          {{ black.playerOne?.name }}
+          <div class="text-orange-400">
+            &nbsp;&nbsp;{{ black.playerOne?.elo }}
+          </div>
+        </div>
+        <div class="flex break-words">
+          {{ black.playerTwo?.name }}
+          <div class="text-orange-400">
+            &nbsp;&nbsp;{{ black.playerTwo?.elo }}
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+
+  <div class="flex w-full justify-between">
+    <div
+      *ngIf="!this.renameWhite"
+      class="flex w-full lg:justify-center justify-center text-[1.2rem] mt-5"
+    >
+      <div
+        class="tooltip tooltip-bottom tooltip-success"
+        data-tip="of latest registered player"
+      >
+        <button
+          class="btn btn-outline btn-error"
+          (click)="changeName(whiteColor)"
+        >
+          Change name
+        </button>
+      </div>
+    </div>
+
+    <div
+      *ngIf="this.renameWhite"
+      class="flex w-full lg:justify-center justify-center text-[1.2rem] mt-5"
+    >
+      <input
+        (keyup)="onKey($event)"
+        type="text"
+        placeholder="{{ game.teamWhite.playerOne?.name }}"
+        class="input input-bordered input-error w-full max-w-xs"
+      />
+      <button class="btn btn-success ml-5" (click)="submit(this.whiteColor)">
+        Submit
+      </button>
+    </div>
+
+    <div
+      *ngIf="!this.renameBlack"
+      class="flex w-full lg:justify-center justify-center text-[1.2rem] mt-5"
+    >
+      <div
+        class="tooltip tooltip-bottom tooltip-success"
+        data-tip="of latest registered player"
+      >
+        <button
+          class="btn btn-outline btn-error"
+          (click)="changeName(blackColor)"
+        >
+          Change name
+        </button>
+      </div>
+    </div>
+    <div
+      *ngIf="this.renameBlack"
+      class="flex w-full lg:justify-center justify-center text-[1.2rem] mt-5"
+    >
+      <input
+        (keyup)="onKey($event)"
+        type="text"
+        placeholder="{{ game.teamBlack.playerOne?.name }}"
+        class="input input-bordered input-error w-full max-w-xs"
+      />
+      <button class="btn btn-success ml-5" (click)="submit(this.blackColor)">
+        Submit
+      </button>
+    </div>
+  </div>
+}

@@ -1,21 +1,14 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { NavbarComponent } from './core/static/components/navbar/navbar.component';
-import { GameViewComponent } from './feature/game-view/game-view.component';
-import { TableViewComponent } from './feature/table-view/table-view.component';
-import { TableDisplayComponent } from './feature/table-view/components/table-display/table-display.component';
-import { ThemeToggleButtonComponent } from './core/static/components/theme-toggle-button/theme-toggle-button.component';
-import { ThemeService } from './core/services/theme.service';
 import { CommonModule } from '@angular/common';
+import { NavbarComponent, ThemeToggleButtonComponent } from '@dig-kick/ui';
+import { ThemeService } from '@dig-kick/services';
 
 @Component({
   standalone: true,
   imports: [
     RouterModule,
     NavbarComponent,
-    GameViewComponent,
-    TableViewComponent,
-    TableDisplayComponent,
     ThemeToggleButtonComponent,
     CommonModule,
   ],

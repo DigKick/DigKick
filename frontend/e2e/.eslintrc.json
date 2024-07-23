@@ -15,7 +15,6 @@
     },
     {
       "files": ["*.js", "*.jsx"],
-      "extends": ["plugin:@nx/javascript"],
       "rules": {
         "@typescript-eslint/no-extra-semi": "error",
         "no-extra-semi": "off"
@@ -26,6 +25,5 @@
       "rules": {}
     }
   ],
-  "extends": ["plugin:playwright/recommended"],
-  "plugins": ["@nx"]
+  "extends": ["plugin:playwright/recommended", "../.eslintrc.base.json"]
 }
