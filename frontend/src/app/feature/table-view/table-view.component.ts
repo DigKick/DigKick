@@ -9,14 +9,12 @@ import { DkMqttClientService } from 'src/app/core/services/dk-mqtt-client.servic
   imports: [TableDisplayComponent, CommonModule],
   providers: [DkMqttClientService],
   templateUrl: './table-view.component.html',
-  styleUrl: './table-view.component.css'
+  styleUrl: './table-view.component.css',
 })
 export class TableViewComponent {
-
   tablesSignal: Signal<String[]>;
 
   constructor(private mqttClient: DkMqttClientService) {
     this.tablesSignal = mqttClient.signalTableNames;
   }
-
 }

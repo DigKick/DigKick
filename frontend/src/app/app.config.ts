@@ -4,5 +4,8 @@ import { appRoutes } from './app.routes';
 import { MQTT_SERVICE_OPTIONS, MqttModule } from 'ngx-mqtt';
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideRouter(appRoutes), importProvidersFrom(MqttModule.forRoot(MQTT_SERVICE_OPTIONS))],
+  providers: [
+    provideRouter(appRoutes),
+    importProvidersFrom(MqttModule.forRoot(MQTT_SERVICE_OPTIONS)),
+  ],
 };

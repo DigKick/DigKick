@@ -8,23 +8,26 @@ import { ThemeToggleButtonComponent } from './core/static/components/theme-toggl
 import { ThemeService } from './core/services/theme.service';
 import { CommonModule } from '@angular/common';
 
-
 @Component({
   standalone: true,
-  imports: [RouterModule, NavbarComponent, GameViewComponent, TableViewComponent,
-    TableDisplayComponent, ThemeToggleButtonComponent, CommonModule],
+  imports: [
+    RouterModule,
+    NavbarComponent,
+    GameViewComponent,
+    TableViewComponent,
+    TableDisplayComponent,
+    ThemeToggleButtonComponent,
+    CommonModule,
+  ],
   providers: [],
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
 export class AppComponent {
-
   title = 'dig-kick-fe';
 
   constructor(private themeService: ThemeService) {
     document.body.classList.add('data-theme', this.themeService.themeSignal());
   }
-
 }
-

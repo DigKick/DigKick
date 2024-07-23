@@ -1,14 +1,14 @@
-import { Player } from "./player.model";
+import { Player } from './player.model';
 
 export interface Team {
-    color: string;
-    score: number;
-    isWinner: boolean;
-    playerOne?: Player;
-    playerTwo?: Player;
+  color: string;
+  score: number;
+  isWinner: boolean;
+  playerOne?: Player;
+  playerTwo?: Player;
 }
 
 export enum TeamColor {
-    WHITE = 'white',
-    BLACK = 'black'
+  WHITE = 'white',
+  BLACK = 'black',
 }

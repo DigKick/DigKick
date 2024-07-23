@@ -8,10 +8,9 @@ describe('TableViewComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TableViewComponent]
-    })
-    .compileComponents();
-    
+      imports: [TableViewComponent],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(TableViewComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

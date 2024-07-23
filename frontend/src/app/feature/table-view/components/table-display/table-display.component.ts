@@ -10,15 +10,17 @@ import { CommonModule } from '@angular/common';
   imports: [RouterModule, CommonModule],
   providers: [DkMqttClientService, GameService],
   templateUrl: './table-display.component.html',
-  styleUrl: './table-display.component.css'
+  styleUrl: './table-display.component.css',
 })
 export class TableDisplayComponent implements OnInit {
-
   random: number = 1;
 
   @Input() tableName!: String;
 
-  constructor(private mqttClient: DkMqttClientService, public gameService: GameService) { }
+  constructor(
+    private mqttClient: DkMqttClientService,
+    public gameService: GameService
+  ) {}
 
   ngOnInit(): void {
     if (this.tableName) {
@@ -31,5 +33,4 @@ export class TableDisplayComponent implements OnInit {
     const imageIndex = Math.floor(Math.random() * 4) + 1;
     return imageIndex;
   }
-
 }

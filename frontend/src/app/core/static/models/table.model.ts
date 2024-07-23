@@ -1,3 +1,3 @@
 export interface Table {
-    id: string
+  id: string;
 }

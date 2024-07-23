@@ -8,10 +8,9 @@ describe('ScoreViewComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ScoreViewComponent]
-    })
-    .compileComponents();
-    
+      imports: [ScoreViewComponent],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(ScoreViewComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

@@ -7,12 +7,8 @@ import { ThemeToggleButtonComponent } from '../theme-toggle-button/theme-toggle-
   standalone: true,
   imports: [RouterModule, ThemeToggleButtonComponent],
   templateUrl: './navbar.component.html',
-  styleUrl: './navbar.component.css'
+  styleUrl: './navbar.component.css',
 })
 export class NavbarComponent {
-
-  constructor() {
-
-  }
-
+  constructor() {}
 }

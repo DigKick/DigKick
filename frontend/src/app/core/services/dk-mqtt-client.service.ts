@@ -6,10 +6,10 @@ import {
   MqttService,
 } from 'ngx-mqtt';
 import { Observable, Subject, Subscription } from 'rxjs';
-import {environment} from "../../../environments/environment";
+import { environment } from '../../../environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class DkMqttClientService {
   private curSubscription: Subscription | undefined;
@@ -26,7 +26,7 @@ export class DkMqttClientService {
     username: environment.broker_username,
     password: environment.broker_password,
     protocol: 'ws',
-  }
+  };
 
   private topics: { [topic: string]: Subject<string> } = {};
   signalTableNames = signal<String[]>([]);
@@ -39,7 +39,7 @@ export class DkMqttClientService {
   // Create a connection
   createConnection() {
     try {
-      this._mqttService.connect(this.connection as IMqttServiceOptions)
+      this._mqttService.connect(this.connection as IMqttServiceOptions);
     } catch (error) {
       console.log('mqtt.connect error', error);
     }
@@ -54,13 +54,16 @@ export class DkMqttClientService {
         try {
           const names = JSON.parse(packet.payload.toString()).names;
           this.signalTableNames.set(names);
-        }
-        catch (e) {
+        } catch (e) {
           console.log(e);
         }
       }
-      console.log(`Received message ${packet.payload.toString()} from topic ${packet.topic}`)
-    })
+      console.log(
+        `Received message ${packet.payload.toString()} from topic ${
+          packet.topic
+        }`
+      );
+    });
   }
 
   subscribe(topic: string): Observable<string> {
@@ -68,13 +71,13 @@ export class DkMqttClientService {
       this.topics[topic] = new Subject<string>();
       this._mqttService.observe(topic).subscribe((message: IMqttMessage) => {
         this.topics[topic].next(message.payload.toString());
-      })
+      });
     }
     this._mqttService.observe(topic);
     return this.topics[topic].asObservable();
   }
 
   doPublish(topic: string, qos: any, payload: string) {
-    this._mqttService?.unsafePublish(topic, payload, qos as IPublishOptions)
+    this._mqttService?.unsafePublish(topic, payload, qos as IPublishOptions);
   }
 }
