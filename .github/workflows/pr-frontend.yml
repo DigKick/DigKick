@@ -4,12 +4,12 @@ on:
     paths:
       - "frontend/**"
       - ".gitea/workflows/pr-frontend.yml"
-defaults:
-  run:
-    working-directory: ./frontend
 jobs:
   checks:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./frontend
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
