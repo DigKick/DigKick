@@ -1,13 +1,21 @@
 import { Route, RouterModule } from '@angular/router';
-import { GameViewComponent } from './feature/game-view/game-view.component';
-import { ScoreViewComponent } from './feature/score-view/score-view.component';
-import { TableViewComponent } from './feature/table-view/table-view.component';
 import { NgModule } from '@angular/core';
 
 export const appRoutes: Route[] = [
-  { path: '', component: TableViewComponent },
-  { path: 'game/:tableId', component: GameViewComponent },
-  { path: 'score', component: ScoreViewComponent },
+  {
+    path: '',
+    loadComponent: () =>
+      import('@dig-kick/table').then((m) => m.TableComponent),
+  },
+  {
+    path: 'game/:tableId',
+    loadComponent: () => import('@dig-kick/game').then((m) => m.GameComponent),
+  },
+  {
+    path: 'score',
+    loadComponent: () =>
+      import('@dig-kick/score').then((m) => m.ScoreComponent),
+  },
 ];
 
 @NgModule({
