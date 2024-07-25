@@ -1,4 +1,4 @@
 export enum Theme {
-  NIGHT = 'night',
-  RETRO = 'retro',
+  DK_LIGHT = "digkickLight",
+  DK_DARK = "digkickDark",
 }

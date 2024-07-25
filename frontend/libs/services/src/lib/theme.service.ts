@@ -1,26 +1,22 @@
-import { Injectable, signal } from '@angular/core';
-import { Theme } from '@dig-kick/models';
+import {Injectable} from '@angular/core';
+import {Theme} from '@dig-kick/models';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ThemeService {
-  private currentTheme: string = Theme.NIGHT;
-  themeSignal = signal<string>(this.currentTheme);
+  private _theme: Theme = Theme.DK_DARK;
 
-  getCurrentTheme(): string {
-    return this.currentTheme;
+  get theme(): Theme {
+    return this._theme;
   }
 
-  setTheme(theme: string) {
-    this.currentTheme = theme;
-    this.themeSignal.set(this.currentTheme);
+  set theme(theme: Theme) {
+    this._theme = theme;
+    document.documentElement.setAttribute('data-theme', theme.toString());
   }
 
   toggleTheme(): void {
-    this.currentTheme =
-      this.currentTheme === Theme.NIGHT ? Theme.RETRO : Theme.NIGHT;
-    this.themeSignal.set(this.currentTheme);
-    document.documentElement.setAttribute('data-theme', this.themeSignal());
+    this.theme = this.theme === Theme.DK_DARK ? Theme.DK_LIGHT : Theme.DK_DARK;
   }
 }
