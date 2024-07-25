@@ -6,13 +6,14 @@ import {TeamEntity} from "./modules/team/teamEntity.ts";
 import {Logger} from "winston";
 import {LoggerFactory} from "../logging/loggerFactory.ts";
 import {PlayerEntity} from "./modules/player/playerEntity.ts";
+import {ApplicationProperities} from "../util/properties/applicationProperities.ts";
 
 const logger: Logger = LoggerFactory.getLogger("DataSourceInitializer");
-new Database(`${process.env.DATABASE_FILE_NAME}.${process.env.DATABASE_FILE_SUFFIX}`)
+new Database(`${ApplicationProperities.properties.db?.file?.name}.${ApplicationProperities.properties.db?.file?.suffix}`)
 
 export const dataSource: DataSource = new DataSource({
   type: "sqlite",
-  database: `${process.env.DATABASE_FILE_NAME}.${process.env.DATABASE_FILE_SUFFIX}`,
+  database: `${ApplicationProperities.properties.db?.file?.name}.${ApplicationProperities.properties.db?.file?.name}`,
   entities: [GameEntity, TableEntity, TeamEntity, PlayerEntity],
   logger: "advanced-console",
   synchronize: true,

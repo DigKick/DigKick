@@ -5,98 +5,26 @@ import {Logger} from "winston";
 import {LoggerFactory} from "../../logging/loggerFactory";
 import {TableRegisterHandler} from "../table/handler/tableRegisterHandler.ts";
 import {DataRequestHandler} from "../global/publishing/dataRequestHandler.ts";
+import {ApplicationProperities} from "../../util/properties/applicationProperities.ts";
 
 export class DkMqttClient {
-  private _logger: Logger = LoggerFactory.getLogger(DkMqttClient.name);
-
   public static _topicObservers: Array<TopicSubscriber> =
     new Array<TopicSubscriber>();
   private static instance: DkMqttClient;
+  private _logger: Logger = LoggerFactory.getLogger(DkMqttClient.name);
   private _mqttConfig = new MqttConfig();
   private _mqttClient!: MqttClient;
-
-  public static getInstance(): DkMqttClient {
-    if (!DkMqttClient.instance) {
-      DkMqttClient.instance = new DkMqttClient();
-    }
-    return this.instance;
-  }
 
   private constructor() {
     this._connectMqttClient();
     this._setupClient();
   }
 
-  private _connectMqttClient() {
-    this._mqttClient = mqtt.connect(this._mqttConfig.connectUrl, {
-      clientId: this._mqttConfig.clientId,
-      clean: true,
-      connectTimeout: 10000,
-      username: process.env.MQTT_LOGIN_USERNAME,
-      password: process.env.MQTT_LOGIN_PASSWORD,
-      reconnectPeriod: 1000,
-    });
-
-    DkMqttClient._topicObservers.forEach((subscriber) => {
-      this._mqttClient.subscribe(subscriber.topic);
-    });
-  }
-
-  private _setupClient() {
-    this._mqttClient.on("connect", () => {
-      this._logger.info("Connected to Broker.");
-      TableRegisterHandler.getInstance()
-      DataRequestHandler.getInstance()
-    });
-
-    this._mqttClient.on("end", () => {
-      this._logger.info("Mqtt Client end.");
-    });
-
-    this._mqttClient.on("disconnect", () => {
-      this._logger.info("Disconnected from Broker.");
-    });
-
-    this._mqttClient.on("reconnect", () => {
-      this._logger.info("Trying to connect to the Broker.");
-    });
-
-    this._mqttClient.on("error", (error) => {
-      this._logger.error(`Error -> (${error.name}): ${error.message}`);
-
-      if (error.message === "connack timeout") {
-        this._connectMqttClient();
-        this._setupClient();
-      }
-    });
-
-    this._mqttClient.on("message", (topic, payload, packet) => {
-      this._logger.debug(`Message on ${topic}:\n${payload.toString()}`);
-      let jsonPayload = "";
-
-      try {
-        jsonPayload = JSON.parse(payload.toString());
-      } catch (e) {
-        if (e instanceof SyntaxError) {
-          this._logger.error("Could not parse payload to JSON: ", e);
-          return;
-        }
-
-        this._logger.error(
-          "Unexpected error while parsing payload to JSON:",
-          e,
-        );
-        return;
-      }
-
-      DkMqttClient._topicObservers.forEach((subscriber) => {
-        if (!this.matchTopic(subscriber.topic, topic)) {
-          return;
-        }
-        this._logger.debug(`Subscriber found for topic: ${topic}`);
-        subscriber.func(topic, jsonPayload, packet);
-      });
-    });
+  public static getInstance(): DkMqttClient {
+    if (!DkMqttClient.instance) {
+      DkMqttClient.instance = new DkMqttClient();
+    }
+    return this.instance;
   }
 
   matchTopic(subscriberTopic: string, topic: string): boolean {
@@ -173,5 +101,77 @@ export class DkMqttClient {
       )}`,
     );
     this._mqttClient.publish(topic, message, options);
+  }
+
+  private _connectMqttClient() {
+    this._mqttClient = mqtt.connect(this._mqttConfig.connectUrl, {
+      clientId: this._mqttConfig.clientId,
+      clean: true,
+      connectTimeout: 10000,
+      username: ApplicationProperities.properties.mqtt?.login?.username,
+      password: ApplicationProperities.properties.mqtt?.login?.username,
+      reconnectPeriod: 1000,
+    });
+
+    DkMqttClient._topicObservers.forEach((subscriber) => {
+      this._mqttClient.subscribe(subscriber.topic);
+    });
+  }
+
+  private _setupClient() {
+    this._mqttClient.on("connect", () => {
+      this._logger.info("Connected to Broker.");
+      TableRegisterHandler.getInstance()
+      DataRequestHandler.getInstance()
+    });
+
+    this._mqttClient.on("end", () => {
+      this._logger.info("Mqtt Client end.");
+    });
+
+    this._mqttClient.on("disconnect", () => {
+      this._logger.info("Disconnected from Broker.");
+    });
+
+    this._mqttClient.on("reconnect", () => {
+      this._logger.info("Trying to connect to the Broker.");
+    });
+
+    this._mqttClient.on("error", (error) => {
+      this._logger.error(`Error -> (${error.name}): ${error.message}`);
+
+      if (error.message === "connack timeout") {
+        this._connectMqttClient();
+        this._setupClient();
+      }
+    });
+
+    this._mqttClient.on("message", (topic, payload, packet) => {
+      this._logger.debug(`Message on ${topic}:\n${payload.toString()}`);
+      let jsonPayload = "";
+
+      try {
+        jsonPayload = JSON.parse(payload.toString());
+      } catch (e) {
+        if (e instanceof SyntaxError) {
+          this._logger.error("Could not parse payload to JSON: ", e);
+          return;
+        }
+
+        this._logger.error(
+          "Unexpected error while parsing payload to JSON:",
+          e,
+        );
+        return;
+      }
+
+      DkMqttClient._topicObservers.forEach((subscriber) => {
+        if (!this.matchTopic(subscriber.topic, topic)) {
+          return;
+        }
+        this._logger.debug(`Subscriber found for topic: ${topic}`);
+        subscriber.func(topic, jsonPayload, packet);
+      });
+    });
   }
 }
