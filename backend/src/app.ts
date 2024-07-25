@@ -3,8 +3,13 @@ import {LoggerFactory} from "./logging/loggerFactory.ts";
 import "reflect-metadata"
 import {initializeDatabase} from "./database/database.ts";
 import {PlayerDataPublisher} from "./mqtt/player/publisher/playerDataPublisher.ts";
+import {PropertiesReader} from "./util/properties/propertyReader.ts";
 
-LoggerFactory.printLogo();
+if (PropertiesReader.getInstance().properties.digkick?.banner) {
+  LoggerFactory.printLogo();
+}
+
 await initializeDatabase();
 DkMqttClient.getInstance();
 await PlayerDataPublisher.publishAll()
+
