@@ -3,7 +3,6 @@
     <table
       class="bg-base-300 table table-zebra lg:w-[40%] lg:md:w-[50%] mx-auto"
     >
-      <!-- head -->
       <thead class="text-[1.5rem]">
         <tr>
           <th></th>
@@ -12,7 +11,6 @@
         </tr>
       </thead>
       <tbody>
-        <!-- loop over players and generate rows -->
         <tr
           *ngFor="let player of scoreService.playersSignal(); let i = index"
           class="text-[1.25rem]"

@@ -1,5 +1,5 @@
-import {Injectable} from '@angular/core';
-import {Theme} from '@dig-kick/models';
+import { Injectable } from '@angular/core';
+import { Theme } from '@dig-kick/models';
 
 @Injectable({
   providedIn: 'root',
