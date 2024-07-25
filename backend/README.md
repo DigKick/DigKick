@@ -23,16 +23,32 @@ To run:
 npm run start:dev
 ```
 
-## Setup .env
+## Setup application.yaml
 
-Before starting you have to set up a .env files with your MQTT host and credentials.
+Before starting you have to set up a .yaml file in the resource directory.
 
-```dotenv
-MQTT_LOGIN_USERNAME=MQTT_USERNAME
-MQTT_LOGIN_PASSWORD=MQTT_PASSWORD
-MQTT_HOST=MQTT_HOST
-DATABASE_FILE_NAME=database
-DATABASE_FILE_SUFFIX=db
+### Example
+
+```yaml
+mqtt:
+  login:
+    username: user
+    password: password
+  host: localhost
+
+db:
+  file:
+    name: database
+    suffix: .db
+
+playerNameRestrictions:
+  length:
+    min: 4
+    max: 16
+  forbiddenParts: |
+    - forbidden
+    - test
+
 ```
 
 ## Generate files from asyncapi.yaml
