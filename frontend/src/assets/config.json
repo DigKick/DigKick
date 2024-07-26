@@ -1,0 +1,9 @@
+{
+  "broker": {
+    "hostname": "localhost",
+    "port": 8083,
+    "path": "/mqtt",
+    "clientId": "frontend",
+    "protocol": "ws"
+  }
+}

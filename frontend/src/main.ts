@@ -1,7 +1,18 @@
 import { bootstrapApplication } from '@angular/platform-browser';
 import { appConfig } from './app/app.config';
 import { AppComponent } from './app/app.component';
+import { Environment, EnvironmentParser } from '@dig-kick/models';
 
-bootstrapApplication(AppComponent, appConfig).catch((err) =>
-  console.error(err),
-);
+fetch('/assets/config.json').then(async (response: Response) => {
+  const config = await response.json();
+  const parsed = EnvironmentParser.safeParse(config);
+
+  if (parsed.success) {
+    const environment: Environment = parsed.data;
+    bootstrapApplication(AppComponent, appConfig(environment)).catch((err) =>
+      console.error(err),
+    );
+  } else {
+    alert(`${parsed.error}`);
+  }
+});
