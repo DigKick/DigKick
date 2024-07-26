@@ -35,6 +35,14 @@ DATABASE_FILE_NAME=database
 DATABASE_FILE_SUFFIX=db
 ```
 
+## Start broker manually
+
+### emqx
+
+```bash
+docker run -d --name emqx -p 1883:1883 -p 8083:8083 -p 8084:8084 -p 8883:8883 -p 18083:18083  emqx:5.6.0
+```
+
 ## Generate files from asyncapi.yaml
 
 ### Markdown
