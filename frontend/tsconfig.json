@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "useDefineForClassFields": false,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
