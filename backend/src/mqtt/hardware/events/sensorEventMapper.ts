@@ -79,6 +79,17 @@ export class SensorEventMapper implements EventMapper<SensorEventType> {
 
   private _updateLeds(teamColor: TeamColor) {
     const dkMqttClient: DkMqttClient = DkMqttClient.getInstance();
+
+    let ledColors = new Array<string>()
+
+    for (let i = 0; i < this._tableHandler.subject.game.getTeamByColor(teamColor).score; i++) {
+      if (i % 2 == 0) {
+        ledColors.push("0x236932", "0x236932")
+        continue
+      }
+      ledColors.push("0xffd966", "0xffd966")
+    }
+
     dkMqttClient.publish(
       BaseTopicFactory.getLedUpdateTopic(
         this._tableHandler.subject,
@@ -86,17 +97,7 @@ export class SensorEventMapper implements EventMapper<SensorEventType> {
       ),
       JSON.stringify(
         new LedUpdatePayload(
-          Array.from(
-            {
-              length:
-                this._tableHandler.subject.game.getTeamByColor(
-                  teamColor,
-                ).score * 2,
-            },
-            () => {
-              return "0x236932";
-            },
-          ),
+          ledColors,
           "",
         ).toJSON(),
       ),
