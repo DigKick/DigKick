@@ -32,6 +32,11 @@ export class PlayerEditHandler extends DkModelHandler<PlayerEditEvent, Table> {
     return this._tableHandler;
   }
 
+  static isPlayerNameLengthValid(playerName: string): boolean {
+    return !(playerName.length < ApplicationProperties.get().player.name.restrictions.length.min
+      || playerName.length > ApplicationProperties.get().player.name.restrictions.length.max);
+  }
+
   editorSubscriberFunc = (topic: string, payload: any) => {
     let playerNameEditPayload: PlayerNameEditPayload
     try {
@@ -41,7 +46,7 @@ export class PlayerEditHandler extends DkModelHandler<PlayerEditEvent, Table> {
       return
     }
 
-    if (!this.isPlayerNameLengthValid(playerNameEditPayload.newName)) {
+    if (!PlayerEditHandler.isPlayerNameLengthValid(playerNameEditPayload.newName)) {
       this._logger.error("Could not set new player name. Invalid player name: "
         + playerNameEditPayload.newName + `\t(Player name must be between 
         ${ApplicationProperties.get().player.name.restrictions.min} and 
@@ -50,11 +55,6 @@ export class PlayerEditHandler extends DkModelHandler<PlayerEditEvent, Table> {
     }
 
     this.triggerEvent(PlayerEditEvent.EDIT_NAME, topic, playerNameEditPayload)
-  }
-
-  isPlayerNameLengthValid(playerName: string): boolean {
-    return !(playerName.length < ApplicationProperties.get().player.name.restrictions.length.min
-      || playerName.length > ApplicationProperties.get().player.name.restrictions.length.max);
   }
 
 }
