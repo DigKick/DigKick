@@ -20,7 +20,7 @@ export const propertySchema = z.object({
   db: z.object({
     file: z.object({
       name: z.string().min(1),
-      suffix: z.string().min(2).startsWith('.')
+      suffix: z.string().min(1)
     })
   }),
 
@@ -43,8 +43,7 @@ export class ApplicationProperities {
 
   private constructor() {
   }
-
-
+  
   private static _properties: any = undefined;
 
   static get properties() {
@@ -53,8 +52,8 @@ export class ApplicationProperities {
   }
 
   static load() {
+    this._properties = {}
     this.loadAllPropertyFiles();
-    console.log(this._properties)
   }
 
   private static loadAllPropertyFiles() {
