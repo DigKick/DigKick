@@ -3,11 +3,11 @@ import {LoggerFactory} from "./logging/loggerFactory.ts";
 import "reflect-metadata"
 import {initializeDatabase} from "./database/database.ts";
 import {PlayerDataPublisher} from "./mqtt/player/publisher/playerDataPublisher.ts";
-import {ApplicationProperities} from "./util/properties/applicationProperities.ts";
+import {ApplicationProperties} from "./util/properties/applicationProperties.ts";
 
-ApplicationProperities.load()
+ApplicationProperties.load()
 
-if (ApplicationProperities.properties.digkick.banner) {
+if (ApplicationProperties.get().digkick.banner) {
   LoggerFactory.printLogo();
 }
 

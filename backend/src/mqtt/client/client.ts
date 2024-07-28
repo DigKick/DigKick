@@ -5,7 +5,7 @@ import {Logger} from "winston";
 import {LoggerFactory} from "../../logging/loggerFactory";
 import {TableRegisterHandler} from "../table/handler/tableRegisterHandler.ts";
 import {DataRequestHandler} from "../global/publishing/dataRequestHandler.ts";
-import {ApplicationProperities} from "../../util/properties/applicationProperities.ts";
+import {ApplicationProperties} from "../../util/properties/applicationProperties.ts";
 
 export class DkMqttClient {
   public static _topicObservers: Array<TopicSubscriber> =
@@ -108,8 +108,8 @@ export class DkMqttClient {
       clientId: this._mqttConfig.clientId,
       clean: true,
       connectTimeout: 10000,
-      username: ApplicationProperities.properties.mqtt.login.username,
-      password: ApplicationProperities.properties.mqtt.login.username,
+      username: ApplicationProperties.get().mqtt.login.username,
+      password: ApplicationProperties.get().mqtt.login.username,
       reconnectPeriod: 1000,
     });
 
@@ -174,4 +174,6 @@ export class DkMqttClient {
       });
     });
   }
+
+
 }

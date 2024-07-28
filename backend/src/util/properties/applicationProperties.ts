@@ -41,16 +41,16 @@ export const propertySchema = z.object({
 })
 
 
-export class ApplicationProperities {
+export class ApplicationProperties {
+
+  private static _properties: any = undefined;
 
   private constructor() {
   }
 
-  private static _properties: any = undefined;
-
-  static get properties() {
+  static get() {
     if (this._properties === undefined) this.load()
-    return ApplicationProperities._properties
+    return ApplicationProperties._properties
   }
 
   static load() {
