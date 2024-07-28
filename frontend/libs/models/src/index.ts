@@ -1,4 +1,5 @@
 export * from './lib/game.model';
+export * from './lib/environment.model';
 export * from './lib/player.model';
 export * from './lib/table.model';
 export * from './lib/team.model';

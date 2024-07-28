@@ -80,7 +80,7 @@ export class GameComponent implements OnInit {
     );
   }
 
-  onKey(event: any) {
-    const inputValue = event.target.value;
+  onKey(_event: KeyboardEvent) {
+    // do nothing
   }
 }
