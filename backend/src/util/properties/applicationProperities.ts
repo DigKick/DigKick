@@ -30,8 +30,8 @@ export const propertySchema = z.object({
     name: z.object({
       restrictions: z.object({
         length: z.object({
-          min: z.number().positive({message: "Min player name length must be greater than 0!"}).optional(),
-          max: z.number().positive({message: "Max player name length must be greater than 0!"}).optional()
+          min: z.number().positive({message: "Min player name length must be greater than 0!"}).optional().default(3),
+          max: z.number().positive({message: "Max player name length must be greater than 0!"}).optional().default(12)
         }).optional(),
         forbiddenParts: z.array(z.object({value: z.string()})).optional()
       }).optional()

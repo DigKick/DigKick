@@ -108,8 +108,8 @@ export class DkMqttClient {
       clientId: this._mqttConfig.clientId,
       clean: true,
       connectTimeout: 10000,
-      username: ApplicationProperities.properties.mqtt?.login?.username,
-      password: ApplicationProperities.properties.mqtt?.login?.username,
+      username: ApplicationProperities.properties.mqtt.login.username,
+      password: ApplicationProperities.properties.mqtt.login.username,
       reconnectPeriod: 1000,
     });
 

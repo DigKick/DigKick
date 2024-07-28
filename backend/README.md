@@ -30,24 +30,27 @@ Before starting you have to set up a .yaml file in the resource directory.
 ### Example
 
 ```yaml
+digkick:
+  banner: true # optional
+
 mqtt:
   login:
-    username: user
-    password: password
+    username: test
+    password: test
   host: localhost
 
 db:
-  file:
-    name: database
-    suffix: .db
+  source:
+    database:
+      name: database
+      suffix: db
 
-playerNameRestrictions:
-  length:
-    min: 4
-    max: 16
-  forbiddenParts: |
-    - forbidden
-    - test
+player:
+  name:
+    restrictions:
+      length:
+        min: 3 # optional
+        max: 12 # optional
 
 ```
 
