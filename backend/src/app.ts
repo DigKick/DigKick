@@ -7,7 +7,7 @@ import {ApplicationProperities} from "./util/properties/applicationProperities.t
 
 ApplicationProperities.load()
 
-if (ApplicationProperities.properties.digkick?.banner) {
+if (ApplicationProperities.properties.digkick.banner) {
   LoggerFactory.printLogo();
 }
 

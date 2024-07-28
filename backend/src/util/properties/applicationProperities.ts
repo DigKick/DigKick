@@ -1,82 +1,60 @@
-import YAML from "yaml";
 import fs from "node:fs";
 import * as path from 'path';
+import {z} from "zod";
+import YAML from 'yaml'
 
-export interface ApplicationProperties {
 
-  digkick: {
-    banner: boolean | undefined
-  } | undefined
+export const propertySchema = z.object({
+  digkick: z.object({
+    banner: z.boolean().default(true)
+  }).optional(),
 
-  mqtt: {
-    login: {
-      username: string | undefined,
-      password: string | undefined
-    } | undefined
-    host: string | undefined
-  } | undefined
+  mqtt: z.object({
+    login: z.object({
+      username: z.string().min(1),
+      password: z.string().min(1),
+    }),
+    host: z.string().min(1),
+  }),
 
-  db: {
-    file: {
-      name: string | undefined,
-      suffix: string | undefined
-    } | undefined
-  } | undefined
+  db: z.object({
+    file: z.object({
+      name: z.string().min(1),
+      suffix: z.string().min(2).startsWith('.')
+    })
+  }),
 
-  playerNameRestrictions: {
-    length: {
-      min: number | undefined,
-      max: number | undefined
-    } | undefined
-    forbiddenParts: Array<string> | undefined
-  } | undefined
-}
+  player: z.object({
+    name: z.object({
+      restrictions: z.object({
+        length: z.object({
+          min: z.number().positive({message: "Min player name length must be greater than 0!"}).optional(),
+          max: z.number().positive({message: "Max player name length must be greater than 0!"}).optional()
+        }).optional(),
+        forbiddenParts: z.array(z.object({value: z.string()})).optional()
+      }).optional()
+    }).optional()
+  }).optional(),
 
-const defaultProperties: ApplicationProperties = {
-
-  digkick: {
-    banner: true,
-  },
-
-  mqtt: {
-    login: {
-      username: undefined,
-      password: undefined
-    },
-    host: undefined
-  },
-  db: {
-    file: {
-      name: undefined,
-      suffix: undefined
-    }
-  },
-  playerNameRestrictions: {
-    length: {
-      min: 4,
-      max: 16
-    },
-    forbiddenParts: []
-  }
-};
+})
 
 
 export class ApplicationProperities {
 
-  static instance: ApplicationProperities;
-
   private constructor() {
   }
 
-  private static _properties: ApplicationProperties = defaultProperties;
 
-  static get properties(): ApplicationProperties {
+  private static _properties: any = undefined;
+
+  static get properties() {
+    if (this._properties === undefined) this.load()
     return ApplicationProperities._properties
   }
 
   static load() {
     this.loadAllPropertyFiles();
-    this.validateProperties(ApplicationProperities._properties, defaultProperties)
+    console.log(this._properties)
   }
 
   private static loadAllPropertyFiles() {
@@ -86,28 +64,12 @@ export class ApplicationProperities {
     const allResourceFiles = fs.readdirSync(resourcePath)
     const allYamlResourceFiles = allResourceFiles.filter(fileName => path.extname(fileName).toLowerCase() === ".yaml")
 
+
     allYamlResourceFiles.forEach(fileName => {
       const yamlFile = fs.readFileSync(resourcePath + "/" + fileName, "utf8")
-      this._properties = {...this._properties, ...YAML.parse(yamlFile) as ApplicationProperties};
+      const loadedProps = propertySchema.parse(YAML.parse(yamlFile));
+      this._properties = {...this._properties, ...loadedProps};
     })
   }
-
-  private static validateProperties(obj: any, reference: any, path: string[] = []): void {
-    if (obj === null || obj === undefined) {
-      throw new Error(`Property ${path.join('.')} is null or undefined`);
-    }
-
-    if (typeof obj === 'object' && !Array.isArray(obj)) {
-      for (const key in reference) {
-        if (reference.hasOwnProperty(key)) {
-          if (!obj.hasOwnProperty(key)) {
-            throw new Error(`Property ${[...path, key].join('.')} is missing`);
-          }
-          this.validateProperties(obj[key], reference[key], [...path, key]);
-        }
-      }
-    }
-  }
-
 }
 
