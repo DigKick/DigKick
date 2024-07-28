@@ -11,7 +11,7 @@ const logger: Logger = LoggerFactory.getLogger("DataSourceInitializer");
 
 export const dataSource: DataSource = new DataSource({
   type: "sqlite",
-  database: `${ApplicationProperities.properties.db.file.name}.${ApplicationProperities.properties.db.file.suffix}`,
+  database: `${ApplicationProperities.properties.db.source.database.name}.${ApplicationProperities.properties.db.source.database.suffix}`,
   entities: [GameEntity, TableEntity, TeamEntity, PlayerEntity],
   logger: "advanced-console",
   synchronize: true,

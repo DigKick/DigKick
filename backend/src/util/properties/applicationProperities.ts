@@ -18,9 +18,11 @@ export const propertySchema = z.object({
   }),
 
   db: z.object({
-    file: z.object({
-      name: z.string().min(1),
-      suffix: z.string().min(1)
+    source: z.object({
+      database: z.object({
+        name: z.string().min(1),
+        suffix: z.string().min(1),
+      }),
     })
   }),
 
@@ -43,7 +45,7 @@ export class ApplicationProperities {
 
   private constructor() {
   }
-  
+
   private static _properties: any = undefined;
 
   static get properties() {
