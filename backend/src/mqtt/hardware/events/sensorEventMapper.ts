@@ -14,6 +14,9 @@ export class SensorEventMapper implements EventMapper<SensorEventType> {
   private _tableHandler: TableHandler;
   private readonly _teamColor: TeamColor;
 
+  private readonly _ledColorGreen = "0x236932"
+  private readonly _ledColorYellow = "0xffd966"
+
   constructor(soccerTableHandler: TableHandler, teamColor: TeamColor) {
     this._tableHandler = soccerTableHandler;
     this._teamColor = teamColor;
@@ -84,10 +87,10 @@ export class SensorEventMapper implements EventMapper<SensorEventType> {
 
     for (let i = 0; i < this._tableHandler.subject.game.getTeamByColor(teamColor).score; i++) {
       if (i % 2 == 0) {
-        ledColors.push("0x236932", "0x236932")
+        ledColors.push(this._ledColorGreen, this._ledColorGreen)
         continue
       }
-      ledColors.push("0xffd966", "0xffd966")
+      ledColors.push(this._ledColorYellow, this._ledColorYellow)
     }
 
     dkMqttClient.publish(
