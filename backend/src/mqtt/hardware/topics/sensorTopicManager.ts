@@ -1,14 +1,13 @@
-import {BasicTerm} from "../../util/basicTerm";
-import {TeamColor} from "../../../models/team";
-import {BaseTopicFactory} from "../../util/baseTopicFactory";
-import {Table} from "../../../models/table.ts";
+import { BasicTerm } from '../../util/basicTerm';
+import { TeamColor } from '../../../models/team';
+import { BaseTopicFactory } from '../../util/baseTopicFactory';
+import { Table } from '../../../models/table.ts';
 
 export class SensorTopicManager {
   constructor(
     private _soccerTable: Table,
     private _teamColor: TeamColor,
-  ) {
-  }
+  ) {}
 
   private get _baseTeamTopic(): string {
     return BaseTopicFactory.getTeamTopic(this._soccerTable, this._teamColor);

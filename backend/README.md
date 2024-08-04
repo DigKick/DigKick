@@ -31,8 +31,7 @@ Before starting you have to set up a .env files with your MQTT host and credenti
 MQTT_LOGIN_USERNAME=MQTT_USERNAME
 MQTT_LOGIN_PASSWORD=MQTT_PASSWORD
 MQTT_HOST=MQTT_HOST
-DATABASE_FILE_NAME=database
-DATABASE_FILE_SUFFIX=db
+DATABASE_FILE=database.db
 ```
 
 ## Start broker manually
@@ -40,7 +39,7 @@ DATABASE_FILE_SUFFIX=db
 ### emqx
 
 ```bash
-docker run -d --name emqx -p 1883:1883 -p 8083:8083 -p 8084:8084 -p 8883:8883 -p 18083:18083  emqx:5.6.0
+docker run -d --name emqx -p 1883:1883 -p 8083:8083 -p 8084:8084 -p 8883:8883 -p 18083:18083 emqx:5
 ```
 
 ## Generate files from asyncapi.yaml

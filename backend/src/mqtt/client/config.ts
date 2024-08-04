@@ -6,7 +6,7 @@ export class MqttConfig {
   connectUrl: string;
 
   constructor() {
-    this.protocol = "mqtt";
+    this.protocol = 'mqtt';
     this.host = String(process.env.MQTT_HOST);
     this.port = 1883;
     this.clientId = `mqtt_${Math.random().toString(16).slice(3)}`;

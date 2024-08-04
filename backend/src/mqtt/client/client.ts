@@ -1,10 +1,10 @@
-import mqtt, {type IClientPublishOptions, MqttClient} from "mqtt";
-import {MqttConfig} from "./config";
-import type {TopicSubscriber} from "./topicSubscriber";
-import {Logger} from "winston";
-import {LoggerFactory} from "../../logging/loggerFactory";
-import {TableRegisterHandler} from "../table/handler/tableRegisterHandler.ts";
-import {DataRequestHandler} from "../global/publishing/dataRequestHandler.ts";
+import mqtt, { type IClientPublishOptions, MqttClient } from 'mqtt';
+import { MqttConfig } from './config';
+import type { TopicSubscriber } from './topicSubscriber';
+import { Logger } from 'winston';
+import { LoggerFactory } from '../../logging/loggerFactory';
+import { TableRegisterHandler } from '../table/handler/tableRegisterHandler.ts';
+import { DataRequestHandler } from '../global/publishing/dataRequestHandler.ts';
 
 export class DkMqttClient {
   private _logger: Logger = LoggerFactory.getLogger(DkMqttClient.name);
@@ -43,47 +43,47 @@ export class DkMqttClient {
   }
 
   private _setupClient() {
-    this._mqttClient.on("connect", () => {
-      this._logger.info("Connected to Broker.");
-      TableRegisterHandler.getInstance()
-      DataRequestHandler.getInstance()
+    this._mqttClient.on('connect', () => {
+      this._logger.info('Connected to Broker.');
+      TableRegisterHandler.getInstance();
+      DataRequestHandler.getInstance();
     });
 
-    this._mqttClient.on("end", () => {
-      this._logger.info("Mqtt Client end.");
+    this._mqttClient.on('end', () => {
+      this._logger.info('Mqtt Client end.');
     });
 
-    this._mqttClient.on("disconnect", () => {
-      this._logger.info("Disconnected from Broker.");
+    this._mqttClient.on('disconnect', () => {
+      this._logger.info('Disconnected from Broker.');
     });
 
-    this._mqttClient.on("reconnect", () => {
-      this._logger.info("Trying to connect to the Broker.");
+    this._mqttClient.on('reconnect', () => {
+      this._logger.info('Trying to connect to the Broker.');
     });
 
-    this._mqttClient.on("error", (error) => {
+    this._mqttClient.on('error', (error) => {
       this._logger.error(`Error -> (${error.name}): ${error.message}`);
 
-      if (error.message === "connack timeout") {
+      if (error.message === 'connack timeout') {
         this._connectMqttClient();
         this._setupClient();
       }
     });
 
-    this._mqttClient.on("message", (topic, payload, packet) => {
+    this._mqttClient.on('message', (topic, payload, packet) => {
       this._logger.debug(`Message on ${topic}:\n${payload.toString()}`);
-      let jsonPayload = "";
+      let jsonPayload = '';
 
       try {
         jsonPayload = JSON.parse(payload.toString());
       } catch (e) {
         if (e instanceof SyntaxError) {
-          this._logger.error("Could not parse payload to JSON: ", e);
+          this._logger.error('Could not parse payload to JSON: ', e);
           return;
         }
 
         this._logger.error(
-          "Unexpected error while parsing payload to JSON:",
+          'Unexpected error while parsing payload to JSON:',
           e,
         );
         return;
@@ -100,8 +100,8 @@ export class DkMqttClient {
   }
 
   matchTopic(subscriberTopic: string, topic: string): boolean {
-    const subscriberSegments = subscriberTopic.split("/");
-    const topicSegments = topic.split("/");
+    const subscriberSegments = subscriberTopic.split('/');
+    const topicSegments = topic.split('/');
 
     let subscriberIndex = 0;
     let topicIndex = 0;
@@ -110,13 +110,13 @@ export class DkMqttClient {
       const subscriberSegment = subscriberSegments[subscriberIndex];
       const topicSegment = topicSegments[topicIndex];
 
-      if (subscriberSegment === topicSegment || subscriberSegment === "+") {
+      if (subscriberSegment === topicSegment || subscriberSegment === '+') {
         topicIndex++;
         subscriberIndex++;
         continue;
       }
 
-      if (subscriberSegment === "#" && topicSegment) {
+      if (subscriberSegment === '#' && topicSegment) {
         // Wildcard check
         if (subscriberIndex + 1 < subscriberSegments.length) {
           // If subscriber topic has next values search if the next one is already there
@@ -130,7 +130,7 @@ export class DkMqttClient {
       }
 
       return (
-        subscriberSegment === "#" &&
+        subscriberSegment === '#' &&
         subscriberIndex === subscriberSegments.length - 1 &&
         !topicSegment
       );
@@ -168,8 +168,8 @@ export class DkMqttClient {
   ) {
     this._logger.debug(
       `Publishing to topic: "${topic}", message: ${message.replaceAll(
-        "\n",
-        " ",
+        '\n',
+        ' ',
       )}`,
     );
     this._mqttClient.publish(topic, message, options);
