@@ -1,11 +1,11 @@
-import {TeamColor} from "../../../models/team";
+import { TeamColor } from '../../../models/team';
 
 export enum GameEventType {
-  _SCORE = "SCORE",
-  _INCREASE = "INCREASE",
-  _DECREASE = "DECREASE",
-  _CHANGE = "CHANGE",
-  _PLAYER = "PLAYER",
+  _SCORE = 'SCORE',
+  _INCREASE = 'INCREASE',
+  _DECREASE = 'DECREASE',
+  _CHANGE = 'CHANGE',
+  _PLAYER = 'PLAYER',
 
   SCORE_CHANGE = `${_SCORE}_${_CHANGE}`,
 
@@ -20,9 +20,9 @@ export enum GameEventType {
   BLACK_SCORE_INCREASE = `${TeamColor.BLACK}_${SCORE_INCREASE}`,
   BLACK_SCORE_DECREASE = `${TeamColor.BLACK}_${SCORE_DECREASE}`,
 
-  _WINNER = "WINNER",
+  _WINNER = 'WINNER',
 
   WINNER_CHANGE = `${_CHANGE}_${_WINNER}`,
 
-  PLAYER_CHANGE = _PLAYER + "_" + _CHANGE,
+  PLAYER_CHANGE = _PLAYER + '_' + _CHANGE,
 }

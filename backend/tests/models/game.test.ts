@@ -1,6 +1,6 @@
-import {beforeEach, expect, test} from "bun:test";
-import {Game} from "../../src/models/game.ts";
-import {ScoreChange} from "../../src/models/team.ts";
+import { beforeEach, expect, test } from 'bun:test';
+import { Game } from '../../src/models/game.ts';
+import { ScoreChange } from '../../src/models/team.ts';
 
 let gameObj = new Game();
 
@@ -12,25 +12,25 @@ beforeEach(() => {
     Tests for basic game
  */
 
-test("white team scores once", () => {
+test('white team scores once', () => {
   gameObj.updateWhiteTeamScore(ScoreChange.INCREASE);
 
   expect(gameObj.teamWhite.score).toBe(1);
 });
 
-test("team score can not be negative", () => {
+test('team score can not be negative', () => {
   gameObj.updateWhiteTeamScore(ScoreChange.DECREASE);
 
   expect(gameObj.teamWhite.score).toBe(0);
 });
 
-test("black team scores once", () => {
+test('black team scores once', () => {
   gameObj.updateBlackTeamScore(ScoreChange.INCREASE);
 
   expect(gameObj.teamBlack.score).toEqual(1);
 });
 
-test("decrease of a score", () => {
+test('decrease of a score', () => {
   gameObj.updateWhiteTeamScore(ScoreChange.INCREASE);
   gameObj.updateWhiteTeamScore(ScoreChange.INCREASE);
 
@@ -39,7 +39,7 @@ test("decrease of a score", () => {
   expect(gameObj.teamWhite.score).toEqual(1);
 });
 
-test("white team wins", () => {
+test('white team wins', () => {
   for (let i = 0; i < 10; i++) {
     gameObj.updateWhiteTeamScore(ScoreChange.INCREASE);
   }
@@ -47,7 +47,7 @@ test("white team wins", () => {
   expect(gameObj.teamWinner).toEqual(gameObj.teamWhite);
 });
 
-test("winning team does not change", () => {
+test('winning team does not change', () => {
   for (let i = 0; i < 10; i++) {
     gameObj.updateWhiteTeamScore(ScoreChange.INCREASE);
   }
@@ -59,7 +59,7 @@ test("winning team does not change", () => {
   expect(gameObj.teamWinner).toEqual(gameObj.teamWhite);
 });
 
-test("winning team is reset after last goal got undo", () => {
+test('winning team is reset after last goal got undo', () => {
   for (let i = 0; i < 10; i++) {
     gameObj.updateWhiteTeamScore(ScoreChange.INCREASE);
   }
@@ -69,7 +69,7 @@ test("winning team is reset after last goal got undo", () => {
   expect(gameObj.teamWinner).toBeUndefined();
 });
 
-test("undo winning team and other team wins", () => {
+test('undo winning team and other team wins', () => {
   for (let i = 0; i < 10; i++) {
     gameObj.updateWhiteTeamScore(ScoreChange.INCREASE);
   }
@@ -84,7 +84,7 @@ test("undo winning team and other team wins", () => {
   expect(gameObj.teamWinner).toEqual(gameObj.teamBlack);
 });
 
-test("reset game", () => {
+test('reset game', () => {
   for (let i = 0; i < 10; i++) {
     gameObj.updateWhiteTeamScore(ScoreChange.INCREASE);
   }

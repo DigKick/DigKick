@@ -1,11 +1,11 @@
-import type {EventMapper} from "../../global/eventMapper";
-import {GameEventType} from "./gameEvent";
-import {Game} from "../../../models/game";
-import {ScoreChange, TeamColor} from "../../../models/team";
-import {Table} from "../../../models/table.ts";
-import {MqttObjectUpdater} from "../../util/mqttObjectUpdater/mqttObjectUpdater";
-import {BasicTerm} from "../../util/basicTerm";
-import {MqttObjectUpdaterFactory} from "../../util/mqttObjectUpdater/mqttObjectUpdaterFactory";
+import type { EventMapper } from '../../global/eventMapper';
+import { GameEventType } from './gameEvent';
+import { Game } from '../../../models/game';
+import { ScoreChange, TeamColor } from '../../../models/team';
+import { Table } from '../../../models/table.ts';
+import { MqttObjectUpdater } from '../../util/mqttObjectUpdater/mqttObjectUpdater';
+import { BasicTerm } from '../../util/basicTerm';
+import { MqttObjectUpdaterFactory } from '../../util/mqttObjectUpdater/mqttObjectUpdaterFactory';
 
 export class GameEventMapper implements EventMapper<GameEventType> {
   private readonly _game: Game;

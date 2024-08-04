@@ -1,12 +1,15 @@
-import {beforeEach, expect, mock, test} from "bun:test";
-import {DkModelHandler, HandlerType,} from "../../../src/mqtt/global/dkModelHandler.ts";
-import {Table} from "../../../src/models/table.ts";
-import type {EventMapper} from "../../../src/mqtt/global/eventMapper.ts";
+import { beforeEach, expect, mock, test } from 'bun:test';
+import {
+  DkModelHandler,
+  HandlerType,
+} from '../../../src/mqtt/global/dkModelHandler.ts';
+import { Table } from '../../../src/models/table.ts';
+import type { EventMapper } from '../../../src/mqtt/global/eventMapper.ts';
 
 enum TestEvent {
-  EVENT_1 = "EVENT_1",
-  EVENT_2 = "EVENT_2",
-  EVENT_3 = "EVENT_3",
+  EVENT_1 = 'EVENT_1',
+  EVENT_2 = 'EVENT_2',
+  EVENT_3 = 'EVENT_3',
 }
 
 class TestEventMapper implements EventMapper<TestEvent> {
@@ -30,7 +33,7 @@ class TestEventMapper implements EventMapper<TestEvent> {
         this._testObj.lastEvent = TestEvent.EVENT_3;
         break;
       default:
-        this._testObj.lastEvent = "default";
+        this._testObj.lastEvent = 'default';
         break;
     }
 
@@ -42,13 +45,13 @@ class TestClass {
   lastEvent: string;
 
   constructor() {
-    this.lastEvent = "init";
+    this.lastEvent = 'init';
   }
 }
 
 class TestHandler extends DkModelHandler<TestEvent, TestClass> {
   constructor(testObj: TestClass) {
-    super(testObj, HandlerType.ABSTRACT, new Table("TEST"));
+    super(testObj, HandlerType.ABSTRACT, new Table('TEST'));
     this._mapper = new TestEventMapper(testObj);
   }
 }
@@ -63,12 +66,12 @@ const testCallback = (testObj: TestClass) => {
 
 const subscribeObserverAndTriggerEvent = (event: TestEvent) => {
   testHandler.subscribe(event, testCallback);
-  testHandler.triggerEvent(event, "", {});
+  testHandler.triggerEvent(event, '', {});
 };
 
 const subscribeMockAndTriggerEvent = (event: TestEvent) => {
   testHandler.subscribe(event, emptyMockFunc);
-  testHandler.triggerEvent(event, "", {});
+  testHandler.triggerEvent(event, '', {});
 };
 
 beforeEach(() => {
@@ -79,7 +82,7 @@ beforeEach(() => {
 
 test(`test trigger all events`, () => {
   Object.values(TestEvent).forEach((event: TestEvent) => {
-    if (!event.includes(".")) {
+    if (!event.includes('.')) {
       // sort out values
       return;
     }

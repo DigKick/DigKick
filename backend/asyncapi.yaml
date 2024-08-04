@@ -21,8 +21,8 @@ components:
     tableName:
       description: Identifier of a table.
       examples:
-        - "table1"
-        - "kjb14123b1jk"
+        - 'table1'
+        - 'kjb14123b1jk'
 
     teamColor:
       description: Identifier of a team.
@@ -33,15 +33,15 @@ components:
     buttonId:
       description: Identifier of a button.
       examples:
-        - "1"
-        - "2"
-        - "3"
+        - '1'
+        - '2'
+        - '3'
 
     lightBarrierId:
       description: Identifier of a light barrier.
       examples:
-        - "1"
-        - "2"
+        - '1'
+        - '2'
 
   messages:
     tableRegisterMessage:
@@ -49,7 +49,7 @@ components:
       payload:
         type: object
         description: Information for a table registration.
-        example: { "name": "table1" }
+        example: { 'name': 'table1' }
         properties:
           name:
             type: string
@@ -57,48 +57,48 @@ components:
     gameMessage:
       summary: All information about a team.
       payload:
-        $ref: "#/components/schemas/game"
+        $ref: '#/components/schemas/game'
 
     teamMessage:
       summary: All information about a team.
       payload:
-        $ref: "#/components/schemas/team"
+        $ref: '#/components/schemas/team'
 
     teamColorMessage:
       summary: Information about the score of a team.
       payload:
-        $ref: "#/components/schemas/color"
+        $ref: '#/components/schemas/color'
 
     teamScoreMessage:
       summary: Information about the score of a team.
       payload:
-        $ref: "#/components/schemas/score"
+        $ref: '#/components/schemas/score'
 
     pinStatusMessage:
       summary: Action triggered by a pin output change.
       payload:
-        $ref: "#/components/schemas/pinStatus"
+        $ref: '#/components/schemas/pinStatus'
 
     displayUpdateMessage:
       summary: Updates the display with the given parameters.
       payload:
-        $ref: "#/components/schemas/displayText"
+        $ref: '#/components/schemas/displayText'
 
     ledUpdateMessage:
       summary: Updates the LEDs strip.
       payload:
-        $ref: "#/components/schemas/ledStatus"
-    
+        $ref: '#/components/schemas/ledStatus'
+
     nfcReaderMessage:
       summary: Information from the nfc reader about the chip.
       payload:
-        $ref: "#/components/schemas/nfcReaderSerialNumber"
-    
+        $ref: '#/components/schemas/nfcReaderSerialNumber'
+
     newPlayerNameMessage:
       summary: The new requested name for the last registered player.
       payload:
         $ref: '#/components/schemas/playerNameChange'
-    
+
     playerEntityListMessage:
       summary: List of all players sorted by elo score.
       payload:
@@ -110,7 +110,7 @@ components:
       enum:
         - DEFAULT
       example:
-        - "DEFAULT"
+        - 'DEFAULT'
 
     pinOut:
       type: string
@@ -123,25 +123,25 @@ components:
       description: Defines the status of an analog or digital pin.
       properties:
         pinOut:
-          $ref: "#/components/schemas/pinOut"
+          $ref: '#/components/schemas/pinOut'
 
     game:
       type: object
       description: Describes all information about a game.
       example:
         {
-          "gameMode": "DEFAULT",
-          "teamWhite": { "color": "white", "score": 4, "isWinner": false },
-          "teamBlack": { "color": "black", "score": 10, "isWinner": true },
-          "pointsToWin": 10,
+          'gameMode': 'DEFAULT',
+          'teamWhite': { 'color': 'white', 'score': 4, 'isWinner': false },
+          'teamBlack': { 'color': 'black', 'score': 10, 'isWinner': true },
+          'pointsToWin': 10,
         }
       properties:
         gameMode:
-          $ref: "#/components/schemas/gameMode"
+          $ref: '#/components/schemas/gameMode'
         teamWhite:
-          $ref: "#/components/schemas/team"
+          $ref: '#/components/schemas/team'
         teamBlack:
-          $ref: "#/components/schemas/team"
+          $ref: '#/components/schemas/team'
         pointsToWin:
           type: number
           minimum: 0
@@ -149,12 +149,12 @@ components:
     team:
       type: object
       description: Describes all information about a team.
-      example: { "color": "white", "score": 5, "isWinner": false }
+      example: { 'color': 'white', 'score': 5, 'isWinner': false }
       properties:
         color:
-          $ref: "#/components/schemas/color"
+          $ref: '#/components/schemas/color'
         score:
-          $ref: "#/components/schemas/score"
+          $ref: '#/components/schemas/score'
         isWinner:
           type: boolean
 
@@ -176,36 +176,32 @@ components:
         serialNumber:
           type: string
           description: Serial number of the read nfc chip
-      example:
-        { "serialNumber": "serialNumberFromChip" }
-    
+      example: { 'serialNumber': 'serialNumberFromChip' }
+
     playerNameChange:
       type: object
       properties:
         newName:
           type: string
           description: New name for the player
-      example:
-        {
-          "newName": "new player name"
-        }
+      example: { 'newName': 'new player name' }
 
     displayText:
       type: object
       description: Describes where to put which text on the OLED display
       example:
         {
-          "snippets":
+          'snippets':
             [
               {
-                "cursorPosition": [ 1, 2 ],
-                "text": "WHITE 1 : 2 BLACK",
-                "inverted": false,
+                'cursorPosition': [1, 2],
+                'text': 'WHITE 1 : 2 BLACK',
+                'inverted': false,
               },
               {
-                "cursorPosition": [ 1, 3 ],
-                "text": "LAST SCORED: TEAM WHITE",
-                "inverted": true,
+                'cursorPosition': [1, 3],
+                'text': 'LAST SCORED: TEAM WHITE',
+                'inverted': true,
               },
             ],
         }
@@ -222,11 +218,11 @@ components:
                 description: The cursor position defines where the text is written on the display. First value = x position - Second value = y position
                 minItems: 2
                 maxItems: 2
-                example: [ 1, 2 ]
+                example: [1, 2]
               text:
                 type: string
                 description: Defines the text.
-                example: "WHITE 1 : 2 BLACK"
+                example: 'WHITE 1 : 2 BLACK'
               inverted:
                 type: boolean
                 description: Defines if the display should be inverted around the text.
@@ -241,14 +237,14 @@ components:
           items:
             type: string
             description: Describes a color in HEX
-            example: "0xFF00FF"
+            example: '0xFF00FF'
           minItems: 0
-          example: [ "0x00FF00", "0x00FFFF" ]
+          example: ['0x00FF00', '0x00FFFF']
           description: Describes the colors of the LEDs. The led strip should light in the described colors. If the value contains an empty string, the led at this place should be turned off.
         animation:
           type: string
           description: Describes the animation which gets played before the update of the LEDs.
-          example: "GLACE GLIDER"
+          example: 'GLACE GLIDER'
           enum:
             -
             - GLACE GLIDER
@@ -257,7 +253,7 @@ components:
             - NEON RUN RIGHT
             - PARTY
             - FIREWORK
-    
+
     id:
       type: number
       description: Identifier of the entity
@@ -267,23 +263,22 @@ components:
     createdAt:
       type: string
       description: Holds the date as string when this entity got created
-      example: "2024-06-17T19:49:24.000Z"
-    
+      example: '2024-06-17T19:49:24.000Z'
+
     updatedAt:
       type: string
       description: Holds the date as string when this entity got updated the last time
-      example: "2024-06-17T19:49:24.000Z"
-
+      example: '2024-06-17T19:49:24.000Z'
 
     playerEntity:
       type: object
       properties:
         id:
-          $ref: "#/components/schemas/id"
+          $ref: '#/components/schemas/id'
         createdAt:
-          $ref: "#/components/schemas/createdAt"
+          $ref: '#/components/schemas/createdAt'
         updatedAt:
-          $ref: "#/components/schemas/updatedAt"
+          $ref: '#/components/schemas/updatedAt'
         elo:
           type: integer
           min: 0
@@ -296,231 +291,229 @@ components:
           description: Hashed serial number - only used on server - censored for frontend
       example:
         {
-          "id": 1,
-          "createdAt": "2024-06-17T22:04:32.000Z",
-          "updatedAt": "2024-06-17T22:04:51.000Z",
-          "elo": 69420,
-          "name": "makoeta",
-          "hashSerialNumber": "CENSORED"
+          'id': 1,
+          'createdAt': '2024-06-17T22:04:32.000Z',
+          'updatedAt': '2024-06-17T22:04:51.000Z',
+          'elo': 69420,
+          'name': 'makoeta',
+          'hashSerialNumber': 'CENSORED',
         }
 
-    
     playerEntityList:
       type: array
       items:
-        $ref: "#/components/schemas/playerEntity"
+        $ref: '#/components/schemas/playerEntity'
       example:
         [
           {
-            "id": 3,
-            "createdAt": "2024-06-17T22:04:32.000Z",
-            "updatedAt": "2024-06-17T22:04:51.000Z",
-            "elo": 69420,
-            "name": "makoeta",
-            "hashSerialNumber": "CENSORED"
+            'id': 3,
+            'createdAt': '2024-06-17T22:04:32.000Z',
+            'updatedAt': '2024-06-17T22:04:51.000Z',
+            'elo': 69420,
+            'name': 'makoeta',
+            'hashSerialNumber': 'CENSORED',
           },
           {
-            "id": 1,
-            "createdAt": "2024-06-17T19:49:17.000Z",
-            "updatedAt": "2024-06-17T19:50:28.000Z",
-            "elo": 3000,
-            "name": "voma",
-            "hashSerialNumber": "CENSORED"
+            'id': 1,
+            'createdAt': '2024-06-17T19:49:17.000Z',
+            'updatedAt': '2024-06-17T19:50:28.000Z',
+            'elo': 3000,
+            'name': 'voma',
+            'hashSerialNumber': 'CENSORED',
           },
           {
-            "id": 2,
-            "createdAt": "2024-06-17T19:49:19.000Z",
-            "updatedAt": "2024-06-17T19:50:28.000Z",
-            "elo": 84,
-            "name": "random atze",
-            "hashSerialNumber": "CENSORED"
-          }
+            'id': 2,
+            'createdAt': '2024-06-17T19:49:19.000Z',
+            'updatedAt': '2024-06-17T19:50:28.000Z',
+            'elo': 84,
+            'name': 'random atze',
+            'hashSerialNumber': 'CENSORED',
+          },
         ]
 
 channels:
   kickerTableRegister:
-    address: "/table/register"
+    address: '/table/register'
     messages:
       registerMessage:
-        $ref: "#/components/messages/tableRegisterMessage"
+        $ref: '#/components/messages/tableRegisterMessage'
 
   gameStatus:
-    address: "/table/{tableName}/game"
+    address: '/table/{tableName}/game'
     parameters:
       tableName:
-        $ref: "#/components/parameters/tableName"
+        $ref: '#/components/parameters/tableName'
     messages:
       gameStatusMessage:
-        $ref: "#/components/messages/gameMessage"
+        $ref: '#/components/messages/gameMessage'
 
   teamStatus:
-    address: "/table/{tableName}/game/team/{teamColor}"
+    address: '/table/{tableName}/game/team/{teamColor}'
     parameters:
       tableName:
-        $ref: "#/components/parameters/tableName"
+        $ref: '#/components/parameters/tableName'
       teamColor:
-        $ref: "#/components/parameters/teamColor"
+        $ref: '#/components/parameters/teamColor'
     messages:
       teamMessage:
-        $ref: "#/components/messages/teamMessage"
+        $ref: '#/components/messages/teamMessage'
 
   teamColorStatus:
-    address: "/table/{tableName}/game/team/{teamColor}/color$"
+    address: '/table/{tableName}/game/team/{teamColor}/color$'
     parameters:
       tableName:
-        $ref: "#/components/parameters/tableName"
+        $ref: '#/components/parameters/tableName'
       teamColor:
-        $ref: "#/components/parameters/teamColor"
+        $ref: '#/components/parameters/teamColor'
     messages:
       teamColorMessage:
-        $ref: "#/components/messages/teamColorMessage"
+        $ref: '#/components/messages/teamColorMessage'
 
   teamScoreStatus:
-    address: "/table/{tableName}/game/team/{teamteamColorId}/score$"
+    address: '/table/{tableName}/game/team/{teamteamColorId}/score$'
     parameters:
       tableName:
-        $ref: "#/components/parameters/tableName"
+        $ref: '#/components/parameters/tableName'
       teamColor:
-        $ref: "#/components/parameters/teamColor"
+        $ref: '#/components/parameters/teamColor'
     messages:
       teamScoreMessage:
-        $ref: "#/components/messages/teamScoreMessage"
+        $ref: '#/components/messages/teamScoreMessage'
 
   winnerTeamStatus:
-    address: "/table/{tableName}/game/team/winner"
+    address: '/table/{tableName}/game/team/winner'
     parameters:
       tableName:
-        $ref: "#/components/parameters/tableName"
+        $ref: '#/components/parameters/tableName'
       teamColor:
-        $ref: "#/components/parameters/teamColor"
+        $ref: '#/components/parameters/teamColor'
     messages:
       teamMessage:
-        $ref: "#/components/messages/teamMessage"
+        $ref: '#/components/messages/teamMessage'
 
   winnerTeamColorStatus:
-    address: "/table/{tableName}/game/team/winner/color$"
+    address: '/table/{tableName}/game/team/winner/color$'
     parameters:
       tableName:
-        $ref: "#/components/parameters/tableName"
+        $ref: '#/components/parameters/tableName'
       teamColor:
-        $ref: "#/components/parameters/teamColor"
+        $ref: '#/components/parameters/teamColor'
     messages:
       scoreStatusMessage:
-        $ref: "#/components/messages/teamColorMessage"
+        $ref: '#/components/messages/teamColorMessage'
 
   winnerTeamScoreStatus:
-    address: "/table/{tableName}/game/team/winner/score$"
+    address: '/table/{tableName}/game/team/winner/score$'
     parameters:
       tableName:
-        $ref: "#/components/parameters/tableName"
+        $ref: '#/components/parameters/tableName'
       teamColor:
-        $ref: "#/components/parameters/teamColor"
+        $ref: '#/components/parameters/teamColor'
     messages:
       scoreStatusMessage:
-        $ref: "#/components/messages/teamScoreMessage"
+        $ref: '#/components/messages/teamScoreMessage'
 
   buttonPress:
-    address: "/table/{tableName}/game/team/{teamColor}/button/{buttonId}"
+    address: '/table/{tableName}/game/team/{teamColor}/button/{buttonId}'
     parameters:
       tableName:
-        $ref: "#/components/parameters/tableName"
+        $ref: '#/components/parameters/tableName'
       teamColor:
-        $ref: "#/components/parameters/teamColor"
+        $ref: '#/components/parameters/teamColor'
       buttonId:
-        $ref: "#/components/parameters/buttonId"
+        $ref: '#/components/parameters/buttonId'
     messages:
       pinOutMessage:
-        $ref: "#/components/messages/pinStatusMessage"
+        $ref: '#/components/messages/pinStatusMessage'
 
   lightBarrierDetect:
-    address: "/table/{tableName}/game/team/{teamColor}/light_barrier/{lightBarrierId}"
+    address: '/table/{tableName}/game/team/{teamColor}/light_barrier/{lightBarrierId}'
     parameters:
       tableName:
-        $ref: "#/components/parameters/tableName"
+        $ref: '#/components/parameters/tableName'
       teamColor:
-        $ref: "#/components/parameters/teamColor"
+        $ref: '#/components/parameters/teamColor'
       lightBarrierId:
-        $ref: "#/components/parameters/lightBarrierId"
+        $ref: '#/components/parameters/lightBarrierId'
     messages:
       pinOutMessage:
-        $ref: "#/components/messages/pinStatusMessage"
+        $ref: '#/components/messages/pinStatusMessage'
 
   displayUpdate:
-    address: "/table/{tableName}/game/team/{teamColor}/display"
+    address: '/table/{tableName}/game/team/{teamColor}/display'
     parameters:
       tableName:
-        $ref: "#/components/parameters/tableName"
+        $ref: '#/components/parameters/tableName'
       teamColor:
-        $ref: "#/components/parameters/teamColor"
+        $ref: '#/components/parameters/teamColor'
     messages:
       displayMessage:
-        $ref: "#/components/messages/displayUpdateMessage"
+        $ref: '#/components/messages/displayUpdateMessage'
 
   ledStripUpdate:
-    address: "/table/{tableName}/game/team/{teamColor}/leds"
+    address: '/table/{tableName}/game/team/{teamColor}/leds'
     parameters:
       tableName:
-        $ref: "#/components/parameters/tableName"
+        $ref: '#/components/parameters/tableName'
       teamColor:
-        $ref: "#/components/parameters/teamColor"
+        $ref: '#/components/parameters/teamColor'
     messages:
       ledMessage:
-        $ref: "#/components/messages/ledUpdateMessage"
-  
+        $ref: '#/components/messages/ledUpdateMessage'
+
   nfcReaderSerialNumberUpdate:
-    address: "/table/{tableName}/game/team/{teamColor}/nfc-reader"
+    address: '/table/{tableName}/game/team/{teamColor}/nfc-reader'
     parameters:
       tableName:
-        $ref: "#/components/parameters/tableName"
+        $ref: '#/components/parameters/tableName'
       teamColor:
-        $ref: "#/components/parameters/teamColor"
+        $ref: '#/components/parameters/teamColor'
     messages:
       nfcReaderMessage:
-        $ref: "#/components/messages/nfcReaderMessage"
-  
+        $ref: '#/components/messages/nfcReaderMessage'
+
   playerNameUpdate:
-    address: "/table/{tableName}/game/team/{teamColor}/changename"
+    address: '/table/{tableName}/game/team/{teamColor}/changename'
     parameters:
       tableName:
-        $ref: "#/components/parameters/tableName"
+        $ref: '#/components/parameters/tableName'
       teamColor:
-        $ref: "#/components/parameters/teamColor"
+        $ref: '#/components/parameters/teamColor'
     messages:
       newPlayerNameMessage:
         $ref: '#/components/messages/newPlayerNameMessage'
 
   apiPlayerAll:
-    address: "/api/player/all"
+    address: '/api/player/all'
     messages:
       playerList:
         $ref: '#/components/messages/playerEntityListMessage'
-
 
 operations:
   kickerTableRegister:
     action: receive
     summary: Operation for a registration of a table with an id
     channel:
-      $ref: "#/channels/kickerTableRegister"
+      $ref: '#/channels/kickerTableRegister'
 
   buttonPress:
     action: receive
     summary: Action on button press
     channel:
-      $ref: "#/channels/buttonPress"
+      $ref: '#/channels/buttonPress'
 
   lightBarrierDetect:
     action: receive
     summary: Action on a detection of the light barrier
     channel:
-      $ref: "#/channels/lightBarrierDetect"
-  
+      $ref: '#/channels/lightBarrierDetect'
+
   nfcReaderSerialUpdate:
     action: receive
     summary: Read nfc chip serial number for player registration.
     channel:
       $ref: '#/channels/nfcReaderSerialNumberUpdate'
-  
+
   playerNameUpdate:
     action: receive
     summary: Action to update the name of the player who registrated last to the table.
@@ -531,58 +524,58 @@ operations:
     action: send
     summary: Information about the game status.
     channel:
-      $ref: "#/channels/gameStatus"
+      $ref: '#/channels/gameStatus'
 
   teamStatus:
     action: send
     summary: Information about the team.
     channel:
-      $ref: "#/channels/teamStatus"
+      $ref: '#/channels/teamStatus'
 
   teamColorStatus:
     action: send
     summary: Information about the team color.
     channel:
-      $ref: "#/channels/teamColorStatus"
+      $ref: '#/channels/teamColorStatus'
 
   teamScoreStatus:
     action: send
     summary: Information about the team score.
     channel:
-      $ref: "#/channels/teamScoreStatus"
+      $ref: '#/channels/teamScoreStatus'
 
   winnerTeamStatus:
     action: send
     summary: Information about the score status of the winner team. Payload is empty when there is no winner at the moment.
     channel:
-      $ref: "#/channels/winnerTeamStatus"
+      $ref: '#/channels/winnerTeamStatus'
 
   winnerTeamColorStatus:
     action: send
     summary: Information about the score status. Payload is empty when there is no winner at the moment.
     channel:
-      $ref: "#/channels/winnerTeamColorStatus"
+      $ref: '#/channels/winnerTeamColorStatus'
 
   winnerTeamScoreStatus:
     action: send
     summary: Information about the score status. Payload is empty when there is no winner at the moment.
     channel:
-      $ref: "#/channels/winnerTeamScoreStatus"
+      $ref: '#/channels/winnerTeamScoreStatus'
 
   displayUpdate:
     action: send
     summary: Display update
     channel:
-      $ref: "#/channels/displayUpdate"
+      $ref: '#/channels/displayUpdate'
 
   ledUpdate:
     action: send
     summary: LED(s) update
     channel:
-      $ref: "#/channels/ledStripUpdate"
+      $ref: '#/channels/ledStripUpdate'
 
   playerScoreBoard:
     action: send
     summary: Publishes all the players here.
     channel:
-      $ref: "#/channels/apiPlayerAll"
+      $ref: '#/channels/apiPlayerAll'

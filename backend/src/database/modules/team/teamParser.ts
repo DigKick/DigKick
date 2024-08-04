@@ -1,17 +1,19 @@
-import {TeamEntity} from "./teamEntity.ts";
-import {Team, TeamColor} from "../../../models/team.ts";
-import {DkParseException} from "../../dkParseException.ts";
-import {PlayerEntity} from "../player/playerEntity.ts";
+import { TeamEntity } from './teamEntity.ts';
+import { Team, TeamColor } from '../../../models/team.ts';
+import { DkParseException } from '../../dkParseException.ts';
+import { PlayerEntity } from '../player/playerEntity.ts';
 
 export class TeamParser {
-
   private static isValidTeamColor(input: string): boolean {
     return (Object.values(TeamColor) as string[]).includes(input);
   }
 
   public static toTeam(teamEntity: TeamEntity): Team {
     if (!this.isValidTeamColor(teamEntity.color)) {
-      throw new DkParseException(TeamEntity.constructor.name, Team.constructor.name)
+      throw new DkParseException(
+        TeamEntity.constructor.name,
+        Team.constructor.name,
+      );
     }
 
     try {
@@ -20,9 +22,12 @@ export class TeamParser {
       team.score = teamEntity.score;
       team.isWinner = teamEntity.isWinner;
 
-      return team
+      return team;
     } catch (e) {
-      throw new DkParseException(TeamEntity.constructor.name, Team.constructor.name)
+      throw new DkParseException(
+        TeamEntity.constructor.name,
+        Team.constructor.name,
+      );
     }
   }
 
@@ -36,34 +41,38 @@ export class TeamParser {
 
       if (team.playerOne) {
         const maybePlayerOne = await PlayerEntity.findOneBy({
-          hashSerialNumber: team.playerOne.key
-        })
+          hashSerialNumber: team.playerOne.key,
+        });
 
         if (maybePlayerOne != null) {
-          teamEntity.playerOne = maybePlayerOne
+          teamEntity.playerOne = maybePlayerOne;
         }
       }
 
       if (team.playerTwo) {
         const maybePlayerTwo = await PlayerEntity.findOneBy({
-          hashSerialNumber: team.playerTwo.key
-        })
+          hashSerialNumber: team.playerTwo.key,
+        });
 
         if (maybePlayerTwo != null) {
-          teamEntity.playerTwo = maybePlayerTwo
+          teamEntity.playerTwo = maybePlayerTwo;
         }
       }
 
-      return teamEntity
+      return teamEntity;
     } catch (e) {
-      throw new DkParseException(Team.constructor.name, TeamEntity.constructor.name)
+      throw new DkParseException(
+        Team.constructor.name,
+        TeamEntity.constructor.name,
+      );
     }
   }
 
-
-  private static async getPlayerByHashedSerialNumber(hashedSerialNumber: string) {
+  private static async getPlayerByHashedSerialNumber(
+    hashedSerialNumber: string,
+  ) {
     return await PlayerEntity.findOneBy({
-      hashSerialNumber: hashedSerialNumber
+      hashSerialNumber: hashedSerialNumber,
     });
   }
 }

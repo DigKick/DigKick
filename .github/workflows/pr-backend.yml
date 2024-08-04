@@ -1,0 +1,23 @@
+name: Pull Request Backend
+on:
+  pull_request:
+    paths:
+      - "backend/**"
+      - ".gitea/workflows/pr-backend.yml"
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./backend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "npm"
+          cache-dependency-path: "./backend/package-lock.json"
+      - run: npm ci
+      - name: Check formatting
+        run: |
+          npm run prettier:check

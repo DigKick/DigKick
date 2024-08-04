@@ -6,7 +6,9 @@
   "scripts": {
     "start:dev": "bun run src/app.ts",
     "gen:doc:md": "asyncapi generate fromTemplate asyncapi.yaml @asyncapi/markdown-template -o ./docs ",
-    "test": "bun test"
+    "test": "bun test",
+    "prettier:check": "prettier -c .",
+    "prettier:write": "prettier -w ."
   },
   "keywords": [],
   "author": "Marvin Voss, Maximilian Koenig",
@@ -23,6 +25,7 @@
   },
   "dependencies": {
     "mqtt": "^5.5.3",
+    "prettier": "^3.3.3",
     "reflect-metadata": "^0.2.2",
     "sqlite3": "^5.1.7",
     "typeorm": "^0.3.20",

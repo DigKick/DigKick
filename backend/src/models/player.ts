@@ -1,8 +1,7 @@
 export class Player {
-
-  name: string
-  elo: number
-  private readonly _key: string
+  name: string;
+  elo: number;
+  private readonly _key: string;
 
   constructor(name: string, key: string, elo: number) {
     this.name = name;
@@ -19,6 +18,6 @@ export class Player {
       name: this.name,
       key: this._key,
       elo: this.elo,
-    }
+    };
   }
 }

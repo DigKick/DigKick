@@ -1,6 +1,6 @@
-import {Table} from "../../models/table.ts";
-import {BasicTerm} from "./basicTerm";
-import {TeamColor} from "../../models/team";
+import { Table } from '../../models/table.ts';
+import { BasicTerm } from './basicTerm';
+import { TeamColor } from '../../models/team';
 
 export class BaseTopicFactory {
   static getBaseTopic(soccerTable: Table): string {
@@ -14,10 +14,7 @@ export class BaseTopicFactory {
     );
   }
 
-  static getLedUpdateTopic(
-    soccerTable: Table,
-    teamColor: TeamColor,
-  ): string {
+  static getLedUpdateTopic(soccerTable: Table, teamColor: TeamColor): string {
     return this.getTeamTopic(soccerTable, teamColor) + `/leds`;
   }
 }

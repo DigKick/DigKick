@@ -1,4 +1,4 @@
-import { Team } from "../../../models/team";
+import { Team } from '../../../models/team';
 
 export class WinnerTeamPayload {
   private readonly _winnerTeam: Team | undefined;

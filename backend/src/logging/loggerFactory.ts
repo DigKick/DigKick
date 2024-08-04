@@ -1,11 +1,11 @@
-import winston, {addColors, transports} from "winston";
-import {HandlerType} from "../mqtt/global/dkModelHandler.ts";
+import winston, { addColors, transports } from 'winston';
+import { HandlerType } from '../mqtt/global/dkModelHandler.ts';
 
 addColors({
-  info: "bold blue", // fontStyle color
-  warn: "italic yellow",
-  error: "bold red",
-  debug: "green",
+  info: 'bold blue', // fontStyle color
+  warn: 'italic yellow',
+  error: 'bold red',
+  debug: 'green',
 });
 
 export class LoggerFactory {
@@ -20,7 +20,7 @@ export class LoggerFactory {
         label: `[${loggerLabel}]`,
       }),
       winston.format.timestamp({
-        format: "DD-MM-YYYY HH:mm:ss",
+        format: 'DD-MM-YYYY HH:mm:ss',
       }),
       winston.format.printf(
         (info) =>
@@ -31,7 +31,7 @@ export class LoggerFactory {
 
   static getLogger(loggerLabel: string) {
     const logger = winston.createLogger({
-      level: "info",
+      level: 'info',
       transports: [
         new transports.Console({
           format: winston.format.combine(
@@ -41,8 +41,8 @@ export class LoggerFactory {
         }),
       ],
     });
-    if (process.env.NODE_ENV !== "production") {
-      logger.level = "debug";
+    if (process.env.NODE_ENV !== 'production') {
+      logger.level = 'debug';
     }
     return logger;
   }
@@ -70,13 +70,13 @@ export class LoggerFactory {
 
   static printLogo() {
     console.log(
-      "\n\n" +
-      "\t██████╗ ██╗ ██████╗ ██╗  ██╗██╗ ██████╗██╗  ██╗\n" +
-      "\t██╔══██╗██║██╔════╝ ██║ ██╔╝██║██╔════╝██║ ██╔╝\n" +
-      "\t██║  ██║██║██║  ███╗█████╔╝ ██║██║     █████╔╝ \n" +
-      "\t██║  ██║██║██║   ██║██╔═██╗ ██║██║     ██╔═██╗ \n" +
-      "\t██████╔╝██║╚██████╔╝██║  ██╗██║╚██████╗██║  ██╗\n" +
-      "\t╚═════╝ ╚═╝ ╚═════╝ ╚═╝  ╚═╝╚═╝ ╚═════╝╚═╝  ╚═╝\n\n",
+      '\n\n' +
+        '\t██████╗ ██╗ ██████╗ ██╗  ██╗██╗ ██████╗██╗  ██╗\n' +
+        '\t██╔══██╗██║██╔════╝ ██║ ██╔╝██║██╔════╝██║ ██╔╝\n' +
+        '\t██║  ██║██║██║  ███╗█████╔╝ ██║██║     █████╔╝ \n' +
+        '\t██║  ██║██║██║   ██║██╔═██╗ ██║██║     ██╔═██╗ \n' +
+        '\t██████╔╝██║╚██████╔╝██║  ██╗██║╚██████╗██║  ██╗\n' +
+        '\t╚═════╝ ╚═╝ ╚═════╝ ╚═╝  ╚═╝╚═╝ ╚═════╝╚═╝  ╚═╝\n\n',
     );
   }
 }

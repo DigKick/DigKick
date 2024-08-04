@@ -1,17 +1,17 @@
-import {Logger} from "winston";
-import {LoggerFactory} from "../../logging/loggerFactory";
-import {Table} from "../../models/table.ts";
-import type {EventMapper} from "./eventMapper";
-import {BasicTerm} from "../util/basicTerm";
-import {DkMqttClient} from "../client/client.ts";
+import { Logger } from 'winston';
+import { LoggerFactory } from '../../logging/loggerFactory';
+import { Table } from '../../models/table.ts';
+import type { EventMapper } from './eventMapper';
+import { BasicTerm } from '../util/basicTerm';
+import { DkMqttClient } from '../client/client.ts';
 
 export enum HandlerType {
   GAME = BasicTerm.GAME,
   SOCCERTABLE = BasicTerm.TABLE,
-  HARDWARE = "Hardware",
-  PLAYER = "Player",
-  PLAYER_EDITOR = HandlerType.PLAYER + "Editor",
-  ABSTRACT = "ABSTRACT",
+  HARDWARE = 'Hardware',
+  PLAYER = 'Player',
+  PLAYER_EDITOR = HandlerType.PLAYER + 'Editor',
+  ABSTRACT = 'ABSTRACT',
 }
 
 export class DkModelHandler<EventType, SubjectType> {
@@ -32,7 +32,10 @@ export class DkModelHandler<EventType, SubjectType> {
 
     this._dkMqttClient = DkMqttClient.getInstance();
 
-    this._logger = LoggerFactory.getHandlerLogger(handlerType, soccerTable.name);
+    this._logger = LoggerFactory.getHandlerLogger(
+      handlerType,
+      soccerTable.name,
+    );
     this._logger.debug(`${handlerType}Handler created.`);
   }
 
@@ -63,7 +66,7 @@ export class DkModelHandler<EventType, SubjectType> {
 
   public triggerEvent(event: EventType, topic: string, payload?: any) {
     if (!this._mapper) {
-      this._logger.error("No mapper defined.");
+      this._logger.error('No mapper defined.');
       return;
     }
 
