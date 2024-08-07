@@ -1,3 +1,7 @@
 .custom-font {
   font-family: 'ranked';
 }
+
+.flip-y {
+  transform: scaleY(-1);
+}

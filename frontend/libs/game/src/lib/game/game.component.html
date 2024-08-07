@@ -1,3 +1,40 @@
+<div class="divider sm:my-6 lg:my-4">
+  <label class="swap" (click)="toggleDirection()">
+    <input type="checkbox" />
+    <div class="swap-on">
+      <svg
+        class="size-14"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="1.5"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M7.5 21 3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5"
+        />
+      </svg>
+    </div>
+    <div class="swap-off">
+      <svg
+        class="flip-y size-14"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="1.5"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M7.5 21 3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5"
+        />
+      </svg>
+    </div>
+  </label>
+</div>
 @if (game(); as game) {
   <div
     class="mx-auto mt-3 flex w-5/6 flex-col items-center justify-center lg:mx-auto lg:w-2/3 lg:flex-row"
@@ -95,86 +132,11 @@
 
   <!-- Player names -->
   <div class="my-auto flex w-full items-center text-[1.2rem] lg:justify-center">
-    @if (game.teamWhite; as white) {
-      <div
-        class="card ml-7 grid h-24 flex-grow place-items-center rounded-box bg-accent-content lg:ml-9"
-      >
-        <div class="flex text-[1.4rem]">
-          <div>TEAM</div>
-          <div class="text-orange-400">&nbsp; WHITE</div>
-        </div>
-        <!-- Added mx-4 for left and right margin -->
-        <div class="flex break-words">
-          {{ white.playerOne?.name }}
-          <div class="text-orange-400">
-            &nbsp;&nbsp;{{ white.playerOne?.elo }}
-          </div>
-        </div>
-        <div class="flex break-words">
-          {{ white.playerTwo?.name }}
-          <div class="text-orange-400">
-            &nbsp;&nbsp;{{ white.playerTwo?.elo }}
-          </div>
-        </div>
-      </div>
-    }
+    <lib-game-team [team]="firstTeam()" />
     <div class="divider divider-warning divider-horizontal text-[1.5rem]">
       VS
     </div>
-    <!-- Spacer for mobile view -->
-    @if (game.teamBlack; as black) {
-      <div
-        class="card mr-7 grid h-24 flex-grow place-items-center rounded-box bg-accent-content lg:mr-9"
-      >
-        <div class="flex text-[1.3rem]">
-          <div>TEAM</div>
-          <div class="text-orange-400">&nbsp; BLACK</div>
-        </div>
-        <!-- Added mx-4 for left and right margin -->
-        <div class="flex break-words">
-          {{ black.playerOne?.name }}
-          <div class="text-orange-400">
-            &nbsp;&nbsp;{{ black.playerOne?.elo }}
-          </div>
-        </div>
-        <div class="flex break-words">
-          {{ black.playerTwo?.name }}
-          <div class="text-orange-400">
-            &nbsp;&nbsp;{{ black.playerTwo?.elo }}
-          </div>
-        </div>
-      </div>
-    }
-  </div>
-
-  @if (environment.debug) {
-    <div class="m-2 flex w-full justify-around">
-      <button
-        class="btn btn-outline btn-error"
-        (click)="registerPlayer(game, TeamColor.WHITE, '1')"
-      >
-        CLICK 1
-      </button>
-      <button
-        class="btn btn-outline btn-error"
-        (click)="registerPlayer(game, TeamColor.WHITE, '2')"
-      >
-        CLICK 2
-      </button>
-      <button
-        class="btn btn-outline btn-error"
-        (click)="registerPlayer(game, TeamColor.BLACK, '3')"
-      >
-        CLICK 3
-      </button>
-      <button
-        class="btn btn-outline btn-error"
-        (click)="registerPlayer(game, TeamColor.BLACK, '4')"
-      >
-        CLICK 4
-      </button>
-    </div>
-  }
+    <lib-game-team [team]="lastTeam()" />
 
   <div class="flex w-full justify-between">
     @if (renameWhite) {
