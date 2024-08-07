@@ -9,11 +9,12 @@ import {
   TeamColor,
 } from '@dig-kick/models';
 import { GameStore } from '@dig-kick/store';
+import { TeamComponent } from '../team/team.component';
 
 @Component({
   selector: 'lib-game-view',
   standalone: true,
-  imports: [CommonModule, NgOptimizedImage],
+  imports: [CommonModule, TeamComponent, NgOptimizedImage],
   templateUrl: './game.component.html',
   styleUrl: './game.component.css',
 })
@@ -37,6 +38,20 @@ export class GameComponent {
 
   renameWhite = false;
   renameBlack = false;
+
+    firstTeam: Signal<Team> = computed(() => {
+        if(this.isWhiteOnTheLeft()) {
+            return this.gameService.gameSignal().teamWhite
+        }
+        return this.gameService.gameSignal().teamBlack;
+    });
+
+    lastTeam: Signal<Team> = computed(() => {
+        if(this.isWhiteOnTheLeft()) {
+            return this.gameService.gameSignal().teamBlack
+        }
+        return this.gameService.gameSignal().teamWhite;
+    });
 
   constructor(private _dkMqttClientService: DkMqttClientService) {}
 
@@ -89,5 +104,9 @@ export class GameComponent {
     const topic = `table/${game.tableId}/game/team/white/button/0`;
     this._dkMqttClientService.doPublish(topic, `{"pinOut": "HIGH"}`);
     this._dkMqttClientService.doPublish(topic, `{"pinOut": "LOW"}`);
+  }
+
+  toggleDirection() {
+    this.isWhiteOnTheLeft.update((isOnTheLeft) => !isOnTheLeft);
   }
 }

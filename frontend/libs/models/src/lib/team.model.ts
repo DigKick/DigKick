@@ -12,7 +12,8 @@ export enum ScoreChange {
 }
 
 export const TeamSchema = z.object({
-  color: z.string(),
+  name: z.string(),
+    color: z.string(),
   score: z.number(),
   isWinner: z.boolean(),
   playerOne: TeamPlayerSchema.nullish(),

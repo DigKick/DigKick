@@ -1,0 +1,23 @@
+@if (team(); as team) {
+    <div
+    class="card ml-7 grid h-24 flex-grow place-items-center rounded-box bg-accent-content lg:ml-9"
+  >
+    <div class="flex text-[1.4rem]">
+      <div>TEAM</div>
+      <div class="text-orange-400">&nbsp; {{team.name}}</div>
+    </div>
+    <!-- Added mx-4 for left and right margin -->
+    <div class="flex break-words">
+      {{ team.playerOne?.name }}
+      <div class="text-orange-400">
+        &nbsp;&nbsp;{{ team.playerOne?.elo }}
+      </div>
+    </div>
+    <div class="flex break-words">
+      {{ team.playerTwo?.name }}
+      <div class="text-orange-400">
+        &nbsp;&nbsp;{{ team.playerTwo?.elo }}
+      </div>
+    </div>
+  </div>
+}
