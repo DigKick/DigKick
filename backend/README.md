@@ -23,16 +23,35 @@ To run:
 npm run start:dev
 ```
 
-## Setup .env
+## Setup application.yaml
 
-Before starting you have to set up a .env files with your MQTT host and credentials.
+Before starting you have to set up a .yaml file in the resource directory.
 
-```dotenv
-MQTT_LOGIN_USERNAME=MQTT_USERNAME
-MQTT_LOGIN_PASSWORD=MQTT_PASSWORD
-MQTT_HOST=MQTT_HOST
-DATABASE_FILE_NAME=database
-DATABASE_FILE_SUFFIX=db
+### Example
+
+```yaml
+digkick:
+  banner: true # optional
+
+mqtt:
+  login:
+    username: test
+    password: test
+  host: localhost
+
+db:
+  source:
+    database:
+      name: database
+      suffix: db
+
+player:
+  name:
+    restrictions:
+      length:
+        min: 3 # optional
+        max: 12 # optional
+
 ```
 
 ## Start broker manually

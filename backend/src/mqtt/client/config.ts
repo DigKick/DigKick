@@ -1,3 +1,5 @@
+import {ApplicationProperties} from "../../util/properties/applicationProperties.ts";
+
 export class MqttConfig {
   protocol: string;
   host: string;
@@ -7,7 +9,7 @@ export class MqttConfig {
 
   constructor() {
     this.protocol = "mqtt";
-    this.host = String(process.env.MQTT_HOST);
+    this.host = ApplicationProperties.get().mqtt.host;
     this.port = 1883;
     this.clientId = `mqtt_${Math.random().toString(16).slice(3)}`;
     this.connectUrl = `${this.protocol}://${this.host}:${this.port}`;

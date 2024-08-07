@@ -1,4 +1,3 @@
-import {Database} from "bun:sqlite"
 import {DataSource} from "typeorm"
 import {GameEntity} from "./modules/game/gameEntity.ts";
 import {TableEntity} from "./modules/table/tableEntity.ts";
@@ -6,13 +5,13 @@ import {TeamEntity} from "./modules/team/teamEntity.ts";
 import {Logger} from "winston";
 import {LoggerFactory} from "../logging/loggerFactory.ts";
 import {PlayerEntity} from "./modules/player/playerEntity.ts";
+import {ApplicationProperties} from "../util/properties/applicationProperties.ts";
 
 const logger: Logger = LoggerFactory.getLogger("DataSourceInitializer");
-new Database(`${process.env.DATABASE_FILE_NAME}.${process.env.DATABASE_FILE_SUFFIX}`)
 
 export const dataSource: DataSource = new DataSource({
   type: "sqlite",
-  database: `${process.env.DATABASE_FILE_NAME}.${process.env.DATABASE_FILE_SUFFIX}`,
+  database: `${ApplicationProperties.get().db.source.database.name}.${ApplicationProperties.get().db.source.database.suffix}`,
   entities: [GameEntity, TableEntity, TeamEntity, PlayerEntity],
   logger: "advanced-console",
   synchronize: true,
