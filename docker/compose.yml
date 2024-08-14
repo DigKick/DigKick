@@ -13,6 +13,8 @@ services:
     build: ../frontend
     container_name: kicker-frontend
     restart: unless-stopped
+    networks:
+      - traefik
     labels:
       traefik.enable: "true"
       traefik.http.routers.kicker.rule: Host("kicker.local.hiqs.de")
@@ -20,5 +22,7 @@ services:
       - ./config/frontend/config.json:/srv/assets/config.json
 
 networks:
+  traefik:
+    external: true
   emqx:
     external: true
