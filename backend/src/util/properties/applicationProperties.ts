@@ -1,6 +1,5 @@
 import fs from "node:fs";
 import * as path from 'path';
-import {z} from "zod";
 import YAML from 'yaml'
 import { propertySchema } from './propertySchema.ts';
 

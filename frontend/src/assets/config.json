@@ -1,9 +1,9 @@
 {
   "broker": {
-    "hostname": "localhost",
-    "port": 8083,
+    "hostname": "wss.local.hiqs.de",
+    "port": 443,
     "path": "/mqtt",
     "clientId": "frontend",
-    "protocol": "ws"
+    "protocol": "wss"
   }
 }

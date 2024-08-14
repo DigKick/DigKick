@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
 import { DkMqttClientService, GameService } from '@dig-kick/services';
 import { TeamColor } from '@dig-kick/models';
 
@@ -9,21 +8,12 @@ import { TeamColor } from '@dig-kick/models';
   selector: 'lib-game-view',
   standalone: true,
   imports: [CommonModule],
-  providers: [DkMqttClientService, GameService],
   templateUrl: './game.component.html',
   styleUrl: './game.component.css',
 })
 export class GameComponent implements OnInit {
   whiteColor: string = TeamColor.WHITE;
   blackColor: string = TeamColor.BLACK;
-
-  game$!: Observable<string>;
-  whiteScore$!: Observable<string>;
-  blackScore$!: Observable<string>;
-  whiteScoreSignal = signal<number>(0);
-  blackScoreSignal = signal<number>(0);
-  winnerSignal = signal<string>('');
-  rankedSignal = signal<string>('');
 
   tableId!: string | null;
 

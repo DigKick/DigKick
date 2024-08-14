@@ -3,7 +3,9 @@ import { DkMqttClientService } from './dk-mqtt-client.service';
 import { Observable } from 'rxjs';
 import { Game, GameMode, TeamColor } from '@dig-kick/models';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class GameService {
   tableId = signal<string>('');
   game$!: Observable<string>;

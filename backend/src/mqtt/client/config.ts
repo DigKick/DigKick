@@ -8,9 +8,9 @@ export class MqttConfig {
   connectUrl: string;
 
   constructor() {
-    this.protocol = "mqtt";
+    this.protocol = "mqtts";
     this.host = ApplicationProperties.get().mqtt.host;
-    this.port = 1883;
+    this.port = 8883;
     this.clientId = `mqtt_${Math.random().toString(16).slice(3)}`;
     this.connectUrl = `${this.protocol}://${this.host}:${this.port}`;
   }
