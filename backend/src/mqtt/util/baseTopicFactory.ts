@@ -1,6 +1,6 @@
-import {Table} from "../../models/table.ts";
-import {BasicTerm} from "./basicTerm";
-import {TeamColor} from "../../models/team";
+import { Table } from '../../models/table.ts';
+import { BasicTerm } from './basicTerm';
+import { TeamColor } from '../../models/team';
 import * as path from 'node:path';
 
 export class BaseTopicFactory {
@@ -9,14 +9,15 @@ export class BaseTopicFactory {
   }
 
   static getTeamTopic(soccerTable: Table, teamColor: TeamColor): string {
-    return (
-      path.join(this.getBaseTopic(soccerTable), BasicTerm.GAME, BasicTerm.TEAM, teamColor));
+    return path.join(
+      this.getBaseTopic(soccerTable),
+      BasicTerm.GAME,
+      BasicTerm.TEAM,
+      teamColor,
+    );
   }
 
-  static getLedUpdateTopic(
-    soccerTable: Table,
-    teamColor: TeamColor,
-  ): string {
-    return path.join(this.getTeamTopic(soccerTable, teamColor), "leds");
+  static getLedUpdateTopic(soccerTable: Table, teamColor: TeamColor): string {
+    return path.join(this.getTeamTopic(soccerTable, teamColor), 'leds');
   }
 }

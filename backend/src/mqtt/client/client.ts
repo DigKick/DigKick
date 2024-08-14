@@ -84,7 +84,7 @@ export class DkMqttClient {
   }
 
   public publishWithRetain(topic: string, message: string) {
-    topic = topic.charAt(0) === "/" ? topic.slice(1) : topic;
+    topic = topic.charAt(0) === '/' ? topic.slice(1) : topic;
     this.publish(topic, message, {
       retain: true,
     });
