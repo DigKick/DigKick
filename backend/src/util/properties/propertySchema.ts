@@ -13,6 +13,8 @@ export const propertySchema = z.object({
       password: z.string().min(1),
     }),
     host: z.string().min(1),
+    port: z.number(),
+    protocol: z.union([z.literal('mqtt'), z.literal('mqtts')]),
   }),
 
   db: z.object({
