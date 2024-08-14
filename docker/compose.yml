@@ -13,8 +13,6 @@ services:
     build: ../frontend
     container_name: kicker-frontend
     restart: unless-stopped
-    ports:
-      - 80:80
     labels:
       traefik.enable: "true"
       traefik.http.routers.kicker.rule: Host("kicker.local.hiqs.de")
