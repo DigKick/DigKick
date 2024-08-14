@@ -1,5 +1,5 @@
-import { MqttObjectUpdater } from "./mqttObjectUpdater";
-import type { MqttObjectUpdaterConfig } from "./mqttObjectUpdaterConfig";
+import { MqttObjectUpdater } from './mqttObjectUpdater';
+import type { MqttObjectUpdaterConfig } from './mqttObjectUpdaterConfig';
 
 export class MqttObjectUpdaterFactory {
   private static mqttObjectUpdaters: Map<any, MqttObjectUpdater<any>> = new Map<

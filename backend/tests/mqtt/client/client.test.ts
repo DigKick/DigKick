@@ -1,7 +1,7 @@
-import {expect, test} from "bun:test";
-import {BasicTerm} from "../../../src/mqtt/util/basicTerm.ts";
-import {TeamColor} from "../../../src/models/team.ts";
-import {DkMqttClient} from "../../../src/mqtt/client/client.ts";
+import { expect, test } from 'bun:test';
+import { BasicTerm } from '../../../src/mqtt/util/basicTerm.ts';
+import { TeamColor } from '../../../src/models/team.ts';
+import { DkMqttClient } from '../../../src/mqtt/client/client.ts';
 
 const dkMqttClient = DkMqttClient.getInstance();
 
@@ -59,25 +59,25 @@ const matchingTopicsWithHashtagWildcards: [string, string][] = [
   ],
 ];
 
-test("valid topic matcher - topics with out wildcards", () => {
+test('valid topic matcher - topics with out wildcards', () => {
   matchingTopicsWithoutWildcards.forEach((topicPair) => {
     expect(dkMqttClient.matchTopic(topicPair[0], topicPair[1])).toBeTrue();
   });
 });
 
-test("invalid topic matcher - topics with out wildcards", () => {
+test('invalid topic matcher - topics with out wildcards', () => {
   nonMatchingTopicsWithoutWildcards.forEach((topicPair) => {
     expect(dkMqttClient.matchTopic(topicPair[0], topicPair[1])).toBeFalse();
   });
 });
 
-test("invalid topic matcher - topics with + wildcard", () => {
+test('invalid topic matcher - topics with + wildcard', () => {
   matchingTopicsWithPlusWildcards.forEach((topicPair) => {
     expect(dkMqttClient.matchTopic(topicPair[0], topicPair[1])).toBeTrue();
   });
 });
 
-test("invalid topic matcher - topics with # wildcard", () => {
+test('invalid topic matcher - topics with # wildcard', () => {
   matchingTopicsWithHashtagWildcards.forEach((topicPair) => {
     expect(dkMqttClient.matchTopic(topicPair[0], topicPair[1])).toBeTrue();
   });

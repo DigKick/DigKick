@@ -1,10 +1,10 @@
-import {expect, test} from "bun:test";
-import {MqttObjectUpdater} from "../../../../src/mqtt/util/mqttObjectUpdater/mqttObjectUpdater.ts";
-import {Table} from "../../../../src/models/table.ts";
-import {BasicTerm} from "../../../../src/mqtt/util/basicTerm.ts";
+import { expect, test } from 'bun:test';
+import { MqttObjectUpdater } from '../../../../src/mqtt/util/mqttObjectUpdater/mqttObjectUpdater.ts';
+import { Table } from '../../../../src/models/table.ts';
+import { BasicTerm } from '../../../../src/mqtt/util/basicTerm.ts';
 
-test("compare function table", () => {
-  let table = new Table("test");
+test('compare function table', () => {
+  let table = new Table('test');
   let updater = new MqttObjectUpdater<Table>(table, {
     prefix: `/${BasicTerm.TABLE}`,
     instantPublish: true,
@@ -18,8 +18,8 @@ test("compare function table", () => {
   updater.publish();
 });
 
-test("compare init table", () => {
-  let table = new Table("test");
+test('compare init table', () => {
+  let table = new Table('test');
   let updater = new MqttObjectUpdater<Table>(table, {
     prefix: `/${BasicTerm.TABLE}`,
     instantPublish: true,
