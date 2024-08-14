@@ -1,4 +1,4 @@
-@if (gameService.gameSignal(); as game) {
+@if (game(); as game) {
   <div
     class="mx-auto mt-3 flex w-5/6 flex-col items-center justify-center lg:mx-auto lg:w-2/3 lg:flex-row"
   >
@@ -58,7 +58,7 @@
 
   <!-- Player names -->
   <div class="my-auto flex w-full items-center text-[1.2rem] lg:justify-center">
-    @if (gameService.gameSignal().teamWhite; as white) {
+    @if (game.teamWhite; as white) {
       <div
         class="card ml-7 grid h-24 flex-grow place-items-center rounded-box bg-accent-content lg:ml-9"
       >
@@ -85,7 +85,7 @@
       VS
     </div>
     <!-- Spacer for mobile view -->
-    @if (gameService.gameSignal().teamBlack; as black) {
+    @if (game.teamBlack; as black) {
       <div
         class="card mr-7 grid h-24 flex-grow place-items-center rounded-box bg-accent-content lg:mr-9"
       >
@@ -133,7 +133,6 @@
       class="mt-5 flex w-full justify-center text-[1.2rem] lg:justify-center"
     >
       <input
-        (keyup)="onKey($event)"
         type="text"
         placeholder="{{ game.teamWhite.playerOne?.name }}"
         class="input input-bordered input-error w-full max-w-xs"
@@ -164,7 +163,6 @@
       class="mt-5 flex w-full justify-center text-[1.2rem] lg:justify-center"
     >
       <input
-        (keyup)="onKey($event)"
         type="text"
         placeholder="{{ game.teamBlack.playerOne?.name }}"
         class="input input-bordered input-error w-full max-w-xs"

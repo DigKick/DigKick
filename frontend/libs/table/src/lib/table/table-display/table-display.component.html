@@ -27,14 +27,16 @@
           <p class="mt-0 break-words">{{ game.teamBlack.playerTwo?.name }}</p>
         </div>
       </div>
-      <div class="card-actions m-3 justify-center" *ngIf="tableName">
-        <button
-          class="btn btn-outline btn-primary w-5/6 items-center text-[1.25rem]"
-          [routerLink]="['/game', tableName]"
-        >
-          View
-        </button>
-      </div>
+      @if (tableName(); as tableName) {
+        <div class="card-actions m-3 justify-center">
+          <button
+            class="btn btn-outline btn-primary w-5/6 items-center text-[1.25rem]"
+            [routerLink]="['/game', tableName]"
+          >
+            View
+          </button>
+        </div>
+      }
     </div>
   }
 </div>

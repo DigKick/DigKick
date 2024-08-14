@@ -1,5 +1,5 @@
 import { ApplicationConfig, importProvidersFrom } from '@angular/core';
-import { provideRouter } from '@angular/router';
+import { provideRouter, withComponentInputBinding } from '@angular/router';
 import { appRoutes } from './app.routes';
 import { IMqttServiceOptions, MqttModule } from 'ngx-mqtt';
 import { ENVIRONMENT, Environment } from '@dig-kick/models';
@@ -17,7 +17,7 @@ export const appConfig: (environment: Environment) => ApplicationConfig = (
 
   return {
     providers: [
-      provideRouter(appRoutes),
+      provideRouter(appRoutes, withComponentInputBinding()),
       importProvidersFrom(MqttModule.forRoot(MQTT_SERVICE_OPTIONS)),
       { provide: ENVIRONMENT, useValue: environment },
     ],

@@ -1,8 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { DkMqttClientService, GameService } from '@dig-kick/services';
-import { TeamColor } from '@dig-kick/models';
+import { Component, input } from '@angular/core';
+import { DkMqttClientService } from '@dig-kick/services';
+import { Game, TeamColor } from '@dig-kick/models';
+import { derivedAsync } from 'ngxtension/derived-async';
+import { map } from 'rxjs';
+import { MqttService } from 'ngx-mqtt';
 
 @Component({
   selector: 'lib-game-view',
@@ -11,29 +13,25 @@ import { TeamColor } from '@dig-kick/models';
   templateUrl: './game.component.html',
   styleUrl: './game.component.css',
 })
-export class GameComponent implements OnInit {
+export class GameComponent {
   whiteColor: string = TeamColor.WHITE;
   blackColor: string = TeamColor.BLACK;
 
-  tableId!: string | null;
+  tableId = input<string>();
+
+  game = derivedAsync<Game>(() =>
+    this._mqttService
+      .observe(`table/${this.tableId()}/game`)
+      .pipe(map((value) => JSON.parse(value.payload.toString()) as Game)),
+  );
 
   renameWhite = false;
   renameBlack = false;
 
   constructor(
     private mqttClient: DkMqttClientService,
-    private route: ActivatedRoute,
-    public gameService: GameService,
+    private _mqttService: MqttService,
   ) {}
-
-  ngOnInit(): void {
-    this.route.paramMap.subscribe((params) => {
-      this.tableId = params.get('tableId');
-      if (this.tableId) {
-        this.gameService.setId(this.tableId);
-      }
-    });
-  }
 
   changeName(color: string) {
     if (color === TeamColor.WHITE) {
@@ -49,14 +47,14 @@ export class GameComponent implements OnInit {
     )).value;
     let topic = '';
     if (color === TeamColor.WHITE) {
-      const playerOneWhite = this.gameService.gameSignal().teamWhite.playerOne;
+      const playerOneWhite = this.game()?.teamWhite.playerOne;
       if (playerOneWhite) {
         playerOneWhite.name = changeNameInputValue;
       }
       topic = `/table/${this.tableId}/game/team/${color}/changename`;
       this.renameWhite = false;
     } else {
-      const playerOneBlack = this.gameService.gameSignal().teamBlack.playerOne;
+      const playerOneBlack = this.game()?.teamBlack.playerOne;
       if (playerOneBlack) {
         playerOneBlack.name = changeNameInputValue;
       }
@@ -68,9 +66,5 @@ export class GameComponent implements OnInit {
       0,
       `{"newName": "${changeNameInputValue}"}`,
     );
-  }
-
-  onKey(_event: KeyboardEvent) {
-    // do nothing
   }
 }
