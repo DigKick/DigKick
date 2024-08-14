@@ -1,6 +1,6 @@
 // noinspection JSUnusedGlobalSymbols
 
-import {Game} from "./game";
+import { Game } from './game';
 
 export class Table {
   public name: string;

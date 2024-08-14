@@ -1,12 +1,10 @@
-import {Column, Entity} from "typeorm";
-import {DkEntity} from "../global/dkEntity.ts";
+import { Column, Entity } from 'typeorm';
+import { DkEntity } from '../global/dkEntity.ts';
 
-@Entity("table")
+@Entity('table')
 export class TableEntity extends DkEntity {
-
-  @Column({unique: true})
+  @Column({ unique: true })
   name!: string;
-
 
   toString(): string {
     return `{name: ${this.name}}`;

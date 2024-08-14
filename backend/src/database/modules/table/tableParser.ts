@@ -1,14 +1,16 @@
-import {TableEntity} from "./tableEntity.ts";
-import {Table} from "../../../models/table.ts";
-import {DkParseException} from "../../dkParseException.ts";
+import { TableEntity } from './tableEntity.ts';
+import { Table } from '../../../models/table.ts';
+import { DkParseException } from '../../dkParseException.ts';
 
 export class TableParser {
-
   public static toTable(tableEntity: TableEntity): Table {
     try {
-      return new Table(tableEntity.name)
+      return new Table(tableEntity.name);
     } catch (e) {
-      throw new DkParseException(TableEntity.constructor.name, Table.constructor.name)
+      throw new DkParseException(
+        TableEntity.constructor.name,
+        Table.constructor.name,
+      );
     }
   }
 
@@ -18,8 +20,10 @@ export class TableParser {
       tableEntity.name = table.name;
       return tableEntity;
     } catch (e) {
-      throw new DkParseException(Table.constructor.name, TableEntity.constructor.name)
+      throw new DkParseException(
+        Table.constructor.name,
+        TableEntity.constructor.name,
+      );
     }
   }
-
 }

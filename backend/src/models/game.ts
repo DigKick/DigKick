@@ -1,5 +1,5 @@
-import {ScoreChange, Team, TeamColor} from "./team";
-import {GameMode} from "./gameMode";
+import { ScoreChange, Team, TeamColor } from './team';
+import { GameMode } from './gameMode';
 
 export class Game {
   public static STANDARDGAME_WINNINGSCORE = 10;
@@ -77,12 +77,11 @@ export class Game {
     this.teamWhite.reset();
     this.teamBlack.reset();
 
-
     this.resetWinnerTeam();
   }
 
   toString() {
-    return JSON.stringify(this.toJSON())
+    return JSON.stringify(this.toJSON());
   }
 
   toJSON() {

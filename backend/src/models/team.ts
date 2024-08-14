@@ -1,8 +1,8 @@
-import type {Player} from "./player.ts";
+import type { Player } from './player.ts';
 
 export enum TeamColor {
-  WHITE = "white",
-  BLACK = "black",
+  WHITE = 'white',
+  BLACK = 'black',
 }
 
 export enum ScoreChange {
@@ -11,7 +11,7 @@ export enum ScoreChange {
 }
 
 export class Team {
-  public static TEAM_SIZE = 2
+  public static TEAM_SIZE = 2;
 
   public color: TeamColor;
   public isWinner: boolean;
@@ -34,18 +34,18 @@ export class Team {
   }
 
   get playerOne() {
-    return this._playerOne
+    return this._playerOne;
   }
 
   get playerTwo() {
-    return this._playerTwo
+    return this._playerTwo;
   }
 
   reset() {
     this._playerOne = undefined;
     this._playerTwo = undefined;
     this.score = 0;
-    this.isWinner = false
+    this.isWinner = false;
   }
 
   addPlayer(newPlayer: Player) {
@@ -60,14 +60,16 @@ export class Team {
       return;
     }
 
-    if (this._playerOne.key == newPlayer.key || this._playerTwo!.key == newPlayer.key) {
+    if (
+      this._playerOne.key == newPlayer.key ||
+      this._playerTwo!.key == newPlayer.key
+    ) {
       return;
     }
 
     this._playerTwo = this._playerOne;
-    this._playerOne = newPlayer
+    this._playerOne = newPlayer;
   }
-
 
   toJSON() {
     return {
