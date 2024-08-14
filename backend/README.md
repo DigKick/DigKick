@@ -51,7 +51,6 @@ player:
       length:
         min: 3 # optional
         max: 12 # optional
-
 ```
 
 ## Start broker manually

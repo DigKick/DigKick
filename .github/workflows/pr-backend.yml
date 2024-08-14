@@ -1,0 +1,21 @@
+name: Pull Request Backend
+on:
+  pull_request:
+    paths:
+      - "backend/**"
+      - ".gitea/workflows/pr-backend.yml"
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./backend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.1.12
+      - name: Bun install
+        run: bun install -p --frozen-lockfile
+      - name: Check formatting
+        run: bun run prettier:check

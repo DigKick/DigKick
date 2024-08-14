@@ -1,6 +1,6 @@
-import {DkMqttClient} from "../../client/client";
-import {ChangeLog} from "./changeLog";
-import type {MqttObjectUpdaterConfig} from "./mqttObjectUpdaterConfig";
+import { DkMqttClient } from '../../client/client';
+import { ChangeLog } from './changeLog';
+import type { MqttObjectUpdaterConfig } from './mqttObjectUpdaterConfig';
 
 /**
  * if someone wants to change something here - may the force be with you
@@ -13,7 +13,7 @@ export class MqttObjectUpdater<ObjectType> {
   constructor(subject: ObjectType, config?: MqttObjectUpdaterConfig) {
     this.subject = structuredClone(subject);
     this.config = {
-      prefix: "",
+      prefix: '',
       instantPublish: false,
       publishWithRetain: false,
       ...config,
@@ -44,18 +44,25 @@ export class MqttObjectUpdater<ObjectType> {
   publish() {
     const dkMqttClient = DkMqttClient.getInstance();
     Array.from(this.latestChanges.entries()).forEach((entry) => {
-      let publishString = "null";
+      let publishString = 'null';
       if (!entry || !entry[0] || !entry[1]) {
         return;
       }
 
       if (entry[1].newValue !== undefined) {
-        publishString = JSON.stringify(entry[1].newValue, MqttObjectUpdater.undefinedReplace).replaceAll("_", "").trim();
+        publishString = JSON.stringify(
+          entry[1].newValue,
+          MqttObjectUpdater.undefinedReplace,
+        )
+          .replaceAll('_', '')
+          .trim();
       }
 
       const publishTopic = String(
         entry[0] +
-        (publishString.startsWith("{") || publishString === "null" ? "" : "$"),
+          (publishString.startsWith('{') || publishString === 'null'
+            ? ''
+            : '$'),
       );
 
       if (!publishString) {
@@ -71,7 +78,7 @@ export class MqttObjectUpdater<ObjectType> {
     this.latestChanges.clear();
   }
 
-  private static undefinedReplace(key: string, value: any) {
+  private static undefinedReplace(value: any) {
     return value === undefined ? null : value;
   }
 
@@ -85,7 +92,7 @@ export class MqttObjectUpdater<ObjectType> {
   private static compareObjects(
     oldObj: any,
     newObj: any,
-    path: string = "",
+    path: string = '',
     visited: Set<any> = new Set(),
   ): Map<string, ChangeLog> {
     let changes = new Map<string, ChangeLog>();
@@ -100,8 +107,8 @@ export class MqttObjectUpdater<ObjectType> {
     const keys = Object.keys(newObj);
     let localPath = structuredClone(path);
 
-    if (keys.includes("name")) {
-      localPath += "/" + newObj["name"];
+    if (keys.includes('name')) {
+      localPath += '/' + newObj['name'];
     }
 
     keys.forEach((key) => {
@@ -110,12 +117,12 @@ export class MqttObjectUpdater<ObjectType> {
       if (!oldObj || !newObj) {
         if (oldObj) {
           changes.set(
-            this.makeNewPath(localPath, key, typeof oldObj === "object"),
+            this.makeNewPath(localPath, key, typeof oldObj === 'object'),
             new ChangeLog(oldObj[key], null),
           );
         } else {
           changes.set(
-            this.makeNewPath(localPath, key, typeof oldObj === "object"),
+            this.makeNewPath(localPath, key, typeof oldObj === 'object'),
             new ChangeLog(null, newObj[key]),
           );
         }
@@ -127,15 +134,15 @@ export class MqttObjectUpdater<ObjectType> {
       const newVal = newObj[key];
 
       if (oldVal !== newVal) {
-        if (typeof newVal === "object") {
+        if (typeof newVal === 'object') {
           const objChanges = MqttObjectUpdater.compareObjects(
             oldVal,
             newVal,
-            this.makeNewPath(localPath, key, typeof newVal === "object"),
+            this.makeNewPath(localPath, key, typeof newVal === 'object'),
           );
           if (objChanges.size > 0) {
             changes.set(
-              this.makeNewPath(localPath, key, typeof oldVal === "object"),
+              this.makeNewPath(localPath, key, typeof oldVal === 'object'),
               new ChangeLog(oldVal, newVal),
             );
           }
@@ -148,24 +155,21 @@ export class MqttObjectUpdater<ObjectType> {
         }
 
         // this is for the recursive delete / set empty values if an object gets removed
-        if (typeof oldVal === "object" && newVal === undefined) {
+        if (typeof oldVal === 'object' && newVal === undefined) {
           const objChanges = MqttObjectUpdater.generateInitialChangeMap(
             oldVal,
-            this.makeNewPath(localPath, key, typeof oldVal === "object"),
+            this.makeNewPath(localPath, key, typeof oldVal === 'object'),
           );
           Array.from(objChanges.entries()).forEach((entry) => {
-            objChanges.set(
-              entry[0],
-              new ChangeLog(entry[1].oldValue, null),
-            );
+            objChanges.set(entry[0], new ChangeLog(entry[1].oldValue, null));
           });
           changes = new Map<string, ChangeLog>([...changes, ...objChanges]);
         }
 
-        if (typeof newVal === "object" && oldVal === undefined) {
+        if (typeof newVal === 'object' && oldVal === undefined) {
           const objChanges = MqttObjectUpdater.generateInitialChangeMap(
             newVal,
-            this.makeNewPath(localPath, key, typeof newVal === "object"),
+            this.makeNewPath(localPath, key, typeof newVal === 'object'),
           );
           changes = new Map<string, ChangeLog>([...changes, ...objChanges]);
         }
@@ -180,10 +184,10 @@ export class MqttObjectUpdater<ObjectType> {
     key: string | symbol,
     isObject = true,
   ) {
-    let newPath = path + String("/" + String(key)).replaceAll("_", "");
+    let newPath = path + String('/' + String(key)).replaceAll('_', '');
 
     if (isObject) {
-      newPath = newPath.replace(/[A-Z]/g, (match) => "/" + match.toLowerCase());
+      newPath = newPath.replace(/[A-Z]/g, (match) => '/' + match.toLowerCase());
     }
 
     return newPath;

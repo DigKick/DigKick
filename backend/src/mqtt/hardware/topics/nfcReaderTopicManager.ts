@@ -8,8 +8,7 @@ export class NfcReaderTopicManager {
   constructor(
     private _soccerTable: Table,
     private _teamColor: TeamColor,
-  ) {
-  }
+  ) {}
 
   private get _baseTeamTopic(): string {
     return BaseTopicFactory.getTeamTopic(this._soccerTable, this._teamColor);
@@ -18,6 +17,4 @@ export class NfcReaderTopicManager {
   get nfcReaderTopic(): string {
     return path.join(this._baseTeamTopic, BasicTerm.NFC_READER);
   }
-
-
 }

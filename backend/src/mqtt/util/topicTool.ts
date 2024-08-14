@@ -1,22 +1,20 @@
 export class TopicTool {
-
   public topicStr: string;
-  private readonly _topicSegments: string[]
+  private readonly _topicSegments: string[];
 
   constructor(topicStr: string) {
     this.topicStr = topicStr.trim();
-    this._topicSegments = topicStr.substring(1).split("/")
+    this._topicSegments = topicStr.substring(1).split('/');
   }
 
   public get topicSegments(): string[] {
-    return this._topicSegments
+    return this._topicSegments;
   }
 
   public getSegment(index: number): string {
     if (index < 0 || index > this.topicStr.length - 1) {
-      return ""
+      return '';
     }
-    return this._topicSegments[index]
+    return this._topicSegments[index];
   }
-
 }

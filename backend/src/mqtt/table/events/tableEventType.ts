@@ -1,5 +1,5 @@
 export enum TableEventType {
-  GAME = "GAME",
+  GAME = 'GAME',
 
   NEW_GAME = `NEW_${GAME}`,
   CANCEL_GAME = `CANCEL_${GAME}`,

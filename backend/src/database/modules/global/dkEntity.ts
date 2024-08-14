@@ -1,9 +1,14 @@
-import {BaseEntity, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn} from "typeorm"
+import {
+  BaseEntity,
+  CreateDateColumn,
+  Entity,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 
 @Entity()
 export class DkEntity extends BaseEntity {
-
-  @PrimaryGeneratedColumn("increment")
+  @PrimaryGeneratedColumn('increment')
   id!: number;
 
   @CreateDateColumn()
@@ -11,5 +16,4 @@ export class DkEntity extends BaseEntity {
 
   @UpdateDateColumn()
   updatedAt!: Date;
-
 }
