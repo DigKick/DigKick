@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { Component, input } from '@angular/core';
 import { DkMqttClientService } from '@dig-kick/services';
 import { Game, TeamColor } from '@dig-kick/models';
@@ -9,7 +9,7 @@ import { MqttService } from 'ngx-mqtt';
 @Component({
   selector: 'lib-game-view',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, NgOptimizedImage],
   templateUrl: './game.component.html',
   styleUrl: './game.component.css',
 })

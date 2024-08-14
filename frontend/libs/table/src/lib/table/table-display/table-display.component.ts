@@ -1,9 +1,9 @@
-import { Component, effect, input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { derivedAsync } from 'ngxtension/derived-async';
 import { MqttService } from 'ngx-mqtt';
-import { map, tap } from 'rxjs';
+import { map } from 'rxjs';
 import { Game } from '@dig-kick/models';
 
 @Component({
@@ -21,15 +21,10 @@ export class TableDisplayComponent {
   game = derivedAsync<Game>(() =>
     this._mqttService
       .observe(`table/${this.tableName()}/game`)
-      .pipe(tap((value) => console.log(value)))
       .pipe(map((value) => JSON.parse(value.payload.toString()) as Game)),
   );
 
-  constructor(private _mqttService: MqttService) {
-    effect(() => {
-      console.log(this.tableName());
-    });
-  }
+  constructor(private _mqttService: MqttService) {}
 
   randomImagePath(): number {
     const imageIndex = Math.floor(Math.random() * 4) + 1;
