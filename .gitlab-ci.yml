@@ -1,9 +1,0 @@
-image: alpine:latest
-
-pages:
-  script:
-    - echo "Deploying pre-built static files"
-  artifacts:
-    paths:
-      - backend/docs/
-  publish: backend/docs

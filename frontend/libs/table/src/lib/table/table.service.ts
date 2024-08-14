@@ -1,4 +1,4 @@
-import { computed, Injectable } from '@angular/core';
+import { computed, effect, Injectable } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { MqttService } from 'ngx-mqtt';
 
@@ -16,5 +16,9 @@ export class TableService {
     return [];
   });
 
-  constructor(private _mqttService: MqttService) {}
+  constructor(private _mqttService: MqttService) {
+    effect(() => {
+      console.log(this.tables());
+    });
+  }
 }

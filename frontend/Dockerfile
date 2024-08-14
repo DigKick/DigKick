@@ -7,5 +7,4 @@ RUN npm run build
 
 FROM caddy
 COPY ./Caddyfile /etc/caddy/Caddyfile
-COPY --from=builder /app/dist/dig-kick-fe/browser /srv
-EXPOSE 80
+COPY --from=builder /app/dist/frontend/browser /srv

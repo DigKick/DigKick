@@ -8,9 +8,10 @@ import { Logger } from 'winston';
 import type { TableRegisterPayload } from '../payloads/tableRegisterPayload';
 import { RegisteredTableListPayload } from '../payloads/registeredTableListPayload';
 import { TableRepository } from '../../../database/modules/table/tableRepository.ts';
+import * as path from 'node:path';
 
 export enum SoccerTableRegisterTopic {
-  REGISTER = `/${BasicTerm.TABLE}/register`,
+  REGISTER = `${BasicTerm.TABLE}/register`,
 }
 
 export class TableRegisterHandler {
@@ -63,7 +64,7 @@ export class TableRegisterHandler {
 
   private publishRegisteredTables() {
     this._dkMqttClient.publishWithRetain(
-      '/tables',
+      'tables',
       JSON.stringify(
         new RegisteredTableListPayload(
           Array.from(TableRegisterHandler.tableHandlers.keys()),

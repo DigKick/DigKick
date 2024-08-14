@@ -50,10 +50,7 @@ export class MqttObjectUpdater<ObjectType> {
       }
 
       if (entry[1].newValue !== undefined) {
-        publishString = JSON.stringify(
-          entry[1].newValue,
-          MqttObjectUpdater.undefinedReplace,
-        )
+        publishString = JSON.stringify(entry[1].newValue)
           .replaceAll('_', '')
           .trim();
       }
@@ -76,10 +73,6 @@ export class MqttObjectUpdater<ObjectType> {
       }
     });
     this.latestChanges.clear();
-  }
-
-  private static undefinedReplace(value: any) {
-    return value === undefined ? null : value;
   }
 
   private static generateInitialChangeMap(

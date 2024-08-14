@@ -1,0 +1,17 @@
+services:
+  backend:
+    build: ../backend
+    container_name: backend
+    restart: unless-stopped
+    volumes:
+      - ./config/backend:/home/bun/app/resources
+      - ./data/backend:/data
+
+  digkick:
+    build: ../frontend
+    container_name: frontend
+    restart: unless-stopped
+    volumes:
+      - ./config/frontend/config.json:/srv/assets/config.json
+    ports:
+      - "80:80"

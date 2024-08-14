@@ -17,10 +17,7 @@ export const propertySchema = z.object({
 
   db: z.object({
     source: z.object({
-      database: z.object({
-        name: z.string().min(1),
-        suffix: z.string().min(1),
-      }),
+      database: z.string().min(1),
     }),
   }),
 
