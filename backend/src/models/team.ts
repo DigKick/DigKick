@@ -13,13 +13,15 @@ export enum ScoreChange {
 export class Team {
   public static TEAM_SIZE = 2;
 
+  public name: string;
   public color: TeamColor;
   public isWinner: boolean;
   private _score: number;
   private _playerOne?: Player;
   private _playerTwo?: Player;
 
-  constructor(color: TeamColor) {
+  constructor(name: string, color: TeamColor) {
+    this.name = name;
     this.color = color;
     this._score = 0;
     this.isWinner = false;
@@ -73,6 +75,7 @@ export class Team {
 
   toJSON() {
     return {
+      name: this.name,
       color: this.color,
       score: this._score,
       playerOne: this._playerOne ? this._playerOne.toJSON() : null,
