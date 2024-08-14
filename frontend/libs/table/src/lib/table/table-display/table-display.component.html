@@ -1,15 +1,19 @@
 <div class="grid-layout">
   @if (game(); as game) {
     <div
-      class="card card-compact mx-auto mt-4 w-72 bg-accent-content shadow-xl md:mt-8 md:w-72 lg:w-96"
+      class="card card-compact mx-auto mt-4 w-72 overflow-hidden rounded bg-accent-content shadow-xl md:mt-8 md:w-72 lg:w-96"
     >
-      <figure>
-        <img
-          src="../assets/images/fun_table{{ random }}.png"
-          alt="table"
-          class="mx-auto w-full"
+      <picture>
+        <source
+          srcset="assets/images/fun_table{{ random }}.webp"
+          type="image/webp"
         />
-      </figure>
+        <source
+          srcset="assets/images/fun_table{{ random }}.jpg"
+          type="image/jpeg"
+        />
+        <img src="assets/images/fun_table{{ random }}.jpg" alt="Game image" />
+      </picture>
       <div
         class="card-body mt-1 grid grid-cols-3 items-center gap-x-4 text-pretty"
       >
