@@ -147,7 +147,7 @@ void sendPlayerRegister(String uid) {
   char playerRegisterPayload[128];
   serializeJson(playerRegisterJson, playerRegisterPayload);
   char topic[50];
-  sprintf(topic, "/table/%s/game/team/%s/nfc-reader", TABLE_ID, TEAM_ID);
+  sprintf(topic, "table/%s/game/team/%s/nfc-reader", TABLE_ID, TEAM_ID);
   client.publish(topic, playerRegisterPayload);
 }
 
@@ -167,7 +167,7 @@ void sendButtonState(int button, bool state)
   char buttonStatePayload[128];
   serializeJson(buttonStatePayloadJson, buttonStatePayload);
   char topic[50];
-  sprintf(topic, "/table/%s/game/team/%s/button/%d", TABLE_ID, TEAM_ID, button);
+  sprintf(topic, "table/%s/game/team/%s/button/%d", TABLE_ID, TEAM_ID, button);
   Serial.println("publish");
   client.publish(topic, buttonStatePayload);
 }
@@ -187,7 +187,7 @@ void sendLightBarrierState(int lightBarrier, bool state)
   char lightBarrierStatePayload[128];
   serializeJson(lightBarrierPayloadJson, lightBarrierStatePayload);
   char topic[50];
-  sprintf(topic, "/table/%s/game/team/%s/light_barrier/%d", TABLE_ID, TEAM_ID, lightBarrier);
+  sprintf(topic, "table/%s/game/team/%s/light_barrier/%d", TABLE_ID, TEAM_ID, lightBarrier);
   Serial.println(topic);
   client.publish(topic, lightBarrierStatePayload);
 }
@@ -294,12 +294,12 @@ void setup_mqtt()
       registerPayloadJson["name"] = TABLE_ID;
       char registerPayload[128];
       serializeJson(registerPayloadJson, registerPayload);
-      client.publish("/table/register", registerPayload);
+      client.publish("table/register", registerPayload);
       char displayTopic[50];
-      sprintf(displayTopic, "/table/%s/game/team/%s/display", TABLE_ID, TEAM_ID);
+      sprintf(displayTopic, "table/%s/game/team/%s/display", TABLE_ID, TEAM_ID);
       client.subscribe(displayTopic);
       char ledsTopic[50];
-      sprintf(ledsTopic, "/table/%s/game/team/%s/leds", TABLE_ID, TEAM_ID);
+      sprintf(ledsTopic, "table/%s/game/team/%s/leds", TABLE_ID, TEAM_ID);
       client.subscribe(ledsTopic);
     }
     else
@@ -423,8 +423,6 @@ void checkAndProcessRFID()
   rfid.PCD_StopCrypto1();
 
   sendPlayerRegister(uid);
-
-
 }
 
 void loop()
