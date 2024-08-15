@@ -14,7 +14,7 @@ import { Game } from '@dig-kick/models';
   styleUrl: './table-display.component.css',
 })
 export class TableDisplayComponent {
-  random = this.randomImagePath();
+  random = Math.floor(Math.random() * 4) + 1;
 
   tableName = input<string>();
 
@@ -25,9 +25,4 @@ export class TableDisplayComponent {
   );
 
   constructor(private _mqttService: MqttService) {}
-
-  randomImagePath(): number {
-    const imageIndex = Math.floor(Math.random() * 4) + 1;
-    return imageIndex;
-  }
 }

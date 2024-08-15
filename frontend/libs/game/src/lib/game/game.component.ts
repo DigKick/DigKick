@@ -21,7 +21,7 @@ export class GameComponent {
 
   game = derivedAsync<Game>(() =>
     this._mqttService
-      .observe(`table/${this.tableId()}/game`)
+      .observeRetained(`table/${this.tableId()}/game`)
       .pipe(map((value) => JSON.parse(value.payload.toString()) as Game)),
   );
 
@@ -41,24 +41,21 @@ export class GameComponent {
     }
   }
 
-  submit(color: string) {
-    const changeNameInputValue: string = (<HTMLInputElement>(
-      document.getElementById('input')
-    )).value;
+  submit(color: string, changeNameInputValue: string) {
     let topic = '';
     if (color === TeamColor.WHITE) {
       const playerOneWhite = this.game()?.teamWhite.playerOne;
       if (playerOneWhite) {
         playerOneWhite.name = changeNameInputValue;
       }
-      topic = `/table/${this.tableId}/game/team/${color}/changename`;
+      topic = `table/${this.tableId()}/game/team/${color}/changename`;
       this.renameWhite = false;
     } else {
       const playerOneBlack = this.game()?.teamBlack.playerOne;
       if (playerOneBlack) {
         playerOneBlack.name = changeNameInputValue;
       }
-      topic = `/table/${this.tableId}/game/team/${color}/changename`;
+      topic = `table/${this.tableId()}/game/team/${color}/changename`;
       this.renameBlack = false;
     }
     this.mqttClient.doPublish(

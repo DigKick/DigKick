@@ -119,7 +119,9 @@ export class DkMqttClient {
 
   private _setupClient() {
     this._mqttClient.on('connect', () => {
-      this._logger.info('Connected to Broker.');
+      this._logger.info(
+        `Connected to Broker on ${this._mqttConfig.connectUrl}`,
+      );
       TableRegisterHandler.getInstance();
       DataRequestHandler.getInstance();
     });

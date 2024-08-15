@@ -8,7 +8,6 @@ import { Logger } from 'winston';
 import type { TableRegisterPayload } from '../payloads/tableRegisterPayload';
 import { RegisteredTableListPayload } from '../payloads/registeredTableListPayload';
 import { TableRepository } from '../../../database/modules/table/tableRepository.ts';
-import * as path from 'node:path';
 
 export enum SoccerTableRegisterTopic {
   REGISTER = `${BasicTerm.TABLE}/register`,
