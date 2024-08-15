@@ -3,6 +3,7 @@ const char* WLAN_PASSWORD = "<wlan-pw>";
 const char* HOSTNAME = "<hostname>";
 const char* TABLE_ID = "<table-id>";
 const char* TEAM_ID = "<team-id>";
+const int LED_BRIGHTNESS = 20;
 
 const char* MQTT_BROKER_ADRRESS = "<broker-ip>";
 const int MQTT_PORT = 1883;
