@@ -317,7 +317,7 @@ void setup_lightstrip()
   pixels.begin();
   pixels.clear();
   pixels.show();
-  pixels.setBrightness(100);
+  pixels.setBrightness(LED_BRIGHTNESS);
 }
 
 void setup_pins()
