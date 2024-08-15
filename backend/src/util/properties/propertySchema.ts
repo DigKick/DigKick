@@ -25,6 +25,7 @@ export const propertySchema = z.object({
 
   player: z
     .object({
+      elo: z.number().positive().default(1000),
       name: z
         .object({
           restrictions: z
