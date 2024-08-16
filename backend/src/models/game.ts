@@ -75,6 +75,11 @@ export class Game {
     ) {
       this.resetWinnerTeam();
     }
+
+
+    if (team.score > this.pointsToWin) {
+      team.score = this.pointsToWin;
+    }
   }
 
   public reset() {
