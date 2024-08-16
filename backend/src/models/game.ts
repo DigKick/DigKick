@@ -58,8 +58,10 @@ export class Game {
   }
 
   private _updateTeamScoreAndWinner(team: Team, change: ScoreChange) {
-    if (team.score < this.pointsToWin && change === ScoreChange.INCREASE) {
-      team.score = team.score + change;
+    team.score = team.score + change;
+
+    if (team.score >= this.pointsToWin && !this.teamWinner) {
+      this.teamWinner = team;
     }
 
     if (team.score >= this.pointsToWin && !this.teamWinner) {
