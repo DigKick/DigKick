@@ -183,3 +183,5 @@ dist
 resources/*.yaml
 
 docs/
+
+.asyncapi-analytics
