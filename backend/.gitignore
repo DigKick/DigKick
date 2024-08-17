@@ -181,3 +181,5 @@ dist
 **/*.db
 
 resources/*.yaml
+
+docs/
