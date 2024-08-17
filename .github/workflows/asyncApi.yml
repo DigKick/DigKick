@@ -33,7 +33,6 @@ jobs:
           filepath: ./backend/asyncapi.yaml
           template: "@asyncapi/html-template" #In case of template from npm. Or can use a link.
           output: ./asyncapi-generated-html
-          parameters: "-p baseHref=/test-experiment/ sidebarOrganization=byTags"
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
