@@ -12,14 +12,14 @@ export const propertySchema = z.object({
       username: z.string().min(1),
       password: z.string().min(1),
     }),
-    host: z.string().min(1).default("localhost"),
+    host: z.string().min(1).default('localhost'),
     port: z.number().default(1883),
-    protocol: z.union([z.literal('mqtt'), z.literal('mqtts')]).default("mqtt"),
+    protocol: z.union([z.literal('mqtt'), z.literal('mqtts')]).default('mqtt'),
   }),
 
   db: z.object({
     source: z.object({
-      database: z.string().min(1).default("database.db"),
+      database: z.string().min(1).default('database.db'),
     }),
   }),
 
