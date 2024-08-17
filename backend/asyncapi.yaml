@@ -3,9 +3,6 @@ info:
   title: DigKick (Backend)
   version: 1.0.0
   description: Digital system for kicker tables.
-  contact:
-    name: Marvin Voss, Maximilian König
-    email: mkoenig2@stud.hs-heilbronn.de
 
 servers:
   emqx:
