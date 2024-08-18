@@ -1,4 +1,4 @@
-@if (gameService.gameSignal(); as game) {
+@if (game(); as game) {
   <div
     class="mx-auto mt-3 flex w-5/6 flex-col items-center justify-center lg:mx-auto lg:w-2/3 lg:flex-row"
   >
@@ -17,10 +17,7 @@
     <div class="flex items-center justify-center">
       <!-- Mobile view -->
       <div class="lg:hidden">
-        <img
-          src="../assets/images/Sprite-0003.png"
-          class="... rotate-90 transform"
-        />
+        <img src="assets/images/sprite.png" class="rotate-90 transform" />
       </div>
     </div>
 
@@ -33,9 +30,9 @@
           {{ game.teamWhite.score }}
         </div>
         <img
-          src="../assets/images/Sprite-0003.png"
+          src="assets/images/sprite.png"
           class="h-full rotate-90"
-          alt="Your Image"
+          alt="Game image"
         />
         <div
           class="card flex h-32 w-64 items-center justify-center bg-accent-content text-[11rem]"
@@ -58,7 +55,7 @@
 
   <!-- Player names -->
   <div class="my-auto flex w-full items-center text-[1.2rem] lg:justify-center">
-    @if (gameService.gameSignal().teamWhite; as white) {
+    @if (game.teamWhite; as white) {
       <div
         class="card ml-7 grid h-24 flex-grow place-items-center rounded-box bg-accent-content lg:ml-9"
       >
@@ -85,7 +82,7 @@
       VS
     </div>
     <!-- Spacer for mobile view -->
-    @if (gameService.gameSignal().teamBlack; as black) {
+    @if (game.teamBlack; as black) {
       <div
         class="card mr-7 grid h-24 flex-grow place-items-center rounded-box bg-accent-content lg:mr-9"
       >
@@ -111,67 +108,74 @@
   </div>
 
   <div class="flex w-full justify-between">
-    <div
-      *ngIf="!this.renameWhite"
-      class="mt-5 flex w-full justify-center text-[1.2rem] lg:justify-center"
-    >
+    @if (renameWhite) {
       <div
-        class="tooltip tooltip-bottom tooltip-success"
-        data-tip="of latest registered player"
+        class="mt-5 flex w-full justify-center text-[1.2rem] lg:justify-center"
       >
+        <input
+          #input
+          type="text"
+          placeholder="{{ game.teamWhite.playerOne?.name }}"
+          class="input input-bordered input-error w-full max-w-xs"
+        />
         <button
-          class="btn btn-outline btn-error"
-          (click)="changeName(whiteColor)"
+          class="btn btn-success ml-5"
+          (click)="submit(whiteColor, input.value)"
         >
-          Change name
+          Submit
         </button>
       </div>
-    </div>
-
-    <div
-      *ngIf="this.renameWhite"
-      class="mt-5 flex w-full justify-center text-[1.2rem] lg:justify-center"
-    >
-      <input
-        (keyup)="onKey($event)"
-        type="text"
-        placeholder="{{ game.teamWhite.playerOne?.name }}"
-        class="input input-bordered input-error w-full max-w-xs"
-      />
-      <button class="btn btn-success ml-5" (click)="submit(this.whiteColor)">
-        Submit
-      </button>
-    </div>
-
-    <div
-      *ngIf="!this.renameBlack"
-      class="mt-5 flex w-full justify-center text-[1.2rem] lg:justify-center"
-    >
+    } @else {
       <div
-        class="tooltip tooltip-bottom tooltip-success"
-        data-tip="of latest registered player"
+        class="mt-5 flex w-full justify-center text-[1.2rem] lg:justify-center"
       >
-        <button
-          class="btn btn-outline btn-error"
-          (click)="changeName(blackColor)"
+        <div
+          class="tooltip tooltip-bottom tooltip-success"
+          data-tip="of latest registered player"
         >
-          Change name
+          <button
+            class="btn btn-outline btn-error"
+            (click)="changeName(whiteColor)"
+          >
+            Change name
+          </button>
+        </div>
+      </div>
+    }
+
+    @if (renameBlack) {
+      <div
+        class="mt-5 flex w-full justify-center text-[1.2rem] lg:justify-center"
+      >
+        <input
+          #input
+          type="text"
+          placeholder="{{ game.teamBlack.playerOne?.name }}"
+          class="input input-bordered input-error w-full max-w-xs"
+        />
+        <button
+          class="btn btn-success ml-5"
+          (click)="submit(blackColor, input.value)"
+        >
+          Submit
         </button>
       </div>
-    </div>
-    <div
-      *ngIf="this.renameBlack"
-      class="mt-5 flex w-full justify-center text-[1.2rem] lg:justify-center"
-    >
-      <input
-        (keyup)="onKey($event)"
-        type="text"
-        placeholder="{{ game.teamBlack.playerOne?.name }}"
-        class="input input-bordered input-error w-full max-w-xs"
-      />
-      <button class="btn btn-success ml-5" (click)="submit(this.blackColor)">
-        Submit
-      </button>
-    </div>
+    } @else {
+      <div
+        class="mt-5 flex w-full justify-center text-[1.2rem] lg:justify-center"
+      >
+        <div
+          class="tooltip tooltip-bottom tooltip-success"
+          data-tip="of latest registered player"
+        >
+          <button
+            class="btn btn-outline btn-error"
+            (click)="changeName(blackColor)"
+          >
+            Change name
+          </button>
+        </div>
+      </div>
+    }
   </div>
 }

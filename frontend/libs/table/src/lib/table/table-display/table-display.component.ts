@@ -1,32 +1,28 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { DkMqttClientService, GameService } from '@dig-kick/services';
+import { derivedAsync } from 'ngxtension/derived-async';
+import { MqttService } from 'ngx-mqtt';
+import { map } from 'rxjs';
+import { Game } from '@dig-kick/models';
 
 @Component({
   selector: 'lib-table-display',
   standalone: true,
   imports: [RouterModule, CommonModule],
-  providers: [DkMqttClientService, GameService],
   templateUrl: './table-display.component.html',
   styleUrl: './table-display.component.css',
 })
-export class TableDisplayComponent implements OnInit {
-  random = 1;
+export class TableDisplayComponent {
+  random = Math.floor(Math.random() * 4) + 1;
 
-  @Input() tableName!: string;
+  tableName = input<string>();
 
-  constructor(public gameService: GameService) {}
+  game = derivedAsync<Game>(() =>
+    this._mqttService
+      .observe(`table/${this.tableName()}/game`)
+      .pipe(map((value) => JSON.parse(value.payload.toString()) as Game)),
+  );
 
-  ngOnInit(): void {
-    if (this.tableName) {
-      this.gameService.setId(this.tableName);
-    }
-    this.random = this.randomImagePath();
-  }
-
-  randomImagePath(): number {
-    const imageIndex = Math.floor(Math.random() * 4) + 1;
-    return imageIndex;
-  }
+  constructor(private _mqttService: MqttService) {}
 }

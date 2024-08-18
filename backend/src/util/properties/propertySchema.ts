@@ -12,20 +12,20 @@ export const propertySchema = z.object({
       username: z.string().min(1),
       password: z.string().min(1),
     }),
-    host: z.string().min(1),
+    host: z.string().min(1).default('localhost'),
+    port: z.number().default(1883),
+    protocol: z.union([z.literal('mqtt'), z.literal('mqtts')]).default('mqtt'),
   }),
 
   db: z.object({
     source: z.object({
-      database: z.object({
-        name: z.string().min(1),
-        suffix: z.string().min(1),
-      }),
+      database: z.string().min(1).default('database.db'),
     }),
   }),
 
   player: z
     .object({
+      elo: z.number().positive().default(1000),
       name: z
         .object({
           restrictions: z

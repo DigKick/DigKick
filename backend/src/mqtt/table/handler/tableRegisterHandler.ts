@@ -10,7 +10,7 @@ import { RegisteredTableListPayload } from '../payloads/registeredTableListPaylo
 import { TableRepository } from '../../../database/modules/table/tableRepository.ts';
 
 export enum SoccerTableRegisterTopic {
-  REGISTER = `/${BasicTerm.TABLE}/register`,
+  REGISTER = `${BasicTerm.TABLE}/register`,
 }
 
 export class TableRegisterHandler {
@@ -63,7 +63,7 @@ export class TableRegisterHandler {
 
   private publishRegisteredTables() {
     this._dkMqttClient.publishWithRetain(
-      '/tables',
+      'tables',
       JSON.stringify(
         new RegisteredTableListPayload(
           Array.from(TableRegisterHandler.tableHandlers.keys()),

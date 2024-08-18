@@ -1,31 +1,14 @@
-import { effect, Injectable, signal } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { IMqttMessage, IPublishOptions, MqttService } from 'ngx-mqtt';
 import { Observable, Subject } from 'rxjs';
-import { toSignal } from '@angular/core/rxjs-interop';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DkMqttClientService {
-  message = toSignal<IMqttMessage>(this._mqttService.observe('tables'));
-
   private topics: { [topic: string]: Subject<string> } = {};
-  signalTableNames = signal<string[]>([]);
 
-  constructor(private _mqttService: MqttService) {
-    effect(() => {
-      const message = this.message();
-
-      if (message) {
-        try {
-          const names = JSON.parse(message.payload.toString()).names;
-          this.signalTableNames.set(names);
-        } catch (e) {
-          console.log(e);
-        }
-      }
-    });
-  }
+  constructor(private _mqttService: MqttService) {}
 
   subscribe(topic: string): Observable<string> {
     if (!this.topics[topic]) {

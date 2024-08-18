@@ -1,5 +1,4 @@
-import { Route, RouterModule } from '@angular/router';
-import { NgModule } from '@angular/core';
+import { Route } from '@angular/router';
 
 export const appRoutes: Route[] = [
   {
@@ -17,9 +16,3 @@ export const appRoutes: Route[] = [
       import('@dig-kick/score').then((m) => m.ScoreComponent),
   },
 ];
-
-@NgModule({
-  imports: [RouterModule.forRoot(appRoutes)],
-  exports: [RouterModule],
-})
-export class AppRoutingModule {}

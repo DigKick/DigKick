@@ -1,10 +1,11 @@
 import { BeforeInsert, Column, Entity } from 'typeorm';
 import { DkEntity } from '../global/dkEntity.ts';
 import { generateUsername } from 'unique-username-generator';
+import { ApplicationProperties } from '../../../util/properties/applicationProperties.ts';
 
 @Entity('player')
 export class PlayerEntity extends DkEntity {
-  @Column({ default: 100 })
+  @Column({ default: ApplicationProperties.get().player.elo })
   elo!: number;
 
   @Column()

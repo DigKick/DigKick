@@ -18,10 +18,32 @@ test('white team scores once', () => {
   expect(gameObj.teamWhite.score).toBe(1);
 });
 
-test('team score can not be negative', () => {
+test('team score can not be negative (white)', () => {
   gameObj.updateWhiteTeamScore(ScoreChange.DECREASE);
 
   expect(gameObj.teamWhite.score).toBe(0);
+});
+
+test('team score can not be negative (black)', () => {
+  gameObj.updateBlackTeamScore(ScoreChange.DECREASE);
+
+  expect(gameObj.teamBlack.score).toBe(0);
+});
+
+test('team score can not be greater than "points to win" (white)', () => {
+  for (let i = 0; i < 20; i++) {
+    gameObj.updateWhiteTeamScore(ScoreChange.INCREASE);
+  }
+
+  expect(gameObj.teamWhite.score).toBe(10);
+});
+
+test('team score can not be greater than "points to win" (black)', () => {
+  for (let i = 0; i < 20; i++) {
+    gameObj.updateBlackTeamScore(ScoreChange.INCREASE);
+  }
+
+  expect(gameObj.teamBlack.score).toBe(10);
 });
 
 test('black team scores once', () => {

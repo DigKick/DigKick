@@ -35,22 +35,23 @@ digkick:
 
 mqtt:
   login:
-    username: test
-    password: test
-  host: localhost
+    username: USERNAME # default
+    password: PASSWORD # default
+  host: localhost # default
+  port: 1883 # default
+  protocol: mqtt # default
 
 db:
   source:
-    database:
-      name: database
-      suffix: db
+    database: database.db # default
 
 player:
+  elo: 1000 # default
   name:
     restrictions:
       length:
-        min: 3 # optional
-        max: 12 # optional
+        min: 3 # default
+        max: 12 # default
 ```
 
 ## Start broker manually

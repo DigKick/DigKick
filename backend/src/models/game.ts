@@ -64,12 +64,20 @@ export class Game {
       this.teamWinner = team;
     }
 
+    if (team.score >= this.pointsToWin && !this.teamWinner) {
+      this.teamWinner = team;
+    }
+
     if (
       change === ScoreChange.DECREASE &&
       team.score === this.pointsToWin - 1 &&
       this.teamWinner === team
     ) {
       this.resetWinnerTeam();
+    }
+
+    if (team.score > this.pointsToWin) {
+      team.score = this.pointsToWin;
     }
   }
 

@@ -18,7 +18,7 @@ export class GameEventMapper implements EventMapper<GameEventType> {
     this._mqttObjectUpdaterGame = MqttObjectUpdaterFactory.getMqttObjectUpdater(
       this._soccerTable,
       {
-        prefix: `/${BasicTerm.TABLE}`,
+        prefix: BasicTerm.TABLE,
         instantPublish: true,
         publishWithRetain: true,
       },

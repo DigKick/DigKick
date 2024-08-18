@@ -1,7 +1,5 @@
 <div class="grid-layout">
-  <lib-table-display
-    *ngFor="let tableName of tablesSignal()"
-    [tableName]="tableName"
-    class="tile"
-  ></lib-table-display>
+  @for (tableName of tableService.tables(); track tableName) {
+    <lib-table-display [tableName]="tableName" class="tile"></lib-table-display>
+  }
 </div>

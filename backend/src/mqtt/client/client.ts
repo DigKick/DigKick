@@ -84,6 +84,7 @@ export class DkMqttClient {
   }
 
   public publishWithRetain(topic: string, message: string) {
+    topic = topic.charAt(0) === '/' ? topic.slice(1) : topic;
     this.publish(topic, message, {
       retain: true,
     });
@@ -108,8 +109,6 @@ export class DkMqttClient {
       clientId: this._mqttConfig.clientId,
       clean: true,
       connectTimeout: 10000,
-      username: ApplicationProperties.get().mqtt.login.username,
-      password: ApplicationProperties.get().mqtt.login.username,
       reconnectPeriod: 1000,
     });
 
@@ -120,7 +119,9 @@ export class DkMqttClient {
 
   private _setupClient() {
     this._mqttClient.on('connect', () => {
-      this._logger.info('Connected to Broker.');
+      this._logger.info(
+        `Connected to Broker on ${this._mqttConfig.connectUrl}`,
+      );
       TableRegisterHandler.getInstance();
       DataRequestHandler.getInstance();
     });

@@ -1,49 +1,37 @@
-import { CommonModule } from '@angular/common';
-import { Component, OnInit, signal } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
-import { DkMqttClientService, GameService } from '@dig-kick/services';
-import { TeamColor } from '@dig-kick/models';
+import { CommonModule, NgOptimizedImage } from '@angular/common';
+import { Component, input } from '@angular/core';
+import { DkMqttClientService } from '@dig-kick/services';
+import { Game, TeamColor } from '@dig-kick/models';
+import { derivedAsync } from 'ngxtension/derived-async';
+import { map } from 'rxjs';
+import { MqttService } from 'ngx-mqtt';
 
 @Component({
   selector: 'lib-game-view',
   standalone: true,
-  imports: [CommonModule],
-  providers: [DkMqttClientService, GameService],
+  imports: [CommonModule, NgOptimizedImage],
   templateUrl: './game.component.html',
   styleUrl: './game.component.css',
 })
-export class GameComponent implements OnInit {
+export class GameComponent {
   whiteColor: string = TeamColor.WHITE;
   blackColor: string = TeamColor.BLACK;
 
-  game$!: Observable<string>;
-  whiteScore$!: Observable<string>;
-  blackScore$!: Observable<string>;
-  whiteScoreSignal = signal<number>(0);
-  blackScoreSignal = signal<number>(0);
-  winnerSignal = signal<string>('');
-  rankedSignal = signal<string>('');
+  tableId = input<string>();
 
-  tableId!: string | null;
+  game = derivedAsync<Game>(() =>
+    this._mqttService
+      .observeRetained(`table/${this.tableId()}/game`)
+      .pipe(map((value) => JSON.parse(value.payload.toString()) as Game)),
+  );
 
   renameWhite = false;
   renameBlack = false;
 
   constructor(
     private mqttClient: DkMqttClientService,
-    private route: ActivatedRoute,
-    public gameService: GameService,
+    private _mqttService: MqttService,
   ) {}
-
-  ngOnInit(): void {
-    this.route.paramMap.subscribe((params) => {
-      this.tableId = params.get('tableId');
-      if (this.tableId) {
-        this.gameService.setId(this.tableId);
-      }
-    });
-  }
 
   changeName(color: string) {
     if (color === TeamColor.WHITE) {
@@ -53,24 +41,21 @@ export class GameComponent implements OnInit {
     }
   }
 
-  submit(color: string) {
-    const changeNameInputValue: string = (<HTMLInputElement>(
-      document.getElementById('input')
-    )).value;
+  submit(color: string, changeNameInputValue: string) {
     let topic = '';
     if (color === TeamColor.WHITE) {
-      const playerOneWhite = this.gameService.gameSignal().teamWhite.playerOne;
+      const playerOneWhite = this.game()?.teamWhite.playerOne;
       if (playerOneWhite) {
         playerOneWhite.name = changeNameInputValue;
       }
-      topic = `/table/${this.tableId}/game/team/${color}/changename`;
+      topic = `table/${this.tableId()}/game/team/${color}/changename`;
       this.renameWhite = false;
     } else {
-      const playerOneBlack = this.gameService.gameSignal().teamBlack.playerOne;
+      const playerOneBlack = this.game()?.teamBlack.playerOne;
       if (playerOneBlack) {
         playerOneBlack.name = changeNameInputValue;
       }
-      topic = `/table/${this.tableId}/game/team/${color}/changename`;
+      topic = `table/${this.tableId()}/game/team/${color}/changename`;
       this.renameBlack = false;
     }
     this.mqttClient.doPublish(
@@ -78,9 +63,5 @@ export class GameComponent implements OnInit {
       0,
       `{"newName": "${changeNameInputValue}"}`,
     );
-  }
-
-  onKey(_event: KeyboardEvent) {
-    // do nothing
   }
 }

@@ -10,7 +10,7 @@ export class ScoreService {
 
   constructor(private mqttClient: DkMqttClientService) {
     effect(() => {
-      this.message$ = this.mqttClient.subscribe(`/api/player/all`);
+      this.message$ = this.mqttClient.subscribe(`api/player/all`);
       this.message$.subscribe((message: string) => {
         try {
           this.playersSignal.set(JSON.parse(message.toString()));

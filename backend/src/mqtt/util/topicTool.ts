@@ -4,7 +4,7 @@ export class TopicTool {
 
   constructor(topicStr: string) {
     this.topicStr = topicStr.trim();
-    this._topicSegments = topicStr.substring(1).split('/');
+    this._topicSegments = topicStr.split('/');
   }
 
   public get topicSegments(): string[] {
