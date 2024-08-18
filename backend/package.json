@@ -11,7 +11,7 @@
     "prettier:write": "prettier -w ."
   },
   "keywords": [],
-  "author": "Marvin Voss, Maximilian Koenig",
+  "author": "DigKick Group (https://github.com/DigKick/DigKick/graphs/contributors)",
   "license": "ISC",
   "devDependencies": {
     "@types/bun": "latest"

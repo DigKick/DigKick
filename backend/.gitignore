@@ -181,3 +181,7 @@ dist
 **/*.db
 
 resources/*.yaml
+
+docs/
+
+.asyncapi-analytics
