@@ -4,12 +4,12 @@ on:
     branches: ["develop", "main"]
     paths:
       - "backend/**"
-      - ".gitea/workflows/bunActions.yml"
+      - ".github/workflows/bunActions.yml"
   push:
     branches: ["develop", "main", "**action**"]
     paths:
       - "backend/**"
-      - ".gitea/workflows/bunActions.yml"
+      - ".github/workflows/bunActions.yml"
 jobs:
   build:
     name: Build backend with bun

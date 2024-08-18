@@ -3,7 +3,7 @@ on:
   pull_request:
     paths:
       - "frontend/**"
-      - ".gitea/workflows/pr-frontend.yml"
+      - ".github/workflows/pr-frontend.yml"
 jobs:
   checks:
     runs-on: ubuntu-latest
