@@ -2,6 +2,7 @@ import { z } from 'zod';
 import { InjectionToken } from '@angular/core';
 
 export const EnvironmentParser = z.object({
+  debug: z.boolean().default(false),
   broker: z.object({
     hostname: z.string(),
     port: z.number(),

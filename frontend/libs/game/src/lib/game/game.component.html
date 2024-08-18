@@ -3,15 +3,55 @@
     class="mx-auto mt-3 flex w-5/6 flex-col items-center justify-center lg:mx-auto lg:w-2/3 lg:flex-row"
   >
     <!-- Mobile view -->
-    <div
-      class="card mx-auto flex h-32 w-64 items-center justify-center rounded-lg bg-accent-content lg:hidden"
-    >
-      <div class="flex items-center justify-center">
-        <div class="mr-3 text-[6rem]">{{ game.teamWhite.score }}</div>
-        <div class="text-[6rem]">:</div>
-        <div class="ml-3 text-[6rem]">{{ game.teamBlack.score }}</div>
+    <div class="flex lg:hidden">
+      @if (environment.debug) {
+        <div class="flex flex-col justify-center gap-4 px-4">
+          <button
+            (click)="changeScore(game, TeamColor.WHITE, ScoreChange.INCREASE)"
+            class="btn btn-outline btn-error"
+          >
+            +
+          </button>
+          <button
+            (click)="changeScore(game, TeamColor.WHITE, ScoreChange.DECREASE)"
+            class="btn btn-outline btn-error"
+          >
+            -
+          </button>
+        </div>
+      }
+      <div
+        class="card mx-auto flex h-32 w-64 items-center justify-center rounded-lg bg-accent-content"
+      >
+        <div class="flex items-center justify-center">
+          <div class="mr-3 text-[6rem]">{{ game.teamWhite?.score }}</div>
+          <div class="text-[6rem]">:</div>
+          <div class="ml-3 text-[6rem]">{{ game.teamBlack?.score }}</div>
+        </div>
       </div>
+      @if (environment.debug) {
+        <div class="flex flex-col justify-center gap-4 px-4">
+          <button
+            (click)="changeScore(game, TeamColor.BLACK, ScoreChange.INCREASE)"
+            class="btn btn-outline btn-error"
+          >
+            +
+          </button>
+          <button
+            (click)="changeScore(game, TeamColor.BLACK, ScoreChange.DECREASE)"
+            class="btn btn-outline btn-error"
+          >
+            -
+          </button>
+        </div>
+      }
     </div>
+
+    @if (environment.debug) {
+      <button (click)="reset(game)" class="btn btn-outline btn-error mt-2">
+        RESET
+      </button>
+    }
 
     <!-- Image container -->
     <div class="flex items-center justify-center">
@@ -27,7 +67,7 @@
         <div
           class="card flex h-32 w-64 items-center justify-center bg-accent-content text-[11rem]"
         >
-          {{ game.teamWhite.score }}
+          {{ game.teamWhite?.score }}
         </div>
         <img
           src="assets/images/sprite.png"
@@ -37,21 +77,21 @@
         <div
           class="card flex h-32 w-64 items-center justify-center bg-accent-content text-[11rem]"
         >
-          {{ game.teamBlack.score }}
+          {{ game.teamBlack?.score }}
         </div>
       </div>
     </div>
   </div>
 
-  <div
-    class="custom-font mb-[1rem] flex justify-center text-[2.5rem] text-red-800 lg:mb-[3rem] lg:text-[4rem]"
-    *ngIf="game.gameMode === 'RANKED'; else hiddenContent"
-  >
-    ranked
-  </div>
-  <ng-template #hiddenContent>
+  @if (game.gameMode === 'RANKED') {
+    <div
+      class="custom-font mb-[1rem] flex justify-center text-[2.5rem] text-red-800 lg:mb-[3rem] lg:text-[4rem]"
+    >
+      ranked
+    </div>
+  } @else {
     <div class="hidden lg:hidden"></div>
-  </ng-template>
+  }
 
   <!-- Player names -->
   <div class="my-auto flex w-full items-center text-[1.2rem] lg:justify-center">
@@ -107,6 +147,35 @@
     }
   </div>
 
+  @if (environment.debug) {
+    <div class="m-2 flex w-full justify-around">
+      <button
+        class="btn btn-outline btn-error"
+        (click)="registerPlayer(game, TeamColor.WHITE, '1')"
+      >
+        CLICK 1
+      </button>
+      <button
+        class="btn btn-outline btn-error"
+        (click)="registerPlayer(game, TeamColor.WHITE, '2')"
+      >
+        CLICK 2
+      </button>
+      <button
+        class="btn btn-outline btn-error"
+        (click)="registerPlayer(game, TeamColor.BLACK, '3')"
+      >
+        CLICK 3
+      </button>
+      <button
+        class="btn btn-outline btn-error"
+        (click)="registerPlayer(game, TeamColor.BLACK, '4')"
+      >
+        CLICK 4
+      </button>
+    </div>
+  }
+
   <div class="flex w-full justify-between">
     @if (renameWhite) {
       <div
@@ -115,7 +184,7 @@
         <input
           #input
           type="text"
-          placeholder="{{ game.teamWhite.playerOne?.name }}"
+          placeholder="{{ game.teamWhite?.playerOne?.name }}"
           class="input input-bordered input-error w-full max-w-xs"
         />
         <button
@@ -150,7 +219,7 @@
         <input
           #input
           type="text"
-          placeholder="{{ game.teamBlack.playerOne?.name }}"
+          placeholder="{{ game.teamBlack?.playerOne?.name }}"
           class="input input-bordered input-error w-full max-w-xs"
         />
         <button

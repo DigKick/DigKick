@@ -16,7 +16,6 @@ export class Player {
   toJSON() {
     return {
       name: this.name,
-      key: this._key,
       elo: this.elo,
     };
   }

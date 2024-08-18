@@ -20,6 +20,7 @@
       "@dig-kick/models": ["libs/models/src/index.ts"],
       "@dig-kick/score": ["libs/score/src/index.ts"],
       "@dig-kick/services": ["libs/services/src/index.ts"],
+      "@dig-kick/store": ["libs/store/src/index.ts"],
       "@dig-kick/table": ["libs/table/src/index.ts"],
       "@dig-kick/ui": ["libs/ui/src/index.ts"]
     }
