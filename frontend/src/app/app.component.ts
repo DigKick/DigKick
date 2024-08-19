@@ -23,5 +23,6 @@ export class AppComponent {
     private dkMqttClientService: DkMqttClientService,
   ) {
     this.themeService.theme = Theme.DK_DARK;
+    this.dkMqttClientService.init();
   }
 }

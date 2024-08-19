@@ -7,7 +7,6 @@ export const EnvironmentParser = z.object({
     hostname: z.string(),
     port: z.number(),
     path: z.string(),
-    clientId: z.string(),
     protocol: z.union([z.literal('ws'), z.literal('wss')]),
   }),
 });

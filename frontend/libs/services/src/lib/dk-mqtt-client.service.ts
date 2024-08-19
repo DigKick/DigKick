@@ -20,6 +20,9 @@ import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
   providedIn: 'root',
 })
 export class DkMqttClientService {
+  private readonly _mqttService: MqttService = inject(MqttService);
+  private readonly _destroyRef: DestroyRef = inject(DestroyRef);
+
   readonly tableStore = inject(TableStore);
   readonly gameStore = inject(GameStore);
   readonly playerStore = inject(PlayerStore);
@@ -28,10 +31,7 @@ export class DkMqttClientService {
 
   scoreRaw = toSignal(this._mqttService.observe(`api/player/all`));
 
-  constructor(
-    private _mqttService: MqttService,
-    private _destroyRef: DestroyRef,
-  ) {
+  init() {
     effect(() => {
       const tablesRaw = this.tablesRaw();
       if (tablesRaw) {
