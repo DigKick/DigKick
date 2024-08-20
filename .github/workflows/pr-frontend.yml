@@ -3,7 +3,7 @@ on:
   pull_request:
     paths:
       - "frontend/**"
-      - ".gitea/workflows/pr-frontend.yml"
+      - ".github/workflows/pr-frontend.yml"
 jobs:
   checks:
     runs-on: ubuntu-latest
@@ -21,3 +21,6 @@ jobs:
       - name: Check formatting
         run: |
           npm run prettier:check
+      - name: Check linting
+        run: |
+          npm run lint
