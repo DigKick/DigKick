@@ -1,5 +1,5 @@
 <div class="grid-layout">
-  @for (tableName of tableService.tables(); track tableName) {
-    <lib-table-display [tableName]="tableName" class="tile"></lib-table-display>
+  @for (table of tables(); track table.id) {
+    <lib-table-display [tableId]="table.id" class="tile"></lib-table-display>
   }
 </div>

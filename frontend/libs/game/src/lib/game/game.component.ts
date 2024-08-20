@@ -1,10 +1,14 @@
 import { CommonModule, NgOptimizedImage } from '@angular/common';
-import { Component, input } from '@angular/core';
+import { Component, computed, inject, input } from '@angular/core';
 import { DkMqttClientService } from '@dig-kick/services';
-import { Game, TeamColor } from '@dig-kick/models';
-import { derivedAsync } from 'ngxtension/derived-async';
-import { map } from 'rxjs';
-import { MqttService } from 'ngx-mqtt';
+import {
+  Environment,
+  ENVIRONMENT,
+  Game,
+  ScoreChange,
+  TeamColor,
+} from '@dig-kick/models';
+import { GameStore } from '@dig-kick/store';
 
 @Component({
   selector: 'lib-game-view',
@@ -19,19 +23,22 @@ export class GameComponent {
 
   tableId = input<string>();
 
-  game = derivedAsync<Game>(() =>
-    this._mqttService
-      .observeRetained(`table/${this.tableId()}/game`)
-      .pipe(map((value) => JSON.parse(value.payload.toString()) as Game)),
-  );
+  readonly environment: Environment = inject(ENVIRONMENT);
+
+  readonly gameStore = inject(GameStore);
+
+  game = computed<Game | undefined>(() => {
+    const tableId = this.tableId();
+    if (tableId) {
+      return this.gameStore.entityMap()[tableId];
+    }
+    return undefined;
+  });
 
   renameWhite = false;
   renameBlack = false;
 
-  constructor(
-    private mqttClient: DkMqttClientService,
-    private _mqttService: MqttService,
-  ) {}
+  constructor(private _dkMqttClientService: DkMqttClientService) {}
 
   changeName(color: string) {
     if (color === TeamColor.WHITE) {
@@ -44,24 +51,43 @@ export class GameComponent {
   submit(color: string, changeNameInputValue: string) {
     let topic = '';
     if (color === TeamColor.WHITE) {
-      const playerOneWhite = this.game()?.teamWhite.playerOne;
+      const playerOneWhite = this.game()?.teamWhite?.playerOne;
       if (playerOneWhite) {
         playerOneWhite.name = changeNameInputValue;
       }
       topic = `table/${this.tableId()}/game/team/${color}/changename`;
       this.renameWhite = false;
     } else {
-      const playerOneBlack = this.game()?.teamBlack.playerOne;
+      const playerOneBlack = this.game()?.teamBlack?.playerOne;
       if (playerOneBlack) {
         playerOneBlack.name = changeNameInputValue;
       }
       topic = `table/${this.tableId()}/game/team/${color}/changename`;
       this.renameBlack = false;
     }
-    this.mqttClient.doPublish(
+    this._dkMqttClientService.doPublish(
       topic,
-      0,
       `{"newName": "${changeNameInputValue}"}`,
     );
+  }
+
+  registerPlayer(game: Game, color: TeamColor, id: string) {
+    this._dkMqttClientService.registerPlayer(id, game.tableId, color);
+  }
+
+  protected readonly TeamColor = TeamColor;
+  protected readonly ScoreChange = ScoreChange;
+
+  changeScore(game: Game, color: TeamColor, scoreChange: ScoreChange) {
+    const state = scoreChange === ScoreChange.INCREASE ? 1 : 2;
+    const topic = `table/${game.tableId}/game/team/${color}/button/${state}`;
+    this._dkMqttClientService.doPublish(topic, `{"pinOut": "HIGH"}`);
+    this._dkMqttClientService.doPublish(topic, `{"pinOut": "LOW"}`);
+  }
+
+  reset(game: Game) {
+    const topic = `table/${game.tableId}/game/team/white/button/0`;
+    this._dkMqttClientService.doPublish(topic, `{"pinOut": "HIGH"}`);
+    this._dkMqttClientService.doPublish(topic, `{"pinOut": "LOW"}`);
   }
 }

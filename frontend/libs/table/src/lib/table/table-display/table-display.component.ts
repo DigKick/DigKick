@@ -1,9 +1,7 @@
-import { Component, input } from '@angular/core';
+import { Component, computed, inject, input } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { derivedAsync } from 'ngxtension/derived-async';
-import { MqttService } from 'ngx-mqtt';
-import { map } from 'rxjs';
+import { GameStore } from '@dig-kick/store';
 import { Game } from '@dig-kick/models';
 
 @Component({
@@ -16,13 +14,15 @@ import { Game } from '@dig-kick/models';
 export class TableDisplayComponent {
   random = Math.floor(Math.random() * 4) + 1;
 
-  tableName = input<string>();
+  tableId = input<string>();
 
-  game = derivedAsync<Game>(() =>
-    this._mqttService
-      .observe(`table/${this.tableName()}/game`)
-      .pipe(map((value) => JSON.parse(value.payload.toString()) as Game)),
-  );
+  readonly gameStore = inject(GameStore);
 
-  constructor(private _mqttService: MqttService) {}
+  game = computed<Game | undefined>(() => {
+    const tableId = this.tableId();
+    if (tableId) {
+      return this.gameStore.entityMap()[tableId];
+    }
+    return undefined;
+  });
 }

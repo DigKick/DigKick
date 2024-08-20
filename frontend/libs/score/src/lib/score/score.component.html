@@ -1,4 +1,4 @@
-<div class="md:container md:mx-auto">
+<div class="mx-4 md:container md:mx-auto">
   <div class="mt-[3rem] overflow-x-auto">
     <table
       class="table table-zebra mx-auto bg-base-300 lg:md:w-[50%] lg:w-[40%]"
@@ -12,7 +12,7 @@
       </thead>
       <tbody>
         <tr
-          *ngFor="let player of scoreService.playersSignal(); let i = index"
+          *ngFor="let player of players(); let i = index"
           class="text-[1.25rem]"
         >
           <th class="text-right">{{ i + 1 }}</th>

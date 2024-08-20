@@ -7,15 +7,19 @@ export class PlayerDataPublisher extends DataPublisher {
   public static async publishAll() {
     const allPlayers = await PlayerEntity.find();
 
-    allPlayers.map((player) => (player.hashSerialNumber = 'CENSORED'));
-
     allPlayers.sort((playerOne, playerTwo) => {
       return playerTwo.elo - playerOne.elo;
     });
 
+    const playerDtos = allPlayers.map((p) => ({
+      id: p.id,
+      name: p.name,
+      elo: p.elo,
+    }));
+
     DkMqttClient.getInstance().publishWithRetain(
       PlayerDataPublishTopics.ALL,
-      JSON.stringify(allPlayers),
+      JSON.stringify(playerDtos),
     );
   }
 }

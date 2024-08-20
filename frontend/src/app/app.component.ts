@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { NavbarComponent, ThemeToggleButtonComponent } from '@dig-kick/ui';
-import { ThemeService } from '@dig-kick/services';
+import { DkMqttClientService, ThemeService } from '@dig-kick/services';
 import { Theme } from '@dig-kick/models';
 
 @Component({
@@ -18,7 +18,11 @@ import { Theme } from '@dig-kick/models';
   styleUrl: './app.component.scss',
 })
 export class AppComponent {
-  constructor(private themeService: ThemeService) {
+  constructor(
+    private themeService: ThemeService,
+    private dkMqttClientService: DkMqttClientService,
+  ) {
     this.themeService.theme = Theme.DK_DARK;
+    this.dkMqttClientService.init();
   }
 }

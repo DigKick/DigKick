@@ -18,24 +18,24 @@
         class="card-body mt-1 grid grid-cols-3 items-center gap-x-4 text-pretty"
       >
         <div class="flex flex-col justify-center pl-2 text-[1.1rem] lg:pl-8">
-          <p class="mb-1 break-words">{{ game.teamWhite.playerOne?.name }}</p>
-          <p class="mt-0 break-words">{{ game.teamWhite.playerTwo?.name }}</p>
+          <p class="mb-1 break-words">{{ game.teamWhite?.playerOne?.name }}</p>
+          <p class="mt-0 break-words">{{ game.teamWhite?.playerTwo?.name }}</p>
         </div>
         <p class="col-span-1 text-center text-[3rem]">
-          {{ game.teamWhite.score }}:{{ game.teamBlack.score }}
+          {{ game.teamWhite?.score }}:{{ game.teamBlack?.score }}
         </p>
         <div
           class="flex flex-col justify-center text-pretty pr-4 text-[1.1rem]"
         >
-          <p class="mb-1 break-words">{{ game.teamBlack.playerOne?.name }}</p>
-          <p class="mt-0 break-words">{{ game.teamBlack.playerTwo?.name }}</p>
+          <p class="mb-1 break-words">{{ game.teamBlack?.playerOne?.name }}</p>
+          <p class="mt-0 break-words">{{ game.teamBlack?.playerTwo?.name }}</p>
         </div>
       </div>
-      @if (tableName(); as tableName) {
+      @if (tableId(); as tableId) {
         <div class="card-actions m-3 justify-center">
           <button
             class="btn btn-outline btn-primary w-5/6 items-center text-[1.25rem]"
-            [routerLink]="['/game', tableName]"
+            [routerLink]="['/game', tableId]"
           >
             View
           </button>

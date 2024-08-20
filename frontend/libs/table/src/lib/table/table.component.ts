@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, inject, Signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TableDisplayComponent } from './table-display/table-display.component';
-import { TableService } from './table.service';
+import { TableStore } from '@dig-kick/store';
+import { Table } from '@dig-kick/models';
 
 @Component({
   selector: 'lib-table-view',
@@ -11,5 +12,7 @@ import { TableService } from './table.service';
   styleUrl: './table.component.css',
 })
 export class TableComponent {
-  constructor(public tableService: TableService) {}
+  readonly tableStore = inject(TableStore);
+
+  tables: Signal<Table[]> = this.tableStore.entities;
 }

@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { ScoreService } from '@dig-kick/services';
+import { Component, inject, Signal } from '@angular/core';
+import { PlayerStore } from '@dig-kick/store';
+import { Player } from '@dig-kick/models';
 
 @Component({
   selector: 'lib-score-view',
@@ -10,5 +11,7 @@ import { ScoreService } from '@dig-kick/services';
   styleUrl: './score.component.css',
 })
 export class ScoreComponent {
-  constructor(protected scoreService: ScoreService) {}
+  readonly playerStore = inject(PlayerStore);
+
+  players: Signal<Player[]> = this.playerStore.entities;
 }

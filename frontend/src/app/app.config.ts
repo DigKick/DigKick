@@ -11,7 +11,6 @@ export const appConfig: (environment: Environment) => ApplicationConfig = (
     hostname: environment.broker.hostname,
     port: environment.broker.port,
     path: environment.broker.path,
-    clientId: environment.broker.clientId,
     protocol: environment.broker.protocol,
   };
 
