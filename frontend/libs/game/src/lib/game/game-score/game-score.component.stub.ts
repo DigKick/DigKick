@@ -7,7 +7,7 @@ import { Component, input } from '@angular/core';
   imports: [CommonModule],
   template: '',
 })
-export class GameScoreComponent {
+export class GameScoreStubComponent {
   teamWhiteScore = input<number>();
   teamBlackScore = input<number>();
 }

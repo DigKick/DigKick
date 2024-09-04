@@ -8,8 +8,8 @@ export enum GameMode {
 
 export const GameSchema = z.object({
   gameMode: z.nativeEnum(GameMode),
-  teamWhite: TeamSchema.nullish(),
-  teamBlack: TeamSchema.nullish(),
+  teamWhite: TeamSchema.optional(),
+  teamBlack: TeamSchema.optional(),
   pointsToWin: z.number(),
 });
 
