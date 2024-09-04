@@ -1,0 +1,17 @@
+<div class="relative">
+  <img
+    ngSrc="assets/images/sprite.png"
+    class="h-auto w-full rotate-90 transform"
+    alt="Background image for score"
+    fill
+  />
+  <div class="absolute inset-0 flex items-center justify-around">
+    <div class="text-3xl font-bold text-red-500">
+      {{ teamWhiteScore() }}
+    </div>
+    <div class="text-3xl font-bold text-red-500">:</div>
+    <div class="text-3xl font-bold text-red-500">
+      {{ teamBlackScore() }}
+    </div>
+  </div>
+</div>
