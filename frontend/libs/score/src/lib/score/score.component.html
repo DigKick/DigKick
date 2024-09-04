@@ -8,17 +8,37 @@
           <th></th>
           <th>Name</th>
           <th class="text-right">Score</th>
+          <th class="text-right">Won</th>
+          <th class="text-right">Lost</th>
+          <th class="text-right">Winrate</th>
+          <th class="text-right">History</th>
         </tr>
       </thead>
       <tbody>
-        <tr
-          *ngFor="let player of players(); let i = index"
-          class="text-[1.25rem]"
-        >
-          <th class="text-right">{{ i + 1 }}</th>
-          <td>{{ player.name }}</td>
-          <td class="text-right text-orange-400">{{ player.elo }}</td>
-        </tr>
+        @for (player of players(); track player.id) {
+          <tr class="text-[1.25rem]">
+            <th class="text-right">{{ $index + 1 }}</th>
+            <td>{{ player.name }}</td>
+            <td class="text-right text-orange-400">{{ player.elo }}</td>
+            <td class="text-right">{{ player.won }}</td>
+            <td class="text-right">{{ player.lost }}</td>
+            <td class="text-right">
+              @if (player.won && player.lost) {
+                {{ player.won / (player.won + player.lost) | percent }}
+              } @else {
+                -
+              }
+            </td>
+            <td class="flex justify-end gap-1">
+              @for (team of player.lastFive; track team.id) {
+                <div
+                  class="badge"
+                  [ngClass]="team.isWinner ? 'bg-success' : 'bg-error'"
+                ></div>
+              }
+            </td>
+          </tr>
+        }
       </tbody>
     </table>
   </div>

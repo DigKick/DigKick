@@ -29,7 +29,7 @@ export class DkMqttClientService {
 
   tablesRaw = toSignal(this._mqttService.observe('tables'));
 
-  scoreRaw = toSignal(this._mqttService.observe(`api/player/all`));
+  playersRaw = toSignal(this._mqttService.observe(`api/player/all`));
 
   init() {
     effect(() => {
@@ -64,10 +64,10 @@ export class DkMqttClientService {
     });
 
     effect(() => {
-      const scoreRaw = this.scoreRaw();
-      if (scoreRaw) {
+      const playersRaw = this.playersRaw();
+      if (playersRaw) {
         const players = PlayersSchema.parse(
-          JSON.parse(scoreRaw.payload.toString()),
+          JSON.parse(playersRaw.payload.toString()),
         );
         untracked(() => {
           this.playerStore.setPlayers(players);
