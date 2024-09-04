@@ -1,212 +1,42 @@
-<div class="divider sm:my-6 lg:my-4">
-  <label class="swap" (click)="toggleDirection()">
-    <input type="checkbox" />
-    <div class="swap-on">
-      <svg
-        class="size-14"
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke-width="1.5"
-        stroke="currentColor"
-      >
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          d="M7.5 21 3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5"
-        />
-      </svg>
-    </div>
-    <div class="swap-off">
-      <svg
-        class="flip-y size-14"
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke-width="1.5"
-        stroke="currentColor"
-      >
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          d="M7.5 21 3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5"
-        />
-      </svg>
-    </div>
-  </label>
-</div>
+<lib-game-team-swap (onSwapTeams)="toggleDirection()" />
 @if (game(); as game) {
-  <div
-    class="mx-auto mt-3 flex w-5/6 flex-col items-center justify-center lg:mx-auto lg:w-2/3 lg:flex-row"
-  >
-    <!-- Mobile view -->
-    <div class="flex lg:hidden">
-      @if (environment.debug) {
-        <div class="flex flex-col justify-center gap-4 px-4">
-          <button
-            (click)="changeScore(game, TeamColor.WHITE, ScoreChange.INCREASE)"
-            class="btn btn-outline btn-error"
-          >
-            +
-          </button>
-          <button
-            (click)="changeScore(game, TeamColor.WHITE, ScoreChange.DECREASE)"
-            class="btn btn-outline btn-error"
-          >
-            -
-          </button>
-        </div>
-      }
-      <div
-        class="card mx-auto flex h-32 w-64 items-center justify-center rounded-lg bg-accent-content"
-      >
-        <div class="flex items-center justify-center">
-          <div class="mr-3 text-[6rem]">{{ game.teamWhite?.score }}</div>
-          <div class="text-[6rem]">:</div>
-          <div class="ml-3 text-[6rem]">{{ game.teamBlack?.score }}</div>
-        </div>
-      </div>
-      @if (environment.debug) {
-        <div class="flex flex-col justify-center gap-4 px-4">
-          <button
-            (click)="changeScore(game, TeamColor.BLACK, ScoreChange.INCREASE)"
-            class="btn btn-outline btn-error"
-          >
-            +
-          </button>
-          <button
-            (click)="changeScore(game, TeamColor.BLACK, ScoreChange.DECREASE)"
-            class="btn btn-outline btn-error"
-          >
-            -
-          </button>
-        </div>
-      }
-    </div>
-
-    @if (environment.debug) {
-      <button (click)="reset(game)" class="btn btn-outline btn-error mt-2">
-        RESET
-      </button>
-    }
-
-    <!-- Image container -->
-    <div class="flex items-center justify-center">
-      <!-- Mobile view -->
-      <div class="lg:hidden">
-        <img src="assets/images/sprite.png" class="rotate-90 transform" />
-      </div>
-    </div>
-
-    <!-- Desktop view -->
-    <div class="hidden items-center justify-center lg:flex">
-      <div class="flex items-center space-x-[6rem]">
-        <div
-          class="card flex h-32 w-64 items-center justify-center bg-accent-content text-[11rem]"
-        >
-          {{ game.teamWhite?.score }}
-        </div>
-        <img
-          src="assets/images/sprite.png"
-          class="h-full rotate-90"
-          alt="Game image"
-        />
-        <div
-          class="card flex h-32 w-64 items-center justify-center bg-accent-content text-[11rem]"
-        >
-          {{ game.teamBlack?.score }}
-        </div>
-      </div>
-    </div>
-  </div>
+  @if (environment.debug) {
+    <lib-game-debug-score-change [game]="game" [teamColor]="TeamColor.WHITE" />
+  }
+  <lib-game-score
+    [teamBlackScore]="game.teamBlack?.score"
+    [teamWhiteScore]="game.teamWhite?.score"
+  />
+  @if (environment.debug) {
+    <lib-game-debug-score-change [game]="game" [teamColor]="TeamColor.BLACK" />
+  }
 
   @if (game.gameMode === 'RANKED') {
-    <div
-      class="custom-font mb-[1rem] flex justify-center text-[2.5rem] text-red-800 lg:mb-[3rem] lg:text-[4rem]"
-    >
-      ranked
-    </div>
-  } @else {
-    <div class="hidden lg:hidden"></div>
+    <span class="custom-font">
+      {{ 'ranked' | uppercase }}
+    </span>
   }
 
   <!-- Player names -->
-  <div class="my-auto flex w-full items-center text-[1.2rem] lg:justify-center">
-    <lib-game-team [team]="firstTeam()" />
-    <div class="divider divider-warning divider-horizontal text-[1.5rem]">
-      VS
-    </div>
-    <lib-game-team [team]="lastTeam()" />
-  </div>
-  <div class="flex w-full justify-between">
-    @if (renameWhite) {
-      <div
-        class="mt-5 flex w-full justify-center text-[1.2rem] lg:justify-center"
-      >
-        <input
-          #input
-          type="text"
-          placeholder="{{ game.teamWhite?.playerOne?.name }}"
-          class="input input-bordered input-error w-full max-w-xs"
-        />
-        <button
-          class="btn btn-success ml-5"
-          (click)="submit(whiteColor, input.value)"
-        >
-          Submit
-        </button>
-      </div>
-    } @else {
-      <div
-        class="mt-5 flex w-full justify-center text-[1.2rem] lg:justify-center"
-      >
-        <div
-          class="tooltip tooltip-bottom tooltip-success"
-          data-tip="of latest registered player"
-        >
-          <button
-            class="btn btn-outline btn-error"
-            (click)="changeName(whiteColor)"
-          >
-            Change name
-          </button>
-        </div>
-      </div>
-    }
+  @if (environment.debug) {
+    <lib-game-debug-register-player
+      [tableId]="game.tableId"
+      [teamColor]="firstTeam()?.color"
+    />
+  }
+  <lib-game-team [team]="firstTeam()" />
+  <div class="divider divider-warning divider-horizontal text-[1.5rem]">VS</div>
+  @if (environment.debug) {
+    <lib-game-debug-register-player
+      [tableId]="game.tableId"
+      [teamColor]="lastTeam()?.color"
+    />
+  }
+  <lib-game-team [team]="lastTeam()" />
 
-    @if (renameBlack) {
-      <div
-        class="mt-5 flex w-full justify-center text-[1.2rem] lg:justify-center"
-      >
-        <input
-          #input
-          type="text"
-          placeholder="{{ game.teamBlack?.playerOne?.name }}"
-          class="input input-bordered input-error w-full max-w-xs"
-        />
-        <button
-          class="btn btn-success ml-5"
-          (click)="submit(blackColor, input.value)"
-        >
-          Submit
-        </button>
-      </div>
-    } @else {
-      <div
-        class="mt-5 flex w-full justify-center text-[1.2rem] lg:justify-center"
-      >
-        <div
-          class="tooltip tooltip-bottom tooltip-success"
-          data-tip="of latest registered player"
-        >
-          <button
-            class="btn btn-outline btn-error"
-            (click)="changeName(blackColor)"
-          >
-            Change name
-          </button>
-        </div>
-      </div>
-    }
-  </div>
+  @if (environment.debug) {
+    <button (click)="reset(game)" class="btn btn-outline btn-error mt-2">
+      RESET
+    </button>
+  }
 }
