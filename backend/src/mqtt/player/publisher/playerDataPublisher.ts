@@ -36,8 +36,6 @@ export class PlayerDataPublisher extends DataPublisher {
       }),
     );
 
-    console.log(playerDtos);
-
     DkMqttClient.getInstance().publishWithRetain(
       PlayerDataPublishTopics.ALL,
       JSON.stringify(playerDtos),
