@@ -10,6 +10,7 @@ fetch('/assets/config.json').then(async (response: Response) => {
   if (parsed.success) {
     const environment: Environment = parsed.data;
     bootstrapApplication(AppComponent, appConfig(environment)).catch((err) =>
+      // eslint-disable-next-line no-console
       console.error(err),
     );
   } else {
