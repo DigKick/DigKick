@@ -1,0 +1,30 @@
+@if (changeActive()) {
+  <div class="mt-5 flex w-full justify-center text-[1.2rem] lg:justify-center">
+    <input
+      #input
+      type="text"
+      placeholder="{{ team()?.playerOne?.name }}"
+      class="input input-bordered input-error w-full max-w-xs"
+    />
+    <button
+      class="btn btn-success ml-5"
+      (click)="changeNameOfPlayer(input.value)"
+    >
+      Submit
+    </button>
+  </div>
+} @else {
+  <div class="mt-5 flex w-full justify-center text-[1.2rem] lg:justify-center">
+    <div
+      class="tooltip tooltip-bottom tooltip-success"
+      data-tip="of latest registered player"
+    >
+      <button
+        class="btn btn-outline btn-error"
+        (click)="changeActive.set(true)"
+      >
+        Change name
+      </button>
+    </div>
+  </div>
+}
