@@ -14,4 +14,3 @@ if (ApplicationProperties.get().digkick.banner) {
 await initializeDatabase();
 DkMqttClient.getInstance();
 await PlayerDataPublisher.publishAll();
-

@@ -1,7 +1,11 @@
 import fs from 'node:fs';
 import * as path from 'path';
 import YAML from 'yaml';
-import { getDefaultProperties, type Properties, propertySchema } from './propertySchema.ts';
+import {
+  getDefaultProperties,
+  type Properties,
+  propertySchema,
+} from './propertySchema.ts';
 
 export class ApplicationProperties {
   private static _properties: Properties = getDefaultProperties();
@@ -22,13 +26,16 @@ export class ApplicationProperties {
 
     const allResourceFiles = fs.readdirSync(resourcePath);
     const allYamlResourceFiles = allResourceFiles.filter(
-      (fileName) => path.extname(fileName).toLowerCase() === '.yaml'
+      (fileName) => path.extname(fileName).toLowerCase() === '.yaml',
     );
 
     allYamlResourceFiles.forEach((fileName) => {
       const yamlFile = fs.readFileSync(resourcePath + '/' + fileName, 'utf8');
       const loadedProps = propertySchema.parse(YAML.parse(yamlFile));
-      this._properties = propertySchema.parse({ ...this._properties, ...loadedProps });
+      this._properties = propertySchema.parse({
+        ...this._properties,
+        ...loadedProps,
+      });
     });
   }
 }
