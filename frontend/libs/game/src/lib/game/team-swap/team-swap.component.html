@@ -1,6 +1,6 @@
 <div class="divider sm:my-6 lg:my-4">
-  <label class="swap" (click)="onSwapTeams.emit()">
-    <input type="checkbox" />
+  <label class="swap">
+    <input type="checkbox" (change)="onSwapTeams.emit()" />
     <div class="swap-on">
       <svg
         class="size-14"
