@@ -1,10 +1,10 @@
 import fs from 'node:fs';
 import * as path from 'path';
 import YAML from 'yaml';
-import { getDefaults, type Properties, propertySchema } from './propertySchema.ts';
+import { getDefaultProperties, type Properties, propertySchema } from './propertySchema.ts';
 
 export class ApplicationProperties {
-  private static _properties: Properties = getDefaults(propertySchema);
+  private static _properties: Properties = getDefaultProperties();
   private static _loaded = false;
 
   static get() {

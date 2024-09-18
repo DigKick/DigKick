@@ -51,7 +51,11 @@ export const propertySchema = z.object({
     })
 });
 
-export function getDefaults<Schema extends z.AnyZodObject>(schema: Schema): any {
+export function getDefaultProperties(): Properties {
+  return getDefaults(propertySchema);
+}
+
+function getDefaults<Schema extends z.AnyZodObject>(schema: Schema): any {
   return Object.fromEntries(
     Object.entries(schema.shape).map(([key, value]) => {
       if (value instanceof z.ZodObject) {
