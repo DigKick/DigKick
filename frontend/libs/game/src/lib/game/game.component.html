@@ -1,42 +1,52 @@
-<lib-game-team-swap (onSwapTeams)="toggleDirection()" />
-@if (game(); as game) {
-  @if (environment.debug) {
-    <lib-game-debug-score-change [game]="game" [teamColor]="TeamColor.WHITE" />
-  }
-  <lib-game-score
-    [teamBlackScore]="game.teamBlack?.score"
-    [teamWhiteScore]="game.teamWhite?.score"
-  />
-  @if (environment.debug) {
-    <lib-game-debug-score-change [game]="game" [teamColor]="TeamColor.BLACK" />
-  }
-
-  @if (game.gameMode === 'RANKED') {
-    <span class="custom-font">
-      {{ 'ranked' | uppercase }}
-    </span>
-  }
-
-  <!-- Player names -->
-  @if (environment.debug) {
-    <lib-game-debug-register-player
-      [tableId]="game.tableId"
-      [teamColor]="firstTeam()?.color"
+<div id="game-container" class="flex-col flex-nowrap">
+  <lib-game-team-swap (onSwapTeams)="toggleDirection()" />
+  @if (game(); as game) {
+    @if (environment.debug) {
+      <lib-game-debug-score-change
+        [game]="game"
+        [teamColor]="TeamColor.WHITE"
+      />
+    }
+    <lib-game-score
+      [teamBlackScore]="game.teamBlack?.score"
+      [teamWhiteScore]="game.teamWhite?.score"
     />
-  }
-  <lib-game-team [team]="firstTeam()" />
-  <div class="divider divider-warning divider-horizontal text-[1.5rem]">VS</div>
-  @if (environment.debug) {
-    <lib-game-debug-register-player
-      [tableId]="game.tableId"
-      [teamColor]="lastTeam()?.color"
-    />
-  }
-  <lib-game-team [team]="lastTeam()" />
+    @if (environment.debug) {
+      <lib-game-debug-score-change
+        [game]="game"
+        [teamColor]="TeamColor.BLACK"
+      />
+    }
 
-  @if (environment.debug) {
-    <button (click)="reset(game)" class="btn btn-outline btn-error mt-2">
-      RESET
-    </button>
+    @if (game.gameMode === 'RANKED') {
+      <span class="custom-font">
+        {{ 'ranked' | uppercase }}
+      </span>
+    }
+
+    <!-- Player names -->
+    @if (environment.debug) {
+      <lib-game-debug-register-player
+        [tableId]="game.tableId"
+        [teamColor]="firstTeam()?.color"
+      />
+    }
+    <lib-game-team [team]="firstTeam()" />
+    <div class="divider divider-warning divider-horizontal text-[1.5rem]">
+      VS
+    </div>
+    @if (environment.debug) {
+      <lib-game-debug-register-player
+        [tableId]="game.tableId"
+        [teamColor]="lastTeam()?.color"
+      />
+    }
+    <lib-game-team [team]="lastTeam()" />
+
+    @if (environment.debug) {
+      <button (click)="reset(game)" class="btn btn-outline btn-error mt-2">
+        RESET
+      </button>
+    }
   }
-}
+</div>
