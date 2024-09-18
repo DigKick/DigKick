@@ -1,52 +1,54 @@
-<div id="game-container" class="flex-col flex-nowrap">
+<div id="game-container" class="flex flex-col flex-nowrap justify-center">
   <lib-game-team-swap (onSwapTeams)="toggleDirection()" />
   @if (game(); as game) {
-    @if (environment.debug) {
-      <lib-game-debug-score-change
-        [game]="game"
-        [teamColor]="TeamColor.WHITE"
+    <div
+      id="score-container"
+      class="h-max-[300px] my-12 flex flex-row items-center justify-around"
+    >
+      @if (environment.debug) {
+        <lib-game-debug-score-change
+          [game]="game"
+          [teamColor]="TeamColor.WHITE"
+        />
+      }
+      <lib-game-score
+        [teamBlackScore]="game.teamBlack?.score"
+        [teamWhiteScore]="game.teamWhite?.score"
       />
-    }
-    <lib-game-score
-      [teamBlackScore]="game.teamBlack?.score"
-      [teamWhiteScore]="game.teamWhite?.score"
-    />
-    @if (environment.debug) {
-      <lib-game-debug-score-change
-        [game]="game"
-        [teamColor]="TeamColor.BLACK"
-      />
-    }
-
-    @if (game.gameMode === 'RANKED') {
-      <span class="custom-font">
-        {{ 'ranked' | uppercase }}
-      </span>
-    }
-
-    <!-- Player names -->
-    @if (environment.debug) {
-      <lib-game-debug-register-player
-        [tableId]="game.tableId"
-        [teamColor]="firstTeam()?.color"
-      />
-    }
-    <lib-game-team [team]="firstTeam()" />
-    <div class="divider divider-warning divider-horizontal text-[1.5rem]">
-      VS
+      @if (environment.debug) {
+        <lib-game-debug-score-change
+          [game]="game"
+          [teamColor]="TeamColor.BLACK"
+        />
+      }
     </div>
-    @if (environment.debug) {
-      <lib-game-debug-register-player
-        [tableId]="game.tableId"
-        [teamColor]="lastTeam()?.color"
-      />
-    }
-    <lib-game-team [team]="lastTeam()" />
+    <div
+      id="ranked-container"
+      class="flex flex-row items-center justify-center"
+    >
+      @if (game.gameMode === 'RANKED') {
+        <span class="custom-font">
+          {{ 'ranked' | uppercase }}
+        </span>
+      }
+    </div>
 
-    @if (environment.debug) {
-      <button (click)="reset(game)" class="btn btn-outline btn-error mt-2">
-        RESET
-      </button>
-    }
+    <div id="teams-container" class="flex flex-row items-center justify-around">
+      <lib-game-team [team]="firstTeam()" />
+      <div class="divider divider-warning divider-horizontal text-[1.5rem]">
+        VS
+      </div>
+      <lib-game-team [team]="lastTeam()" />
+    </div>
+    <div
+      id="reset-container"
+      class="mt-4 flex flex-row items-center justify-center"
+    >
+      @if (environment.debug) {
+        <button (click)="reset(game)" class="btn btn-outline btn-error">
+          RESET
+        </button>
+      }
+    </div>
   }
 </div>

@@ -4,23 +4,23 @@
       #input
       type="text"
       placeholder="{{ team()?.playerOne?.name }}"
-      class="input input-bordered input-error w-full max-w-xs"
+      class="input input-bordered input-error w-3/4 max-w-xs"
     />
     <button
-      class="btn btn-success ml-5"
+      class="btn btn-success ml-5 w-1/4"
       (click)="changeNameOfPlayer(input.value)"
     >
       Submit
     </button>
   </div>
 } @else {
-  <div class="mt-5 flex w-full justify-center text-[1.2rem] lg:justify-center">
+  <div class="mt-5 flex w-full text-[1.2rem]">
     <div
-      class="tooltip tooltip-bottom tooltip-success"
+      class="tooltip tooltip-bottom tooltip-success w-full"
       data-tip="of latest registered player"
     >
       <button
-        class="btn btn-outline btn-error"
+        class="btn btn-outline btn-error w-full"
         (click)="changeActive.set(true)"
       >
         Change name
