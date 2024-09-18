@@ -1,19 +1,20 @@
 import fs from 'node:fs';
 import * as path from 'path';
 import YAML from 'yaml';
-import { propertySchema } from './propertySchema.ts';
+import { getDefaults, type Properties, propertySchema } from './propertySchema.ts';
 
 export class ApplicationProperties {
-  private static _properties: any = undefined;
+  private static _properties: Properties = getDefaults(propertySchema);
+  private static _loaded = false;
 
   static get() {
-    if (this._properties === undefined) this.load();
+    if (!this._loaded) ApplicationProperties.load();
     return ApplicationProperties._properties;
   }
 
   static load() {
-    this._properties = {};
     this.loadAllPropertyFiles();
+    this._loaded = true;
   }
 
   private static loadAllPropertyFiles() {
@@ -21,13 +22,13 @@ export class ApplicationProperties {
 
     const allResourceFiles = fs.readdirSync(resourcePath);
     const allYamlResourceFiles = allResourceFiles.filter(
-      (fileName) => path.extname(fileName).toLowerCase() === '.yaml',
+      (fileName) => path.extname(fileName).toLowerCase() === '.yaml'
     );
 
     allYamlResourceFiles.forEach((fileName) => {
       const yamlFile = fs.readFileSync(resourcePath + '/' + fileName, 'utf8');
       const loadedProps = propertySchema.parse(YAML.parse(yamlFile));
-      this._properties = { ...this._properties, ...loadedProps };
+      this._properties = propertySchema.parse({ ...this._properties, ...loadedProps });
     });
   }
 }
