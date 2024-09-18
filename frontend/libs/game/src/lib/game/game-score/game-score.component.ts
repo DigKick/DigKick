@@ -9,6 +9,6 @@ import { Component, input } from '@angular/core';
   styleUrl: './game-score.component.scss',
 })
 export class GameScoreComponent {
-  teamWhiteScore = input<number>();
-  teamBlackScore = input<number>();
+  firstTeamScore = input<number>();
+  secondTeamScore = input<number>();
 }
