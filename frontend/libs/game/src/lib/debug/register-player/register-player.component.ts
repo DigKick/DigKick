@@ -11,7 +11,7 @@ import { TeamColor } from '@dig-kick/models';
   styleUrl: './register-player.component.scss',
 })
 export class RegisterPlayerComponent {
-  tableId = input.required<string>();
+  tableId = input.required<number | undefined>();
   teamColor = input<string>();
 
   constructor(private _dkMqttClientService: DkMqttClientService) {}
@@ -20,7 +20,7 @@ export class RegisterPlayerComponent {
     const randomId = self.crypto.randomUUID();
     this._dkMqttClientService.registerPlayer(
       randomId,
-      this.tableId(),
+      `${this.tableId()}`,
       this.teamColor() === 'white' ? TeamColor.WHITE : TeamColor.BLACK,
     );
   }
