@@ -14,7 +14,7 @@ export function createValidBlackTeamEntity() {
 function createValidTeamEntity(teamColor: TeamColor) {
   const validTeamEntity: TeamEntity = new TeamEntity();
 
-  validTeamEntity.name = "BADCODE"
+  validTeamEntity.name = 'BADCODE';
   validTeamEntity.score = 5;
   validTeamEntity.color = teamColor;
   validTeamEntity.isWinner = false;
@@ -23,15 +23,15 @@ function createValidTeamEntity(teamColor: TeamColor) {
 }
 
 export function createValidWhiteTeam() {
-  return createValidTeam("BADCODE", TeamColor.WHITE)
+  return createValidTeam('BADCODE', TeamColor.WHITE);
 }
 
 export function createValidBlackTeam() {
-  return createValidTeam("DEADBEEF", TeamColor.BLACK)
+  return createValidTeam('DEADBEEF', TeamColor.BLACK);
 }
 
 function createValidTeam(name: string, teamColor: TeamColor) {
-  const team = new Team(name, teamColor)
+  const team = new Team(name, teamColor);
   team.score = 3;
   team.isWinner = false;
 
