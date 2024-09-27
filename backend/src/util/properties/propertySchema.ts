@@ -1,11 +1,11 @@
 import { z } from 'zod';
 
+export type Properties = z.infer<typeof propertySchema>;
+
 export const propertySchema = z.object({
-  digkick: z
-    .object({
-      banner: z.boolean().default(true),
-    })
-    .optional(),
+  digkick: z.object({
+    banner: z.boolean().default(true),
+  }),
 
   mqtt: z.object({
     login: z.object({
@@ -23,35 +23,43 @@ export const propertySchema = z.object({
     }),
   }),
 
-  player: z
-    .object({
-      elo: z.number().positive().default(1000),
-      name: z
-        .object({
-          restrictions: z
-            .object({
-              length: z
-                .object({
-                  min: z
-                    .number()
-                    .positive({
-                      message: 'Min player name length must be greater than 0!',
-                    })
-                    .optional()
-                    .default(3),
-                  max: z
-                    .number()
-                    .positive({
-                      message: 'Max player name length must be greater than 0!',
-                    })
-                    .optional()
-                    .default(12),
-                })
-                .optional(),
+  player: z.object({
+    elo: z.number().positive().default(1000),
+    name: z.object({
+      restrictions: z.object({
+        length: z.object({
+          min: z
+            .number()
+            .positive({
+              message: 'Min player name length must be greater than 0!',
             })
-            .optional(),
-        })
-        .optional(),
-    })
-    .optional(),
+            .default(3),
+          max: z
+            .number()
+            .positive({
+              message: 'Max player name length must be greater than 0!',
+            })
+            .default(12),
+        }),
+      }),
+    }),
+  }),
 });
+
+export function getDefaultProperties(): Properties {
+  return getDefaults(propertySchema);
+}
+
+function getDefaults<Schema extends z.AnyZodObject>(schema: Schema): any {
+  return Object.fromEntries(
+    Object.entries(schema.shape).map(([key, value]) => {
+      if (value instanceof z.ZodObject) {
+        return [key, getDefaults(value)];
+      }
+      if (value instanceof z.ZodDefault) {
+        return [key, value._def.defaultValue()];
+      }
+      return [key, undefined];
+    }),
+  );
+}
