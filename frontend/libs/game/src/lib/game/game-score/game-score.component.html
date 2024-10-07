@@ -1,0 +1,14 @@
+<div
+  id="game-score-container"
+  class="relative m-auto flex items-center justify-center bg-no-repeat md:h-[250px] md:w-[350px] md:bg-[url('/assets/images/sprite.png')]"
+>
+  <div class="z-10 flex flex-row items-center justify-around text-center">
+    <div class="text-[10rem] text-error">
+      {{ firstTeamScore() }}
+    </div>
+    <div class="text-[10rem] font-bold text-orange-400">:</div>
+    <div class="text-[10rem] font-bold text-error">
+      {{ secondTeamScore() }}
+    </div>
+  </div>
+</div>
