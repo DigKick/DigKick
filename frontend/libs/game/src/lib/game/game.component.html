@@ -8,17 +8,17 @@
       @if (environment.debug) {
         <lib-game-debug-score-change
           [game]="game"
-          [teamColor]="TeamColor.WHITE"
+          [teamColor]="firstTeam()?.color!"
         />
       }
       <lib-game-score
-        [secondTeamScore]="firstTeam()?.score"
-        [firstTeamScore]="lastTeam()?.score"
+        [firstTeamScore]="firstTeam()?.score"
+        [secondTeamScore]="lastTeam()?.score"
       />
       @if (environment.debug) {
         <lib-game-debug-score-change
           [game]="game"
-          [teamColor]="TeamColor.BLACK"
+          [teamColor]="lastTeam()?.color!"
         />
       }
     </div>
