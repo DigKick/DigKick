@@ -5,9 +5,6 @@ import { PlayerEntity } from '../player/playerEntity.ts';
 @Entity('team')
 export class TeamEntity extends DkEntity {
   @Column()
-  name!: string;
-
-  @Column()
   color!: string;
 
   @Column()

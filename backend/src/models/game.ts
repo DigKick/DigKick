@@ -12,8 +12,8 @@ export class Game {
 
   // Constructor for standard game
   constructor() {
-    this.teamWhite = new Team('White', TeamColor.WHITE);
-    this.teamBlack = new Team('Black', TeamColor.BLACK);
+    this.teamWhite = new Team(TeamColor.WHITE);
+    this.teamBlack = new Team(TeamColor.BLACK);
     this.gameMode = GameMode.DEFAULT;
     this.pointsToWin = Game.STANDARDGAME_WINNINGSCORE;
   }

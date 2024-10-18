@@ -17,7 +17,7 @@ export class TeamParser {
     }
 
     try {
-      const team = new Team(teamEntity.name, teamEntity.color as TeamColor);
+      const team = new Team(teamEntity.color as TeamColor);
 
       team.score = teamEntity.score;
       team.isWinner = teamEntity.isWinner;
@@ -35,7 +35,6 @@ export class TeamParser {
     try {
       const teamEntity = new TeamEntity();
 
-      teamEntity.name = team.name;
       teamEntity.color = team.color;
       teamEntity.isWinner = team.isWinner;
       teamEntity.score = team.score;

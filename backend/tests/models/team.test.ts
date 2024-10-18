@@ -2,10 +2,10 @@ import { beforeEach, expect, test } from 'bun:test';
 import { Team, TeamColor } from '../../src/models/team.ts';
 import { playerOne, playerThree, playerTwo } from './player.test.ts';
 
-let teamObj = new Team('BADCODE', TeamColor.WHITE);
+let teamObj = new Team(TeamColor.WHITE);
 
 beforeEach(() => {
-  teamObj = new Team('BADCODE', TeamColor.WHITE);
+  teamObj = new Team(TeamColor.WHITE);
 });
 
 test('add player to a team', () => {
