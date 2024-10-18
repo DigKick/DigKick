@@ -4,3 +4,38 @@
 2. Edit /src/CONFIG.h
 3. Change PlattformIO env to main
 4. Click on Upload
+
+# Flashing to ESP
+
+When flashing new Code to the ESP-Modules, keep the following things in mind:
+
+1. Check and define Config.h
+-> **MQTT_CLIENT_ID** must be different for every ESP you flash!
+2. The MQTT-Library has a fixed payload size that is to low for us
+-> Set **#define MQTT_MAX_PACKET_SIZE 512** in PubSubClient.h under .pio/libdeps/main/PubSubClient/src
+
+# Using with MicroPython
+
+Our ESP-Board on [Adafruit](https://learn.adafruit.com/adafruit-huzzah32-esp32-feather)
+Tutorial [https://wolfpaulus.com/micro-python-esp32](https://wolfpaulus.com/micro-python-esp32)
+
+## Requirements
+
+1. PyEnv to install Python [Installation Guide](https://github.com/pyenv/pyenv?tab=readme-ov-file#homebrew-in-macos)
+2. Install Python
+    * ```pyenv install -l``` to list all versions
+    * Install Python ```pyenv install X.X.X```
+    * Make it usable ```pyenv global X.X.X```
+3. Install ESPTools [Documentation](https://docs.espressif.com/projects/esptool/en/latest/esp32/)
+4. Flash MicroPython to ESP [Firmware](https://micropython.org/download/ESP32_GENERIC/)
+5. Install Adafruit-Ampy with pip [https://pypi.org/project/adafruit-ampy/](https://pypi.org/project/adafruit-ampy/)
+
+## Making changes
+
+With MicroPython you have two main files on the ESP:
+1. boot.py runs on boot of the board // contains setup code
+2. main.py runs right after boot // contains the main loop
+
+Change these files and push them to the ESP with Adafruit-Ampy
+
+
