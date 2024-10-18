@@ -6,7 +6,6 @@ import { Component, input } from '@angular/core';
   standalone: true,
   imports: [CommonModule, NgOptimizedImage],
   templateUrl: './game-score.component.html',
-  styleUrl: './game-score.component.scss',
 })
 export class GameScoreComponent {
   firstTeamScore = input<number>();
