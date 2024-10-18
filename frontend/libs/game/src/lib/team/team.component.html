@@ -1,0 +1,23 @@
+@if (team(); as team) {
+  <div class="card min-h-[170px] w-3/4 rounded-box bg-accent-content">
+    <div
+      class="flex flex-row flex-wrap items-center justify-center pt-1 text-3xl"
+    >
+      <div>TEAM</div>
+      <div class="text-orange-400">&nbsp; {{ team.color }}</div>
+    </div>
+    <lib-game-team-player-name [player]="team.playerOne" />
+    <lib-game-team-player-name [player]="team.playerTwo" />
+  </div>
+  <div class="w-3/4">
+    <lib-game-team-player-name-change [team]="team" [tableId]="tableId()" />
+  </div>
+  @if (environment.debug) {
+    <div class="mt-4 w-3/4">
+      <lib-game-debug-register-player
+        [tableId]="tableId()"
+        [teamColor]="team.color"
+      />
+    </div>
+  }
+}
