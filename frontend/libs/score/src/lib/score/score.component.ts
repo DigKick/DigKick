@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, Signal } from '@angular/core';
+import { Component, computed, inject, Signal } from '@angular/core';
 import { PlayerStore } from '@dig-kick/store';
 import { Player } from '@dig-kick/models';
 
@@ -13,5 +13,7 @@ import { Player } from '@dig-kick/models';
 export class ScoreComponent {
   readonly playerStore = inject(PlayerStore);
 
-  players: Signal<Player[]> = this.playerStore.entities;
+  players: Signal<Player[]> = computed(() =>
+    this.playerStore.entities().sort((a, b) => b.elo - a.elo),
+  );
 }
