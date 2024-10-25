@@ -37,5 +37,3 @@ With MicroPython you have two main files on the ESP:
 2. main.py runs right after boot // contains the main loop
 
 Change these files and push them to the ESP with Adafruit-Ampy
-
-
