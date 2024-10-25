@@ -19,10 +19,16 @@
       <lib-game-team-player-name-change [team]="team" [tableId]="tableId()" />
     </div>
     @if (environment.debug) {
-      <div class="mt-4 w-3/4">
+      <div class="mt-4 flex w-3/4 flex-wrap justify-center gap-4">
         <lib-game-debug-register-player
           [tableId]="tableId()"
           [teamColor]="team.color"
+          name="1"
+        />
+        <lib-game-debug-register-player
+          [tableId]="tableId()"
+          [teamColor]="team.color"
+          name="2"
         />
       </div>
     }

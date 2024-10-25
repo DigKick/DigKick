@@ -8,8 +8,6 @@
           <th></th>
           <th>Name</th>
           <th class="text-right">Score</th>
-          <th class="text-right">Won</th>
-          <th class="text-right">Lost</th>
           <th class="text-right">Winrate</th>
           <th class="text-right">History</th>
         </tr>
@@ -20,11 +18,9 @@
             <th class="text-right">{{ $index + 1 }}</th>
             <td>{{ player.name }}</td>
             <td class="text-right text-orange-400">{{ player.elo }}</td>
-            <td class="text-right">{{ player.won }}</td>
-            <td class="text-right">{{ player.lost }}</td>
             <td class="text-right">
-              @if (player.won && player.lost) {
-                {{ player.won / (player.won + player.lost) | percent }}
+              @if (player.winRate) {
+                {{ player.winRate | percent }}
               } @else {
                 -
               }
