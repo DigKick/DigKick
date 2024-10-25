@@ -11,8 +11,8 @@ import { TeamColor } from '@dig-kick/models';
   styleUrl: './register-player.component.scss',
 })
 export class RegisterPlayerComponent {
-  tableId = input.required<number | undefined>();
-  teamColor = input<string>();
+  tableId = input.required<string | undefined>();
+  teamColor = input.required<string>();
 
   constructor(private _dkMqttClientService: DkMqttClientService) {}
 

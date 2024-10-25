@@ -21,5 +21,5 @@ export class TeamComponent {
   readonly environment: Environment = inject(ENVIRONMENT);
 
   public team = input<Team | undefined>(undefined);
-  public tableId = input<number>();
+  public tableId = input.required<string>();
 }

@@ -7,5 +7,6 @@ import { Team } from '@dig-kick/models';
   template: '',
 })
 export class TeamStubComponent {
-  public team = input<Team | undefined>(undefined);
+  public team = input.required<Team | undefined>(undefined);
+  public tableId = input<string>('');
 }

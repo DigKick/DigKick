@@ -1,14 +1,7 @@
-<div
-  id="game-score-container"
-  class="relative m-auto flex items-center justify-center bg-no-repeat md:h-[250px] md:w-[350px] md:bg-[url('/assets/images/sprite.webp')]"
->
-  <div class="z-10 flex flex-row items-center justify-around text-center">
-    <div class="text-[10rem] text-error">
-      {{ firstTeamScore() }}
-    </div>
-    <div class="text-[10rem] font-bold text-orange-400">:</div>
-    <div class="text-[10rem] font-bold text-error">
-      {{ secondTeamScore() }}
-    </div>
+<div class="">
+  <div class="flex gap-10 text-[10rem]">
+    <span>{{ firstTeamScore() }}</span>
+    <span class="text-orange-400"> &#58; </span>
+    <span>{{ secondTeamScore() }}</span>
   </div>
 </div>

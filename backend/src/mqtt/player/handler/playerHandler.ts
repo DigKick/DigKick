@@ -9,6 +9,6 @@ export class PlayerHandler extends DkModelHandler<PlayerEventType, Table> {
 
   constructor(tableHandler: TableHandler, table: Table) {
     super(table, HandlerType.PLAYER, table);
-    this._mapper = new PlayerEventMapper(tableHandler, table);
+    this._mapper = new PlayerEventMapper(tableHandler);
   }
 }

@@ -10,8 +10,8 @@ import { DkMqttClientService } from '@dig-kick/services';
   templateUrl: './player-name-change.component.html',
 })
 export class PlayerNameChangeComponent {
-  tableId = input<number>();
-  team = input<Team>();
+  tableId = input.required<string>();
+  team = input.required<Team>();
   changeActive = signal<boolean>(false);
 
   constructor(private _dkMqttClientService: DkMqttClientService) {}

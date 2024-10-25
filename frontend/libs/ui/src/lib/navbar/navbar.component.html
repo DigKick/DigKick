@@ -1,23 +1,25 @@
-<nav class="flex flex-grow items-center justify-center">
-  <ul class="flex items-center space-x-3">
-    <li>
+<div class="grid grid-cols-3 items-center justify-items-center px-2">
+  <div></div>
+  <div class="flex gap-x-3">
+    <div>
       <a
         class="text-[2rem] lg:text-[2.5rem]"
         routerLink="/"
         routerLinkActive="active"
         >games</a
       >
-    </li>
-    <li>
+    </div>
+    <div>
       <span class="text-[2rem] text-orange-400 lg:text-[2.5rem]">|</span>
-    </li>
-    <li>
+    </div>
+    <div>
       <a
         class="text-[2rem] lg:text-[2.5rem]"
         routerLink="/score"
         routerLinkActive="active"
         >score</a
       >
-    </li>
-  </ul>
-</nav>
+    </div>
+  </div>
+  <lib-theme-toggle-button class="justify-self-end"></lib-theme-toggle-button>
+</div>

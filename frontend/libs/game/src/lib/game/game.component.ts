@@ -38,7 +38,7 @@ import { RegisterPlayerComponent } from '../debug/register-player/register-playe
   styleUrl: './game.component.scss',
 })
 export class GameComponent {
-  tableId = input<string>();
+  tableId = input.required<string>();
 
   private _isWhiteTeamFirst = signal(true);
 
