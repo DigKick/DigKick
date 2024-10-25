@@ -1,250 +1,47 @@
-@if (game(); as game) {
-  <div
-    class="mx-auto mt-3 flex w-5/6 flex-col items-center justify-center lg:mx-auto lg:w-2/3 lg:flex-row"
-  >
-    <!-- Mobile view -->
-    <div class="flex lg:hidden">
+<div class="flex flex-col flex-nowrap justify-center">
+  <lib-game-team-swap (onSwapTeams)="toggleDirection()" />
+  @if (game(); as game) {
+    <div class="h-max-[300px] my-4 flex flex-row items-center justify-around">
       @if (environment.debug) {
-        <div class="flex flex-col justify-center gap-4 px-4">
-          <button
-            (click)="changeScore(game, TeamColor.WHITE, ScoreChange.INCREASE)"
-            class="btn btn-outline btn-error"
-          >
-            +
-          </button>
-          <button
-            (click)="changeScore(game, TeamColor.WHITE, ScoreChange.DECREASE)"
-            class="btn btn-outline btn-error"
-          >
-            -
-          </button>
-        </div>
+        <lib-game-debug-score-change
+          [game]="game"
+          [teamColor]="firstTeam()?.color!"
+        />
       }
-      <div
-        class="card mx-auto flex h-32 w-64 items-center justify-center rounded-lg bg-accent-content"
-      >
-        <div class="flex items-center justify-center">
-          <div class="mr-3 text-[6rem]">{{ game.teamWhite?.score }}</div>
-          <div class="text-[6rem]">:</div>
-          <div class="ml-3 text-[6rem]">{{ game.teamBlack?.score }}</div>
-        </div>
-      </div>
+      <lib-game-score
+        [firstTeamScore]="firstTeam()?.score"
+        [secondTeamScore]="lastTeam()?.score"
+      />
       @if (environment.debug) {
-        <div class="flex flex-col justify-center gap-4 px-4">
-          <button
-            (click)="changeScore(game, TeamColor.BLACK, ScoreChange.INCREASE)"
-            class="btn btn-outline btn-error"
-          >
-            +
-          </button>
-          <button
-            (click)="changeScore(game, TeamColor.BLACK, ScoreChange.DECREASE)"
-            class="btn btn-outline btn-error"
-          >
-            -
-          </button>
-        </div>
+        <lib-game-debug-score-change
+          [game]="game"
+          [teamColor]="lastTeam()?.color!"
+        />
+      }
+    </div>
+    <div class="flex flex-row items-center justify-center py-2">
+      @if (game.gameMode === 'DEFAULT') {
+        <span class="custom-font text-4xl text-error">
+          {{ 'ranked' | uppercase }}
+        </span>
       }
     </div>
 
-    @if (environment.debug) {
-      <button (click)="reset(game)" class="btn btn-outline btn-error mt-2">
-        RESET
-      </button>
-    }
-
-    <!-- Image container -->
-    <div class="flex items-center justify-center">
-      <!-- Mobile view -->
-      <div class="lg:hidden">
-        <img src="assets/images/sprite.png" class="rotate-90 transform" />
-      </div>
-    </div>
-
-    <!-- Desktop view -->
-    <div class="hidden items-center justify-center lg:flex">
-      <div class="flex items-center space-x-[6rem]">
-        <div
-          class="card flex h-32 w-64 items-center justify-center bg-accent-content text-[11rem]"
-        >
-          {{ game.teamWhite?.score }}
-        </div>
-        <img
-          src="assets/images/sprite.png"
-          class="h-full rotate-90"
-          alt="Game image"
-        />
-        <div
-          class="card flex h-32 w-64 items-center justify-center bg-accent-content text-[11rem]"
-        >
-          {{ game.teamBlack?.score }}
-        </div>
-      </div>
-    </div>
-  </div>
-
-  @if (game.gameMode === 'RANKED') {
-    <div
-      class="custom-font mb-[1rem] flex justify-center text-[2.5rem] text-red-800 lg:mb-[3rem] lg:text-[4rem]"
-    >
-      ranked
-    </div>
-  } @else {
-    <div class="hidden lg:hidden"></div>
-  }
-
-  <!-- Player names -->
-  <div class="my-auto flex w-full items-center text-[1.2rem] lg:justify-center">
-    @if (game.teamWhite; as white) {
+    <div class="flex">
+      <lib-game-team [team]="firstTeam()" [tableId]="tableId()" />
       <div
-        class="card ml-7 grid h-24 flex-grow place-items-center rounded-box bg-accent-content lg:ml-9"
+        class="divider divider-warning divider-horizontal mx-1 text-[1.5rem]"
       >
-        <div class="flex text-[1.4rem]">
-          <div>TEAM</div>
-          <div class="text-orange-400">&nbsp; WHITE</div>
-        </div>
-        <!-- Added mx-4 for left and right margin -->
-        <div class="flex break-words">
-          {{ white.playerOne?.name }}
-          <div class="text-orange-400">
-            &nbsp;&nbsp;{{ white.playerOne?.elo }}
-          </div>
-        </div>
-        <div class="flex break-words">
-          {{ white.playerTwo?.name }}
-          <div class="text-orange-400">
-            &nbsp;&nbsp;{{ white.playerTwo?.elo }}
-          </div>
-        </div>
+        VS
       </div>
-    }
-    <div class="divider divider-warning divider-horizontal text-[1.5rem]">
-      VS
+      <lib-game-team [team]="lastTeam()" [tableId]="tableId()" />
     </div>
-    <!-- Spacer for mobile view -->
-    @if (game.teamBlack; as black) {
-      <div
-        class="card mr-7 grid h-24 flex-grow place-items-center rounded-box bg-accent-content lg:mr-9"
-      >
-        <div class="flex text-[1.3rem]">
-          <div>TEAM</div>
-          <div class="text-orange-400">&nbsp; BLACK</div>
-        </div>
-        <!-- Added mx-4 for left and right margin -->
-        <div class="flex break-words">
-          {{ black.playerOne?.name }}
-          <div class="text-orange-400">
-            &nbsp;&nbsp;{{ black.playerOne?.elo }}
-          </div>
-        </div>
-        <div class="flex break-words">
-          {{ black.playerTwo?.name }}
-          <div class="text-orange-400">
-            &nbsp;&nbsp;{{ black.playerTwo?.elo }}
-          </div>
-        </div>
-      </div>
-    }
-  </div>
-
-  @if (environment.debug) {
-    <div class="m-2 flex w-full justify-around">
-      <button
-        class="btn btn-outline btn-error"
-        (click)="registerPlayer(game, TeamColor.WHITE, '1')"
-      >
-        CLICK 1
-      </button>
-      <button
-        class="btn btn-outline btn-error"
-        (click)="registerPlayer(game, TeamColor.WHITE, '2')"
-      >
-        CLICK 2
-      </button>
-      <button
-        class="btn btn-outline btn-error"
-        (click)="registerPlayer(game, TeamColor.BLACK, '3')"
-      >
-        CLICK 3
-      </button>
-      <button
-        class="btn btn-outline btn-error"
-        (click)="registerPlayer(game, TeamColor.BLACK, '4')"
-      >
-        CLICK 4
-      </button>
+    <div class="mt-4 flex flex-row items-center justify-center">
+      @if (environment.debug) {
+        <button (click)="reset(game)" class="btn btn-outline btn-error">
+          RESET
+        </button>
+      }
     </div>
   }
-
-  <div class="flex w-full justify-between">
-    @if (renameWhite) {
-      <div
-        class="mt-5 flex w-full justify-center text-[1.2rem] lg:justify-center"
-      >
-        <input
-          #input
-          type="text"
-          placeholder="{{ game.teamWhite?.playerOne?.name }}"
-          class="input input-bordered input-error w-full max-w-xs"
-        />
-        <button
-          class="btn btn-success ml-5"
-          (click)="submit(whiteColor, input.value)"
-        >
-          Submit
-        </button>
-      </div>
-    } @else {
-      <div
-        class="mt-5 flex w-full justify-center text-[1.2rem] lg:justify-center"
-      >
-        <div
-          class="tooltip tooltip-bottom tooltip-success"
-          data-tip="of latest registered player"
-        >
-          <button
-            class="btn btn-outline btn-error"
-            (click)="changeName(whiteColor)"
-          >
-            Change name
-          </button>
-        </div>
-      </div>
-    }
-
-    @if (renameBlack) {
-      <div
-        class="mt-5 flex w-full justify-center text-[1.2rem] lg:justify-center"
-      >
-        <input
-          #input
-          type="text"
-          placeholder="{{ game.teamBlack?.playerOne?.name }}"
-          class="input input-bordered input-error w-full max-w-xs"
-        />
-        <button
-          class="btn btn-success ml-5"
-          (click)="submit(blackColor, input.value)"
-        >
-          Submit
-        </button>
-      </div>
-    } @else {
-      <div
-        class="mt-5 flex w-full justify-center text-[1.2rem] lg:justify-center"
-      >
-        <div
-          class="tooltip tooltip-bottom tooltip-success"
-          data-tip="of latest registered player"
-        >
-          <button
-            class="btn btn-outline btn-error"
-            (click)="changeName(blackColor)"
-          >
-            Change name
-          </button>
-        </div>
-      </div>
-    }
-  </div>
-}
+</div>
