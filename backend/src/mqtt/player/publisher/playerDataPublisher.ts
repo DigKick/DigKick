@@ -20,18 +20,19 @@ export class PlayerDataPublisher extends DataPublisher {
         });
 
         const lastFive = teams
-          .slice(teams.length - 5, teams.length)
+          .slice(-5)
           .map((t) => ({ id: t.id, isWinner: t.isWinner }));
 
-        const won = teams.filter((t) => t.isWinner).length;
+        const won: number = teams.filter((t) => t.isWinner).length;
+
+        const winRate = teams.length == 0 ? 1 : won / teams.length;
 
         return {
           id: p.id,
           name: p.name,
           elo: p.elo,
-          won,
-          lost: teams.length - won,
-          lastFive: lastFive,
+          winRate,
+          lastFive,
         };
       }),
     );

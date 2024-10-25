@@ -13,13 +13,13 @@ import { TeamColor } from '@dig-kick/models';
 export class RegisterPlayerComponent {
   tableId = input.required<string | undefined>();
   teamColor = input.required<string>();
+  name = input.required<string>();
 
   constructor(private _dkMqttClientService: DkMqttClientService) {}
 
   registerPlayer() {
-    const randomId = self.crypto.randomUUID();
     this._dkMqttClientService.registerPlayer(
-      randomId,
+      `${this.teamColor()}-${this.name()}`,
       `${this.tableId()}`,
       this.teamColor() === 'white' ? TeamColor.WHITE : TeamColor.BLACK,
     );
