@@ -13,17 +13,13 @@
         </tr>
       </thead>
       <tbody>
-        @for (player of players(); track player.id) {
+        @for (player of players(); track player) {
           <tr class="text-[1.25rem]">
             <th class="text-right">{{ $index + 1 }}</th>
             <td>{{ player.name }}</td>
             <td class="text-right text-orange-400">{{ player.elo }}</td>
             <td class="text-right">
-              @if (player.winRate) {
-                {{ player.winRate | percent }}
-              } @else {
-                -
-              }
+              {{ player.winRate | percent }}
             </td>
             <td class="flex justify-end gap-1">
               @for (team of player.lastFive; track team.id) {

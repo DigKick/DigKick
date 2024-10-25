@@ -24,17 +24,8 @@ export class PlayerDataPublisher extends DataPublisher {
           .map((t) => ({ id: t.id, isWinner: t.isWinner }));
 
         const won: number = teams.filter((t) => t.isWinner).length;
-        const lost: number = teams.length - won;
 
-        let winRate: number | null = null;
-
-        if (lost == 0) {
-          if (won > 0) {
-            winRate = 1;
-          }
-        } else {
-          winRate = won / (won + lost);
-        }
+        const winRate = teams.length == 0 ? 1 : won / teams.length;
 
         return {
           id: p.id,
