@@ -3,7 +3,7 @@ import { z } from 'zod';
 export const TeamPlayerSchema = z.object({
   elo: z.number(),
   name: z.string(),
-  winRate: z.number(),
+  winRate: z.number().nullish(),
   lastFive: z
     .array(z.object({ id: z.number(), isWinner: z.boolean() }))
     .nullish(),
